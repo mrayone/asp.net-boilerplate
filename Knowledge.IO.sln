@@ -3,9 +3,48 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentidadeAcessoContext", "IdentidadeAcessoContext", "{18921978-4A4B-4AA5-829E-10AB2CBD2D26}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Services", "1 - Services", "{2AD6F86E-7AB7-4FEE-B889-0B6038646D95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Domain", "2 - Domain", "{787C8E6C-08A3-4A7B-869C-7985C65ED024}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infrastructure", "3 - Infrastructure", "{D6E630AA-575C-4EB8-9243-5DED7C1AAB0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1 - Data", "3.1 - Data", "{9B2B1D0A-E1F9-4C66-86DD-FB8D50DCB689}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2 - CrossCutting", "3.2 - CrossCutting", "{B91E3841-FC8F-4052-A315-9F7CFED964A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentidadeAcesso.Domain", "src\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj", "{35849EE9-6C5C-452E-AD07-B0ECDF7E148D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentidadeAcesso.Domain.Tests", "tests\IdentidadeAcesso\IdentidadeAcesso.Domain.Tests\IdentidadeAcesso.Domain.Tests.csproj", "{10A718CE-F176-49BC-9002-F7DC3749DDB4}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A718CE-F176-49BC-9002-F7DC3749DDB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A718CE-F176-49BC-9002-F7DC3749DDB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A718CE-F176-49BC-9002-F7DC3749DDB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A718CE-F176-49BC-9002-F7DC3749DDB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2AD6F86E-7AB7-4FEE-B889-0B6038646D95} = {18921978-4A4B-4AA5-829E-10AB2CBD2D26}
+		{787C8E6C-08A3-4A7B-869C-7985C65ED024} = {18921978-4A4B-4AA5-829E-10AB2CBD2D26}
+		{D6E630AA-575C-4EB8-9243-5DED7C1AAB0E} = {18921978-4A4B-4AA5-829E-10AB2CBD2D26}
+		{9B2B1D0A-E1F9-4C66-86DD-FB8D50DCB689} = {D6E630AA-575C-4EB8-9243-5DED7C1AAB0E}
+		{B91E3841-FC8F-4052-A315-9F7CFED964A5} = {D6E630AA-575C-4EB8-9243-5DED7C1AAB0E}
+		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D} = {787C8E6C-08A3-4A7B-869C-7985C65ED024}
+		{10A718CE-F176-49BC-9002-F7DC3749DDB4} = {787C8E6C-08A3-4A7B-869C-7985C65ED024}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FA9BF4-E732-429E-A3AC-B0AE77B8AEB0}

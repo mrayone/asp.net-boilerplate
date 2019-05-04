@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AggregatesModel\PermissoesAggregate\" />
+    <Folder Include="AggregatesModel\PerfilAggregate\" />
+    <Folder Include="AggregatesModel\UsuariosAggregate\" />
+  </ItemGroup>
+
+</Project>
