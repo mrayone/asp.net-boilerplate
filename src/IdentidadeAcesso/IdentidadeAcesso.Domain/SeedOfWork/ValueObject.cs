@@ -6,6 +6,9 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
+
+        public ValidationResult ValidationResult { get; protected set; }
+
         public override bool Equals(object obj)
         {
             var valueObject = obj as T;
