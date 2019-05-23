@@ -5,9 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AggregatesModel\PermissoesAggregate\" />
+    <Folder Include="AggregatesModel\PermissaoAggregate\" />
     <Folder Include="AggregatesModel\PerfilAggregate\" />
-    <Folder Include="AggregatesModel\UsuariosAggregate\" />
   </ItemGroup>
 
 </Project>

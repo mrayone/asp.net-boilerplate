@@ -12,4 +12,14 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AggregatesModelTest\PerfilAggregateTest\" />
+    <Folder Include="AggregatesModelTest\PermissaoAggregateTest\" />
+    <Folder Include="AggregatesModelTest\UsuarioAggregateTest\ValueObjectSpecs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
