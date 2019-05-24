@@ -29,8 +29,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             _primeiroNome = primeiroNome;
             _sobrenome = sobrenome;
-            ValidationResult = new ValidationResult();
-
+            
             Validar();
         }
 

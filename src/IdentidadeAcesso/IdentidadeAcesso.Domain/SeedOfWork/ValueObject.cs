@@ -9,6 +9,11 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 
         public ValidationResult ValidationResult { get; protected set; }
 
+        public ValueObject()
+        {
+            ValidationResult = new ValidationResult();
+        }
+
         public override bool Equals(object obj)
         {
             var valueObject = obj as T;
