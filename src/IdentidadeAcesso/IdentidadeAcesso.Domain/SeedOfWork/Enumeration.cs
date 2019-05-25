@@ -8,17 +8,17 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 {
     public abstract class Enumeration : IComparable
     {
-        public string Name { get; private set; }
+        public string Nome { get; private set; }
 
         public string Id { get; private set; }
 
         protected Enumeration(string id, string name)
         {
             Id = id;
-            Name = name;
+            Nome = name;
         }
 
-        public override string ToString() => Name;
+        public override string ToString() => Nome;
 
         public static IEnumerable<T> GetAll<T>() where T : Enumeration
         {
@@ -50,7 +50,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 
         public static T FromDisplayName<T>(string displayName) where T : Enumeration
         {
-            var matchingItem = Parse<T, string>(displayName, "nome", item => item.Name == displayName);
+            var matchingItem = Parse<T, string>(displayName, "nome", item => item.Nome == displayName);
             return matchingItem;
         }
 
