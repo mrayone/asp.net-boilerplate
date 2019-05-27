@@ -12,10 +12,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Nome Nome { get; private set; }
         public Sexo Sexo { get; private set; }
         public Email Email { get; private set; }
-        public Cpf Cpf { get; private set; }
+        public CPF CPF { get; private set; }
         public Telefone Telefone { get; private set; }
         public Celular Celular { get; private set; }
-        public bool Ativo { get; private set; }
+        public Status Ativo { get; private set; }
 
         public Usuario()
         {
