@@ -5,57 +5,72 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Nome : ValueObject<Nome>
     {
-        private readonly string _primeiroNome;
-        private readonly string _sobrenome;
+        public readonly string PrimeiroNome;
 
-        public string PrimeiroNome
-        {
-            get
-            {
-                return _primeiroNome;
-            }
-        }
-
-        public string Sobrenome
-        {
-            get
-            {
-                return _sobrenome;
-            }
-        }
-
+        public readonly string Sobrenome;
 
         public Nome(string primeiroNome, string sobrenome)
         {
-            _primeiroNome = primeiroNome;
-            _sobrenome = sobrenome;
-            
+            PrimeiroNome = primeiroNome;
+            Sobrenome = sobrenome;
+
             Validar();
         }
 
         private void Validar()
         {
-            if (_primeiroNome == null || _primeiroNome == String.Empty) ValidationResult.AdicionarErro("PrimeiroNome", "O primeiro nome não pode ser vazio.");
-            if (_sobrenome == null || _sobrenome == String.Empty) ValidationResult.AdicionarErro("Sobrenome", "O sobrenome não pode ser vazio.");
+            ValidarNome();
+            ValidarSobrenome();
         }
 
         public string ObterNomeCompleto()
         {
-            return String.Format("{0} {1}", _primeiroNome, _sobrenome);
+            return String.Format("{0} {1}", PrimeiroNome, Sobrenome);
         }
+
+        #region Validações
+        private void ValidarNome()
+        {
+            if (PrimeiroNome == null)
+            {
+                ValidationResult.AdicionarErro("Primeiro Nome Nulo", "O primeiro nome não pode ser nulo.");
+                return;
+            }
+            if (PrimeiroNome == String.Empty)
+            {
+                ValidationResult.AdicionarErro("Primeiro Nome Vazio", "O primeiro nome não pode ser em branco.");
+                return;
+            }
+        }
+
+        private void ValidarSobrenome()
+        {
+            if (Sobrenome == null)
+            {
+                ValidationResult.AdicionarErro("Sobrenome Nulo", "O sobrenome não pode ser nulo.");
+                return;
+            }
+            if (Sobrenome == String.Empty)
+            {
+                ValidationResult.AdicionarErro("Sobrenome Vazio", "O sobrenome não pode ser em branco.");
+                return;
+            }
+        }
+        #endregion
+
 
         protected override bool EqualsCore(Nome other)
         {
-            return _primeiroNome.Equals(other.PrimeiroNome)
-                && _sobrenome.Equals(other.Sobrenome);
+            return PrimeiroNome.Equals(other.PrimeiroNome)
+                && Sobrenome.Equals(other.Sobrenome);
         }
 
         protected override int GetHashCodeCore()
         {
             unchecked
             {
-                int hash = _primeiroNome.GetHashCode();
-                hash = (hash * 907) ^ _sobrenome.GetHashCode();
+                int hash = PrimeiroNome.GetHashCode();
+                hash = (hash * 907) ^ Sobrenome.GetHashCode();
 
                 return hash;
             }

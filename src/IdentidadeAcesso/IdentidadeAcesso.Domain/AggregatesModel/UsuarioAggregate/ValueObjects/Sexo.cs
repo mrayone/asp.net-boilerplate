@@ -5,8 +5,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Sexo : Enumeration
     {
-        public static readonly Sexo Masculino = new Sexo("M","Masculino");
-        public static readonly Sexo Feminino = new Sexo("F","Feminino");
+        public static readonly Sexo Masculino = new Sexo("M", nameof(Masculino).ToLowerInvariant());
+        public static readonly Sexo Feminino = new Sexo("F", nameof(Feminino).ToLowerInvariant());
 
         public ValidationResult ValidationResult { get; private set; }
         public Sexo(string id, string nome) : base(id, nome)
@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if(!Equals(Sexo.Masculino) || !Equals(Sexo.Feminino))
             {
-                ValidationResult.AdicionarErro("Sexo", "O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
+                ValidationResult.AdicionarErro("Valor Inválido", "O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
             }
         }
     }

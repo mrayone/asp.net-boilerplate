@@ -1,0 +1,76 @@
+﻿using FluentAssertions;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Xunit;
+
+namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest.ValueObjectSpecs
+{
+    public class EmailSpec
+    {
+        [Fact(DisplayName = "Deve retornar erro se valor nulo for definido.")]
+        [Trait("Value Object", "Email")]
+        public void deve_retornar_erro_se_valor_nulo_for_definido()
+        {
+            //arrange
+            var email = new Email(null);
+
+            //act
+            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            {
+                ["Email Nulo"] = "O email não pode ser nulo."
+            });
+        }
+
+        [Fact(DisplayName = "Deve retornar erro se valor vazio for definido.")]
+        [Trait("Value Object", "Email")]
+        public void deve_retornar_erro_se_valor_vazio_for_definido()
+        {
+            //arrange
+            var email = new Email("");
+
+            //act
+            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            {
+                ["Email Vazio"] = "O email não pode estar em branco."
+            });
+        }
+
+        [Fact(DisplayName = "Deve retornar erro se valor não for um e-mail válido")]
+        [Trait("Value Object", "Email")]
+        public void deve_retornar_erro_se_valor_nao_for_email_valido()
+        {
+            //arrange
+            var email = new Email("mariana.glogia.com");
+
+            //act
+            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            {
+                ["Email Inválido"] = "O email informado não é um válido."
+            });
+        }
+
+        [Trait("Value Object", "Email")]
+        [Theory(DisplayName = "Deve manter o estado válido 'false' para emails inválidos e 'true' para válidos")]
+        [InlineData("maria.@gmail.com", true)]
+        [InlineData("maria@gmail.com", true)]
+        [InlineData("maria_2019@gmail.com", true)]
+        [InlineData("maria_@gmail.com", true)]
+        [InlineData("maycon.rayone@hotmail.com", true)]
+        [InlineData("maycon.rayone@gmail.com", true)]
+        [InlineData("maycon.rayonegmail.com", false)]
+        [InlineData("js*@proseware.com", false)]
+        [InlineData("js*@proseware..com", false)]
+        [InlineData("-----------", false)]
+        [InlineData("***asdad**..com", false)]
+        public void deve_manter_o_estado_valido_false_se_invalido_e_true_se_valido(string endereco, bool isValid)
+        {
+            //arrange
+            var email = new Email(endereco);
+
+            //act
+            email.ValidationResult.IsValid.Should().Be(isValid);
+        }
+    }
+}

@@ -41,8 +41,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nome.ValidationResult.IsValid.Should().BeFalse();
             nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["PrimeiroNome"] = "O primeiro nome não pode ser vazio.",
-                ["Sobrenome"] = "O sobrenome não pode ser vazio."
+                ["Primeiro Nome Vazio"] = "O primeiro nome não pode ser em branco.",
+                ["Sobrenome Vazio"] = "O sobrenome não pode ser em branco."
             });
         }
 
@@ -59,8 +59,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nome.ValidationResult.IsValid.Should().BeFalse();
             nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["PrimeiroNome"] = "O primeiro nome não pode ser vazio.",
-                ["Sobrenome"] = "O sobrenome não pode ser vazio."
+                ["Primeiro Nome Nulo"] = "O primeiro nome não pode ser nulo.",
+                ["Sobrenome Nulo"] = "O sobrenome não pode ser nulo."
             });
         }
 
