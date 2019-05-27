@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             }
             if (PrimeiroNome == String.Empty)
             {
-                ValidationResult.AdicionarErro("Primeiro Nome Vazio", "O primeiro nome não pode ser em branco.");
+                ValidationResult.AdicionarErro("Primeiro Nome Vazio", "O primeiro nome não pode ser vazio.");
                 return;
             }
         }
@@ -52,7 +52,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             }
             if (Sobrenome == String.Empty)
             {
-                ValidationResult.AdicionarErro("Sobrenome Vazio", "O sobrenome não pode ser em branco.");
+                ValidationResult.AdicionarErro("Sobrenome Vazio", "O sobrenome não pode ser vazio.");
                 return;
             }
         }

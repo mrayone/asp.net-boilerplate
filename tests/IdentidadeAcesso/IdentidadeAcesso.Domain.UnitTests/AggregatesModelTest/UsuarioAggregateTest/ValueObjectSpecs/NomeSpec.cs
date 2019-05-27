@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
         [Fact(DisplayName = "O estado do nome deve ser invalido se valores em branco forem setados.")]
         [Trait("Value Object", "Nome")]
-        public void o_estado_do_nome_deve_ser_invalido_se_valores_em_branco()
+        public void o_estado_do_nome_deve_ser_invalido_se_valores_vazio()
         {
             //arrange
             var nome = new Nome("", "");
@@ -41,8 +41,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nome.ValidationResult.IsValid.Should().BeFalse();
             nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Primeiro Nome Vazio"] = "O primeiro nome não pode ser em branco.",
-                ["Sobrenome Vazio"] = "O sobrenome não pode ser em branco."
+                ["Primeiro Nome Vazio"] = "O primeiro nome não pode ser vazio.",
+                ["Sobrenome Vazio"] = "O sobrenome não pode ser vazio."
             });
         }
 

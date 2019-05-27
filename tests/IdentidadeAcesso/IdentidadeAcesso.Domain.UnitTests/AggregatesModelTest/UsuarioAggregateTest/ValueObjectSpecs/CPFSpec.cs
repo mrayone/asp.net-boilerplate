@@ -50,6 +50,22 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             cpf2.ValidationResult.Erros.Should().Contain(cpfBranco);
         }
 
+        [Fact(DisplayName = "Deve retornar erro se CPF ultrapassar onze dígitos")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornar_erro_se_cpf_ultrapassar_onze_digitos()
+        {
+            var cpf = new CPF("1111.111.111-55");
+            var cpf2 = new CPF("111111111155");
+
+            var cpfErro = new Dictionary<string, string>()
+            {
+                ["CPF Excedeu Digitos"] = "O CPF não pode possuir mais de 11 digitos."
+            };
+
+            cpf.ValidationResult.Erros.Should().Contain(cpfErro);
+            cpf2.ValidationResult.Erros.Should().Contain(cpfErro);
+        }
+
         [Fact(DisplayName = "Deve retornar um CPF somente com os digitos se houver mascara")]
         [Trait("Value Object", "CPF")]
         public void deve_retornar_um_cpf_somente_com_digitos_se_houver_mascara()
@@ -96,6 +112,20 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             cpf1Mask.Should().Be(cpf1Mask);
         }
 
+
+        [Fact(DisplayName = "Deve retornar erro se CPF for inválido")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornar_erro_se_cpf_for_invalido()
+        {
+            var cpf = new CPF("111.111.111-55");
+
+            var cpfErro = new Dictionary<string, string>()
+            {
+                ["CPF Inválido"] = "O CPF informado é inválido."
+            };
+
+            cpf.ValidationResult.Erros.Should().Contain(cpfErro);
+        }
 
         [Trait("Value Object", "CPF")]
         [Theory(DisplayName = "Deve validar CPF(s) com e sem mascara")]

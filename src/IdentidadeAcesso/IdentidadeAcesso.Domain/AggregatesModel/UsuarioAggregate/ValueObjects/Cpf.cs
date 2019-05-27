@@ -36,6 +36,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 return;
             }
 
+            if (CPF.LimparFormatacaoCPF(Digitos).Length > MaxDigitos)
+            {
+                ValidationResult.AdicionarErro("CPF Excedeu Digitos", "O CPF não pode possuir mais de 11 digitos.");
+                return;
+            }
+
             if (!CPFValido())
             {
                 ValidationResult.AdicionarErro("CPF Inválido", "O CPF informado é inválido.");
@@ -133,8 +139,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             return new CPF(cpfLimpo);
         }
-
-        //TODO: Implementar obter um cpf com a mascara.
 
         protected override bool EqualsCore(CPF other)
         {

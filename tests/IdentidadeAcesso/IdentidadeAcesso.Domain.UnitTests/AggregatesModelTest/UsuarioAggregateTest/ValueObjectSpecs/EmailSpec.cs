@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
             email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Email Vazio"] = "O email não pode estar em branco."
+                ["Email Vazio"] = "O email não pode estar vazio."
             });
         }
 

@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (Endereco == String.Empty)
             {
-                ValidationResult.AdicionarErro("Email Vazio", "O email não pode estar em branco.");
+                ValidationResult.AdicionarErro("Email Vazio", "O email não pode estar vazio.");
                 return;
             }
 
