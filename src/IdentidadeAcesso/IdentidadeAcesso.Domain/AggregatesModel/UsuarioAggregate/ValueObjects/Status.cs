@@ -22,7 +22,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if (!Equals(Status.Ativo) || !Equals(Status.Inativo))
             {
-                ValidationResult.AdicionarErro("Valor Inválido", "O status só pode ser definido como 'Ativo' ou 'Inativo'.");
+                ValidationResult.AdicionarErro("Status Inválido", "O status só pode ser definido como 'Ativo' ou 'Inativo'.");
             }
         }
     }

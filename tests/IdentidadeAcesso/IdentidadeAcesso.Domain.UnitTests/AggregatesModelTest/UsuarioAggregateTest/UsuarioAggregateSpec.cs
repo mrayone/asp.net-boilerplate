@@ -7,6 +7,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class UsuarioAggregateTest
     {
-
+        //TODO: Escrever testes para utilizar os V.O
     }
 }
