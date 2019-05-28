@@ -13,6 +13,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Sexo Sexo { get; private set; }
         public Email Email { get; private set; }
         public CPF CPF { get; private set; }
+        //TODO: Criar propriedade data de nascimento
         public Telefone Telefone { get; private set; }
         public Celular Celular { get; private set; }
         public Status Ativo { get; private set; }

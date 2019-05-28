@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using IdentidadeAcesso.Domain.SeedOfWork;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
@@ -6,6 +7,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
     public class Telefone : ValueObject<Telefone>
     {
         private const int MaxNumeros = 13;
+        private const string Pattern = @"(\+\d{2})+(\d{10})";
         public string Numero { get; private set; }
         public Telefone(string numero)
         {
@@ -22,19 +24,25 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if(Numero == null)
             {
-                ValidationResult.AdicionarErro("Número Nulo", "O número não pode ser nulo.");
+                ValidationResult.AdicionarErro("Telefone Nulo", "O telefone não pode ser nulo.");
                 return;
             }
 
             if(Numero == String.Empty)
             {
-                ValidationResult.AdicionarErro("Número Vazio", "O número não pode ser vazio.");
+                ValidationResult.AdicionarErro("Telefone Vazio", "O telefone não pode ser vazio.");
                 return;
             }
 
             if (Numero.Length > MaxNumeros)
             {
-                ValidationResult.AdicionarErro("Número Tamanho Inválido", "O número não pode ser exceder 13 caracteres.");
+                ValidationResult.AdicionarErro("Telefone Tamanho Inválido", "O telefone não pode exceder 13 caracteres.");
+                return;
+            }
+
+            if (!Regex.IsMatch(Numero, Pattern ))
+            {
+                ValidationResult.AdicionarErro("Telefone Inválido", "O telefone com formato inválido.");
                 return;
             }
         }
