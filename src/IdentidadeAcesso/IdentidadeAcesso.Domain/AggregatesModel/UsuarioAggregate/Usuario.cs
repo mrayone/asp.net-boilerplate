@@ -16,11 +16,27 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public DataDeNascimento DataDeNascimento { get; private set; }
         public Telefone Telefone { get; private set; }
         public Celular Celular { get; private set; }
-        public Status Ativo { get; private set; }
+        public Status Status { get; private set; }
+        public Endereco Endereco { get; private set; }
+        public Guid? PerfilId { get; private set; }
 
-        public Usuario()
+
+        protected Usuario()
         {
             Id = Guid.NewGuid();
+            Status = Status.Ativo;
+        }
+
+        public Usuario(Nome nome, Sexo sexo, Email email, CPF cpf, 
+            DataDeNascimento dataDeNascimento, Guid? perfilId)
+            : this()
+        {
+            Nome = nome;
+            Sexo = sexo;
+            Email = email;
+            CPF = cpf;
+            DataDeNascimento = dataDeNascimento;
+            PerfilId = perfilId;
         }
     }
 }
