@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="AggregatesModelTest\PerfilAggregateTest\" />
     <Folder Include="AggregatesModelTest\PermissaoAggregateTest\" />
-    <Folder Include="Builders\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //assert
 
             endereco.ValidationResult.IsValid.Should().BeFalse();
-            endereco.ValidationResult.Erros.Should().HaveCount(6);
+            endereco.ValidationResult.Erros.Should().HaveCount(7);
         }
 
         [Fact(DisplayName = "Deve validar o estado em branco do objeto")]
@@ -49,18 +49,19 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
                 ["Estado Nulo"] = "O estado não pode ser nulo.",
                 ["Bairro Nulo"] = "O bairro não pode ser nulo.",
                 ["Numero Nulo"] = "O numero não pode ser nulo.",
+                ["Complemento Nulo"] = "O complemento não pode ser nulo.",
                 ["Logradouro Nulo"] = "O logradouro não pode ser nulo."
             };
 
             endereco.ValidationResult.Erros.Should().Contain(dict);
-            endereco.ValidationResult.Erros.Should().HaveCount(6);
+            endereco.ValidationResult.Erros.Should().HaveCount(7);
         }
 
         [Fact(DisplayName = "Deve conter mensagem de erro se vazio")]
         [Trait("Value Object", "Endereço")]
         public void deve_conter_mensagem_de_erro_se_vazio()
         {
-            var endereco = new Endereco("", "", null, "", "", "", "");
+            var endereco = new Endereco("", "", "", "", "", "");
             var dict = new Dictionary<string, string>()
             {
                 ["Cidade Vazio"] = "A cidade não pode ser vazia.",
@@ -79,8 +80,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         [Trait("Value Object", "Endereço")]
         public void deve_garantir_que_dois_enderecos_com_os_mesmos_dados_sejam_o_mesmo_objeto()
         {
-            var endereco = new Endereco("Rua Bla bla", "E489", null, "Vila Santa", "19480400", "Seilandia", "SL");
-            var endereco2 = new Endereco("Rua Bla bla", "E489", null, "Vila Santa", "19480400", "Seilandia", "SL");
+            var endereco = new Endereco("Rua Bla bla", "E489", "Vila Santa", "19480400", "Seilandia", "SL");
+            var endereco2 = new Endereco("Rua Bla bla", "E489", "Vila Santa", "19480400", "Seilandia", "SL");
 
             endereco.Should().Be(endereco2);
         }

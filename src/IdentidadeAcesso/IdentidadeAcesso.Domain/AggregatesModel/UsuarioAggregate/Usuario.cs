@@ -3,6 +3,7 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
@@ -18,8 +19,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Celular Celular { get; private set; }
         public Status Status { get; private set; }
         public Endereco Endereco { get; private set; }
-        public Guid? PerfilId { get; private set; }
+        public Guid PerfilId { get; private set; }
 
+        public Dictionary<string, IReadOnlyDictionary<string, string>> Erros { get; private set; }
 
         protected Usuario()
         {
@@ -27,8 +29,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Status = Status.Ativo;
         }
 
-        public Usuario(Nome nome, Sexo sexo, Email email, CPF cpf, 
-            DataDeNascimento dataDeNascimento, Guid? perfilId)
+        public Usuario(Nome nome, Sexo sexo, Email email, CPF cpf,
+            DataDeNascimento dataDeNascimento, Guid perfilId)
             : this()
         {
             Nome = nome;
@@ -37,6 +39,24 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             CPF = cpf;
             DataDeNascimento = dataDeNascimento;
             PerfilId = perfilId;
+
+            Erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
+
+            Validar();
+        }
+
+        private void Validar()
+        {
+            Erros.AddIfNotNullOrEmpty("Nome", Nome.ValidationResult.Erros);
+            Erros.AddIfNotNullOrEmpty("Sexo", Sexo.ValidationResult.Erros);
+            Erros.AddIfNotNullOrEmpty("Email", Email.ValidationResult.Erros);
+            Erros.AddIfNotNullOrEmpty("CPF", CPF.ValidationResult.Erros);
+            Erros.AddIfNotNullOrEmpty("DataDeNascimento", DataDeNascimento.ValidationResult.Erros);
+        }
+
+        public bool EhValido()
+        {
+            return !Erros.Any();
         }
     }
 }

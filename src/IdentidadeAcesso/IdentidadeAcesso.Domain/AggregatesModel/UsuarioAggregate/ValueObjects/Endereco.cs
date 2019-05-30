@@ -14,8 +14,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public string Estado { get; private set; }
 
-        public Endereco(string logradouro, string numero, string complemento, 
-            string bairro, string cep, string cidade, string estado)
+        public Endereco(string logradouro, string numero, 
+            string bairro, string cep, string cidade, string estado, string complemento = "")
         {
             Logradouro = logradouro;
             Numero = numero;
@@ -86,7 +86,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarComplemento()
         {
-           //TODO: Qual validação é mais interessante aqui?
+            if (Complemento == null)
+            {
+                ValidationResult.AdicionarErro("Complemento Nulo", "O complemento não pode ser nulo.");
+                return;
+            }
         }
 
         private void ValidarBairro()
@@ -141,7 +145,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 && Complemento.Equals(other.Complemento)
                 && Bairro.Equals(other.Bairro)
                 && CEP.Equals(other.CEP)
-                && Cidade.Equals(other.Cidade);
+                && Cidade.Equals(other.Cidade)
+                && Estado.Equals(other.Estado);
         }
 
         protected override int GetHashCodeCore()
@@ -154,6 +159,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 hash += (Bairro.GetHashCode() * 907) ^ Bairro.GetHashCode();
                 hash += (CEP.GetHashCode() * 907) ^ CEP.GetHashCode();
                 hash += (Cidade.GetHashCode() * 907) ^ Cidade.GetHashCode();
+                hash += (Estado.GetHashCode() * 907) ^ Estado.GetHashCode();
 
                 return hash;
             }
