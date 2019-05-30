@@ -84,7 +84,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var tel = new Telefone(numero);
             var dict = new Dictionary<string, string>()
             {
-                ["Telefone Inválido"] = "O telefone com formato inválido.",
+                ["Telefone Inválido"] = "Telefone com formato inválido.",
             };
 
             tel.ValidationResult.IsValid.Should().Be(isValid);

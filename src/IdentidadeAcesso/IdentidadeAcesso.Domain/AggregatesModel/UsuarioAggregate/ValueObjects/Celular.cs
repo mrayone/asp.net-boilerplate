@@ -43,7 +43,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!Regex.IsMatch(Numero, Pattern))
             {
-                ValidationResult.AdicionarErro("Celular Inválido", "O celular com formato inválido.");
+                ValidationResult.AdicionarErro("Celular Inválido", "Celular com formato inválido.");
                 return;
             }
         }

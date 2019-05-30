@@ -58,5 +58,43 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         {
             return !Erros.Any();
         }
+
+        public void AdicionarEndereco(Endereco endereco)
+        {
+            Erros.AddIfNotNullOrEmpty("Endereco", endereco.ValidationResult.Erros);
+
+            if (EhValido())
+            {
+                Endereco = endereco;
+            }
+        }
+
+        public void AdicionarTelefone(Telefone telefone)
+        {
+            Erros.AddIfNotNullOrEmpty("Telefone", telefone.ValidationResult.Erros);
+            if (EhValido())
+            {
+                Telefone = telefone;
+            }
+        }
+
+        public void AdicionarCelular(Celular celular)
+        {
+            Erros.AddIfNotNullOrEmpty("Celular", celular.ValidationResult.Erros);
+            if (EhValido())
+            {
+                Celular = celular;
+            }
+        }
+
+        public void Deletar()
+        {
+            //TODO: Logica para deletar usuário, atualmente será softdelete.
+            //Apenas sera desativado.
+            if(Status.Equals(Status.Ativo))
+            {
+                Status = Status.Inativo;
+            }
+        }
     }
 }

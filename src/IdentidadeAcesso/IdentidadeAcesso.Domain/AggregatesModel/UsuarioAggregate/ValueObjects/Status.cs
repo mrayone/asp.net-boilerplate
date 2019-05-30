@@ -20,10 +20,31 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void Validar()
         {
-            if (!Equals(Status.Ativo) || !Equals(Status.Inativo))
+            if (ValidarAtivo())
             {
-                ValidationResult.AdicionarErro("Status Inválido", "O status só pode ser definido como 'Ativo' ou 'Inativo'.");
+                return;
             }
+
+            if (ValidarInativo())
+            {
+                return;
+            }
+
+            if (!ValidarAtivo() || !ValidarInativo())
+            {
+                ValidationResult.AdicionarErro("Status Inválido", "O status deve ser definido como 'Ativo' ou 'Inativo'.");
+                return;
+            }
+        }
+
+        private bool ValidarAtivo()
+        {
+            return (Id.Equals("A") && Nome.Equals(nameof(Ativo).ToLowerInvariant()));
+        }
+
+        private bool ValidarInativo()
+        {
+            return (Id.Equals("I") && Nome.Equals(nameof(Inativo).ToLowerInvariant()));
         }
     }
 }

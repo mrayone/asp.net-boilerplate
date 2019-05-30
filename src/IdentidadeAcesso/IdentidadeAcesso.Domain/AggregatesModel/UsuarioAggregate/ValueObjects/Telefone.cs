@@ -42,7 +42,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!Regex.IsMatch(Numero, Pattern ))
             {
-                ValidationResult.AdicionarErro("Telefone Inválido", "O telefone com formato inválido.");
+                ValidationResult.AdicionarErro("Telefone Inválido", "Telefone com formato inválido.");
                 return;
             }
         }

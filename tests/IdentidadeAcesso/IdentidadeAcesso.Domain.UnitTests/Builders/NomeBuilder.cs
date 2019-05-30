@@ -7,12 +7,12 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders
     {
         public static Nome ObterNomeInvalido()
         {
-            return new Nome("Maycon", null);
+            return new Nome("Fake User", null);
         }
 
         public static Nome ObterNomeValido()
         {
-            return new Nome("Maycon", "Rodrigues Xavier");
+            return new Nome("Fake", "Usuario Fake");
         }
     }
 }

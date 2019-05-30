@@ -17,5 +17,25 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
             return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
         }
+
+        public static Usuario ObterUsuarioParcialmenteInvalido()
+        {
+            var nome = NomeBuilder.ObterNomeValido();
+            var email = EmailBuilder.ObterEmailValido();
+            var sexo = SexoBuilder.ObterSexoInvalido();
+            var cpf = CPFBuilder.ObterCPFInvalido();
+            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
+            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
+        }
+
+        public static Usuario ObterUsuarioValido()
+        {
+            var nome = NomeBuilder.ObterNomeValido();
+            var email = EmailBuilder.ObterEmailValido();
+            var sexo = SexoBuilder.ObterSexoValido();
+            var cpf = CPFBuilder.ObterCPFValido();
+            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
+            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
+        }
     }
 }

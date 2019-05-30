@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //assert
             status.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Status Inválido"] = "O status só pode ser definido como 'Ativo' ou 'Inativo'."
+                ["Status Inválido"] = "O status deve ser definido como 'Ativo' ou 'Inativo'."
             });
         }
 
@@ -50,17 +50,33 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
             inativo.Should().Be(Status.Inativo);
             ativo.Should().Be(Status.Ativo);
+
+            ativo.ValidationResult.IsValid.Should().BeTrue();
+            inativo.ValidationResult.IsValid.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Deve validar se valores são diferentes")]
+        [Trait("Value Object", "Status")]
+        public void deve_validar_se_valores_sao_diferentes()
+        {
+            var ativo = Status.Ativo;
+            var inativo = Status.Inativo;
+
+            inativo.Should().NotBe(ativo);
         }
 
         [Fact(DisplayName = "Deve retornar verdadeiro para valores iguais quando setados manualmente.")]
         [Trait("Value Object", "Status")]
         public void deve_retornar_verdadeiro_para_valores_iguais_quando_setados_manualmente()
         {
-            var ativo = new Status("A", "Ativo");
-            var inativo = new Status("I", "Inativo");
+            var ativo = new Status("A", "ativo");
+            var inativo = new Status("I", "inativo");
 
             inativo.Should().Be(Status.Inativo);
             ativo.Should().Be(Status.Ativo);
+
+            ativo.ValidationResult.IsValid.Should().BeTrue();
+            inativo.ValidationResult.IsValid.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Deve retornar erro se definido valores brancos")]

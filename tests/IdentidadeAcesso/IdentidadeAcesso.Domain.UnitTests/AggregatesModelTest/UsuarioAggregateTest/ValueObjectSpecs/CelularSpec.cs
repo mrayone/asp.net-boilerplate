@@ -86,7 +86,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var cel = new Celular(numero);
             var dict = new Dictionary<string, string>()
             {
-                ["Celular Inválido"] = "O celular com formato inválido.",
+                ["Celular Inválido"] = "Celular com formato inválido.",
             };
 
             cel.ValidationResult.IsValid.Should().Be(isValid);

@@ -9,5 +9,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders
         {
             return new CPF("334.445.668-13");
         }
+
+        public static CPF ObterCPFValido()
+        {
+            return new CPF("50103965050");
+        }
     }
 }

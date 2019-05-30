@@ -9,5 +9,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders
         {
             return new Email("js*@proseware.com");
         }
+
+        public static Email ObterEmailValido()
+        {
+            return new Email("maycon.rayone@gmail.com");
+        }
     }
 }

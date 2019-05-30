@@ -9,5 +9,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders
         {
             return new Sexo("R", "Retângulo");
         }
+
+        public static Sexo ObterSexoValido()
+        {
+            return Sexo.Masculino;
+        }
     }
 }
