@@ -14,7 +14,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         private List<Permissao> _permissoes;
 
-        public Identifacao Identifacao { get; private set; }
+        public Identificacao Identifacao { get; private set; }
         public Dictionary<string, IReadOnlyDictionary<string, string>> Erros { get; private set; }
         public IReadOnlyCollection<Permissao> Permissoes => _permissoes;
 
@@ -23,7 +23,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             Id = Guid.NewGuid();
         }
 
-        public Perfil(Identifacao identificacao) : this()
+        public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
             _permissoes = new List<Permissao>();
