@@ -1,6 +1,6 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 
-namespace IdentidadeAcesso.Domain.UnitTests.Builders
+namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
     public class EnderecoBuilder
     {

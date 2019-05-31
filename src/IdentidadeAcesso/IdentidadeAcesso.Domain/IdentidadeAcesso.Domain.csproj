@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AggregatesModel\PermissaoAggregate\" />
-    <Folder Include="AggregatesModel\PerfilAggregate\" />
+    <Compile Remove="AggregatesModel\PermissaoAggregate\**" />
+    <EmbeddedResource Remove="AggregatesModel\PermissaoAggregate\**" />
+    <None Remove="AggregatesModel\PermissaoAggregate\**" />
   </ItemGroup>
 
 </Project>

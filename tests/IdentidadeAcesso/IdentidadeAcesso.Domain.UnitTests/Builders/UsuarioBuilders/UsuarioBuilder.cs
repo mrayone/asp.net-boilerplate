@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace IdentidadeAcesso.Domain.UnitTests.Builders
+namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
     public abstract class UsuarioBuilder
     {
