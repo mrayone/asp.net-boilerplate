@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using static IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario;
 
 namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
@@ -36,6 +37,21 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
             return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
+        }
+
+        public static Usuario ObterUsuarioCompletoValido()
+        {
+            var nome = NomeBuilder.ObterNomeValido();
+            var email = EmailBuilder.ObterEmailValido();
+            var sexo = SexoBuilder.ObterSexoValido();
+            var cpf = CPFBuilder.ObterCPFValido();
+            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
+            var celular = CelularBuilder.ObterCelularValido();
+            var telefone = TelefoneBuilder.ObterTelefoneValido();
+            var endereco = EnderecoBuilder.ObterEnderecoValido();
+
+            return UsuarioFactory.CriarUsuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid(),celular,
+                telefone, endereco);
         }
     }
 }

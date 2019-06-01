@@ -10,6 +10,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 {
     public class Usuario : Entity, IAggregateRoot
     {
+        private Dictionary<string, IReadOnlyDictionary<string, string>> _erros;
+
         public NomeCompleto Nome { get; private set; }
         public Sexo Sexo { get; private set; }
         public Email Email { get; private set; }
@@ -21,79 +23,91 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Endereco Endereco { get; private set; }
         public Guid PerfilId { get; private set; }
 
-        public Dictionary<string, IReadOnlyDictionary<string, string>> Erros { get; private set; }
+        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Erros => _erros;
 
         protected Usuario()
         {
-            Id = Guid.NewGuid();
-            Status = Status.Ativo;
+            _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
         }
 
         public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
             DataDeNascimento dataDeNascimento, Guid perfilId)
             : this()
         {
+
+            Id = Guid.NewGuid();
+            Status = Status.Ativo;
+
             Nome = nome;
             Sexo = sexo;
             Email = email;
             CPF = cpf;
             DataDeNascimento = dataDeNascimento;
             PerfilId = perfilId;
-
-            Erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
-
-            Validar();
         }
 
         private void Validar()
         {
-            Erros.AddIfNotNullOrEmpty("Nome", Nome.ValidationResult.Erros);
-            Erros.AddIfNotNullOrEmpty("Sexo", Sexo.ValidationResult.Erros);
-            Erros.AddIfNotNullOrEmpty("Email", Email.ValidationResult.Erros);
-            Erros.AddIfNotNullOrEmpty("CPF", CPF.ValidationResult.Erros);
-            Erros.AddIfNotNullOrEmpty("DataDeNascimento", DataDeNascimento.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("Nome", Nome.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("Sexo", Sexo.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("Email", Email.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("CPF", CPF.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("DataDeNascimento", DataDeNascimento.ValidationResult.Erros);
         }
 
         public bool EhValido()
         {
-            return !Erros.Any();
+            Validar();
+            return !_erros.Any();
         }
 
         public void AdicionarEndereco(Endereco endereco)
         {
-            Erros.AddIfNotNullOrEmpty("Endereco", endereco.ValidationResult.Erros);
+            _erros.AddIfNotNullOrEmpty("Endereco", endereco.ValidationResult.Erros);
 
-            if (EhValido())
-            {
-                Endereco = endereco;
-            }
+            if (!EhValido()) return;
+
+            Endereco = endereco;
         }
 
         public void AdicionarTelefone(Telefone telefone)
         {
-            Erros.AddIfNotNullOrEmpty("Telefone", telefone.ValidationResult.Erros);
-            if (EhValido())
-            {
-                Telefone = telefone;
-            }
+            _erros.AddIfNotNullOrEmpty("Telefone", telefone.ValidationResult.Erros);
+            if (!EhValido()) return;
+
+            Telefone = telefone;
         }
 
         public void AdicionarCelular(Celular celular)
         {
-            Erros.AddIfNotNullOrEmpty("Celular", celular.ValidationResult.Erros);
-            if (EhValido())
-            {
-                Celular = celular;
-            }
+            _erros.AddIfNotNullOrEmpty("Celular", celular.ValidationResult.Erros);
+            if (!EhValido()) return;
+            Celular = celular;
         }
 
         public void Deletar()
         {
             //TODO: Logica para deletar usuário, atualmente será softdelete.
             //Apenas sera desativado.
-            if(Status.Equals(Status.Ativo))
+            if (Status.Equals(Status.Ativo))
             {
                 Status = Status.Inativo;
+            }
+        }
+
+        public static class UsuarioFactory
+        {
+            public static Usuario CriarUsuario(NomeCompleto nome, Sexo sexo, Email email,
+                CPF cpf, DataDeNascimento dataDeNascimento,
+                Guid perfilId, Celular celular, Telefone telefone, Endereco endereco)
+            {
+                var usuario = new Usuario(nome, sexo, email, cpf, dataDeNascimento, perfilId);
+
+                usuario.AdicionarTelefone(telefone);
+                usuario.AdicionarCelular(celular);
+                usuario.AdicionarEndereco(endereco);
+
+                return usuario;
             }
         }
     }

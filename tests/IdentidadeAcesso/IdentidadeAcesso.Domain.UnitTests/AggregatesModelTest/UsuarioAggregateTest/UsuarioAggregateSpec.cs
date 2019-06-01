@@ -176,15 +176,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_validar_um_usuario_preenchido_completamente()
         {
             //arr
-            var usuario = UsuarioBuilder.ObterUsuarioValido();
-            var celular = CelularBuilder.ObterCelularValido();
-            var telefone = TelefoneBuilder.ObterTelefoneValido();
-            var endereco = EnderecoBuilder.ObterEnderecoValido();
+            var usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
 
             //act
-            usuario.AdicionarTelefone(telefone);
-            usuario.AdicionarCelular(celular);
-            usuario.AdicionarEndereco(endereco);
 
             var valido = usuario.EhValido();
             //assert

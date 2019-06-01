@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
     public class Permissao : Entity, IAggregateRoot
     {
         
-        public Atribuicao Atributo { get; private set; }
+        public Atribuicao Atribuicao { get; private set; }
 
         public Dictionary<string, IReadOnlyDictionary<string, string>> _erros;
 
@@ -22,13 +22,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
             _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
         }
 
-        private Permissao(Atribuicao atribuicao) : this() { }
-
-        public Permissao CriarPermissao(Atribuicao atribuicao)
+        public Permissao(Atribuicao atribuicao) : this()
         {
-            //TODO: Lógica de Validação
-
-            return new Permissao(atribuicao);
+            Atribuicao = atribuicao;
         }
     }
 }
