@@ -12,11 +12,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         //TODO: Perfis não podem ser deletados se houver permissões registradas.
         //
 
-        private List<Permissao> _permissoes;
+        private List<PerfilPermissao> _permissoes;
 
         public Identificacao Identifacao { get; private set; }
         public Dictionary<string, IReadOnlyDictionary<string, string>> Erros { get; private set; }
-        public IReadOnlyCollection<Permissao> Permissoes => _permissoes;
+        public IReadOnlyCollection<PerfilPermissao> Permissoes => _permissoes;
 
         protected Perfil()
         {
@@ -26,7 +26,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
-            _permissoes = new List<Permissao>();
+            _permissoes = new List<PerfilPermissao>();
             Validar();
         }
 
