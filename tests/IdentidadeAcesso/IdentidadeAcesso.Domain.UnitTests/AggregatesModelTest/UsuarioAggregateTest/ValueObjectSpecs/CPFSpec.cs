@@ -36,18 +36,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var cpf = new CPF(null);
             var cpf2 = new CPF("");
 
-            var cpfNulo = new Dictionary<string, string>()
+            var cpfNuloBranco = new Dictionary<string, string>()
             {
-                ["CPF Nulo"] = "O CPF não pode ser nulo."
+                ["CPF Nulo/Vazio"] =  "O CPF deve ser fornecido."
             };
 
-            var cpfBranco = new Dictionary<string, string>()
-            {
-                ["CPF Vazio"] = "O CPF não pode ser vazio.",
-            };
-
-            cpf.ValidationResult.Erros.Should().Contain(cpfNulo);
-            cpf2.ValidationResult.Erros.Should().Contain(cpfBranco);
+            cpf.ValidationResult.Erros.Should().Contain(cpfNuloBranco);
+            cpf2.ValidationResult.Erros.Should().Contain(cpfNuloBranco);
         }
 
         [Fact(DisplayName = "Deve retornar erro se CPF ultrapassar onze dígitos")]

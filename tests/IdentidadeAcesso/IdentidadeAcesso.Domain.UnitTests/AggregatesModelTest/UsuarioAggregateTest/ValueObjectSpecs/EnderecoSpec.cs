@@ -44,13 +44,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var endereco = new Endereco(null, null, null, null, null, null, null);
             var dict = new Dictionary<string, string>()
             {
-                ["Cidade Nula"] = "A cidade não pode ser nulo.",
-                ["CEP Nulo"] = "O cep não pode ser nulo.",
-                ["Estado Nulo"] = "O estado não pode ser nulo.",
-                ["Bairro Nulo"] = "O bairro não pode ser nulo.",
-                ["Numero Nulo"] = "O numero não pode ser nulo.",
+                ["Cidade Nulo/Vazio"] = "A cidade deve ser fornecida.",
+                ["CEP Nulo/Vazio"] = "O cep deve ser fornecido.",
+                ["Estado Nulo/Vazio"] = "O estado deve ser fornecido.",
+                ["Bairro Nulo/Vazio"] = "O bairro deve ser fornecido.",
+                ["Numero Nulo/Vazio"] = "O numero deve ser fornecido.",
                 ["Complemento Nulo"] = "O complemento não pode ser nulo.",
-                ["Logradouro Nulo"] = "O logradouro não pode ser nulo."
+                ["Logradouro Nulo/Vazio"] = "O logradouro deve ser fornecido."
             };
 
             endereco.ValidationResult.Erros.Should().Contain(dict);
@@ -64,12 +64,12 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var endereco = new Endereco("", "", "", "", "", "");
             var dict = new Dictionary<string, string>()
             {
-                ["Cidade Vazio"] = "A cidade não pode ser vazia.",
-                ["CEP Vazio"] = "O cep não pode ser vazio.",
-                ["Estado Vazio"] = "O estado não pode ser vazio.",
-                ["Bairro Vazio"] = "O bairro não pode ser vazio.",
-                ["Numero Vazio"] = "O numero não pode ser vazio.",
-                ["Logradouro Vazio"] = "O logradouro não pode ser vazio."
+                ["Cidade Nulo/Vazio"] = "A cidade deve ser fornecida.",
+                ["CEP Nulo/Vazio"] = "O cep deve ser fornecido.",
+                ["Estado Nulo/Vazio"] = "O estado deve ser fornecido.",
+                ["Bairro Nulo/Vazio"] = "O bairro deve ser fornecido.",
+                ["Numero Nulo/Vazio"] = "O numero deve ser fornecido.",
+                ["Logradouro Nulo/Vazio"] = "O logradouro deve ser fornecido."
             };
 
             endereco.ValidationResult.Erros.Should().Contain(dict);

@@ -5,14 +5,14 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
     public class NomeBuilder
     {
-        public static Nome ObterNomeInvalido()
+        public static NomeCompleto ObterNomeInvalido()
         {
-            return new Nome("Fake User", null);
+            return new NomeCompleto("Fake User", null);
         }
 
-        public static Nome ObterNomeValido()
+        public static NomeCompleto ObterNomeValido()
         {
-            return new Nome("Fake", "Usuario Fake");
+            return new NomeCompleto("Fake", "Usuario Fake");
         }
     }
 }

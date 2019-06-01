@@ -23,15 +23,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarNumero()
         {
-            if (Numero == null)
+            if (string.IsNullOrEmpty(Numero))
             {
-                ValidationResult.AdicionarErro("Celular Nulo", "O celular não pode ser nulo.");
-                return;
-            }
-
-            if (Numero == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Celular Vazio", "O celular não pode ser vazio.");
+                ValidationResult.AdicionarErro("Celular Vazio/Nulo", "O celular precisa ser fornecido.");
                 return;
             }
 

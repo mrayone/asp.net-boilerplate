@@ -19,7 +19,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
             email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Email Nulo"] = "O email não pode ser nulo."
+                ["Email Nulo/Vazio"] = "O email deve ser fornecido."
             });
         }
 
@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
             email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Email Vazio"] = "O email não pode estar vazio."
+                ["Email Nulo/Vazio"] = "O email deve ser fornecido."
             });
         }
 

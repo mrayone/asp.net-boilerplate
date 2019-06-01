@@ -41,45 +41,27 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarEstado()
         {
-            if (Estado == null)
+            if (string.IsNullOrEmpty(Estado))
             {
-                ValidationResult.AdicionarErro("Estado Nulo", "O estado não pode ser nulo.");
-                return;
-            }
-
-            if (Estado == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Estado Vazio", "O estado não pode ser vazio.");
+                ValidationResult.AdicionarErro("Estado Nulo/Vazio", "O estado deve ser fornecido.");
                 return;
             }
         }
 
         private void ValidarCidade()
         {
-            if (Cidade == null)
+            if (string.IsNullOrEmpty(Cidade))
             {
-                ValidationResult.AdicionarErro("Cidade Nula", "A cidade não pode ser nulo.");
-                return;
-            }
-
-            if (Cidade == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Cidade Vazio", "A cidade não pode ser vazia.");
+                ValidationResult.AdicionarErro("Cidade Nulo/Vazio", "A cidade deve ser fornecida.");
                 return;
             }
         }
 
         private void ValidarCEP()
         {
-            if (CEP == null)
+            if (string.IsNullOrEmpty(CEP))
             {
-                ValidationResult.AdicionarErro("CEP Nulo", "O cep não pode ser nulo.");
-                return;
-            }
-
-            if (CEP == String.Empty)
-            {
-                ValidationResult.AdicionarErro("CEP Vazio", "O cep não pode ser vazio.");
+                ValidationResult.AdicionarErro("CEP Nulo/Vazio", "O cep deve ser fornecido.");
                 return;
             }
         }
@@ -95,45 +77,27 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarBairro()
         {
-            if (Bairro == null)
+            if (string.IsNullOrEmpty(Bairro))
             {
-                ValidationResult.AdicionarErro("Bairro Nulo", "O bairro não pode ser nulo.");
-                return;
-            }
-
-            if (Bairro == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Bairro Vazio", "O bairro não pode ser vazio.");
+                ValidationResult.AdicionarErro("Bairro Nulo/Vazio", "O bairro deve ser fornecido.");
                 return;
             }
         }
 
         private void ValidarNumero()
         {
-            if (Numero == null)
+            if (string.IsNullOrEmpty(Numero))
             {
-                ValidationResult.AdicionarErro("Numero Nulo", "O numero não pode ser nulo.");
-                return;
-            }
-
-            if (Numero == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Numero Vazio", "O numero não pode ser vazio.");
+                ValidationResult.AdicionarErro("Numero Nulo/Vazio", "O numero deve ser fornecido.");
                 return;
             }
         }
 
         private void ValidarLogradouro()
         {
-            if (Logradouro == null)
+            if (string.IsNullOrEmpty(Logradouro))
             {
-                ValidationResult.AdicionarErro("Logradouro Nulo", "O logradouro não pode ser nulo.");
-                return;
-            }
-
-            if (Logradouro == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Logradouro Vazio", "O logradouro não pode ser vazio.");
+                ValidationResult.AdicionarErro("Logradouro Nulo/Vazio", "O logradouro deve ser fornecido.");
                 return;
             }
         }

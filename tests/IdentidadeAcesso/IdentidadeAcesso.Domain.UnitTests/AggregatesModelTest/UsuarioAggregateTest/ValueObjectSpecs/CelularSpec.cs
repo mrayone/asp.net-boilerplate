@@ -40,16 +40,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
             var erros1 = new Dictionary<string, string>()
             {
-                ["Celular Nulo"] = "O celular não pode ser nulo.",
-            };
-
-            var erros2 = new Dictionary<string, string>()
-            {
-                ["Celular Vazio"] = "O celular não pode ser vazio.",
+                ["Celular Vazio/Nulo"] = "O celular precisa ser fornecido.",
             };
 
             celular.ValidationResult.Erros.Should().Contain(erros1);
-            celular2.ValidationResult.Erros.Should().Contain(erros2);
 
             celular.ValidationResult.IsValid.Should().BeFalse();
             celular2.ValidationResult.IsValid.Should().BeFalse();

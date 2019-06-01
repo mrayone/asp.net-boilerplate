@@ -40,18 +40,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var telefone = new Telefone(null);
             var telefone2 = new Telefone("");
 
-            var erros1 = new Dictionary<string, string>()
+            var erros = new Dictionary<string, string>()
             {
-                ["Telefone Nulo"] = "O telefone não pode ser nulo.",
+                ["Telefone Vazio/Nulo"] = "O telefone precisa ser fornecido."
             };
 
-            var erros2 = new Dictionary<string, string>()
-            {
-                ["Telefone Vazio"] = "O telefone não pode ser vazio.",
-            };
-
-            telefone.ValidationResult.Erros.Should().Contain(erros1);
-            telefone2.ValidationResult.Erros.Should().Contain(erros2);
+            telefone.ValidationResult.Erros.Should().Contain(erros);
+            telefone2.ValidationResult.Erros.Should().Contain(erros);
             telefone.ValidationResult.IsValid.Should().BeFalse();
             telefone2.ValidationResult.IsValid.Should().BeFalse();
         }

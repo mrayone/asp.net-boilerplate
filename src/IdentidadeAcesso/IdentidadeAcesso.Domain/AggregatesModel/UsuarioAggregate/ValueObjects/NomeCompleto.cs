@@ -3,13 +3,13 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
-    public class Nome : ValueObject<Nome>
+    public class NomeCompleto : ValueObject<NomeCompleto>
     {
         public readonly string PrimeiroNome;
 
         public readonly string Sobrenome;
 
-        public Nome(string primeiroNome, string sobrenome)
+        public NomeCompleto(string primeiroNome, string sobrenome)
         {
             PrimeiroNome = primeiroNome;
             Sobrenome = sobrenome;
@@ -31,35 +31,25 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         #region Validações
         private void ValidarNome()
         {
-            if (PrimeiroNome == null)
+            if (string.IsNullOrEmpty(PrimeiroNome))
             {
-                ValidationResult.AdicionarErro("Primeiro Nome Nulo", "O primeiro nome não pode ser nulo.");
-                return;
-            }
-            if (PrimeiroNome == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Primeiro Nome Vazio", "O primeiro nome não pode ser vazio.");
+                ValidationResult.AdicionarErro("Primeiro Nome Nulo/Vazio", "O primeiro nome deve ser fornecido.");
                 return;
             }
         }
 
         private void ValidarSobrenome()
         {
-            if (Sobrenome == null)
+            if (string.IsNullOrEmpty(Sobrenome))
             {
-                ValidationResult.AdicionarErro("Sobrenome Nulo", "O sobrenome não pode ser nulo.");
-                return;
-            }
-            if (Sobrenome == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Sobrenome Vazio", "O sobrenome não pode ser vazio.");
+                ValidationResult.AdicionarErro("Sobrenome Nulo/Vazio", "O sobrenome deve ser fornecido.");
                 return;
             }
         }
         #endregion
 
 
-        protected override bool EqualsCore(Nome other)
+        protected override bool EqualsCore(NomeCompleto other)
         {
             return PrimeiroNome.Equals(other.PrimeiroNome)
                 && Sobrenome.Equals(other.Sobrenome);

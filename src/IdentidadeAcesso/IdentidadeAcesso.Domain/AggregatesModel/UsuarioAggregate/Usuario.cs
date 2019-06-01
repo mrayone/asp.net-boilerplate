@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 {
     public class Usuario : Entity, IAggregateRoot
     {
-        public Nome Nome { get; private set; }
+        public NomeCompleto Nome { get; private set; }
         public Sexo Sexo { get; private set; }
         public Email Email { get; private set; }
         public CPF CPF { get; private set; }
@@ -29,7 +29,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Status = Status.Ativo;
         }
 
-        public Usuario(Nome nome, Sexo sexo, Email email, CPF cpf,
+        public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
             DataDeNascimento dataDeNascimento, Guid perfilId)
             : this()
         {

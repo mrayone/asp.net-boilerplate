@@ -24,15 +24,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         #region Validação
         private void ValidarCPF()
         {
-            if(Digitos == null)
+            if(string.IsNullOrEmpty(Digitos))
             {
-                ValidationResult.AdicionarErro("CPF Nulo", "O CPF não pode ser nulo.");
-                return;
-            }
-
-            if (Digitos == String.Empty)
-            {
-                ValidationResult.AdicionarErro("CPF Vazio", "O CPF não pode ser vazio.");
+                ValidationResult.AdicionarErro("CPF Nulo/Vazio", "O CPF deve ser fornecido.");
                 return;
             }
 

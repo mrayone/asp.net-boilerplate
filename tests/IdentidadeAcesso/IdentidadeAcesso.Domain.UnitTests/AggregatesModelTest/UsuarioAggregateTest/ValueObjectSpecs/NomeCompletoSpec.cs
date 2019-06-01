@@ -7,11 +7,11 @@ using Xunit;
 
 namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest.ValueObjectSpecs
 {
-    public class NomeSpec
+    public class NomeCompletoSpec
     {
         private static string NOME = "Maycon Rayone";
         private static string SOBRENOME = "Rodrigues Xavier";
-        public NomeSpec()
+        public NomeCompletoSpec()
         { }
 
         [Fact(DisplayName = "A concatenação de primeiro nome e sobrenome devem formar o nome completo")]
@@ -19,7 +19,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_retornar_o_nome_completo()
         {
             //arrange
-            var nome = new Nome(NOME, SOBRENOME);
+            var nome = new NomeCompleto(NOME, SOBRENOME);
 
             //act
             var nomeCompleto = nome.ObterNomeCompleto();
@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void o_estado_do_nome_deve_ser_invalido_se_valores_vazio()
         {
             //arrange
-            var nome = new Nome("", "");
+            var nome = new NomeCompleto("", "");
             //act
 
             //assert
@@ -41,8 +41,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nome.ValidationResult.IsValid.Should().BeFalse();
             nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Primeiro Nome Vazio"] = "O primeiro nome não pode ser vazio.",
-                ["Sobrenome Vazio"] = "O sobrenome não pode ser vazio."
+                ["Primeiro Nome Nulo/Vazio"] = "O primeiro nome deve ser fornecido.",
+                ["Sobrenome Nulo/Vazio"] = "O sobrenome deve ser fornecido."
             });
         }
 
@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void o_estado_do_nome_deve_ser_invalido_se_valores_nulos()
         {
             //arrange
-            var nome = new Nome(null, null);
+            var nome = new NomeCompleto(null, null);
             //act
 
             //assert
@@ -59,8 +59,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nome.ValidationResult.IsValid.Should().BeFalse();
             nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
             {
-                ["Primeiro Nome Nulo"] = "O primeiro nome não pode ser nulo.",
-                ["Sobrenome Nulo"] = "O sobrenome não pode ser nulo."
+                ["Primeiro Nome Nulo/Vazio"] = "O primeiro nome deve ser fornecido.",
+                ["Sobrenome Nulo/Vazio"] = "O sobrenome deve ser fornecido."
             });
         }
 
@@ -70,7 +70,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void o_estado_do_nome_deve_ser_valido()
         {
             //arrange
-            var nome = new Nome(NOME, SOBRENOME);
+            var nome = new NomeCompleto(NOME, SOBRENOME);
             //act
 
             //assert
@@ -83,8 +83,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_ser_verdadeiro_para_duas_instancias_com_os_mesmos_dados()
         {
             //arrange
-            var nome = new Nome(NOME, SOBRENOME);
-            var nome2 = new Nome(NOME, SOBRENOME);
+            var nome = new NomeCompleto(NOME, SOBRENOME);
+            var nome2 = new NomeCompleto(NOME, SOBRENOME);
             //act
 
             //assert
