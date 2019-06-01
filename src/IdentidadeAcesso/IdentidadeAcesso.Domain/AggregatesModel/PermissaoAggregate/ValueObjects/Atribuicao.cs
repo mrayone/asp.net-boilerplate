@@ -23,7 +23,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
         {
             if (string.IsNullOrEmpty(Valor))
             {
-                ValidationResult.AdicionarErro("","");
+                ValidationResult.AdicionarErro("Atribuição Nula/Vazia", "A atribuição deve ser preenchida.");
             }
         }
 

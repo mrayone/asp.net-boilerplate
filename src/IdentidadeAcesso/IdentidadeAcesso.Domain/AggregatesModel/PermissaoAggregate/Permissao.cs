@@ -3,6 +3,7 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
@@ -20,6 +21,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
         {
             Id = Guid.NewGuid();
             _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
+        }
+
+
+        public bool EhValido()
+        {
+            return !_erros.Any();
         }
 
         public Permissao(Atribuicao atribuicao) : this()
