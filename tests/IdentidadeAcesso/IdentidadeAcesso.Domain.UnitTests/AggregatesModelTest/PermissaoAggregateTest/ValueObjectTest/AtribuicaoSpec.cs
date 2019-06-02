@@ -36,7 +36,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PermissaoAggrega
             var atr2 = AtribuicaoBuilder.ObterAtribuicaoEmBranco();
             var arr = new Dictionary<string, string>()
             {
-                ["Atribuição Nula/Vazia"] = "A atribuição deve ser preenchida."
+                ["Valor Nulo/Vazio"] = "O valor deve ser preenchido.",
+                ["Tipo Nulo/Vazio"] = "O tipo deve ser preenchido.",
+
             };
 
             //act

@@ -1,5 +1,6 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.SeedOfWork;
+using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public void Deletar()
         {
-            //TODO: Logica para deletar usuário, atualmente será softdelete.
+            //TODO: Logica para deletar usuário, atualmente será softdelete (update no banco).
             //Apenas sera desativado.
             if (Status.Equals(Status.Ativo))
             {

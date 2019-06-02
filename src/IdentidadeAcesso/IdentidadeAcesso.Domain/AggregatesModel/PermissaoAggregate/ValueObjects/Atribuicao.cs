@@ -6,10 +6,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
     public class Atribuicao : ValueObject<Atribuicao>
     {
         public string Valor { get; private set; }
+        public string Tipo { get; private set; }
 
-        public Atribuicao(string valor)
+        public Atribuicao(string valor, string tipo)
         {
             Valor = valor;
+            Tipo = tipo;
 
             Validar();
         }
@@ -17,13 +19,22 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
         private void Validar()
         {
             ValidarValor();
+            ValidarTipo();
+        }
+
+        private void ValidarTipo()
+        {
+            if (string.IsNullOrEmpty(Valor))
+            {
+                ValidationResult.AdicionarErro("Tipo Nulo/Vazio", "O tipo deve ser preenchido.");
+            }
         }
 
         private void ValidarValor()
         {
             if (string.IsNullOrEmpty(Valor))
             {
-                ValidationResult.AdicionarErro("Atribuição Nula/Vazia", "A atribuição deve ser preenchida.");
+                ValidationResult.AdicionarErro("Valor Nulo/Vazio", "O valor deve ser preenchido.");
             }
         }
 

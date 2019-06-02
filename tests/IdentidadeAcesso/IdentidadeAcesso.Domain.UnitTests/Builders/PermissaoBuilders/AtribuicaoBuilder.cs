@@ -7,12 +7,12 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PermissaoBuilders
     {
         public static Atribuicao ObterAtribuicaoNula()
         {
-            return new Atribuicao(null);
+            return new Atribuicao(null, null);
         }
 
         public static Atribuicao ObterAtribuicaoEmBranco()
         {
-            return new Atribuicao("");
+            return new Atribuicao("", "");
         }
     }
 }

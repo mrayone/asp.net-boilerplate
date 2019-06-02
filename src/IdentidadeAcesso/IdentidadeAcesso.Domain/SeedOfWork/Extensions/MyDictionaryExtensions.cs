@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
+namespace IdentidadeAcesso.Domain.SeedOfWork.Extensions
 {
     public static class MyDictionaryExtensions
     {
