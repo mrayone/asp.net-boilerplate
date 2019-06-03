@@ -6,7 +6,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
     {
         public static Endereco ObterEnderecoInvalido()
         {
-            return new Endereco("","123x","", null, "", null);
+            return new Endereco("asdsad","123x","wwwe", "adwdw", "111558778", "asdsadw");
         }
 
         public static Endereco ObterEnderecoValido()

@@ -49,7 +49,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         public void DeletarPerfil()
         {
-            if (_permissoes.Any()) throw new IdentidadeAcessoDomainException(nameof(DeletarPerfil));
+            if (_permissoes.Any()) throw new IdentidadeAcessoDomainException("Não é possível deletar um perfil com permissões.");
 
             Status = Status.Inativo;
         }

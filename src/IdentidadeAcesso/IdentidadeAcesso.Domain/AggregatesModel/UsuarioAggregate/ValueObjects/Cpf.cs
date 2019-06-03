@@ -92,7 +92,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         }
         #endregion
 
-        public static string LimparFormatacaoCPF(string cpf)
+        private static string LimparFormatacaoCPF(string cpf)
         {
             if (cpf == null) return null;
             if (cpf == String.Empty) return "";

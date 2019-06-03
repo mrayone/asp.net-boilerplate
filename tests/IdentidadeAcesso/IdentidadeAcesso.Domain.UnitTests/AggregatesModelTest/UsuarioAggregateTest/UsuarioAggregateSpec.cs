@@ -13,6 +13,19 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class UsuarioAggregateTest
     {
+        [Fact(DisplayName = "Deve retonar erros caso estado inválido.")]
+        [Trait("Raiz de Agregação", "Usuário")]
+        public void deve_retornar_erros_caso_estado_invalido()
+        {
+            //arrange
+            var usuario = UsuarioBuilder.ObterUsuarioInvalido();
+            //act
+            var isValid = usuario.EhValido();
+
+            //assert
+            isValid.Should().BeFalse();
+            usuario.Erros.Should().NotBeEmpty();
+        }
 
         [Fact(DisplayName = "Deve marcar status como 'inativo' se o método deletar for invocado")]
         [Trait("Raiz de Agregação", "Usuário")]
@@ -23,9 +36,24 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
             usuario.Deletar();
 
-            usuario.Status.Equals(Status.Inativo);
-            usuario.Status.Id.Equals(Status.Inativo.Id);
-            usuario.Status.Nome.Equals(Status.Inativo.Nome);
+            usuario.Status.Should().Be(Status.Inativo);
+        }
+
+
+        [Fact(DisplayName = "Deve retornar estado falso ao adicionar telefone, endereço e celular inválido.")]
+        [Trait("Raiz de Agregação", "Usuário")]
+        public void deve_retornar_estado_falso_ao_adicionar_telefone_endereco_e_celular_invalido()
+        {
+            var usuario = UsuarioBuilder.ObterUsuarioValido();
+
+            //act
+            usuario.AdicionarCelular(CelularBuilder.ObterCelularInvalido());
+            usuario.AdicionarEndereco(EnderecoBuilder.ObterEnderecoInvalido());
+            usuario.AdicionarTelefone(TelefoneBuilder.ObterTelefoneInvalido());
+            var isValid = usuario.EhValido();
+
+            isValid.Should().BeFalse();
+            usuario.Erros.Should().NotBeEmpty();
         }
     }
 }
