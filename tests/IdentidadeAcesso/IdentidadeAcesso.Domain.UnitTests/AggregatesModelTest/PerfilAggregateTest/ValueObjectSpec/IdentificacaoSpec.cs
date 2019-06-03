@@ -44,14 +44,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             var nulo = IdentificacaoBuilder.ObterNulo();
             var dic1 = new Dictionary<string, string>()
             {
-                ["Nome Nulo"] = "O nome não pode ser nulo.",
-                ["Descrição Nula"] = "A descrição não pode ser nula."
-            };
-
-            var dic2 = new Dictionary<string, string>()
-            {
-                ["Nome Vazio"] = "O nome não pode estar em branco.",
-                ["Descrição Vazia"] = "A descrição não pode estar em branco."
+                ["Nome Nulo/Vazio"] = "O nome precisa ser preenchido.",
+                ["Descrição Nulo/Vazio"] = "A descrição precisa ser preenchida."
             };
 
             //act
@@ -62,7 +56,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             isValido2.Should().BeFalse();
 
             nulo.ValidationResult.Erros.Should().Contain(dic1);
-            emBranco.ValidationResult.Erros.Should().Contain(dic2);
+            emBranco.ValidationResult.Erros.Should().Contain(dic1);
         }
 
         [Fact(DisplayName = "Deve manter o estado inválido se somente nome estiver nulo ou em branco.")]
@@ -74,12 +68,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             var nulo = IdentificacaoBuilder.ObterComNomeNulo();
             var dic1 = new Dictionary<string, string>()
             {
-                ["Nome Nulo"] = "O nome não pode ser nulo.",
-            };
-
-            var dic2 = new Dictionary<string, string>()
-            {
-                ["Nome Vazio"] = "O nome não pode estar em branco.",
+                ["Nome Nulo/Vazio"] = "O nome precisa ser preenchido.",
             };
 
             //act
@@ -90,7 +79,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             isValido2.Should().BeFalse();
 
             nulo.ValidationResult.Erros.Should().Contain(dic1);
-            emBranco.ValidationResult.Erros.Should().Contain(dic2);
         }
 
 
@@ -103,12 +91,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             var nulo = IdentificacaoBuilder.ObterComDescricaoNula();
             var dic1 = new Dictionary<string, string>()
             {
-                ["Descrição Nula"] = "A descrição não pode ser nula."
-            };
-
-            var dic2 = new Dictionary<string, string>()
-            {
-                ["Descrição Vazia"] = "A descrição não pode estar em branco."
+                ["Descrição Nulo/Vazio"] = "A descrição precisa ser preenchida."
             };
 
             //act
@@ -119,7 +102,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             isValido2.Should().BeFalse();
 
             nulo.ValidationResult.Erros.Should().Contain(dic1);
-            emBranco.ValidationResult.Erros.Should().Contain(dic2);
+            emBranco.ValidationResult.Erros.Should().Contain(dic1);
         }
 
         [Fact(DisplayName = "Deve manter seu estado válido caso não tenha erros.")]

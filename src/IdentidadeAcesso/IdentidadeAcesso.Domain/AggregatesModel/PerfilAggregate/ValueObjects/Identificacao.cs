@@ -24,30 +24,18 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects
 
         private void ValidarDescricao()
         {
-            if (Descricao == null)
+            if (string.IsNullOrEmpty(Descricao))
             {
-                ValidationResult.AdicionarErro("Descrição Nula", "A descrição não pode ser nula.");
-                return;
-            }
-
-            if (Descricao == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Descrição Vazia", "A descrição não pode estar em branco.");
+                ValidationResult.AdicionarErro("Descrição Nulo/Vazio", "A descrição precisa ser preenchida.");
                 return;
             }
         }
 
         private void ValidarNome()
         {
-            if (Nome == null)
+            if (string.IsNullOrEmpty(Nome))
             {
-                ValidationResult.AdicionarErro("Nome Nulo", "O nome não pode ser nulo.");
-                return;
-            }
-
-            if (Nome == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Nome Vazio", "O nome não pode estar em branco.");
+                ValidationResult.AdicionarErro("Nome Nulo/Vazio", "O nome precisa ser preenchido.");
                 return;
             }
         }

@@ -14,5 +14,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PermissaoBuilders
         {
             return new Atribuicao("", "");
         }
+
+        public static Atribuicao ObterAtribuicaoValida()
+        {
+            return new Atribuicao("Atualizar","Usuário");
+        }
     }
 }
