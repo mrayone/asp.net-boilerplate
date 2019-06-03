@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using System;
 using System.Collections.Generic;

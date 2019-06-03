@@ -1,4 +1,7 @@
 ﻿using FluentAssertions;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.Exceptions;
+using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders;
 using System;
 using System.Collections.Generic;
@@ -53,6 +56,23 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             var permissao = PerfilPermissaoBuilder.ObterPerfilPermissao();
 
             perfil.AdicionarPermissao(permissao);
+
+            Action act = () => perfil.DeletarPerfil();
+
+            act.Should().Throw<IdentidadeAcessoDomainException>();
+        }
+
+        [Fact(DisplayName = "Deve desativar o perfil ao chamar o método deletar perfil.")]
+        [Trait("Raiz de Agregação", "Perfil")]
+        public void deve_desativar_o_perfil_ao_chamar_metodo_deletar_perfil()
+        {
+            var perfil = PerfilBuilder.ObterPerfilValido();
+            var permissao = PerfilPermissaoBuilder.ObterPerfilPermissao();
+
+            Action act = () => perfil.DeletarPerfil();
+
+            act.Should().NotThrow<IdentidadeAcessoDomainException>();
+            perfil.Status.Should().Be(Status.Inativo);
         }
     }
 }

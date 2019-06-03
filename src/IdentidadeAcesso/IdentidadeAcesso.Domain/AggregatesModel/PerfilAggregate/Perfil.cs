@@ -1,7 +1,9 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.Exceptions;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
     public class Perfil : Entity, IAggregateRoot
     {
-        //TODO: Perfis não podem ser deletados se houver permissões registradas.
+        //TODO: Perfis não podem ser deletados quando houver: 
+        // permissões registradas[x]
+        // usuários vinculados - Vou precisar de um serviço de Dominio para verificar isso.
         //
 
         private List<PerfilPermissao> _permissoes;
@@ -20,6 +24,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Identificacao Identifacao { get; private set; }
         public IReadOnlyCollection<PerfilPermissao> Permissoes => _permissoes;
         public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Erros => _erros;
+
+        public Status Status { get; private set; }
 
         protected Perfil()
         {
@@ -55,6 +61,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             }
 
             _permissoes.Add(permissao);
+        }
+
+        public void DeletarPerfil()
+        {
+            if (_permissoes.Any()) throw new IdentidadeAcessoDomainException(nameof(DeletarPerfil));
+
+            Status = Status.Inativo;
         }
     }
 }
