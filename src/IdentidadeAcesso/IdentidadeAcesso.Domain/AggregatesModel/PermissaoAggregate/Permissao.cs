@@ -12,15 +12,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
     {
         public Atribuicao Atribuicao { get; private set; }
 
-        public Dictionary<string, IReadOnlyDictionary<string, string>> _erros;
-
-        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Erros => _erros;
-
         protected Permissao(){ }
         public Permissao (Atribuicao atribuicao)
         {
             Id = Guid.NewGuid();
-            _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
             Atribuicao = atribuicao;
         }
     }

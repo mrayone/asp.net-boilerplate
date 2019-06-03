@@ -16,11 +16,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             PermissaoId = permissaoId;
         }
 
-        public bool EhValido()
-        {
-            return true;
-        }
-
         public void DesativarPermissao()
         {
             Ativo = false;

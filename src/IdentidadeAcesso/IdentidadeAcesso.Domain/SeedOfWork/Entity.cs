@@ -15,7 +15,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
             _erros = new List<string>();
         }
 
-
         public virtual bool EhValido()
         {
             return !_erros.Any();
