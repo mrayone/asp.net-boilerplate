@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using IdentidadeAcesso.Domain.SeedOfWork;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Endereco : ValueObject<Endereco>
     {
+
+        private const int DigMaxCep = 8;
+        private const string CepPattern = @"\d{8}";
         public string Logradouro { get; private set; }
         public string Numero { get; private set; }
         public string Complemento { get; private set; }
@@ -35,11 +39,22 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarCEP()
         {
-            if (string.IsNullOrEmpty(CEP))
+            if (ObterCEPLimpo(CEP).Length != DigMaxCep)
             {
-                ValidationResult.AdicionarErro("O cep deve ser fornecido.");
+                ValidationResult.AdicionarErro("O CEP deve conter 8 dígitos.");
                 return;
             }
+
+            if (!Regex.IsMatch(CEP, CepPattern))
+            {
+                ValidationResult.AdicionarErro("O CEP é inválido.");
+                return;
+            }
+        }
+
+        private string ObterCEPLimpo(string cep)
+        {
+            return Regex.Replace(cep, CepPattern, "");
         }
 
         protected override bool EqualsCore(Endereco other)
