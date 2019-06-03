@@ -22,21 +22,16 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarNumero()
         {
-            if (string.IsNullOrEmpty(Numero))
-            {
-                ValidationResult.AdicionarErro("Telefone Vazio/Nulo", "O telefone precisa ser fornecido.");
-                return;
-            }
 
             if (Numero.Length > MaxNumeros)
             {
-                ValidationResult.AdicionarErro("Telefone Tamanho Inválido", "O telefone não pode exceder 13 caracteres.");
+                ValidationResult.AdicionarErro("O telefone não pode exceder 13 caracteres.");
                 return;
             }
 
             if (!Regex.IsMatch(Numero, Pattern ))
             {
-                ValidationResult.AdicionarErro("Telefone Inválido", "Telefone com formato inválido.");
+                ValidationResult.AdicionarErro("Telefone com formato inválido.");
                 return;
             }
         }

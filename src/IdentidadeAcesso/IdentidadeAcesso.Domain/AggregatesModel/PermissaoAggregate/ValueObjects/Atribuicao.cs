@@ -12,30 +12,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
         {
             Valor = valor;
             Tipo = tipo;
-
-            Validar();
-        }
-
-        private void Validar()
-        {
-            ValidarValor();
-            ValidarTipo();
-        }
-
-        private void ValidarTipo()
-        {
-            if (string.IsNullOrEmpty(Valor))
-            {
-                ValidationResult.AdicionarErro("Tipo Nulo/Vazio", "O tipo deve ser preenchido.");
-            }
-        }
-
-        private void ValidarValor()
-        {
-            if (string.IsNullOrEmpty(Valor))
-            {
-                ValidationResult.AdicionarErro("Valor Nulo/Vazio", "O valor deve ser preenchido.");
-            }
         }
 
         protected override bool EqualsCore(Atribuicao other)

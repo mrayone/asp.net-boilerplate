@@ -13,31 +13,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects
             Nome = nome;
             Descricao = descricao;
 
-            Validar();
-        }
-
-        private void Validar()
-        {
-            ValidarNome();
-            ValidarDescricao();
-        }
-
-        private void ValidarDescricao()
-        {
-            if (string.IsNullOrEmpty(Descricao))
-            {
-                ValidationResult.AdicionarErro("Descrição Nulo/Vazio", "A descrição precisa ser preenchida.");
-                return;
-            }
-        }
-
-        private void ValidarNome()
-        {
-            if (string.IsNullOrEmpty(Nome))
-            {
-                ValidationResult.AdicionarErro("Nome Nulo/Vazio", "O nome precisa ser preenchido.");
-                return;
-            }
         }
 
         protected override bool EqualsCore(Identificacao other)

@@ -1,6 +1,5 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using System;
@@ -12,8 +11,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 {
     public class Usuario : Entity, IAggregateRoot
     {
-        private Dictionary<string, IReadOnlyDictionary<string, string>> _erros;
-
         public NomeCompleto Nome { get; private set; }
         public Sexo Sexo { get; private set; }
         public Email Email { get; private set; }
@@ -25,11 +22,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Endereco Endereco { get; private set; }
         public Guid PerfilId { get; private set; }
 
-        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Erros => _erros;
 
         protected Usuario()
         {
-            _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
         }
 
         public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
@@ -48,42 +43,18 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             PerfilId = perfilId;
         }
 
-        private void Validar()
-        {
-            _erros.AddIfNotNullOrEmpty("Nome", Nome.ValidationResult.Erros);
-            _erros.AddIfNotNullOrEmpty("Sexo", Sexo.ValidationResult.Erros);
-            _erros.AddIfNotNullOrEmpty("Email", Email.ValidationResult.Erros);
-            _erros.AddIfNotNullOrEmpty("CPF", CPF.ValidationResult.Erros);
-            _erros.AddIfNotNullOrEmpty("DataDeNascimento", DataDeNascimento.ValidationResult.Erros);
-        }
-
-        public bool EhValido()
-        {
-            Validar();
-            return !_erros.Any();
-        }
-
         public void AdicionarEndereco(Endereco endereco)
         {
-            _erros.AddIfNotNullOrEmpty("Endereco", endereco.ValidationResult.Erros);
-
-            if (!EhValido()) return;
-
             Endereco = endereco;
         }
 
         public void AdicionarTelefone(Telefone telefone)
         {
-            _erros.AddIfNotNullOrEmpty("Telefone", telefone.ValidationResult.Erros);
-            if (!EhValido()) return;
-
             Telefone = telefone;
         }
 
         public void AdicionarCelular(Celular celular)
         {
-            _erros.AddIfNotNullOrEmpty("Celular", celular.ValidationResult.Erros);
-            if (!EhValido()) return;
             Celular = celular;
         }
 

@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!ValidarMasculino() || !ValidarFeminino())
             {
-                ValidationResult.AdicionarErro("Valor Inválido", "O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
+                ValidationResult.AdicionarErro("O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
                 return;
             }
         }

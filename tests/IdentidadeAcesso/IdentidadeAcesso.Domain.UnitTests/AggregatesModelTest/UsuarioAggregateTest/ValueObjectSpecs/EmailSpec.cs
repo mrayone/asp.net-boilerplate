@@ -9,33 +9,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class EmailSpec
     {
-        [Fact(DisplayName = "Deve retornar erro se valor nulo for definido.")]
-        [Trait("Value Object", "Email")]
-        public void deve_retornar_erro_se_valor_nulo_for_definido()
-        {
-            //arrange
-            var email = new Email(null);
-
-            //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Email Nulo/Vazio"] = "O email deve ser fornecido."
-            });
-        }
-
-        [Fact(DisplayName = "Deve retornar erro se valor vazio for definido.")]
-        [Trait("Value Object", "Email")]
-        public void deve_retornar_erro_se_valor_vazio_for_definido()
-        {
-            //arrange
-            var email = new Email("");
-
-            //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Email Nulo/Vazio"] = "O email deve ser fornecido."
-            });
-        }
 
         [Fact(DisplayName = "Deve retornar erro se valor não for um e-mail válido")]
         [Trait("Value Object", "Email")]
@@ -45,9 +18,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var email = new Email("mariana.glogia.com");
 
             //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            email.ValidationResult.Erros.Should().Contain(new List<string>()
             {
-                ["Email Inválido"] = "O email informado não é um válido."
+                "O email informado não é um válido."
             });
         }
 

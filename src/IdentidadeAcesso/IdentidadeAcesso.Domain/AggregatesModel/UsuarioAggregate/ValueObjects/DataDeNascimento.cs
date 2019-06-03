@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             }
             catch (ArgumentOutOfRangeException)
             {
-                ValidationResult.AdicionarErro("Data de Nascimento Inválida", "Os valores fornecidos representam uma data não representável.");
+                ValidationResult.AdicionarErro("Os valores fornecidos representam uma data não representável.");
             }
         }
 
@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             var totalDeAnos = (DateTime.Today - Data).TotalDays / 365.25;
             if (totalDeAnos < DataDeNascimento.IdadeMin)
             {
-                ValidationResult.AdicionarErro("Data de Nascimento Inválida", String.Format("A idade mínima requerida é de {0} anos.", DataDeNascimento.IdadeMin));
+                ValidationResult.AdicionarErro(String.Format("A idade mínima requerida é de {0} anos.", DataDeNascimento.IdadeMin));
             }
         }
 

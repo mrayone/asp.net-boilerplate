@@ -35,9 +35,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
 
             //assert
-            sexo.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            sexo.ValidationResult.Erros.Should().Contain(new List<string>()
             {
-                ["Valor Inválido"] = "O sexo deve ser definido como 'Masculino' ou 'Feminino'."
+                "O sexo deve ser definido como 'Masculino' ou 'Feminino'."
             });
         }
 

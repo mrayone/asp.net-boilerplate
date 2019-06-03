@@ -1,6 +1,5 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,17 +22,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
             Id = Guid.NewGuid();
             _erros = new Dictionary<string, IReadOnlyDictionary<string, string>>();
             Atribuicao = atribuicao;
-        }
-
-        public bool EhValido()
-        {
-            Validar();
-            return !_erros.Any();
-        }
-
-        private void Validar()
-        {
-            _erros.AddIfNotNullOrEmpty("Atribuição", Atribuicao.ValidationResult.Erros);
         }
     }
 }

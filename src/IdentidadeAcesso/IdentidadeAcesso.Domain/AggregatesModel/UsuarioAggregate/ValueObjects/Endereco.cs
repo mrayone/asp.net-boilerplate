@@ -30,74 +30,14 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void Validar()
         {
-            ValidarLogradouro();
-            ValidarNumero();
-            ValidarComplemento();
-            ValidarBairro();
             ValidarCEP();
-            ValidarCidade();
-            ValidarEstado();
-        }
-
-        private void ValidarEstado()
-        {
-            if (string.IsNullOrEmpty(Estado))
-            {
-                ValidationResult.AdicionarErro("Estado Nulo/Vazio", "O estado deve ser fornecido.");
-                return;
-            }
-        }
-
-        private void ValidarCidade()
-        {
-            if (string.IsNullOrEmpty(Cidade))
-            {
-                ValidationResult.AdicionarErro("Cidade Nulo/Vazio", "A cidade deve ser fornecida.");
-                return;
-            }
         }
 
         private void ValidarCEP()
         {
             if (string.IsNullOrEmpty(CEP))
             {
-                ValidationResult.AdicionarErro("CEP Nulo/Vazio", "O cep deve ser fornecido.");
-                return;
-            }
-        }
-
-        private void ValidarComplemento()
-        {
-            if (Complemento == null)
-            {
-                ValidationResult.AdicionarErro("Complemento Nulo", "O complemento não pode ser nulo.");
-                return;
-            }
-        }
-
-        private void ValidarBairro()
-        {
-            if (string.IsNullOrEmpty(Bairro))
-            {
-                ValidationResult.AdicionarErro("Bairro Nulo/Vazio", "O bairro deve ser fornecido.");
-                return;
-            }
-        }
-
-        private void ValidarNumero()
-        {
-            if (string.IsNullOrEmpty(Numero))
-            {
-                ValidationResult.AdicionarErro("Numero Nulo/Vazio", "O numero deve ser fornecido.");
-                return;
-            }
-        }
-
-        private void ValidarLogradouro()
-        {
-            if (string.IsNullOrEmpty(Logradouro))
-            {
-                ValidationResult.AdicionarErro("Logradouro Nulo/Vazio", "O logradouro deve ser fornecido.");
+                ValidationResult.AdicionarErro("O cep deve ser fornecido.");
                 return;
             }
         }

@@ -5,8 +5,8 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 {
     public sealed class ValidationResult
     {
-        private Dictionary<string, string> _erros;
-        public IReadOnlyDictionary<string, string> Erros => _erros;
+        private List<string> _erros;
+        public IReadOnlyList<string> Erros => _erros;
 
         public bool IsValid
         {
@@ -18,12 +18,12 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 
         public ValidationResult()
         {
-            _erros = new Dictionary<string, string>();
+            _erros = new List<string>();
         }
 
-        public void AdicionarErro(string erro, string mensagem)
+        public void AdicionarErro(string mensagem)
         {
-            _erros.Add(erro, mensagem);
+            _erros.Add(mensagem);
         }
     }
 }

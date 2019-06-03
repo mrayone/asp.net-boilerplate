@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.ValueObjects
 
             if (!ValidarAtivo() || !ValidarInativo())
             {
-                ValidationResult.AdicionarErro("Status Inválido", "O status deve ser definido como 'Ativo' ou 'Inativo'.");
+                ValidationResult.AdicionarErro("O status deve ser definido como 'Ativo' ou 'Inativo'.");
                 return;
             }
         }

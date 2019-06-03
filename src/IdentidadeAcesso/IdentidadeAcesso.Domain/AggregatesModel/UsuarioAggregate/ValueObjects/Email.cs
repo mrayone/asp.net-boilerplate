@@ -25,15 +25,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidaraEndereco()
         {
-            if (string.IsNullOrEmpty(Endereco))
-            {
-                ValidationResult.AdicionarErro("Email Nulo/Vazio", "O email deve ser fornecido.");
-                return;
-            }
 
             if (!Regex.IsMatch(Endereco, Pattern))
             {
-                ValidationResult.AdicionarErro("Email Inválido", "O email informado não é um válido.");
+                ValidationResult.AdicionarErro("O email informado não é um válido.");
             }
         }
 

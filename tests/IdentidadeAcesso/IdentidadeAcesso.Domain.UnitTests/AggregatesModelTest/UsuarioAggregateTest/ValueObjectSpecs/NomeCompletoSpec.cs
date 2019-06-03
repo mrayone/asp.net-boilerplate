@@ -28,43 +28,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nomeCompleto.Should().Be(NOME + " " + SOBRENOME);
         }
 
-        [Fact(DisplayName = "O estado do nome deve ser invalido se valores em branco forem setados.")]
-        [Trait("Value Object", "Nome")]
-        public void o_estado_do_nome_deve_ser_invalido_se_valores_vazio()
-        {
-            //arrange
-            var nome = new NomeCompleto("", "");
-            //act
-
-            //assert
-            nome.ValidationResult.Erros.Should().HaveCount(2);
-            nome.ValidationResult.IsValid.Should().BeFalse();
-            nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Primeiro Nome Nulo/Vazio"] = "O primeiro nome deve ser fornecido.",
-                ["Sobrenome Nulo/Vazio"] = "O sobrenome deve ser fornecido."
-            });
-        }
-
-        [Fact(DisplayName = "O estado do nome deve ser invalido se valores em branco forem setados.")]
-        [Trait("Value Object", "Nome")]
-        public void o_estado_do_nome_deve_ser_invalido_se_valores_nulos()
-        {
-            //arrange
-            var nome = new NomeCompleto(null, null);
-            //act
-
-            //assert
-            nome.ValidationResult.Erros.Should().HaveCount(2);
-            nome.ValidationResult.IsValid.Should().BeFalse();
-            nome.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Primeiro Nome Nulo/Vazio"] = "O primeiro nome deve ser fornecido.",
-                ["Sobrenome Nulo/Vazio"] = "O sobrenome deve ser fornecido."
-            });
-        }
-
-
         [Fact(DisplayName = "O estado do nome deve ser valido")]
         [Trait("Value Object", "Nome")]
         public void o_estado_do_nome_deve_ser_valido()

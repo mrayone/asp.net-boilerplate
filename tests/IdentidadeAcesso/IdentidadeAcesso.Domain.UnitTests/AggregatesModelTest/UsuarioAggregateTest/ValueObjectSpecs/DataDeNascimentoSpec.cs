@@ -26,9 +26,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             //arr
             var data = new DataDeNascimento(0, 0, 0);
-            var dict = new Dictionary<string, string>()
+            var dict = new List<string>()
             {
-                ["Data de Nascimento Inválida"] = "Os valores fornecidos representam uma data não representável."
+                "Os valores fornecidos representam uma data não representável."
             };
 
             data.ValidationResult.IsValid.Should().BeFalse();
@@ -42,9 +42,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //arr
             var idadeMin = DataDeNascimento.IdadeMin;
             var data = new DataDeNascimento(22, 7, 2007);
-            var dict = new Dictionary<string, string>()
+            var dict = new List<string>()
             {
-                ["Data de Nascimento Inválida"] = String.Format("A idade mínima requerida é de {0} anos.", idadeMin)
+                String.Format("A idade mínima requerida é de {0} anos.", idadeMin)
             };
 
             data.ValidationResult.IsValid.Should().BeFalse();

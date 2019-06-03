@@ -20,4 +20,9 @@
     <ProjectReference Include="..\..\..\src\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AggregatesModelTest\PerfilAggregateTest\ValueObjectSpec\" />
+    <Folder Include="AggregatesModelTest\PermissaoAggregateTest\ValueObjectTest\" />
+  </ItemGroup>
+
 </Project>

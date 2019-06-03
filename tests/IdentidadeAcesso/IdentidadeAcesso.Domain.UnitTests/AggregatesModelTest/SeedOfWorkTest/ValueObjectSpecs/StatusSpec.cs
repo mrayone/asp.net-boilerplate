@@ -35,9 +35,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.SeedOfWorkTest.ValueObjectSpecs
             //act
 
             //assert
-            status.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            status.ValidationResult.Erros.Should().Contain(new List<string>()
             {
-                ["Status Inválido"] = "O status deve ser definido como 'Ativo' ou 'Inativo'."
+               "O status deve ser definido como 'Ativo' ou 'Inativo'."
             });
         }
 

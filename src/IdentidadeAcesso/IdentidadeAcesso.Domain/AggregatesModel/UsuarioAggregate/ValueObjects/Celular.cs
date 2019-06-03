@@ -23,21 +23,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarNumero()
         {
-            if (string.IsNullOrEmpty(Numero))
-            {
-                ValidationResult.AdicionarErro("Celular Vazio/Nulo", "O celular precisa ser fornecido.");
-                return;
-            }
-
             if (Numero.Length > MaxNumeros)
             {
-                ValidationResult.AdicionarErro("Celular de Tamanho Inválido", "O celular não pode exceder 14 caracteres.");
+                ValidationResult.AdicionarErro("O celular não pode exceder 14 caracteres.");
                 return;
             }
 
             if (!Regex.IsMatch(Numero, Pattern))
             {
-                ValidationResult.AdicionarErro("Celular Inválido", "Celular com formato inválido.");
+                ValidationResult.AdicionarErro("Celular com formato inválido.");
                 return;
             }
         }

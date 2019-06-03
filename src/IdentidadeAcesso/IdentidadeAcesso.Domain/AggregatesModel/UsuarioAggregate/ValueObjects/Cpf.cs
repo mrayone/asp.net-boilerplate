@@ -24,21 +24,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         #region Validação
         private void ValidarCPF()
         {
-            if(string.IsNullOrEmpty(Digitos))
-            {
-                ValidationResult.AdicionarErro("CPF Nulo/Vazio", "O CPF deve ser fornecido.");
-                return;
-            }
-
             if (CPF.LimparFormatacaoCPF(Digitos).Length > MaxDigitos)
             {
-                ValidationResult.AdicionarErro("CPF Excedeu Digitos", "O CPF não pode possuir mais de 11 digitos.");
+                ValidationResult.AdicionarErro("O CPF não pode possuir mais de 11 digitos.");
                 return;
             }
 
             if (!CPFValido())
             {
-                ValidationResult.AdicionarErro("CPF Inválido", "O CPF informado é inválido.");
+                ValidationResult.AdicionarErro("O CPF informado é inválido.");
                 return;
             }
         }

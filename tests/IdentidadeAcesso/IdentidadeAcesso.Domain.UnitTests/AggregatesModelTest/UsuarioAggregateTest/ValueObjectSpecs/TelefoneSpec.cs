@@ -21,45 +21,14 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         }
 
         [Trait("Value Object", "Telefone")]
-        [Fact(DisplayName = "Deve invalidar o estado em caso de valores nulos ou vazios serem setados")]
-        public void deve_invalidar_o_estado_em_caso_de_valores_nulos_ou_vazios_serem_setados()
-        {
-            var telefone = new Telefone(null);
-            var telefone2 = new Telefone("");
-
-
-            telefone.ValidationResult.IsValid.Should().BeFalse();
-            telefone2.ValidationResult.IsValid.Should().BeFalse();
-        }
-
-
-        [Trait("Value Object", "Telefone")]
-        [Fact(DisplayName = "Deve retornar mensagens de erro quando valores nulos ou vazios são setados")]
-        public void deve_retornar_mensaagens_de_erro_quando_valores_nulos_ou_vazios_sao_setados()
-        {
-            var telefone = new Telefone(null);
-            var telefone2 = new Telefone("");
-
-            var erros = new Dictionary<string, string>()
-            {
-                ["Telefone Vazio/Nulo"] = "O telefone precisa ser fornecido."
-            };
-
-            telefone.ValidationResult.Erros.Should().Contain(erros);
-            telefone2.ValidationResult.Erros.Should().Contain(erros);
-            telefone.ValidationResult.IsValid.Should().BeFalse();
-            telefone2.ValidationResult.IsValid.Should().BeFalse();
-        }
-
-        [Trait("Value Object", "Telefone")]
         [Fact(DisplayName = "Deve retornar mensagens de erro quando valores estão com tamanho inválidos")]
         public void deve_retornar_erro_para_tamanho_invalido_de_dados()
         {
             var telefone = new Telefone("+5518328155976");
 
-            var erros1 = new Dictionary<string, string>()
+            var erros1 = new List<string>()
             {
-                ["Telefone Tamanho Inválido"] = "O telefone não pode exceder 13 caracteres.",
+                "O telefone não pode exceder 13 caracteres.",
             };
 
             telefone.ValidationResult.Erros.Should().Contain(erros1);
@@ -77,9 +46,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_manter_seu_estado_invalido_e_retornar_erro_se_um_telefone_invalido_for_fornecido(string numero, bool isValid)
         {
             var tel = new Telefone(numero);
-            var dict = new Dictionary<string, string>()
+            var dict = new List<string>()
             {
-                ["Telefone Inválido"] = "Telefone com formato inválido.",
+                 "Telefone com formato inválido.",
             };
 
             tel.ValidationResult.IsValid.Should().Be(isValid);

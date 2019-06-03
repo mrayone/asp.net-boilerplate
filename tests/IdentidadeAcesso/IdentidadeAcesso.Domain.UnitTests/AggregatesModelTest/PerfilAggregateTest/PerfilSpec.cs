@@ -13,18 +13,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
 {
     public class PerfilSpec
     {
-        [Fact(DisplayName = "Deve invalidar o estado se houver erros na criação.")]
-        [Trait("Raiz de Agregação", "Perfil")]
-        public void deve_invalidar_estado_se_houver_erros()
-        {
-            //arrange
-            var perfil = PerfilBuilder.ObterPerfilInvalido();
-            //act
-            var isValid = perfil.EhValido();
-
-            isValid.Should().BeFalse();
-            perfil.Erros.Should().NotBeEmpty();
-        }
 
         [Fact(DisplayName = "Não deve conter permissões duplicadas e em caso de adição a ultima permissão deve permanecer na lista.")]
         [Trait("Raiz de Agregação", "Perfil")]
@@ -36,13 +24,11 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             var permissao2 = permissao.Clone();
 
             //act
-            var isValid = perfil.EhValido();
             permissao.DesativarPermissao();
             perfil.AdicionarPermissao(permissao);
             perfil.AdicionarPermissao(permissao2);
 
             //
-            isValid.Should().BeTrue();
             perfil.Permissoes.Should().HaveCount(1);
             var elem = perfil.Permissoes.SingleOrDefault();
             elem.Ativo.Should().Be(permissao2.Ativo);

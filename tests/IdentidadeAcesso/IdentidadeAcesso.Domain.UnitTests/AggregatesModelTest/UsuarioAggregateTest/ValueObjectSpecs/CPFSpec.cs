@@ -12,39 +12,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public CPFSpec()
         { }
 
-        [Fact(DisplayName = "Deve ter seu estado inválido para cpf em branco ou nulo")]
-        [Trait("Value Object", "CPF")]
-        public void deve_ter_seu_estado_invalido_para_cpf_em_branco_ou_nulo()
-        {
-            //arrange
-            var cpf = new CPF(null);
-            var cpf2 = new CPF("");
-
-
-            //act
-
-            //assert
-            cpf.ValidationResult.IsValid.Should().BeFalse();
-            cpf.ValidationResult.IsValid.Should().BeFalse();
-
-        }
-
-        [Fact(DisplayName = "Deve retornar erro para cpf em branco ou nulo")]
-        [Trait("Value Object", "CPF")]
-        public void deve_retornar_errro_para_cpf_em_branco_ou_nulo()
-        {
-            var cpf = new CPF(null);
-            var cpf2 = new CPF("");
-
-            var cpfNuloBranco = new Dictionary<string, string>()
-            {
-                ["CPF Nulo/Vazio"] =  "O CPF deve ser fornecido."
-            };
-
-            cpf.ValidationResult.Erros.Should().Contain(cpfNuloBranco);
-            cpf2.ValidationResult.Erros.Should().Contain(cpfNuloBranco);
-        }
-
         [Fact(DisplayName = "Deve retornar erro se CPF ultrapassar onze dígitos")]
         [Trait("Value Object", "CPF")]
         public void deve_retornar_erro_se_cpf_ultrapassar_onze_digitos()
@@ -52,9 +19,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var cpf = new CPF("1111.111.111-55");
             var cpf2 = new CPF("111111111155");
 
-            var cpfErro = new Dictionary<string, string>()
+            var cpfErro = new List<string>()
             {
-                ["CPF Excedeu Digitos"] = "O CPF não pode possuir mais de 11 digitos."
+                "O CPF não pode possuir mais de 11 digitos."
             };
 
             cpf.ValidationResult.Erros.Should().Contain(cpfErro);
@@ -114,9 +81,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             var cpf = new CPF("111.111.111-55");
 
-            var cpfErro = new Dictionary<string, string>()
+            var cpfErro = new List<string>()
             {
-                ["CPF Inválido"] = "O CPF informado é inválido."
+                 "O CPF informado é inválido."
             };
 
             cpf.ValidationResult.Erros.Should().Contain(cpfErro);
