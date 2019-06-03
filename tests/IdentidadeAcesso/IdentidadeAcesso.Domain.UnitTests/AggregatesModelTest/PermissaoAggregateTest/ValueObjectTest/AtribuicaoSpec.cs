@@ -9,7 +9,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PermissaoAggrega
 {
     public class AtribuicaoSpec
     {
-
         [Fact(DisplayName = "Deve invalidar o estado se atribuição esta nula ou em branco.")]
         [Trait("Value Object", "Atribuição")]
         public void deve_invalidar_se_atribuicao_esta_nula_ou_em_branco()

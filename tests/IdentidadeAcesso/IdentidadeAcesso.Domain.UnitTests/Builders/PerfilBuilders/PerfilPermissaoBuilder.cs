@@ -9,11 +9,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders
 {
     public class PerfilPermissaoBuilder
     {
-        public static PerfilPermissao ObterPerfilPermissao(Guid id)
-        {
-            return new PerfilPermissao(id, true);
-        }
-
         public static PerfilPermissao ObterPerfilPermissao()
         {
             return new PerfilPermissao(Guid.NewGuid(), true);

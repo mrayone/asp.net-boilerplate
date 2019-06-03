@@ -17,6 +17,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
 
         public IReadOnlyDictionary<string, IReadOnlyDictionary<string, string>> Erros => _erros;
 
+        protected Permissao(){ }
         public Permissao (Atribuicao atribuicao)
         {
             Id = Guid.NewGuid();

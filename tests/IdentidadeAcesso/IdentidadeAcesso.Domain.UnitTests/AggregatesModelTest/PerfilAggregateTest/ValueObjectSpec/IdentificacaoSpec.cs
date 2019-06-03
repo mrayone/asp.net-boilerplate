@@ -8,7 +8,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
     public class IdentificacaoSpec
     {
         [Fact(DisplayName = "Deve invalidar estado se definir nome e descrição nulos.")]
-        [Trait("Value Object", "Identificacao")]
+        [Trait("Value Object", "Identificação")]
         public void deve_invalidar_estado_se_definir_nome_e_descricao_nulo()
         {
             //arr
