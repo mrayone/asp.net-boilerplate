@@ -17,13 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AggregatesModelTest\PerfilAggregateTest\" />
-    <Folder Include="AggregatesModelTest\PermissaoAggregateTest\" />
-    <Folder Include="Builders\" />
+    <ProjectReference Include="..\..\..\src\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
+    <Folder Include="AggregatesModelTest\PerfilAggregateTest\ValueObjectSpec\" />
+    <Folder Include="AggregatesModelTest\PermissaoAggregateTest\ValueObjectTest\" />
   </ItemGroup>
 
 </Project>

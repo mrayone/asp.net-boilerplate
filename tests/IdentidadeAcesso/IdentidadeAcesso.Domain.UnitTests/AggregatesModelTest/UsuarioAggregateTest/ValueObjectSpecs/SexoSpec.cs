@@ -16,7 +16,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
 
             //arrange
-            var sexo = new Sexo("M", "Mirosmar");
+            var sexo = new Sexo("E", "Mirosmar");
 
             //act
 
@@ -35,9 +35,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
 
             //assert
-            sexo.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            sexo.ValidationResult.Erros.Should().Contain(new List<string>()
             {
-                ["Valor Inválido"] = "O sexo deve ser definido como 'Masculino' ou 'Feminino'."
+                "O sexo deve ser definido como 'Masculino' ou 'Feminino'."
             });
         }
 
@@ -49,6 +49,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var fem = Sexo.Feminino;
             var mas = Sexo.Masculino;
 
+
+            fem.ValidationResult.IsValid.Should().BeTrue();
+            mas.ValidationResult.IsValid.Should().BeTrue();
+
             fem.Should().Be(Sexo.Feminino);
             mas.Should().Be(Sexo.Masculino);
         }
@@ -57,8 +61,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         [Trait("Value Object", "Sexo")]
         public void deve_retornar_verdadeiro_para_valores_iguais_quando_setados_manualmente()
         {
-            var fem = new Sexo("F", "Feminino");
-            var mas = new Sexo("M", "Masculino");
+            var fem = new Sexo("F", "feminino");
+            var mas = new Sexo("M", "masculino");
 
             fem.Should().Be(Sexo.Feminino);
             mas.Should().Be(Sexo.Masculino);
@@ -74,13 +78,34 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             mas.ValidationResult.IsValid.Should().BeFalse();
         }
 
-        [Fact(DisplayName = "Deve lançar uma InvalidOperationException exception em caso de valor nulo.")]
+        [Fact(DisplayName = "Deve lançar uma NullReferenceException exception em caso de valor nulo.")]
         [Trait("Value Object", "Sexo")]
         public void deve_lancar_exception_se_definido_valores_nulo()
         {
             Action act = () => new Sexo(null, null);
 
             act.Should().Throw<NullReferenceException>();
+        }
+
+        [Fact(DisplayName = "Deve ser válido ao usar os enumeradores.")]
+        [Trait("Value Object", "Sexo")]
+        public void deve_ser_valido_ao_usar_os_enumeradores()
+        {
+            var mas = Sexo.Masculino;
+            var fem = Sexo.Feminino;
+
+            mas.ValidationResult.IsValid.Should().BeTrue();
+            fem.ValidationResult.IsValid.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Deve validar se valores são diferentes")]
+        [Trait("Value Object", "Status")]
+        public void deve_validar_se_valores_sao_diferentes()
+        {
+            var mas = Sexo.Masculino;
+            var fem = Sexo.Feminino;
+
+            mas.Should().NotBe(fem);
         }
     }
 }

@@ -12,42 +12,20 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public CPFSpec()
         { }
 
-        [Fact(DisplayName = "Deve ter seu estado inválido para cpf em branco ou nulo")]
+        [Fact(DisplayName = "Deve retornar erro se CPF ultrapassar onze dígitos")]
         [Trait("Value Object", "CPF")]
-        public void deve_ter_seu_estado_invalido_para_cpf_em_branco_ou_nulo()
+        public void deve_retornar_erro_se_cpf_ultrapassar_onze_digitos()
         {
-            //arrange
-            var cpf = new CPF(null);
-            var cpf2 = new CPF("");
+            var cpf = new CPF("1111.111.111-55");
+            var cpf2 = new CPF("111111111155");
 
-
-            //act
-
-            //assert
-            cpf.ValidationResult.IsValid.Should().BeFalse();
-            cpf.ValidationResult.IsValid.Should().BeFalse();
-
-        }
-
-        [Fact(DisplayName = "Deve retornar erro para cpf em branco ou nulo")]
-        [Trait("Value Object", "CPF")]
-        public void deve_retornar_errro_para_cpf_em_branco_ou_nulo()
-        {
-            var cpf = new CPF(null);
-            var cpf2 = new CPF("");
-
-            var cpfNulo = new Dictionary<string, string>()
+            var cpfErro = new List<string>()
             {
-                ["CPF Nulo"] = "O CPF não pode ser nulo."
+                "O CPF não pode possuir mais de 11 digitos."
             };
 
-            var cpfBranco = new Dictionary<string, string>()
-            {
-                ["CPF Vazio"] = "O CPF não pode ser vazio.",
-            };
-
-            cpf.ValidationResult.Erros.Should().Contain(cpfNulo);
-            cpf2.ValidationResult.Erros.Should().Contain(cpfBranco);
+            cpf.ValidationResult.Erros.Should().Contain(cpfErro);
+            cpf2.ValidationResult.Erros.Should().Contain(cpfErro);
         }
 
         [Fact(DisplayName = "Deve retornar um CPF somente com os digitos se houver mascara")]
@@ -56,7 +34,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             //arrage
             var cpfStr = "017.942.000-37";
-            var cpf = new CPF(cpfStr);
             //act
             var cpfLimpo = CPF.ObterCPFSemFormatacao(cpfStr);
 
@@ -64,6 +41,53 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             cpfLimpo.Digitos.Should().Be("01794200037");
         }
 
+
+        [Fact(DisplayName = "Deve retornar um CPF com formatação XXX.XXX.XXX-XX")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornar_cpf_com_formatacao()
+        {
+            //arrage
+            var cpfStr = "01794200037";
+            var cpfStr2 = "1794200037";
+            //act
+            var cpfComMascara = CPF.ObterCPFComFormatacao(cpfStr);
+            var cpfComMascara2 = CPF.ObterCPFComFormatacao(cpfStr2);
+            //assert
+            cpfComMascara.Digitos.Should().Be("017.942.000-37");
+            cpfComMascara2.Digitos.Should().Be("017.942.000-37");
+        }
+
+        [Fact(DisplayName = "Deve garantir que dois cpfs com os mesmos digitos sejam o mesmo objeto")]
+        [Trait("Value Object", "CPF")]
+        public void deve_garantir_que_dois_cpfs_com_os_mesmos_digitos_sejam_o_mesmo_objeto()
+        {
+            //arrage
+            var cpf1 = new CPF("1794200037");
+            var cpf2 = new CPF("1794200037");
+
+            //arrange
+            var cpf1Mask = CPF.ObterCPFComFormatacao(cpf1.Digitos);
+            var cpf2Mask = CPF.ObterCPFComFormatacao(cpf2.Digitos);
+
+            //assert
+            cpf1.Should().Be(cpf2);
+            cpf1Mask.Should().Be(cpf1Mask);
+        }
+
+
+        [Fact(DisplayName = "Deve retornar erro se CPF for inválido")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornar_erro_se_cpf_for_invalido()
+        {
+            var cpf = new CPF("111.111.111-55");
+
+            var cpfErro = new List<string>()
+            {
+                 "O CPF informado é inválido."
+            };
+
+            cpf.ValidationResult.Erros.Should().Contain(cpfErro);
+        }
 
         [Trait("Value Object", "CPF")]
         [Theory(DisplayName = "Deve validar CPF(s) com e sem mascara")]

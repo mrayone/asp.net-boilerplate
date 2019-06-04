@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.Domain.UnitTests", "tests\IdentidadeAcesso\IdentidadeAcesso.Domain.UnitTests\IdentidadeAcesso.Domain.UnitTests.csproj", "{82219891-65EB-499C-8434-F4B02F743866}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knowledge.IO.Infra.Data", "src\Knowledge.IO.Infra.Data\Knowledge.IO.Infra.Data.csproj", "{10228B9F-0821-49A5-8387-4D4C8A6A2E3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{82219891-65EB-499C-8434-F4B02F743866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82219891-65EB-499C-8434-F4B02F743866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82219891-65EB-499C-8434-F4B02F743866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10228B9F-0821-49A5-8387-4D4C8A6A2E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10228B9F-0821-49A5-8387-4D4C8A6A2E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10228B9F-0821-49A5-8387-4D4C8A6A2E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10228B9F-0821-49A5-8387-4D4C8A6A2E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{B91E3841-FC8F-4052-A315-9F7CFED964A5} = {D6E630AA-575C-4EB8-9243-5DED7C1AAB0E}
 		{35849EE9-6C5C-452E-AD07-B0ECDF7E148D} = {787C8E6C-08A3-4A7B-869C-7985C65ED024}
 		{82219891-65EB-499C-8434-F4B02F743866} = {787C8E6C-08A3-4A7B-869C-7985C65ED024}
+		{10228B9F-0821-49A5-8387-4D4C8A6A2E3D} = {9B2B1D0A-E1F9-4C66-86DD-FB8D50DCB689}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FA9BF4-E732-429E-A3AC-B0AE77B8AEB0}

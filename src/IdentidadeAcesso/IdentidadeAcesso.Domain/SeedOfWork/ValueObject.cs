@@ -14,6 +14,11 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
             ValidationResult = new ValidationResult();
         }
 
+        public bool EhValido()
+        {
+            return ValidationResult.IsValid;
+        }
+
         public override bool Equals(object obj)
         {
             var valueObject = obj as T;
