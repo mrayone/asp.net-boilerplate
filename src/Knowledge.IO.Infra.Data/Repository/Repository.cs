@@ -15,7 +15,8 @@ namespace Knowledge.IO.Infra.Data.Repository
     {
         protected IdentidadeAcessoContext Context;
         protected DbSet<TEntity> DbSet;
-        private readonly IUnitOfWork UnitOfWork;
+
+        public readonly IUnitOfWork UnitOfWork;
 
         public Repository(IdentidadeAcessoContext context, IUnitOfWork unitOfWork)
         {
