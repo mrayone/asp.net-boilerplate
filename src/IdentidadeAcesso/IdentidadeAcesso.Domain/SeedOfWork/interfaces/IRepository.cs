@@ -13,6 +13,5 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
         void Atualizar(TEntity obj);
         void Remover(Guid id);
         IEnumerable<TEntity> Buscar(Expression<Func<TEntity, bool>> predicate);
-        int SaveChanges();
     }
 }
