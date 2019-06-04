@@ -15,11 +15,13 @@ namespace Knowledge.IO.Infra.Data.Repository
     {
         protected IdentidadeAcessoContext Context;
         protected DbSet<TEntity> DbSet;
+        private readonly IUnitOfWork UnitOfWork;
 
-        public Repository(IdentidadeAcessoContext context)
+        public Repository(IdentidadeAcessoContext context, IUnitOfWork unitOfWork)
         {
             Context = context;
             DbSet = Context.Set<TEntity>();
+            UnitOfWork = unitOfWork;
         }
 
         public void Adicionar(TEntity obj)
