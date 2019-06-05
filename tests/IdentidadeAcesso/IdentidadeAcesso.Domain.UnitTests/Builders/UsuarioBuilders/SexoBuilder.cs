@@ -7,7 +7,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
     {
         public static Sexo ObterSexoInvalido()
         {
-            return new Sexo("R", "Retângulo");
+            return new Sexo();
         }
 
         public static Sexo ObterSexoValido()

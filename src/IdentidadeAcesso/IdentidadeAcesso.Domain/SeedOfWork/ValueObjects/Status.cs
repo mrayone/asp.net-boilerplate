@@ -5,46 +5,31 @@ using System.Text;
 
 namespace IdentidadeAcesso.Domain.SeedOfWork.ValueObjects
 {
-    public class Status : Enumeration
+    public class Status : ValueObject<Status>
     {
-        public static readonly Status Ativo = new Status("A", nameof(Ativo).ToLowerInvariant());
-        public static readonly Status Inativo = new Status("I", nameof(Inativo).ToLowerInvariant());
+        public static readonly Status Ativo = new Status { Valor = true };
+        public static readonly Status Inativo = new Status { Valor = false };
 
-        public ValidationResult ValidationResult { get; private set; }
-        public Status(string id, string name) : base(id, name)
+        public bool Valor { get; private set; }
+
+        public Status()
         {
-            ValidationResult = new ValidationResult();
 
-            Validar();
         }
 
-        private void Validar()
+        protected override bool EqualsCore(Status other)
         {
-            if (ValidarAtivo())
-            {
-                return;
-            }
-
-            if (ValidarInativo())
-            {
-                return;
-            }
-
-            if (!ValidarAtivo() || !ValidarInativo())
-            {
-                ValidationResult.AdicionarErro("O status deve ser definido como 'Ativo' ou 'Inativo'.");
-                return;
-            }
+            return Valor == other.Valor;
         }
 
-        private bool ValidarAtivo()
+        protected override int GetHashCodeCore()
         {
-            return (Id.Equals("A") && Nome.Equals(nameof(Ativo).ToLowerInvariant()));
-        }
+            unchecked
+            {
+                var hash = (Valor.GetHashCode() * 907) ^ Valor.GetHashCode();
 
-        private bool ValidarInativo()
-        {
-            return (Id.Equals("I") && Nome.Equals(nameof(Inativo).ToLowerInvariant()));
+                return hash;
+            }
         }
     }
 }
