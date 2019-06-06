@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="AggregatesModelTest\PerfilAggregateTest\ValueObjectSpec\" />
-    <Folder Include="AggregatesModelTest\PermissaoAggregateTest\ValueObjectTest\" />
   </ItemGroup>
 
 </Project>

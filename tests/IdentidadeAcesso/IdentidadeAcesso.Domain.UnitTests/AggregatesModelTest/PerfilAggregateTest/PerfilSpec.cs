@@ -2,7 +2,6 @@
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Exceptions;
 using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
-using IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,52 +12,78 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
 {
     public class PerfilSpec
     {
+        /*
+     Deve validar seu rótulo[x].
+     Deve adicionar se PerfilPermissao for valido permissões[].
+     Deve conter um Perfil Atrelado[].
+     Não pode haver permissões duplicadas[].
+     Deve permitir desativar uma determinada permissão[].
+     */
+        //[Fact(DisplayName = "Deve validar seu rotulo em caso de nulo")]
+        //[Trait("Raiz de Agregação", "PerfilPermissão")]
+        //public void deve_validar_seu_rotulo_em_caso_de_nulo()
+        //{
+        //    var rotulo = new Rotulo(null);
+        //    var perfilPermissao = new Perfil(rotulo, Guid.NewGuid());
 
-        [Fact(DisplayName = "Não deve conter permissões duplicadas e em caso de adição a ultima permissão deve permanecer na lista.")]
-        [Trait("Raiz de Agregação", "Perfil")]
-        public void nao_deve_permitir_permissoes_duplicadas_e_em_caso_de_adicao_a_ultima_adicionada_deve_permanercer_na_lista()
-        {
-            //arrange
-            var perfil = PerfilBuilder.ObterPerfilValido();
-            var permissao = PerfilPermissaoBuilder.ObterPerfilPermissao();
-            var permissao2 = permissao.Clone();
+        //    var isValid = perfilPermissao.EhValido();
 
-            //act
-            permissao.DesativarPermissao();
-            perfil.AdicionarPermissao(permissao);
-            perfil.AdicionarPermissao(permissao2);
+        //    isValid.Should().BeFalse();
+        //    perfilPermissao.Erros.Should().NotBeEmpty();
+        //}
 
-            //
-            perfil.Permissoes.Should().HaveCount(1);
-            var elem = perfil.Permissoes.SingleOrDefault();
-            elem.Ativo.Should().Be(permissao2.Ativo);
-        }
+        //[Fact(DisplayName = "Deve validar se o id do perfil é vazio.")]
+        //[Trait("Raiz de Agregação", "PerfilPermissão")]
+        //public void deve_validar_perfilGuid_em_caso_de_vazio()
+        //{
+        //    var rotulo = new Rotulo(null);
+        //    var perfilPermissao = new Perfil(rotulo, Guid.Empty);
 
-        [Fact(DisplayName = "Deve gerar exception se deletar perfil que contem permissão.")]
-        [Trait("Raiz de Agregação", "Perfil")]
-        public void deve_gerar_exception_se_deletar_perfil_que_contem_permissoes()
-        {
-            var perfil = PerfilBuilder.ObterPerfilValido();
-            var permissao = PerfilPermissaoBuilder.ObterPerfilPermissao();
+        //    var isValid = perfilPermissao.EhValido();
 
-            perfil.AdicionarPermissao(permissao);
+        //    isValid.Should().BeFalse();
+        //    perfilPermissao.Erros.Should().HaveCount(2);
+        //}
 
-            Action act = () => perfil.DeletarPerfil();
+        //[Fact(DisplayName = "Deve adicionar permissão se perfil valido")]
+        //[Trait("Raiz de Agregação", "PerfilPermissão")]
+        //public void deve_adicionar_permissoes_se_perfil_valido()
+        //{
+        //    var perfilPermissao = PerfilPermissaoBuilder.ObterValido();
+        //    var permissao = PermissaoBuilder.ObterValido();
 
-            act.Should().Throw<IdentidadeAcessoDomainException>();
-        }
+        //    perfilPermissao.EhValido().Should().BeTrue();
+        //    perfilPermissao.AdicionarPermissao(permissao);
 
-        [Fact(DisplayName = "Deve desativar o perfil ao chamar o método deletar perfil.")]
-        [Trait("Raiz de Agregação", "Perfil")]
-        public void deve_desativar_o_perfil_ao_chamar_metodo_deletar_perfil()
-        {
-            var perfil = PerfilBuilder.ObterPerfilValido();
-            var permissao = PerfilPermissaoBuilder.ObterPerfilPermissao();
+        //    perfilPermissao.Permissoes.Should().Contain(permissao);
+        //}
 
-            Action act = () => perfil.DeletarPerfil();
+        //[Fact(DisplayName = "Deve retornar erro ao adicionar permissão se perfil invalido.")]
+        //[Trait("Raiz de Agregação", "PerfilPermissão")]
+        //public void deve_retornar_erro_ao_adicionar_permissao_se_perfil_invalido()
+        //{
+        //    var rotulo = new Rotulo(null);
+        //    var perfilPermissao = new Perfil(rotulo, Guid.Empty);
+        //    var permissao = PermissaoBuilder.ObterValido();
 
-            act.Should().NotThrow<IdentidadeAcessoDomainException>();
-            perfil.Status.Should().Be(Status.Inativo);
-        }
+        //    perfilPermissao.AdicionarPermissao(permissao);
+
+        //    perfilPermissao.EhValido().Should().BeFalse();
+        //    perfilPermissao.Erros.Should().NotBeEmpty();
+        //}
+
+        //[Fact(DisplayName = "Deve retornar erro ao adicioanr permissão inválida.")]
+        //[Trait("Raiz de Agregação", "PerfilPermissão")]
+        //public void deve_retornar_excessao_ao_adicionar_permissao_invalida()
+        //{
+        //    var perfilPermissao = PerfilPermissaoBuilder.ObterValido();
+        //    var permissao = PermissaoBuilder.ObterInvalido();
+
+        //    perfilPermissao.AdicionarPermissao(permissao);
+
+        //    perfilPermissao.EhValido().Should().BeFalse();
+        //    perfilPermissao.Erros.Should().NotBeEmpty();
+        //    perfilPermissao.Erros.Should().HaveCount(1);
+        //}
     }
 }

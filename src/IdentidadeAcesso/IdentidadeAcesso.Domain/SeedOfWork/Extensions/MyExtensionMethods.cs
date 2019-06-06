@@ -11,7 +11,17 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Extensions
         {
             if (!collection.Any()) return;
 
-            lista.AddRange(collection);
+            foreach(var item in collection)
+            {
+                lista.AddIfNotExits(item);
+            }
+        }
+
+        public static void AddIfNotExits<T>(this List<T> lista, T value)
+        {
+            if (lista.Contains(value)) return;
+
+            lista.Add(value);
         }
     }
 }

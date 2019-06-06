@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
+﻿
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using System;
 
 namespace IdentidadeAcesso.Domain.UnitTests.Builders.PermissaoBuilders
@@ -17,7 +18,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PermissaoBuilders
 
         public static Atribuicao ObterAtribuicaoValida()
         {
-            return new Atribuicao("Atualizar","Usuário");
+            return new Atribuicao("Atualizar", "Usuário");
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 
 namespace Knowledge.IO.Infra.Data.Context
 {
@@ -14,7 +14,6 @@ namespace Knowledge.IO.Infra.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Perfil> Perfis { get; set; }
         public DbSet<Permissao> Permissoes { get; set; }
-        public DbSet<PerfilPermissao> PerfilPermissao { get; set; }
 
 
         public IdentidadeAcessoContext(DbContextOptions<IdentidadeAcessoContext> options) : base(options)
