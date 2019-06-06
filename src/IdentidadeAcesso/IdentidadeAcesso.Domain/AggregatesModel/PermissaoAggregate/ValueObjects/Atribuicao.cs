@@ -8,7 +8,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
         public string Valor { get; private set; }
         public string Tipo { get; private set; }
 
-        public Atribuicao(string valor, string tipo)
+        public Atribuicao(string tipo, string valor)
         {
             Valor = valor;
             Tipo = tipo;
@@ -16,7 +16,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObject
 
         protected override bool EqualsCore(Atribuicao other)
         {
-            return Valor.Equals(other.Valor);
+            return Tipo.Equals(other.Tipo) 
+                && Valor.Equals(other.Valor);
         }
 
         protected override int GetHashCodeCore()

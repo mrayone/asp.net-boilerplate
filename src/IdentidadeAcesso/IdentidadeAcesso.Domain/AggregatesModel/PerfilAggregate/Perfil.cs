@@ -1,6 +1,8 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.Exceptions;
 using IdentidadeAcesso.Domain.SeedOfWork;
+using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using System;
@@ -12,15 +14,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
     public class Perfil : Entity, IAggregateRoot
     {
-        //TODO: Perfis não podem ser deletados quando houver: 
-        // permissões registradas[x]
-        // usuários vinculados - Vou precisar de um serviço de Dominio para verificar isso.
-        //
-
-        private List<PerfilPermissao> _permissoes;
+        private List<Permissao> _permissoes;
 
         public Identificacao Identifacao { get; private set; }
-        public IReadOnlyCollection<PerfilPermissao> Permissoes => _permissoes;
+        public IReadOnlyCollection<Permissao> Permissoes => _permissoes;
+
+        public DateTime DeletadoEm { get; private set; }
 
         public Status Status { get; private set; }
 
@@ -32,26 +31,47 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
-            _permissoes = new List<PerfilPermissao>();
+            _permissoes = new List<Permissao>();
         }
 
-        public void AdicionarPermissao(PerfilPermissao permissao)
+        public void AdicionarPermissao(Permissao permissao)
         {
-            if (_permissoes.Contains(permissao))
+            if(EncontrarPermissao(permissao) == null)
             {
-                var index = _permissoes.IndexOf(permissao);
-                _permissoes[index] = permissao;
+                _permissoes.Add(permissao);
                 return;
             }
 
-            _permissoes.Add(permissao);
+            _erros.AddIfNotExits($"A permissão [{permissao.Atribuicao.Tipo} {permissao.Atribuicao.Valor}] já existe.");
+        }
+
+        private Permissao EncontrarPermissao(Permissao permissao)
+        {
+            var existePermissao = _permissoes.Where(p => p == permissao).FirstOrDefault() ?? null;
+
+            return existePermissao;
         }
 
         public void DeletarPerfil()
         {
-            if (_permissoes.Any()) throw new IdentidadeAcessoDomainException("Não é possível deletar um perfil com permissões.");
+            if (_permissoes.Where(p => p.Status == Status.Ativo).Any())
+            {
+                _erros.AddIfNotExits("Este perfil não pode ser deletado pois possui permissões ativas.");
+                return;
+            }
 
             Status = Status.Inativo;
+        }
+
+        public void DesativarPermissao(Permissao permissao)
+        {
+            var permissaoParaDesativar = EncontrarPermissao(permissao);
+            if(permissaoParaDesativar != null)
+            {
+                permissaoParaDesativar.Desativar();
+                return;
+            }
+            _erros.AddIfNotExits($"A permissão [{permissao.Atribuicao.Tipo} {permissao.Atribuicao.Valor}] não foi vinculada.");
         }
     }
 }
