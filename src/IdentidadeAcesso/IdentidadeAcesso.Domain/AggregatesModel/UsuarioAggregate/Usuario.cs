@@ -21,7 +21,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Celular Celular { get; private set; }
         public Status Status { get; private set; }
         public Endereco Endereco { get; private set; }
-
+        public DateTime DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
 
 
@@ -90,9 +90,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public void Deletar()
         {
-            //TODO: Logica para deletar usuário, atualmente será softdelete (update no banco).
-            //Apenas sera desativado.
-            if (Status.Equals(Status.Ativo))
+            DeletadoEm = DateTime.Now;
+        }
+
+        public void DesativarUsuario ()
+        {
+            if(Status.Equals(Status.Ativo))
             {
                 Status = Status.Inativo;
             }

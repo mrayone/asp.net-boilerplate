@@ -65,9 +65,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
         /*
          Deve permitir deletar um perfil se, não houver usuarios e permissões ativas.
          */
-        [Fact(DisplayName = "Deve permitir desativar uma permissão")]
+        [Fact(DisplayName = "Deve gerar erro ao deletar perfil com permissões ativas.")]
         [Trait("Raiz de Agregação", "Perfil")]
-        public void deve_gerar_erro_se_deletar_perfil_com_permissoes_ativas()
+        public void deve_gerar_erro_ao_deletar_perfil_com_permissoes_ativas()
         {
             //arrange
             var perfil = PerfilBuilder.ObterPerfilValido();
@@ -86,6 +86,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             {
                 "Este perfil não pode ser deletado pois possui permissões ativas."
             });
+        }
+
+        [Fact(DisplayName = "Deve gerar erro ao deletar perfil com usuario vinculado.")]
+        [Trait("Raiz de Agregação", "Perfil")]
+        public void deve_gerar_erro_ao_deletar_perfil_com_usuario_vinculado()
+        {
+           
         }
     }
 }

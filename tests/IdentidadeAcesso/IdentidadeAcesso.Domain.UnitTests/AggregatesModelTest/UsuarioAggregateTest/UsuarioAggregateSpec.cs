@@ -1,12 +1,6 @@
 ﻿using FluentAssertions;
-using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
-using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
-using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest
@@ -19,6 +13,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             //arrange
             var usuario = UsuarioBuilder.ObterUsuarioInvalido();
+
             //act
             var isValid = usuario.EhValido();
 
@@ -27,16 +22,16 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             usuario.Erros.Should().NotBeEmpty();
         }
 
-        [Fact(DisplayName = "Deve marcar status como 'inativo' se o método deletar for invocado")]
+        [Fact(DisplayName = "Deve setar a data caso a ação de deletar seja invocada")]
         [Trait("Raiz de Agregação", "Usuário")]
-        public void deve_marcar_status_como_inativo_se_o_metodo_deletar_for_invocado()
+        public void deve_setar_uma_data_caso_a_acao_de_deletar_seja_invocada()
         {
+            //arrange
             var usuario = UsuarioBuilder.ObterUsuarioValido();
-
             //act
             usuario.Deletar();
-
-            usuario.Status.Should().Be(Status.Inativo);
+            //assert
+            usuario.DeletadoEm.Date.Should().Be(DateTime.Today);
         }
 
 
