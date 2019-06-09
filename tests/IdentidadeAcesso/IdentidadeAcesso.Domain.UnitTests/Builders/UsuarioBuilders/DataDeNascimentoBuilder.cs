@@ -7,12 +7,14 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
     {
         public static DataDeNascimento ObterDataValida()
         {
-            return new DataDeNascimento(22, 7, 1993);
+            var dataNascimento = new DateTime(1993, 7, 22);
+            return new DataDeNascimento(dataNascimento);
         }
 
         public static DataDeNascimento ObterDataInvalida()
         {
-            return new DataDeNascimento(22, 7, 2006);
+            var dataNascimento = new DateTime(2007, 7, 22);
+            return new DataDeNascimento(dataNascimento);
         }
     }
 }

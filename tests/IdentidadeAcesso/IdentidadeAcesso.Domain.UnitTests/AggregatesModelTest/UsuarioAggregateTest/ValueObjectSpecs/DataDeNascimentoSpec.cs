@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,25 +15,11 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_manter_igualdade_entre_dois_objetos_com_os_mesmos_valores()
         {
             //arr
-            var data = new DataDeNascimento(22, 7, 1993);
-            var data2 = new DataDeNascimento(22, 7, 1993);
+            var data = DataDeNascimentoBuilder.ObterDataValida();
+            var data2 = DataDeNascimentoBuilder.ObterDataValida();
+
 
             data.Should().Be(data2);
-        }
-
-        [Trait("Value Object", "Data de Nascimento")]
-        [Fact(DisplayName = "Deve retornar erro se data zerada for setada")]
-        public void deve_retornar_erro_se_data_zerada_for_setada()
-        {
-            //arr
-            var data = new DataDeNascimento(0, 0, 0);
-            var dict = new List<string>()
-            {
-                "Os valores fornecidos representam uma data não representável."
-            };
-
-            data.ValidationResult.IsValid.Should().BeFalse();
-            data.ValidationResult.Erros.Should().Contain(dict);
         }
 
         [Trait("Value Object", "Data de Nascimento")]
@@ -41,7 +28,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             //arr
             var idadeMin = DataDeNascimento.IdadeMin;
-            var data = new DataDeNascimento(22, 7, 2007);
+            var data = DataDeNascimentoBuilder.ObterDataInvalida();
             var dict = new List<string>()
             {
                 String.Format("A idade mínima requerida é de {0} anos.", idadeMin)
@@ -56,7 +43,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_validar_estado_se_data_estiver_correta()
         {
             //arr
-            var data = new DataDeNascimento(22, 5, 2005);
+            var dataNacimento = new DateTime(2005, 5, 22);
+
+            var data = new DataDeNascimento(dataNacimento);
 
             data.ValidationResult.IsValid.Should().BeTrue();
         }

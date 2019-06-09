@@ -21,7 +21,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Celular Celular { get; private set; }
         public Status Status { get; private set; }
         public Endereco Endereco { get; private set; }
-        public DateTime DeletadoEm { get; private set; }
+        public DateTime? DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
 
 

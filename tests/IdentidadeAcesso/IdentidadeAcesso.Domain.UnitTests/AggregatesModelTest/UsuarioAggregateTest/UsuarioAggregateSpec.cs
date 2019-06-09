@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //act
             usuario.Deletar();
             //assert
-            usuario.DeletadoEm.Date.Should().Be(DateTime.Today);
+            usuario.DeletadoEm?.Date.Should().Be(DateTime.Today);
         }
 
 
