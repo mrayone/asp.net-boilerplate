@@ -15,8 +15,10 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             builder.HasKey(p => p.Id);
             builder.Ignore(p => p.Erros);
 
-            builder.Property<string>("PerfilId")
-                .IsRequired();
+            builder.OwnsOne(p => p.Status, st => 
+            {
+                st.Ignore(s => s.ValidationResult);
+            });
 
             builder.HasOne<Permissao>()
                 .WithMany()

@@ -7,14 +7,14 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.ValueObjects
 {
     public class Status : ValueObject<Status>
     {
-        public static readonly Status Ativo = new Status { Valor = true };
-        public static readonly Status Inativo = new Status { Valor = false };
+        public static readonly Status Ativo = new Status(true);
+        public static readonly Status Inativo = new Status(false);
 
         public bool Valor { get; private set; }
 
-        public Status()
+        public Status(bool valor)
         {
-
+            Valor = valor;
         }
 
         protected override bool EqualsCore(Status other)

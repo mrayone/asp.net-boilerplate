@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         private List<PermissaoAssinada> _permissoesAssinadas;
         public Identificacao Identifacao { get; private set; }
         public IReadOnlyCollection<PermissaoAssinada> PermissoesAssinadas => _permissoesAssinadas;
-        public DateTime DeletadoEm { get; private set; }
+        public DateTime? DeletadoEm { get; private set; }
 
         public Status Status { get; private set; }
 

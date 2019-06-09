@@ -13,7 +13,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         public string Numero { get; private set; }
         public string Complemento { get; private set; }
         public string Bairro { get; private set; }
-        public string CEP { get; private set; }
+        public string Cep { get; private set; }
         public string Cidade { get; private set; }
 
         public string Estado { get; private set; }
@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             Numero = numero;
             Complemento = complemento;
             Bairro = bairro;
-            CEP = cep;
+            Cep = cep;
             Cidade = cidade;
             Estado = estado;
 
@@ -39,13 +39,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidarCEP()
         {
-            if (ObterCEPLimpo(CEP).Length != DigMaxCep)
+            if (ObterCEPLimpo(Cep).Length != DigMaxCep)
             {
                 ValidationResult.AdicionarErro("O CEP deve conter 8 dígitos.");
                 return;
             }
 
-            if (!Regex.IsMatch(CEP, CepPattern))
+            if (!Regex.IsMatch(Cep, CepPattern))
             {
                 ValidationResult.AdicionarErro("O CEP é inválido.");
                 return;
@@ -63,7 +63,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 && Numero.Equals(other.Numero)
                 && Complemento.Equals(other.Complemento)
                 && Bairro.Equals(other.Bairro)
-                && CEP.Equals(other.CEP)
+                && Cep.Equals(other.Cep)
                 && Cidade.Equals(other.Cidade)
                 && Estado.Equals(other.Estado);
         }
@@ -76,7 +76,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 hash += (Numero.GetHashCode() * 907) ^ Numero.GetHashCode();
                 hash += (Complemento.GetHashCode() * 907) ^ Complemento.GetHashCode();
                 hash += (Bairro.GetHashCode() * 907) ^ Bairro.GetHashCode();
-                hash += (CEP.GetHashCode() * 907) ^ CEP.GetHashCode();
+                hash += (Cep.GetHashCode() * 907) ^ Cep.GetHashCode();
                 hash += (Cidade.GetHashCode() * 907) ^ Cidade.GetHashCode();
                 hash += (Estado.GetHashCode() * 907) ^ Estado.GetHashCode();
 

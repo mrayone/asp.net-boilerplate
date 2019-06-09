@@ -10,17 +10,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.SeedOfWorkTest.ValueObjectSpecs
 {
     public class StatusSpec
     {
-        [Fact(DisplayName = "Deve validar o estado de status estanciado sem parametro.")]
-        [Trait("Value Object", "Status")]
-        public void deve_validar_o_estado_de_status_estanciado_sem_parametro()
-        {
-            //arrange
-            var status = new Status();
-            //act
-            var isValid = status.EhValido();
-
-            isValid.Should().BeTrue();
-        }
 
         [Fact(DisplayName = "Deve retornar verdadeiro para valores iguais")]
         [Trait("Value Object", "Status")]

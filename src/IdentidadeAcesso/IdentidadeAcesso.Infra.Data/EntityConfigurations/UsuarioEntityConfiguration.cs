@@ -21,16 +21,19 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             {
                 n.Property(p => p.PrimeiroNome).HasColumnName("PrimeiroNome").IsRequired();
                 n.Property(p => p.Sobrenome).HasColumnName("Sobrenome").IsRequired();
+                n.Ignore(p => p.ValidationResult);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Sexo, s =>
             {
                 s.Property(p => p.Tipo).HasColumnName("Sexo").IsRequired();
                 s.Ignore(p => p.ValidationResult);
-
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Status);
+            usuarioConfiguration.OwnsOne(u => u.Status, st =>
+            {
+                st.Ignore(p => p.ValidationResult);
+            });
 
             usuarioConfiguration.OwnsOne(u => u.Email, e => 
             {
@@ -80,7 +83,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             usuarioConfiguration.HasOne<Perfil>()
                 .WithMany()
                 .HasForeignKey("PerfilId")
-                .IsRequired(false);
+                .IsRequired();
         }
     }
 }
