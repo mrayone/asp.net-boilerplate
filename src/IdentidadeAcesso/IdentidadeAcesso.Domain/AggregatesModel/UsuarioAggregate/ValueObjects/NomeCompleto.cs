@@ -5,9 +5,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class NomeCompleto : ValueObject<NomeCompleto>
     {
-        public readonly string PrimeiroNome;
+        public string PrimeiroNome { get; private set; }
 
-        public readonly string Sobrenome;
+        public string Sobrenome { get; private set; }
 
         public NomeCompleto(string primeiroNome, string sobrenome)
         {
