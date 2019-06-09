@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Service", "1 - Service"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.Infra.Data", "src\IdentidadeAcesso\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj", "{59C3733A-4A21-4A91-9838-313ED4A40D6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentidadeAcesso.API", "src\IdentidadeAcesso.API\IdentidadeAcesso.API.csproj", "{37180054-D917-4C3B-A805-0AD0586592FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{59C3733A-4A21-4A91-9838-313ED4A40D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C3733A-4A21-4A91-9838-313ED4A40D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59C3733A-4A21-4A91-9838-313ED4A40D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37180054-D917-4C3B-A805-0AD0586592FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37180054-D917-4C3B-A805-0AD0586592FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37180054-D917-4C3B-A805-0AD0586592FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37180054-D917-4C3B-A805-0AD0586592FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{82219891-65EB-499C-8434-F4B02F743866} = {787C8E6C-08A3-4A7B-869C-7985C65ED024}
 		{043045B9-1A1F-4663-BBB0-200D75B4FCA6} = {18921978-4A4B-4AA5-829E-10AB2CBD2D26}
 		{59C3733A-4A21-4A91-9838-313ED4A40D6C} = {9B2B1D0A-E1F9-4C66-86DD-FB8D50DCB689}
+		{37180054-D917-4C3B-A805-0AD0586592FB} = {043045B9-1A1F-4663-BBB0-200D75B4FCA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41FA9BF4-E732-429E-A3AC-B0AE77B8AEB0}
