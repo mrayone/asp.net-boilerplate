@@ -1,6 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using Knowledge.IO.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
@@ -17,16 +18,17 @@ namespace Knowledge.IO.Infra.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Perfil> Perfis { get; set; }
         public DbSet<Permissao> Permissoes { get; set; }
-        public DbSet<PerfilPermissao> PerfilPermissao { get; set; }
         public IdentidadeAcessoContext(DbContextOptions<IdentidadeAcessoContext> options) : base(options)
         { }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new PerfilEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PermissaoAssinadaEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new PermissaoEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
         }
-
     }
 
     public class IdentidadeAcessoContextDesignFactory : IDesignTimeDbContextFactory<IdentidadeAcessoContext>
