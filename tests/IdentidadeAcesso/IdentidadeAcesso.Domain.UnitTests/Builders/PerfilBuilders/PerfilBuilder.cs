@@ -7,7 +7,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders
 {
     public class PerfilBuilder
     {
-        public static Perfil ObterPerfilValido()
+        public static Perfil ObterPerfil()
         {
             var ident = IdentificacaoBuilder.ObterValido();
             return new Perfil(ident);

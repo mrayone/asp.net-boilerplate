@@ -14,11 +14,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
     public class Perfil : Entity, IAggregateRoot
     {
-        private List<Permissao> _permissoes;
-
+        private List<PermissaoAssinada> _permissoesAssinadas;
         public Identificacao Identifacao { get; private set; }
-        public IReadOnlyCollection<Permissao> Permissoes => _permissoes;
-
+        public IReadOnlyCollection<PermissaoAssinada> PermissoesAssinadas => _permissoesAssinadas;
         public DateTime DeletadoEm { get; private set; }
 
         public Status Status { get; private set; }
@@ -31,47 +29,40 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
-            _permissoes = new List<Permissao>();
+            _permissoesAssinadas = new List<PermissaoAssinada>();
         }
 
-        public void AdicionarPermissao(Permissao permissao)
+        public void AssinarPermissao(Guid permissaoId)
         {
-            if(EncontrarPermissao(permissao) == null)
+            var permissaoExistente = EncontrarPermissao(permissaoId);
+            if (permissaoExistente != null)
             {
-                _permissoes.Add(permissao);
+                permissaoExistente.AtivarAssinatura();
+            }
+            else
+            {
+                var permissaoAssinada = new PermissaoAssinada(permissaoId);
+                permissaoAssinada.AtivarAssinatura();
+                _permissoesAssinadas.Add(permissaoAssinada);
+            }
+        }
+
+        public void CancelarAssinatura(Guid permissaoId)
+        {
+            var permissaoExistente = EncontrarPermissao(permissaoId);
+            if (permissaoExistente == null)
+            {
+                _erros.AddIfNotExits("Essa permissão não contém assinatura.");
                 return;
             }
-
-            _erros.AddIfNotExits($"A permissão [{permissao.Atribuicao.Tipo} {permissao.Atribuicao.Valor}] já existe.");
+            permissaoExistente.DesativarAssinatura();
         }
 
-        private Permissao EncontrarPermissao(Permissao permissao)
+        private PermissaoAssinada EncontrarPermissao(Guid permissaoId)
         {
-            var existePermissao = _permissoes.Where(p => p == permissao).FirstOrDefault() ?? null;
+            var permissaoEncontrada = _permissoesAssinadas.Where(p => p.PermissaoId == permissaoId).FirstOrDefault();
 
-            return existePermissao;
-        }
-
-        public void DeletarPerfil()
-        {
-            if (_permissoes.Where(p => p.Status == Status.Ativo).Any())
-            {
-                _erros.AddIfNotExits("Este perfil não pode ser deletado pois possui permissões ativas.");
-                return;
-            }
-
-            Status = Status.Inativo;
-        }
-
-        public void DesativarPermissao(Permissao permissao)
-        {
-            var permissaoParaDesativar = EncontrarPermissao(permissao);
-            if(permissaoParaDesativar != null)
-            {
-                permissaoParaDesativar.Desativar();
-                return;
-            }
-            _erros.AddIfNotExits($"A permissão [{permissao.Atribuicao.Tipo} {permissao.Atribuicao.Valor}] não foi vinculada.");
+            return permissaoEncontrada;
         }
     }
 }
