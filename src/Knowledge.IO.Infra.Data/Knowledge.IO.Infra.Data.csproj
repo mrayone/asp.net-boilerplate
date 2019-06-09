@@ -18,8 +18,4 @@
     <ProjectReference Include="..\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="EntityConfigurations\" />
-  </ItemGroup>
-
 </Project>

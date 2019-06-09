@@ -1,21 +1,23 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 
 namespace Knowledge.IO.Infra.Data.Context
 {
     public class IdentidadeAcessoContext : DbContext
     {
+
+        public const string DEFAULT_SCHEMA = "identidade";
+
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Perfil> Perfis { get; set; }
         public DbSet<Permissao> Permissoes { get; set; }
-
-
+        public DbSet<PerfilPermissao> PerfilPermissao { get; set; }
         public IdentidadeAcessoContext(DbContextOptions<IdentidadeAcessoContext> options) : base(options)
         { }
 
@@ -32,7 +34,7 @@ namespace Knowledge.IO.Infra.Data.Context
         public IdentidadeAcessoContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<IdentidadeAcessoContext>()
-                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=KnowledgeIO;Trusted_Connection=True;MultipleActiveResultSets=true");
+                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true");
 
             return new IdentidadeAcessoContext(optionsBuilder.Options);
         }
