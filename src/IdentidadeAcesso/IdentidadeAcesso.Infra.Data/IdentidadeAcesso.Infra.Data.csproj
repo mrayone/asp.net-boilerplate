@@ -15,11 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentidadeAcesso\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EntityConfigurations\" />
+    <ProjectReference Include="..\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
   </ItemGroup>
 
 </Project>
