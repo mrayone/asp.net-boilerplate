@@ -1,11 +1,11 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 
 namespace IdentidadeAcesso.API.Application.Commands.Perfil
 {
-    public abstract class BasePerfilCommand
+    public abstract class BasePerfilCommand<T> : AbstractValidator<T> where T : BasePerfilCommand<T>
     {
-
         public Guid Id { get; protected set; }
         public string Nome { get; protected set; }
         public string Descricao { get; protected set; }

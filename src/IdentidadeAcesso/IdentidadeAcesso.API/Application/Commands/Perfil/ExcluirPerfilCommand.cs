@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.Perfil
 {
-    public class ExcluirPerfilCommand : BasePerfilCommand
+    public class ExcluirPerfilCommand : BasePerfilCommand<ExcluirPerfilCommand>
     {
         public ExcluirPerfilCommand(Guid id)
         {

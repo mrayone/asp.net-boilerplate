@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.Perfil
 {
-    public class CriarPerfilCommand : BasePerfilCommand
+    public class CriarPerfilCommand : BasePerfilCommand<CriarPerfilCommand>
     {
         public CriarPerfilCommand(Guid id, string nome, string descricao, string status,
             IList<PermissaoAssinadaDTO> permissoesAssinadas)

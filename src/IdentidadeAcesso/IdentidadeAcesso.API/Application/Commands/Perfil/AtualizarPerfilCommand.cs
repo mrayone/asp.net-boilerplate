@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.Perfil
 {
-    public class AtualizarPerfilCommand : BasePerfilCommand
+    public class AtualizarPerfilCommand : BasePerfilCommand<AtualizarPerfilCommand>
     {
         public AtualizarPerfilCommand(Guid id, string nome, string descricao, string status,
             IList<PermissaoAssinadaDTO> permissoesAssinadas)
