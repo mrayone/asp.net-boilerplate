@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentidadeAcesso\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
+    <ProjectReference Include="..\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
