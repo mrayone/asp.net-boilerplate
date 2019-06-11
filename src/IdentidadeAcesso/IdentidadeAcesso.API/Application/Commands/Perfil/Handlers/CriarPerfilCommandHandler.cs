@@ -1,5 +1,6 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
+using IdentidadeAcesso.Domain.SeedOfWork.Events;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using MediatR;
 using System;
@@ -25,7 +26,12 @@ namespace IdentidadeAcesso.API.Application.Commands.Perfil.Handlers
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!request.isValid()) return await Task.FromResult(request.isValid());
+            if (!request.isValid())
+            {
+                //TODO: Implementar domain notification
+                NotificarErros(request);
+                return await Task.FromResult(false);
+            };
             
 
 
