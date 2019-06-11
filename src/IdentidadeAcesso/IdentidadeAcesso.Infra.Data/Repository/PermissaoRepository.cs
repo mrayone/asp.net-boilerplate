@@ -7,7 +7,7 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class PerfilPermissaoRepository : Repository<Perfil>, IPerfilRepository
     {
-        public PerfilPermissaoRepository(IdentidadeAcessoContext context, IUnitOfWork uow) : base(context, uow)
+        public PerfilPermissaoRepository(IdentidadeAcessoContext context) : base(context)
         {
 
         }

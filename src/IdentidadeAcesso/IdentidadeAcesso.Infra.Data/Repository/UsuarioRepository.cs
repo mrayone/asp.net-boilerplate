@@ -10,7 +10,7 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     {
-        public UsuarioRepository(IdentidadeAcessoContext context, IUnitOfWork uow) : base(context, uow)
+        public UsuarioRepository(IdentidadeAcessoContext context) : base(context)
         {
 
         }

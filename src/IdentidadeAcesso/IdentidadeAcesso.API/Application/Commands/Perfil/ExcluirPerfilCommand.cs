@@ -11,5 +11,10 @@ namespace IdentidadeAcesso.API.Application.Commands.Perfil
         {
             Id = id;
         }
+
+        public override bool isValid()
+        {
+            return true;
+        }
     }
 }

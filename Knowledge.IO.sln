@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.Infra.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.API", "src\IdentidadeAcesso\IdentidadeAcesso.API\IdentidadeAcesso.API.csproj", "{9500CAF6-0A52-4C0A-BAD4-15A9CAA29FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentidadeAcesso.Services.Tests", "tests\IdentidadeAcesso\IdentidadeAcesso.Services.Tests\IdentidadeAcesso.Services.Tests.csproj", "{6821345E-311F-4AB2-8CA5-A626E0A78B26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentidadeAcesso.Services.UnitTests", "tests\IdentidadeAcesso\IdentidadeAcesso.Services.Tests\IdentidadeAcesso.Services.UnitTests.csproj", "{6821345E-311F-4AB2-8CA5-A626E0A78B26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

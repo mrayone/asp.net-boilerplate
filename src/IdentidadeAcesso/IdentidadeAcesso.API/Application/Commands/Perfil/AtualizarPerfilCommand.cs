@@ -7,7 +7,7 @@ namespace IdentidadeAcesso.API.Application.Commands.Perfil
 {
     public class AtualizarPerfilCommand : BasePerfilCommand<AtualizarPerfilCommand>
     {
-        public AtualizarPerfilCommand(Guid id, string nome, string descricao, string status,
+        public AtualizarPerfilCommand(Guid id, string nome, string descricao, bool status,
             IList<PermissaoAssinadaDTO> permissoesAssinadas)
         {
             Id = id;
@@ -15,6 +15,11 @@ namespace IdentidadeAcesso.API.Application.Commands.Perfil
             Descricao = descricao;
             Status = status;
             PermissoesAssinadas = permissoesAssinadas;
+        }
+
+        public override bool isValid()
+        {
+            return true;
         }
     }
 }
