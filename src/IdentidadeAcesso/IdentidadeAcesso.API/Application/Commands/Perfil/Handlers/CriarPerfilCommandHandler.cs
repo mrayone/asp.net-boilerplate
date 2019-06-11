@@ -1,9 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
-using IdentidadeAcesso.Domain.SeedOfWork.Events;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,8 +31,6 @@ namespace IdentidadeAcesso.API.Application.Commands.Perfil.Handlers
                 return await Task.FromResult(false);
             };
             
-
-
             return await Task.FromResult(false);
         }
     }

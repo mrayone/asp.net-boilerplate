@@ -18,6 +18,7 @@
   <ItemGroup>
     <Folder Include="Application\Commands\Permissao\" />
     <Folder Include="Application\Commands\Usuario\" />
+    <Folder Include="Application\DomainEventHandlers\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
 

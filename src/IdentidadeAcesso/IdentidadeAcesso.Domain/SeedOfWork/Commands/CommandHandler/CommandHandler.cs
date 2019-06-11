@@ -1,5 +1,5 @@
-﻿using IdentidadeAcesso.Domain.SeedOfWork.Events;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
 using System.Collections.Generic;
