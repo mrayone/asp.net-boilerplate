@@ -6,12 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentidadeAcesso\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
+    <ProjectReference Include="..\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\Commands\PermissaoCommands\" />
+    <Folder Include="Application\Commands\UsuarioCommands\" />
+    <Folder Include="Application\DomainEventHandlers\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,18 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using Knowledge.IO.Infra.Data.Context;
 
 namespace Knowledge.IO.Infra.Data.Repository
 {
-    public class PerfilPermissaoRepository : Repository<Perfil>, IPerfilRepository
+    public class PermissaoRepository : Repository<Permissao>, IPermissaoRepository
     {
-        public PerfilPermissaoRepository(IdentidadeAcessoContext context, IUnitOfWork uow) : base(context, uow)
+        public PermissaoRepository(IdentidadeAcessoContext context) : base(context)
         {
 
         }

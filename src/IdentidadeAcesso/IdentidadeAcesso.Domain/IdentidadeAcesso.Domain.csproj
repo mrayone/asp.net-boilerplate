@@ -8,4 +8,9 @@
     <Folder Include="AggregatesModel\PermissaoAggregate\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.4.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>
