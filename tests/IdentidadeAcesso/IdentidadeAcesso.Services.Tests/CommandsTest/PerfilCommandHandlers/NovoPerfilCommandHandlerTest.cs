@@ -7,6 +7,7 @@ using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builders;
 using MediatR;
 using Moq;
 using System;
@@ -35,9 +36,9 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             _notifications = new Mock<DomainNotificationHandler>();
 
 
-            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(PerfilFalso().Identifacao.Nome)).Returns(PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(TestBuilder.PerfilFalso().Identifacao.Nome)).Returns(TestBuilder.PerfilFalso());
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
 
         }
 
@@ -46,7 +47,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_retorna_falso_se_o_perfil_estiver_invalidoAsync()
         {
             //arrange
-            var command = FalsoPerfilRequestComPermissoes();
+            var command = TestBuilder.FalsoPerfilRequestComPermissoes();
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
@@ -62,7 +63,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         [Trait("Handler - Perfil", "NovoPerfil")]
         public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
         {
-            var command = FalsoPerfilRequestComNomeExistente();
+            var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
             
             _uow.Setup(u => u.Commit()).Returns(CommandResponse.Fail);
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
@@ -81,7 +82,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         [Trait("Handler - Perfil", "NovoPerfil")]
         public async Task Handle_deve_persistir_um_perfil_com_sucesso()
         {
-            var command = FalsoPerfilRequestOk();
+            var command = TestBuilder.FalsoPerfilRequestOk();
             _uow.Setup(u => u.Commit()).Returns(CommandResponse.Ok);
             
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
@@ -92,66 +93,6 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
 
             //assert
             result.Should().BeTrue();
-        }
-
-        private Perfil PerfilFalso()
-        {
-            var identificacao = new Identificacao("Perfil RH 01", "Perfil de acesso nível 1");
-            return new Perfil(identificacao);
-        }
-
-        private CriarPerfilCommand FalsoPerfilRequestComPermissoes()
-        {
-            return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
-                nome: "1",
-                descricao: "a",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
-                    }
-                );
-        }
-
-        private CriarPerfilCommand FalsoPerfilRequestComNomeExistente()
-        {
-            return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
-                nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
-                    }
-                );
-        }
-
-        private CriarPerfilCommand FalsoPerfilRequestOk()
-        {
-            return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
-                nome: "Perfil RH 02",
-                descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
-                    }
-                );
         }
     }
 }
