@@ -9,13 +9,27 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
 {
     public class CommandHandler
     {
-        IMediator _mediator;
-        IUnitOfWork _unitOfWork;
+        readonly IMediator _mediator;
+        readonly IUnitOfWork _unitOfWork;
+        readonly DomainNotificationHandler _notifications;
 
-        public CommandHandler(IMediator mediator, IUnitOfWork unitOfWork)
+        public CommandHandler(IMediator mediator, IUnitOfWork unitOfWork, 
+            INotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;
             _unitOfWork = unitOfWork;
+            _notifications = (DomainNotificationHandler)notifications;
+        }
+
+        public bool Commit()
+        {
+            if (_notifications.HasNotifications()) return false;
+
+            if (_unitOfWork.Commit().Success) return true;
+
+            _mediator.Publish(new DomainNotification("Commit", "Ocorreu um erro ao persistir os dados."));
+
+            return false;
         }
 
         protected void NotificarErros(ICommand request)
@@ -25,5 +39,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
                 _mediator.Publish(new DomainNotification(request.GetType().Name, item.ErrorMessage));
             }
         }
+
     }
 }

@@ -4,7 +4,7 @@ using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace IdentidadeAcesso.API.Application.Commands.Perfil
+namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public abstract class BasePerfilCommand<T> : ICommand where T: BasePerfilCommand<T>
     {

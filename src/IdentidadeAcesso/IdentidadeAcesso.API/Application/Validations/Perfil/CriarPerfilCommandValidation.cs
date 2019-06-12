@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using IdentidadeAcesso.API.Application.Commands;
-using IdentidadeAcesso.API.Application.Commands.Perfil;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
