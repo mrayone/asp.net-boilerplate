@@ -34,8 +34,8 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             _uow = new Mock<IUnitOfWork>();
             _notifications = new Mock<DomainNotificationHandler>();
 
-            
-            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(It.IsAny<string>())).Returns(PerfilFalso());
+
+            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(PerfilFalso().Identifacao.Nome)).Returns(PerfilFalso());
 
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(PerfilFalso());
 
@@ -72,7 +72,8 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, cancelToken);
 
             //assert
-            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.AtLeastOnce());
+            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
+            result.Should().BeFalse();
         }
 
 
@@ -82,7 +83,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         {
             var command = FalsoPerfilRequestOk();
             _uow.Setup(u => u.Commit()).Returns(CommandResponse.Ok);
-
+            
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 

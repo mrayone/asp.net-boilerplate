@@ -41,6 +41,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             if (perfilExistente != null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
+                return await Task.FromResult(false);
             }
 
             var perfil = DefinirPerfil(request);
