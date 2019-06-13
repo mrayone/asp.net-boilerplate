@@ -52,7 +52,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             var permissaoExistente = EncontrarPermissao(permissaoId);
             if (permissaoExistente == null)
             {
-                _erros.AddIfNotExits("Essa permissão não contém assinatura.");
                 return;
             }
             permissaoExistente.DesativarAssinatura();
