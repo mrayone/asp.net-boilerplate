@@ -4,6 +4,7 @@ using Knowledge.IO.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Knowledge.IO.Infra.Data.UoW
 {
@@ -16,9 +17,9 @@ namespace Knowledge.IO.Infra.Data.UoW
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public CommandResponse Commit()
+        public async Task<CommandResponse> Commit()
         {
-            return Context.SaveChanges() > 0 ? CommandResponse.Ok : CommandResponse.Fail;
+            return await Context.SaveChangesAsync() > 0 ? CommandResponse.Ok : CommandResponse.Fail;
         }
 
         public void Dispose()

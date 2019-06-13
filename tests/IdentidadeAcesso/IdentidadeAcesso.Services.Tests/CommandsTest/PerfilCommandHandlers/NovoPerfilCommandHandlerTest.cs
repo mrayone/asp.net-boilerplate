@@ -65,7 +65,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         {
             var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
             
-            _uow.Setup(u => u.Commit()).Returns(CommandResponse.Fail);
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
@@ -83,7 +83,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_persistir_um_perfil_com_sucesso()
         {
             var command = TestBuilder.FalsoPerfilRequestOk();
-            _uow.Setup(u => u.Commit()).Returns(CommandResponse.Ok);
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();

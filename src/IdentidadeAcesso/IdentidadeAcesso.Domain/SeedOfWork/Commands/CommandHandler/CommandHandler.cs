@@ -4,6 +4,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
 {
@@ -13,7 +14,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
         readonly IUnitOfWork _unitOfWork;
         readonly DomainNotificationHandler _notifications;
 
-        public CommandHandler(IMediator mediator, IUnitOfWork unitOfWork, 
+        public CommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;
@@ -21,15 +22,16 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
             _notifications = (DomainNotificationHandler)notifications;
         }
 
-        public bool Commit()
+        public async Task<bool> Commit()
         {
             if (_notifications.HasNotifications()) return false;
 
-            if (_unitOfWork.Commit().Success) return true;
+            var result = await _unitOfWork.Commit();
+            if (result.Success) return await Task.FromResult(true);
 
-            _mediator.Publish(new DomainNotification("Commit", "Ocorreu um erro ao persistir os dados."));
+            await _mediator.Publish(new DomainNotification("Commit", "Ocorreu um erro ao persistir os dados."));
 
-            return false;
+            return await Task.FromResult(false);
         }
 
         protected void NotificarErros(ICommand request)

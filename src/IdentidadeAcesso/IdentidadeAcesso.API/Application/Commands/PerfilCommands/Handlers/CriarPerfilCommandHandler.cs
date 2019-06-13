@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             _perfilRepository.Adicionar(perfil);
             
-            if(Commit())
+            if(await Commit())
             {
                 await _mediator.Publish(new PerfilCriadoEvent(perfil));
             }
