@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
     <ProjectReference Include="..\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
   </ItemGroup>
 

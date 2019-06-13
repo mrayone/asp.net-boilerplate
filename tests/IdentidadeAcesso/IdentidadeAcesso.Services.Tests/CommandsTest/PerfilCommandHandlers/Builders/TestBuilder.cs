@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 status: true,
                 permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true)
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), false)
                     }
                 );
         }
@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 status: true,
                 permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true)
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
                     }
                 );
         }
@@ -52,8 +52,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 status: true,
                 permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true),
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), false)
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), true),
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
                     }
                 );
         }
@@ -67,8 +67,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 status: true,
                 permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true),
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), false)
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
                     }
                 );
         }

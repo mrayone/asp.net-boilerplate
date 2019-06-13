@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
@@ -22,6 +23,13 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public override bool isValid()
         {
             ValidationResult = new CriarPerfilCommandValidation().Validate(this);
+            foreach (var item in PermissoesAssinadas)
+            {
+                if(!item.isValid())
+                {
+                    ValidationResult.Errors.AddRangeIfNotEmpty(item.ValidationResult.Errors);
+                } 
+            }
             return ValidationResult.IsValid;
         }
     }

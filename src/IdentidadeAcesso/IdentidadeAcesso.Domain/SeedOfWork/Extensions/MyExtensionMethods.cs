@@ -7,7 +7,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Extensions
 {
     public static class MyExtensionMethods
     {
-        public static void AddRangeIfNotEmpty<T>(this List<T> lista, IEnumerable<T> collection)
+        public static void AddRangeIfNotEmpty<T>(this IList<T> lista, IEnumerable<T> collection)
         {
             if (!collection.Any()) return;
 
@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Extensions
             }
         }
 
-        public static void AddIfNotExits<T>(this List<T> lista, T value)
+        public static void AddIfNotExits<T>(this IList<T> lista, T value)
         {
             if (lista.Contains(value)) return;
 

@@ -47,7 +47,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             }
         }
 
-        public void CancelarAssinatura(Guid permissaoId)
+        public void CancelarPermissao(Guid permissaoId)
         {
             var permissaoExistente = EncontrarPermissao(permissaoId);
             if (permissaoExistente == null)

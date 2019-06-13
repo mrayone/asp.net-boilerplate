@@ -45,30 +45,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             perfil.AssinarPermissao(permissao.Id);
 
             //act
-            perfil.CancelarAssinatura(permissao.Id);
+            perfil.CancelarPermissao(permissao.Id);
             var permissaoAssinada = perfil.PermissoesAssinadas.FirstOrDefault();
             var isValid = perfil.EhValido();
             //assert
             permissaoAssinada.Status.Should().Be(Status.Inativo);
             perfil.Erros.Should().BeEmpty();
 
-        }
-
-        [Fact(DisplayName = "Deve cancelar apenas assinaturas existentes caso contrario retornar um erro.")]
-        [Trait("Raiz de Agregação", "Perfil")]
-        public void deve_cancelar_apenas_assinaturas_existentes_caso_contratrio_retornar_um_erro()
-        {
-            //arrange
-            var permissao = new Permissao(AtribuicaoBuilder.ObterAtribuicaoValida());
-            var perfil = PerfilBuilder.ObterPerfil();
-            perfil.AssinarPermissao(permissao.Id);
-
-            //act
-            perfil.CancelarAssinatura(Guid.NewGuid());
-
-            //assert
-            perfil.EhValido().Should().BeFalse();
-            perfil.Erros.Should().NotBeEmpty();
         }
 
         [Fact(DisplayName = "Deve ativar a permissão caso ela ja exista.")]
@@ -81,7 +64,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
 
             //act
             perfil.AssinarPermissao(permissao.Id);
-            perfil.CancelarAssinatura(permissao.Id);
+            perfil.CancelarPermissao(permissao.Id);
             perfil.AssinarPermissao(permissao.Id);
 
             //assert
