@@ -7,7 +7,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
     {
         public static Sexo Masculino = new Sexo("M");
         public static Sexo Feminino = new Sexo("F");
-        //TODO: Transformar em Value Object e limitar a tipo F ou M com.
         public string Tipo { get; private set; }
 
         private Sexo(string tipo)

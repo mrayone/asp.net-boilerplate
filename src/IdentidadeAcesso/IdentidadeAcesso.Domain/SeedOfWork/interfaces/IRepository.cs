@@ -7,6 +7,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity, IAggregateRoot
     {
+        //TODO: deixar os métodos assincronos.
         void Adicionar(TEntity obj);
         TEntity ObterPorId(Guid id);
         IEnumerable<TEntity> ObterTodos();

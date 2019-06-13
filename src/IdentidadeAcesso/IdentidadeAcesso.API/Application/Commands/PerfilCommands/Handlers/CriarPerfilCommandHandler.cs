@@ -32,7 +32,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             if (!request.isValid())
             {
-                //TODO: Implementar domain notification
                 NotificarErros(request);
                 return await Task.FromResult(false);
             };
