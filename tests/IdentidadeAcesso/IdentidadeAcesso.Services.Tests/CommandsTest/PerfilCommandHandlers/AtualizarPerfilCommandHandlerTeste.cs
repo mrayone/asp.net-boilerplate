@@ -36,7 +36,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
         /*
          * TODO:Testes ao atualizar perfil devem verificar estado de permissoes e do perfil.
-         * Não pode cancelar uma assinatura que não foi assinada.
          * Não pode atualizar um perfil invalido.
          * Não pode atualizar um perfil com um nome existen.
          */ 

@@ -22,13 +22,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "1",
                 descricao: "a",
                 status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true)
                     }
                 );
         }
@@ -40,13 +36,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "1",
                 descricao: "a",
                 status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true)
                     }
                 );
         }
@@ -58,13 +50,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
                 status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true),
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), false)
                     }
                 );
         }
@@ -76,13 +65,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "Perfil RH 02",
                 descricao: "Perfil de acesso nível 1",
                 status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
                     {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid(),
-                            Status = true
-                        }
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), true),
+                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), false)
                     }
                 );
         }

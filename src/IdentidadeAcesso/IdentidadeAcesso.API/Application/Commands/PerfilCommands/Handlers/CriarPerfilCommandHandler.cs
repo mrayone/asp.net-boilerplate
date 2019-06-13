@@ -59,9 +59,9 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             var perfil = new Perfil(new Identificacao(request.Nome, request.Descricao));
 
-            foreach (var permissao in request.PermissoesAssinadas)
+            foreach (var item in request.PermissoesAssinadas)
             {
-                perfil.AssinarPermissao(permissao.PermissaoId);
+                perfil.AssinarPermissao(item.PermissaoId);
             }
 
             return perfil;
