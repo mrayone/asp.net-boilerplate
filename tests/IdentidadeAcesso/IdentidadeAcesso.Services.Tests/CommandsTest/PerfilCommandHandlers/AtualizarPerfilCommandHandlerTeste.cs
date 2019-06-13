@@ -1,4 +1,6 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+﻿using FluentAssertions;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builders;
@@ -37,14 +39,22 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
          * Não pode cancelar uma assinatura que não foi assinada.
          * Não pode atualizar um perfil invalido.
          * Não pode atualizar um perfil com um nome existen.
-         * 
          */ 
 
         [Fact(DisplayName = "O handle deve retornar falso se perfil invalido")]
         [Trait("Handler - Perfil", "AtualizarPerfil")]
         public async Task Handle_deve_retornar_falso_se_perfil_invalido()
         {
+            //arrange
+            var command = TestBuilder.FalsoAtualizarPerfilRequestComPermissoes();
+            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
+            var cancelToken = new System.Threading.CancellationToken();
 
+            //act
+            var result = await handler.Handle(command, cancelToken);
+
+            //assert
+            result.Should().BeFalse();
         }
     }
 }

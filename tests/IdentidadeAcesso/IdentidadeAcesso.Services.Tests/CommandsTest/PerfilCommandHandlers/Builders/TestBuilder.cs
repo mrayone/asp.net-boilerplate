@@ -33,6 +33,24 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 );
         }
 
+        public static AtualizarPerfilCommand FalsoAtualizarPerfilRequestComPermissoes()
+        {
+            return new AtualizarPerfilCommand(
+                id: Guid.NewGuid(),
+                nome: "1",
+                descricao: "a",
+                status: true,
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                    {
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid(),
+                            Status = true
+                        }
+                    }
+                );
+        }
+
         public static CriarPerfilCommand FalsoPerfilRequestComNomeExistente()
         {
             return new CriarPerfilCommand(
