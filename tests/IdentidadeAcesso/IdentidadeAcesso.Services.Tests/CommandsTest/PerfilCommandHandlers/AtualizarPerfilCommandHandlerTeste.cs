@@ -68,5 +68,22 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
             result.Should().BeFalse();
         }
+
+        [Fact(DisplayName = "O Handle deve persistir um perfil com sucesso.")]
+        [Trait("Handler - Perfil", "AtualizarPerfil")]
+        public async Task Handle_deve_persistir_um_perfil_com_sucesso()
+        {
+            var command = TestBuilder.AtualizarPerfilRequestOk();
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
+
+            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
+            var cancelToken = new System.Threading.CancellationToken();
+
+            //act
+            var result = await handler.Handle(command, cancelToken);
+
+            //assert
+            result.Should().BeTrue();
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.Events.PerfilEvents;
 using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
@@ -38,7 +41,29 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(false);
             }
 
+            var perfil = DefinirPerfil(request);
+
+            _perfilRepository.Adicionar(perfil);
+
+            if (await Commit())
+            {
+                await _mediator.Publish(new PerfilAtualizadoEvent(perfil));
+            }
+
             return await Task.FromResult(true);
+        }
+
+
+        private Perfil DefinirPerfil(AtualizarPerfilCommand request)
+        {
+            var perfil = new Perfil(new Identificacao(request.Nome, request.Descricao));
+
+            foreach (var item in request.PermissoesAssinadas)
+            {
+                perfil.AssinarPermissao(item.PermissaoId);
+            }
+
+            return perfil;
         }
     }
 }

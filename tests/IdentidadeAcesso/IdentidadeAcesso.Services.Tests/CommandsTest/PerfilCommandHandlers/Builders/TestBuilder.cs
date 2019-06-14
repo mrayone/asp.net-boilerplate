@@ -122,5 +122,22 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                     }
                 );
         }
+
+        public static AtualizarPerfilCommand AtualizarPerfilRequestOk()
+        {
+            return new AtualizarPerfilCommand(
+                id: Guid.NewGuid(),
+                nome: "Perfil RH 02",
+                descricao: "Perfil de acesso nível 1",
+                status: true,
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                    {
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
+                    }
+                );
+        }
     }
 }

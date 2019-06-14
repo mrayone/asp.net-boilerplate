@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
 
             RuleFor(command => command.PermissoesAssinadas).ForEach(permissaoAssinada =>
             {
-                permissaoAssinada.Must(p => p.PermissaoId == Guid.Empty).WithMessage("A permissão assinada não é valida.");
+                permissaoAssinada.Must(p => p.PermissaoId != Guid.Empty).WithMessage("A permissão assinada não é valida.");
             });
         }
     }
