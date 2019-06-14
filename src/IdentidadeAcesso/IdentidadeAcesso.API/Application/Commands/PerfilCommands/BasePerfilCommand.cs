@@ -13,9 +13,16 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public string Descricao { get; protected set; }
         public bool Status { get; protected set; }
 
-        public IList<AssinarPermissaoPerfilCommand> PermissoesAssinadas { get; protected set; }
+        public IList<PermissaoAssinadaDTO> PermissoesAssinadas { get; protected set; }
 
         public ValidationResult ValidationResult { get; set; }
         public abstract bool isValid();
+    }
+
+    public class PermissaoAssinadaDTO
+    {
+        public Guid PermissaoId { get; set; }
+        public Guid PerfilId { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -22,9 +22,16 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "1",
                 descricao: "a",
                 status: true,
-                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), false)
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        },
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        },
                     }
                 );
         }
@@ -36,24 +43,65 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "1",
                 descricao: "a",
                 status: true,
-                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
                     }
                 );
         }
 
-        public static CriarPerfilCommand FalsoPerfilRequestComNomeExistente()
+        public static CriarPerfilCommand FalsoAtualizarPerfilRequestComNomeExistente()
         {
             return new CriarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
                 status: true,
-                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), true),
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
+                     new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
+                    }
+                );
+        }
+
+        public static AtualizarPerfilCommand FalsoPerfilRequestComNomeExistente()
+        {
+            return new AtualizarPerfilCommand(
+                id: Guid.NewGuid(),
+                nome: "Perfil RH 01",
+                descricao: "Perfil de acesso nível 1",
+                status: true,
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                    {
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
+                    }
+                );
+        }
+
+
+
+        public static AtualizarPerfilCommand AtualizarPerfilFalsoRequestComPermissoes()
+        {
+            return new AtualizarPerfilCommand(
+                id: Guid.NewGuid(),
+                nome: "Perfil RH 01",
+                descricao: "Perfil de acesso nível 1",
+                status: true,
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
+                    {
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
                     }
                 );
         }
@@ -65,10 +113,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 nome: "Perfil RH 02",
                 descricao: "Perfil de acesso nível 1",
                 status: true,
-                permissoesAssinadas: new List<AssinarPermissaoPerfilCommand>()
+                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
                     {
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid()),
-                        new AssinarPermissaoPerfilCommand(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid())
+                        new PermissaoAssinadaDTO()
+                        {
+                            PermissaoId = Guid.NewGuid()
+                        }
                     }
                 );
         }

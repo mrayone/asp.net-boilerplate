@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builders;
@@ -34,12 +35,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
         }
 
-        /*
-         * TODO:Testes ao atualizar perfil devem verificar estado de permissoes e do perfil.
-         * Não pode atualizar um perfil invalido.
-         * Não pode atualizar um perfil com um nome existen.
-         */ 
-
         [Fact(DisplayName = "O handle deve retornar falso se perfil invalido")]
         [Trait("Handler - Perfil", "AtualizarPerfil")]
         public async Task Handle_deve_retornar_falso_se_perfil_invalido()
@@ -53,6 +48,24 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, cancelToken);
 
             //assert
+            result.Should().BeFalse();
+        }
+
+        [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]
+        [Trait("Handler - Perfil", "AtualizarPerfil")]
+        public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
+        {
+            var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
+
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
+            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
+            var cancelToken = new System.Threading.CancellationToken();
+
+            //act
+            var result = await handler.Handle(command, cancelToken);
+
+            //assert
+            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
             result.Should().BeFalse();
         }
     }

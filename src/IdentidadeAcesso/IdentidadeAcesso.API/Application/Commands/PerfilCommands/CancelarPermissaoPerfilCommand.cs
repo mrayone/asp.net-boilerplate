@@ -7,6 +7,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class CancelarPermissaoPerfilCommand
     {
-
+        //TODO: Só pode cancelar permissões que já estejam no perfil.
     }
 }

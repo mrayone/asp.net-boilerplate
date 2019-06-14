@@ -63,7 +63,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         [Trait("Handler - Perfil", "NovoPerfil")]
         public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
         {
-            var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
+            var command = TestBuilder.FalsoAtualizarPerfilRequestComNomeExistente();
             
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);

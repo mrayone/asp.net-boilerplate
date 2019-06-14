@@ -31,6 +31,13 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(false);
             }
 
+            var perfilExistente = _perfilRepository.BuscarPorNome(request.Nome);
+            if (perfilExistente != null)
+            {
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
+                return await Task.FromResult(false);
+            }
+
             return await Task.FromResult(true);
         }
     }
