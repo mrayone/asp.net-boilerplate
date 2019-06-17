@@ -6,6 +6,7 @@ using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,10 +30,12 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!request.isValid())
+            var perfil = DefinirPerfil(request);
+
+            if (!ValidarCommand(request, perfil))
             {
                 return await Task.FromResult(false);
-            }
+            };
 
             var perfilExistente = _perfilRepository.BuscarPorNome(request.Nome);
             if (perfilExistente != null)
@@ -40,8 +43,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
                 return await Task.FromResult(false);
             }
-
-            var perfil = DefinirPerfil(request);
 
             _perfilRepository.Adicionar(perfil);
 
@@ -52,7 +53,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             return await Task.FromResult(true);
         }
-
 
         private Perfil DefinirPerfil(AtualizarPerfilCommand request)
         {

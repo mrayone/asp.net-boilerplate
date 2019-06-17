@@ -57,6 +57,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             permissaoExistente.DesativarAssinatura();
         }
 
+        public void Deletar()
+        {
+            DeletadoEm = DateTime.Now;
+        }
+
         private PermissaoAssinada EncontrarPermissao(Guid permissaoId)
         {
             var permissaoEncontrada = _permissoesAssinadas.Where(p => p.PermissaoId == permissaoId).FirstOrDefault();

@@ -41,13 +41,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if (ObterCEPLimpo(Cep).Length != DigMaxCep)
             {
-                ValidationResult.AdicionarErro("O CEP deve conter 8 dígitos.");
+                ValidationResult.AddError("CEP","O CEP deve conter 8 dígitos.");
                 return;
             }
 
             if (!Regex.IsMatch(Cep, CepPattern))
             {
-                ValidationResult.AdicionarErro("O CEP é inválido.");
+                ValidationResult.AddError("CEP","O CEP é inválido.");
                 return;
             }
         }

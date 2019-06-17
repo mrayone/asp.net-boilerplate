@@ -26,13 +26,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if (CPF.LimparFormatacaoCPF(Digitos).Length > MaxDigitos)
             {
-                ValidationResult.AdicionarErro("O CPF não pode possuir mais de 11 digitos.");
+                ValidationResult.AddError("CPF","O CPF não pode possuir mais de 11 digitos.");
                 return;
             }
 
             if (!CPFValido())
             {
-                ValidationResult.AdicionarErro("O CPF informado é inválido.");
+                ValidationResult.AddError("CPF","O CPF informado é inválido.");
                 return;
             }
         }

@@ -34,6 +34,23 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
             return await Task.FromResult(false);
         }
 
+        protected bool ValidarCommand(ICommand request, Entity entidade)
+        {
+            if (!request.isValid() || !entidade.EhValido())
+            {
+                foreach (var item in entidade.Erros)
+                {
+                    request.ValidationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(item.Property, item.MessageError));
+                }
+
+                NotificarErros(request);
+
+                return false;
+            }
+
+            return true;
+        }
+
         protected void NotificarErros(ICommand request)
         {
             foreach (var item in request.ValidationResult.Errors)

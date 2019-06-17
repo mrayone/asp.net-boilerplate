@@ -25,13 +25,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (Numero.Length > MaxNumeros)
             {
-                ValidationResult.AdicionarErro("O telefone não pode exceder 13 caracteres.");
+                ValidationResult.AddError("Telefone","O telefone não pode exceder 13 caracteres.");
                 return;
             }
 
             if (!Regex.IsMatch(Numero, Pattern ))
             {
-                ValidationResult.AdicionarErro("Telefone com formato inválido.");
+                ValidationResult.AddError("Telefone","Telefone com formato inválido.");
                 return;
             }
         }

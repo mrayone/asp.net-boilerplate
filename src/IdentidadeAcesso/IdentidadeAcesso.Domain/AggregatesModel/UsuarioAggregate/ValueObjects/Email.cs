@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!Regex.IsMatch(Endereco, Pattern))
             {
-                ValidationResult.AdicionarErro("O email informado não é um válido.");
+                ValidationResult.AddError("Email","O email informado não é um válido.");
             }
         }
 

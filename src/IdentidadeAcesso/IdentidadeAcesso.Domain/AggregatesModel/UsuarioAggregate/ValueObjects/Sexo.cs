@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if (string.IsNullOrEmpty(Tipo))
             {
-                ValidationResult.AdicionarErro("O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
+                ValidationResult.AddError("Sexo","O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
             }
         }
 

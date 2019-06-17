@@ -30,9 +30,11 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!request.isValid())
+
+            var perfil = DefinirPerfil(request);
+
+            if (!ValidarCommand(request, perfil))
             {
-                NotificarErros(request);
                 return await Task.FromResult(false);
             };
 
@@ -42,8 +44,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
                 return await Task.FromResult(false);
             }
-
-            var perfil = DefinirPerfil(request);
 
             _perfilRepository.Adicionar(perfil);
             

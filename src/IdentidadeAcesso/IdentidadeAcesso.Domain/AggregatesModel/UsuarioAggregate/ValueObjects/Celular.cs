@@ -25,13 +25,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         {
             if (Numero.Length > MaxNumeros)
             {
-                ValidationResult.AdicionarErro("O celular não pode exceder 14 caracteres.");
+                ValidationResult.AddError("Celular","O celular não pode exceder 14 caracteres.");
                 return;
             }
 
             if (!Regex.IsMatch(Numero, Pattern))
             {
-                ValidationResult.AdicionarErro("Celular com formato inválido.");
+                ValidationResult.AddError("Celular", "Celular com formato inválido.");
                 return;
             }
         }
