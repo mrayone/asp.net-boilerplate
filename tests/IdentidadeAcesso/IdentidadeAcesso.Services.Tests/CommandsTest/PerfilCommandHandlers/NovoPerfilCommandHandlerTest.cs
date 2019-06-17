@@ -13,6 +13,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<DomainNotificationHandler> _notifications;
-
+        private readonly IList<Perfil>_listMock;
         public NovoPerfilCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
@@ -35,11 +36,12 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             _uow = new Mock<IUnitOfWork>();
             _notifications = new Mock<DomainNotificationHandler>();
 
-
-            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(TestBuilder.PerfilFalso().Identifacao.Nome)).Returns(TestBuilder.PerfilFalso());
+            _listMock = new List<Perfil>()
+            { 
+                TestBuilder.PerfilFalso()
+            };
 
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
-
         }
 
         [Fact(DisplayName = "O Handle retorna falso se o perfil não for persistido.")]
@@ -64,8 +66,10 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
         {
             var command = TestBuilder.FalsoAtualizarPerfilRequestComNomeExistente();
-            
+            _perfilRepositoryMock.Setup(perfil => perfil.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
+             .Returns(_listMock);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
+
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
