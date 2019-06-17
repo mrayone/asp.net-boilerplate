@@ -30,12 +30,11 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
         {
+            if (!ValidarCommand(request)) return await Task.FromResult(false);
+
             var perfil = DefinirPerfil(request);
 
-            if (!ValidarCommand(request, perfil))
-            {
-                return await Task.FromResult(false);
-            };
+            if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
             var perfilExistente = _perfilRepository.BuscarPorNome(request.Nome);
             if (perfilExistente != null)
@@ -44,7 +43,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(false);
             }
 
-            _perfilRepository.Adicionar(perfil);
+            _perfilRepository.Atualizar(perfil);
 
             if (await Commit())
             {

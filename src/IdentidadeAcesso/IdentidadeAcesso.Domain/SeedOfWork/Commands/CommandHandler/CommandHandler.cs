@@ -34,16 +34,23 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
             return await Task.FromResult(false);
         }
 
-        protected bool ValidarCommand(ICommand request, Entity entidade)
+        protected bool ValidarCommand(ICommand request)
         {
-            if (!request.isValid() || !entidade.EhValido())
+            if (!request.isValid())
             {
-                foreach (var item in entidade.Erros)
-                {
-                    request.ValidationResult.Errors.Add(new FluentValidation.Results.ValidationFailure(item.Property, item.MessageError));
-                }
-
                 NotificarErros(request);
+
+                return false;
+            }
+
+            return true;
+        }
+
+        protected bool ValidarEntity(Entity entity)
+        {
+            if (!entity.EhValido())
+            {
+                NotificarErros(entity);
 
                 return false;
             }
@@ -56,6 +63,14 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
             foreach (var item in request.ValidationResult.Errors)
             {
                 _mediator.Publish(new DomainNotification(request.GetType().Name, item.ErrorMessage));
+            }
+        }
+
+        protected void NotificarErros(Entity entity)
+        {
+            foreach (var item in entity.Erros)
+            {
+                _mediator.Publish(new DomainNotification(item.Property, item.MessageError));
             }
         }
 

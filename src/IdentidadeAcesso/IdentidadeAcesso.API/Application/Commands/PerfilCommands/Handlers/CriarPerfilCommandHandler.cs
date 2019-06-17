@@ -30,13 +30,11 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
         {
+            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             var perfil = DefinirPerfil(request);
 
-            if (!ValidarCommand(request, perfil))
-            {
-                return await Task.FromResult(false);
-            };
+            if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
             var perfilExistente = _perfilRepository.BuscarPorNome(request.Nome);
             if (perfilExistente != null)
