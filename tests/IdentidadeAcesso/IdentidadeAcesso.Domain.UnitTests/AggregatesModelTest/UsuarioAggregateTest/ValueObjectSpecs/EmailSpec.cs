@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,9 +19,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var email = new Email("mariana.glogia.com");
 
             //act
-            email.ValidationResult.Erros.Should().Contain(new List<string>()
+            email.ValidationResult.Erros.Should().Contain(new List<ValidationError>()
             {
-                "O email informado não é um válido."
+                new ValidationError("Email","O email informado não é um válido.")
             });
         }
 

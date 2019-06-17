@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,9 +26,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             var celular = new Celular("+55189819286693");
 
-            var erros1 = new List<string>()
+            var erros1 = new List<ValidationError>()
             {
-                 "O celular não pode exceder 14 caracteres.",
+                 new ValidationError("Celular", "O celular não pode exceder 14 caracteres."),
             };
 
             celular.ValidationResult.Erros.Should().Contain(erros1);
@@ -48,9 +49,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_manter_seu_estado_invalido_e_retornar_erro_se_um_celular_invalido_for_fornecido(string numero, bool isValid)
         {
             var cel = new Celular(numero);
-            var dict = new List<string>()
+            var dict = new List<ValidationError>()
             {
-                "Celular com formato inválido.",
+                new ValidationError("Celular", "Celular com formato inválido."),
             };
 
             cel.ValidationResult.IsValid.Should().Be(isValid);

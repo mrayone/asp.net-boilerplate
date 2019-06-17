@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var isValid = sexo.EhValido();
 
             isValid.Should().BeFalse();
-            sexo.ValidationResult.Erros.Should().Contain(new List<string>()
+            sexo.ValidationResult.Erros.Should().Contain(new List<ValidationError>()
             {
-                "O sexo deve ser definido como 'Masculino' ou 'Feminino'."
+                new ValidationError("Sexo","O sexo deve ser definido como 'Masculino' ou 'Feminino'.")
             });
         }
 

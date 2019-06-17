@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //arr
             var idadeMin = DataDeNascimento.IdadeMin;
             var data = DataDeNascimentoBuilder.ObterDataInvalida();
-            var dict = new List<string>()
+            var dict = new List<ValidationError>()
             {
-                String.Format("A idade mínima requerida é de {0} anos.", idadeMin)
+                new ValidationError("DataDeNascimento",String.Format("A idade mínima requerida é de {0} anos.", idadeMin))
             };
 
             data.ValidationResult.IsValid.Should().BeFalse();

@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,9 +20,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var cpf = new CPF("1111.111.111-55");
             var cpf2 = new CPF("111111111155");
 
-            var cpfErro = new List<string>()
+            var cpfErro = new List<ValidationError>()
             {
-                "O CPF não pode possuir mais de 11 digitos."
+                 new ValidationError("CPF", "O CPF não pode possuir mais de 11 digitos.")
             };
 
             cpf.ValidationResult.Erros.Should().Contain(cpfErro);
@@ -81,9 +82,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             var cpf = new CPF("111.111.111-55");
 
-            var cpfErro = new List<string>()
+            var cpfErro = new List<ValidationError>()
             {
-                 "O CPF informado é inválido."
+                 new ValidationError("CPF", "O CPF informado é inválido.")
             };
 
             cpf.ValidationResult.Erros.Should().Contain(cpfErro);

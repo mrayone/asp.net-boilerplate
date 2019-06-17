@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,9 +20,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var isValid = endereco.ValidationResult.IsValid;
 
             isValid.Should().BeFalse();
-            endereco.ValidationResult.Erros.Should().Contain(new List<string>()
+            endereco.ValidationResult.Erros.Should().Contain(new List<ValidationError>()
             {
-                "O CEP deve conter 8 dígitos."
+               new ValidationError("CEP", "O CEP deve conter 8 dígitos.")
             });
         }
 
@@ -34,9 +35,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var isValid = endereco.ValidationResult.IsValid;
 
             isValid.Should().BeFalse();
-            endereco.ValidationResult.Erros.Should().Contain(new List<string>()
+            endereco.ValidationResult.Erros.Should().Contain(new List<ValidationError>()
             {
-                "O CEP é inválido."
+                new ValidationError("CEP", "O CEP é inválido.")
             });
         }
 

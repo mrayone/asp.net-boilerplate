@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             var totalDeAnos = (DateTime.Today - Data).TotalDays / 365.25;
             if (totalDeAnos < DataDeNascimento.IdadeMin)
             {
-                ValidationResult.AddError("Data de Nascimento", String.Format("A idade mínima requerida é de {0} anos.", DataDeNascimento.IdadeMin));
+                ValidationResult.AddError("DataDeNascimento", String.Format("A idade mínima requerida é de {0} anos.", DataDeNascimento.IdadeMin));
             }
         }
 

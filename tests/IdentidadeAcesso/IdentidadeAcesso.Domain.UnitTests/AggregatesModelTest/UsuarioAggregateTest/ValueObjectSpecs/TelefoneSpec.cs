@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         {
             var telefone = new Telefone("+5518328155976");
 
-            var erros1 = new List<string>()
+            var erros1 = new List<ValidationError>()
             {
-                "O telefone não pode exceder 13 caracteres.",
+                new ValidationError("Telefone","O telefone não pode exceder 13 caracteres."),
             };
 
             telefone.ValidationResult.Erros.Should().Contain(erros1);
@@ -46,9 +47,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void deve_manter_seu_estado_invalido_e_retornar_erro_se_um_telefone_invalido_for_fornecido(string numero, bool isValid)
         {
             var tel = new Telefone(numero);
-            var dict = new List<string>()
+            var dict = new List<ValidationError>()
             {
-                 "Telefone com formato inválido.",
+                 new ValidationError("Telefone","Telefone com formato inválido."),
             };
 
             tel.ValidationResult.IsValid.Should().Be(isValid);
