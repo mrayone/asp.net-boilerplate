@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders
         public static Perfil ObterPerfil()
         {
             var ident = IdentificacaoBuilder.ObterValido();
-            return new Perfil(Guid.NewGuid(), ident);
+            return new Perfil(ident);
         }
     }
 }

@@ -33,6 +33,8 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 
+            if ( !await PerfilExitente(request)) return await Task.FromResult(false);
+
             var perfil = DefinirPerfil(request);
 
             if (!ValidarEntity(perfil)) return await Task.FromResult(false);
@@ -54,9 +56,18 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             return await Task.FromResult(true);
         }
 
+        private async Task<bool> PerfilExitente(AtualizarPerfilCommand request)
+        {
+            var perfil = _perfilRepository.ObterPorId(request.Id);
+            if (perfil != null) return true;
+
+            await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
+            return false;
+        }
+
         private Perfil DefinirPerfil(AtualizarPerfilCommand request)
         {
-            var perfil = new Perfil(request.Id, new Identificacao(request.Nome, request.Descricao));
+            var perfil = Perfil.PerfilFactory.NovoPerfil(request.Id,request.Nome, request.Descricao);
 
             foreach (var item in request.PermissoesAssinadas)
             {

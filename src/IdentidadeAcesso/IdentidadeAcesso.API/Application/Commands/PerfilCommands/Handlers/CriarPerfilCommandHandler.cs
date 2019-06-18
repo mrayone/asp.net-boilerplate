@@ -55,7 +55,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         private Perfil DefinirPerfil(CriarPerfilCommand request)
         {
-            var perfil = new Perfil(request.Id, new Identificacao(request.Nome, request.Descricao));
+            var perfil = new Perfil(new Identificacao(request.Nome, request.Descricao));
 
             foreach (var item in request.PermissoesAssinadas)
             {
