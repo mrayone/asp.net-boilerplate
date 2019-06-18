@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Validations.Perfil
 {
-    public class ExcluirPerfilCommandValidation : ValidacaoPerfil<ExcluirPerfilCommand>
+    public class ExcluirPerfilCommandValidation : AbstractValidator<ExcluirPerfilCommand>
     {
         public ExcluirPerfilCommandValidation()
         {

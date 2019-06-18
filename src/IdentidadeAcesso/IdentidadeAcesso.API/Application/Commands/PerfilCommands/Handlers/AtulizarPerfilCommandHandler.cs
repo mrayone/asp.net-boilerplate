@@ -59,10 +59,10 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         private async Task<bool> PerfilExitente(AtualizarPerfilCommand request)
         {
             var perfil = _perfilRepository.ObterPorId(request.Id);
-            if (perfil != null) return true;
+            if (perfil != null) return await Task.FromResult(true);
 
             await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
-            return false;
+            return await Task.FromResult(true);
         }
 
         private Perfil DefinirPerfil(AtualizarPerfilCommand request)

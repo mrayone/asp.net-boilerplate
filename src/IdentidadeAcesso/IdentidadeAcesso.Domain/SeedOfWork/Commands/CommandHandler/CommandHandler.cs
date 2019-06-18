@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
 
         public async Task<bool> Commit()
         {
-            if (_notifications.HasNotifications()) return false;
+            if (_notifications.HasNotifications()) return await Task.FromResult(false);
 
             var result = await _unitOfWork.Commit();
             if (result.Success) return await Task.FromResult(true);

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using IdentidadeAcesso.API.Application.Validations.Perfil;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 
         public override bool isValid()
         {
-            return true;
+            ValidationResult = new ExcluirPerfilCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 }
