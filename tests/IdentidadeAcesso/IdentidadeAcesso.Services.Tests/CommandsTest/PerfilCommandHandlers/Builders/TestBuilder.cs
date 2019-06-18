@@ -12,7 +12,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public static Perfil PerfilFalso()
         {
             var identificacao = new Identificacao("Perfil RH 01", "Perfil de acesso nível 1");
-            return new Perfil(identificacao);
+            return new Perfil(Guid.NewGuid(), identificacao);
         }
 
         public static CriarPerfilCommand FalsoPerfilRequestComPermissoes()

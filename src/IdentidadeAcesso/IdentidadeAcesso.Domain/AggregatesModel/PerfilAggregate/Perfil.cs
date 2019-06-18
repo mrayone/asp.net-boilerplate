@@ -22,13 +22,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Status Status { get; private set; }
 
         protected Perfil()
-        {
-            Id = Guid.NewGuid();
-        }
+        { }
 
-        public Perfil(Identificacao identificacao) : this()
+        public Perfil(Guid id, Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
+            Id = id;
             _permissoesAssinadas = new List<PermissaoAssinada>();
         }
 
