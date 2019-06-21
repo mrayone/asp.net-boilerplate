@@ -21,6 +21,7 @@
     <Folder Include="Application\Commands\UsuarioCommands\" />
     <Folder Include="Application\DomainEventHandlers\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

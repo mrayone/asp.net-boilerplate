@@ -52,7 +52,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             result.Should().Be(false);
         }
 
-        [Fact(DisplayName = "O deve retornar falso se o perfil não existir.")]
+        [Fact(DisplayName = "O handle deve retornar falso se o perfil não existir.")]
         [Trait("Handler - Perfil", "ExcluirPerfil")]
         public async Task Handle_deve_retornar_falso_se_perfil_nao_existir()
         {

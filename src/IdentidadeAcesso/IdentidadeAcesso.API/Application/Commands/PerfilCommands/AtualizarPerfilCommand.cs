@@ -1,5 +1,4 @@
 ﻿using IdentidadeAcesso.API.Application.Validations.Perfil;
-using IdentidadeAcesso.API.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;

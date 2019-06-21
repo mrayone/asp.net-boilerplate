@@ -15,6 +15,17 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new Perfil(identificacao);
         }
 
+        public static Perfil PerfilFalsoComPermissoes()
+        {
+            var identificacao = new Identificacao("Perfil RH 01", "Perfil de acesso nível 1");
+            var perfil = new Perfil(identificacao);
+
+            perfil.AssinarPermissao(Guid.NewGuid());
+            perfil.AssinarPermissao(Guid.NewGuid());
+
+            return perfil;
+        }
+
         public static CriarPerfilCommand FalsoPerfilRequestComPermissoes()
         {
             return new CriarPerfilCommand(
