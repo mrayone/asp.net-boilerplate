@@ -16,10 +16,5 @@ namespace Knowledge.IO.Infra.Data.Repository
         {
 
         }
-
-        public Perfil BuscarPorNome(string nome)
-        {
-            return DbSet.AsNoTracking().Where(p => p.Identifacao.Nome == nome).SingleOrDefault();
-        }
     }
 }

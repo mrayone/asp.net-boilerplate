@@ -30,16 +30,14 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
         {
+            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             var perfil = DefinirPerfil(request);
 
-            if (!ValidarCommand(request, perfil))
-            {
-                return await Task.FromResult(false);
-            };
+            if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
-            var perfilExistente = _perfilRepository.BuscarPorNome(request.Nome);
-            if (perfilExistente != null)
+            var perfilExistente = _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);
+            if (perfilExistente.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
                 return await Task.FromResult(false);

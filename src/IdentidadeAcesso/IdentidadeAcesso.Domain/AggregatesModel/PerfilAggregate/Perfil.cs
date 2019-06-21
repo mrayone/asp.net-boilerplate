@@ -24,12 +24,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         protected Perfil()
         {
             Id = Guid.NewGuid();
+            _permissoesAssinadas = new List<PermissaoAssinada>();
         }
 
         public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
-            _permissoesAssinadas = new List<PermissaoAssinada>();
+            
         }
 
         public void AssinarPermissao(Guid permissaoId)
@@ -67,6 +68,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             var permissaoEncontrada = _permissoesAssinadas.Where(p => p.PermissaoId == permissaoId).FirstOrDefault();
 
             return permissaoEncontrada;
+        }
+
+
+        public class PerfilFactory
+        {
+            public static Perfil NovoPerfil(Guid id, string nome, string descricao)
+            {
+                return new Perfil()
+                {
+                    Id = id,
+                    Identifacao = new Identificacao(nome, descricao)
+                };
+            }
         }
     }
 }

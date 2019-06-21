@@ -7,6 +7,5 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository
 {
     public interface IPerfilRepository : IRepository<Perfil>
     {
-        Perfil BuscarPorNome(string nome);
     }
 }

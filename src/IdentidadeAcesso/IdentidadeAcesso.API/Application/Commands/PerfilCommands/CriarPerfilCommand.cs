@@ -1,10 +1,7 @@
 ﻿using IdentidadeAcesso.API.Application.Validations.Perfil;
-using IdentidadeAcesso.API.Extensions;
 using MediatR;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {

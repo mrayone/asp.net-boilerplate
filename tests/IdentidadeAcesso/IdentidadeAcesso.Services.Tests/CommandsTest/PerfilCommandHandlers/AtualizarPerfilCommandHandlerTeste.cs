@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
@@ -9,6 +10,7 @@ using MediatR;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,6 +23,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<DomainNotificationHandler> _notifications;
+        private readonly IList<Perfil> _listMock;
 
         public AtualizarPerfilCommandHandlerTeste()
         {
@@ -30,7 +33,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _notifications = new Mock<DomainNotificationHandler>();
 
 
-            _perfilRepositoryMock.Setup(perfil => perfil.BuscarPorNome(TestBuilder.PerfilFalso().Identifacao.Nome)).Returns(TestBuilder.PerfilFalso());
+            _listMock = new List<Perfil>()
+            {
+                TestBuilder.PerfilFalso()
+            };
 
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
         }
@@ -56,6 +62,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
         {
             var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
+
+            _perfilRepositoryMock.Setup(perfil => perfil.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
+            .Returns(_listMock);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
             var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);

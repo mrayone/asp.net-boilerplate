@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="AggregatesModel\PermissaoAggregate\" />
+    <Folder Include="Sevices\" />
   </ItemGroup>
 
   <ItemGroup>

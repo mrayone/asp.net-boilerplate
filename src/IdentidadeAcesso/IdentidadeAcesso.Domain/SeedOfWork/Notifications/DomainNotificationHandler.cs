@@ -17,6 +17,12 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Notifications
             _notifications = new List<DomainNotification>();
         }
 
+
+        public List<DomainNotification> GetNotifications()
+        {
+            return _notifications;
+        }
+
         public Task Handle(DomainNotification notification, CancellationToken cancellationToken)
         {
             _notifications.Add(notification);
