@@ -52,7 +52,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         private async Task<bool> PerfilExitente(ExcluirPerfilCommand request)
         {
-            var perfil = _perfilRepository.ObterPorId(request.Id);
+            var perfil = await _perfilRepository.ObterPorId(request.Id);
             if (perfil != null) return await Task.FromResult(true);
 
             await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
