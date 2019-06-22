@@ -22,7 +22,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
             _notifications = (DomainNotificationHandler)notifications;
         }
 
-        public async Task<bool> Commit()
+        protected async Task<bool> Commit()
         {
             if (_notifications.HasNotifications()) return await Task.FromResult(false);
 
