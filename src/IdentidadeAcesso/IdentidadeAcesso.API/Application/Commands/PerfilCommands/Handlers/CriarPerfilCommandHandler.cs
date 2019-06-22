@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
-            var perfilExistente = _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);
+            var perfilExistente = await _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);
             if (perfilExistente.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Knowledge.IO.Infra.Data.Repository
 {
@@ -32,9 +33,11 @@ namespace Knowledge.IO.Infra.Data.Repository
             DbSet.Update(obj);
         }
 
-        public IEnumerable<TEntity> Buscar(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate)
         {
-            return DbSet.AsNoTracking().Where(predicate);
+            var result = DbSet.AsNoTracking().Where(predicate);
+
+            return await Task.FromResult(result);  
         }
 
         public void Dispose()
@@ -42,19 +45,9 @@ namespace Knowledge.IO.Infra.Data.Repository
             Context.Dispose();
         }
 
-        public TEntity ObterPorId(Guid id)
+        public async Task<TEntity> ObterPorId(Guid id)
         {
-            return DbSet.AsNoTracking().FirstOrDefault(e => e.Id == id);
-        }
-
-        public IEnumerable<TEntity> ObterTodos()
-        {
-            return DbSet.ToList();
-        }
-
-        public void Remover(Guid id)
-        {
-            DbSet.Remove(DbSet.Find(id));
+            return await DbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }

@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity, IAggregateRoot
     {
-        //TODO: deixar os métodos assincronos.
         void Adicionar(TEntity obj);
-        TEntity ObterPorId(Guid id);
-        IEnumerable<TEntity> ObterTodos();
         void Atualizar(TEntity obj);
-        void Remover(Guid id);
-        IEnumerable<TEntity> Buscar(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> ObterPorId(Guid id);
+        Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate);
     }
 }

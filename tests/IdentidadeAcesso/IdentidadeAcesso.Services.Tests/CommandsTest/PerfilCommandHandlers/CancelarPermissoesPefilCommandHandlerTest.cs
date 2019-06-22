@@ -112,7 +112,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             };
 
             var perfil = TestBuilder.PerfilFalsoComPermissoes();
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).Returns(perfil);
+            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
             _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>()))
               .ReturnsAsync((Perfil)null);
             var command = new CancelarPermissoesPerfilCommand(perfilId, listaPermissao);
@@ -152,7 +152,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             };
 
             var perfil = TestBuilder.PerfilFalsoComPermissoes();
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).Returns(perfil);
+            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
             _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>()))
                 .ReturnsAsync(perfil);
 

@@ -41,7 +41,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
                 TestBuilder.PerfilFalso()
             };
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
         }
 
         [Fact(DisplayName = "O Handle retorna falso se o perfil não for persistido.")]
@@ -67,7 +67,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         {
             var command = TestBuilder.FalsoAtualizarPerfilRequestComNomeExistente();
             _perfilRepositoryMock.Setup(perfil => perfil.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
-             .Returns(_listMock);
+             .ReturnsAsync(_listMock);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
 
             var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);

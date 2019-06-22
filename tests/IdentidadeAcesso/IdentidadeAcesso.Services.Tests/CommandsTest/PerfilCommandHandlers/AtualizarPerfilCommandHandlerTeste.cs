@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 TestBuilder.PerfilFalso()
             };
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).Returns(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
         }
 
         [Fact(DisplayName = "O handle deve retornar falso se perfil invalido")]
@@ -64,7 +64,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var command = TestBuilder.FalsoPerfilRequestComNomeExistente();
 
             _perfilRepositoryMock.Setup(perfil => perfil.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
-            .Returns(_listMock);
+            .ReturnsAsync(_listMock);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
             var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
