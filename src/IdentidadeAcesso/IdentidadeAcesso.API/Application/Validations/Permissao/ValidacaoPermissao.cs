@@ -12,12 +12,10 @@ namespace IdentidadeAcesso.API.Application.Validations.Permissao
         public ValidacaoPermissao()
         {
             RuleFor(c => c.Tipo)
-                .NotEmpty()
                 .MaximumLength(50)
                 .MinimumLength(2);
 
             RuleFor(c => c.Valor)
-                .NotEmpty()
                 .MaximumLength(50)
                 .MinimumLength(2);
         }
