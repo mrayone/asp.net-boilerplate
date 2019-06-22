@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Validations.Perfil
 {
-    public abstract class ValidacaoPerfil<T>: AbstractValidator<BasePerfilCommand<T>> where T : BasePerfilCommand<T>
+    public abstract class ValidacaoPerfil<T>: AbstractValidator<T> where T : BasePerfilCommand<T>
     {
         public ValidacaoPerfil()
         {
