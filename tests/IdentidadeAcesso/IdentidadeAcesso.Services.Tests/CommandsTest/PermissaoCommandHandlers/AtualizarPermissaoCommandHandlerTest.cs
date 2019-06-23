@@ -3,6 +3,8 @@ using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
+using IdentidadeAcesso.Domain.Events.PermissaoEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandlers.Builder;
@@ -30,6 +32,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
             _notifications = new Mock<DomainNotificationHandler>();
+
+            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.CriarPermissaoFake());
         }
 
         [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]
@@ -64,6 +68,21 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             result.Should().BeFalse();
             _mediator.Verify(p=> p.Publish(It.IsAny<DomainNotification>(), 
                 new System.Threading.CancellationToken()));
+        }
+
+        [Fact(DisplayName = "O Handle deve atualizar com sucesso a permissão.")]
+        [Trait("Handler - Permissão", "NovaPermissão")]
+        public async Task Handle_deve_cadastrar_com_sucesso()
+        {
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
+            var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Criar");
+            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
+            //act
+            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeTrue();
+            commandFake.ValidationResult.Errors.Should().BeEmpty();
+            _mediator.Verify(m => m.Publish(It.IsAny<PermissaoAtualizadaEvent>(), default), Times.Once());
         }
     }
 }
