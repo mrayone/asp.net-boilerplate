@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             if(!await PerfilExitente(request)) return await Task.FromResult(false);
 
             var perfil = await _perfilRepository.ObterPorId(request.Id);
-            if(!await _domainService.DeletarPerfil(perfil))
+            if(!await _domainService.DeletarPerfil(perfil.Id))
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Este perfil está em uso e não pode ser deletado."));
                 return await Task.FromResult(false);

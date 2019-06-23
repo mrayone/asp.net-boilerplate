@@ -94,7 +94,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
 
-            _service.Setup(s => s.DeletarPerfil(It.IsAny<Perfil>())).ReturnsAsync(false);
+            _service.Setup(s => s.DeletarPerfil(It.IsAny<Guid>())).ReturnsAsync(false);
             var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
 
             //act
@@ -113,7 +113,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
-            _service.Setup(s => s.DeletarPerfil(It.IsAny<Perfil>())).ReturnsAsync(true);
+            _service.Setup(s => s.DeletarPerfil(It.IsAny<Guid>())).ReturnsAsync(true);
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
 
             var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);

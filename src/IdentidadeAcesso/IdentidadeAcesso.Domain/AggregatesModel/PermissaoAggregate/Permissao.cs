@@ -12,12 +12,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
     public class Permissao : Entity, IAggregateRoot
     {
         public Atribuicao Atribuicao { get; private set; }
-        public Status Status { get; private set; }
+
+        public DateTime? DeletadoEm { get; private set; }
 
         protected Permissao()
         {
             Id = Guid.NewGuid();
-            Status = Status.Ativo;
         }
         public Permissao (Atribuicao atribuicao) : this()
         {
@@ -29,14 +29,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
             Atribuicao = atribuicao;
         }
 
-        public void Desativar()
+        public void Deletar()
         {
-            Status = Status.Inativo;
-        }
-
-        public void Ativar()
-        {
-            Status = Status.Ativo;
-        }
+            DeletadoEm = DateTime.Now;
+        } 
     }
 }
