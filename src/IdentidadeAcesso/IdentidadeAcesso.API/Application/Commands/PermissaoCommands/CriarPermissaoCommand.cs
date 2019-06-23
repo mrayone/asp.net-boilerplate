@@ -9,11 +9,10 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
 {
     public class CriarPermissaoCommand : BasePermissaoCommand<CriarPermissaoCommand>, IRequest<bool>
     {
-        public CriarPermissaoCommand(string tipo, string valor, bool status)
+        public CriarPermissaoCommand(string tipo, string valor)
         {
             Tipo = tipo;
             Valor = valor;
-            Status = status;
         }
         public override bool isValid()
         {
