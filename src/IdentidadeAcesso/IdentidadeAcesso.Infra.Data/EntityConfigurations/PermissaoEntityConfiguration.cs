@@ -16,11 +16,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             builder.HasKey(p => p.Id);
             builder.Ignore(p => p.Erros);
-
-            builder.OwnsOne(p => p.Status, st =>
-            {
-                st.Ignore(p => p.ValidationResult);
-            });
+            builder.Property(p => p.DeletadoEm).IsRequired(false);
 
             builder.OwnsOne(p => p.Atribuicao, a =>
             {
