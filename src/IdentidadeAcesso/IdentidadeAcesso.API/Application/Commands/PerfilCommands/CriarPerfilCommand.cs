@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public CriarPerfilCommand(Guid id, string nome, string descricao, bool status,
             IList<PermissaoAssinadaDTO> permissoesAssinadas)
         {
-            Id = id;
+            Id = id; //TODO: Remover este campo para o command criar.
             Nome = nome;
             Descricao = descricao;
             Status = status;

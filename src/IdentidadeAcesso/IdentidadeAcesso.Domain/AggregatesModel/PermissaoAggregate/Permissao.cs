@@ -24,9 +24,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
             Atribuicao = atribuicao;
         }
 
+        public void DefinirAtribuicao(Atribuicao atribuicao)
+        {
+            Atribuicao = atribuicao;
+        }
+
         public void Desativar()
         {
             Status = Status.Inativo;
+        }
+
+        public void Ativar()
+        {
+            Status = Status.Ativo;
         }
     }
 }
