@@ -1,5 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +11,17 @@ namespace IdentidadeAcesso.Domain.Sevices
 {
     public class PerfilService : IPerfilService
     {
-        public Task<Perfil> CancelarPermissoes(List<PermissaoAssinada> permissoes)
+        private readonly IPerfilRepository _perfilRepo;
+        private readonly IMediator _mediator;
+
+        public PerfilService(IPerfilRepository perfilRepo, IMediator mediator)
+        {
+            _perfilRepo = perfilRepo;
+            _mediator = mediator;
+        }
+
+
+        public Task<Perfil> CancelarPermissoes(List<PermissaoAssinada> permissoes, Guid perfilId)
         {
             throw new NotImplementedException();
         }
