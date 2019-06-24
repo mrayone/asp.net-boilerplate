@@ -1,9 +1,11 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,14 +23,28 @@ namespace IdentidadeAcesso.Domain.Sevices
         }
 
 
-        public Task<Perfil> CancelarPermissoes(List<PermissaoAssinada> permissoes, Guid perfilId)
+        public async Task<Perfil> CancelarPermissoesAsync(List<PermissaoAssinada> permissoes, Guid perfilId)
         {
-            throw new NotImplementedException();
+            var perfil = await _perfilRepo.ObterPorId(perfilId);
+
+            foreach (var item in permissoes)
+            {
+                if(perfil.PermissoesAssinadas.Contains(item))
+                {
+                    perfil.CancelarPermissao(item.Id);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            return await Task.FromResult(perfil);
         }
 
-        public Task<bool> DeletarPerfil(Guid perfil)
+        public async Task<bool> DeletarPerfil(Guid perfil)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(false);
         }
     }
 }

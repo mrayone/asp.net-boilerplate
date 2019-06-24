@@ -113,7 +113,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             var perfil = TestBuilder.PerfilFalsoComPermissoes();
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.CancelarPermissoesAsync(It.IsAny<List<PermissaoAssinada>>(), It.IsAny<Guid>()))
               .ReturnsAsync((Perfil)null);
             var command = new CancelarPermissoesPerfilCommand(perfilId, listaPermissao);
             var handle = new CancelarPermissoesPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object,
@@ -153,7 +153,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             var perfil = TestBuilder.PerfilFalsoComPermissoes();
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.CancelarPermissoesAsync(It.IsAny<List<PermissaoAssinada>>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
