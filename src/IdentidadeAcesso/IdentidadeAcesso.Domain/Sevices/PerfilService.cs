@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.Domain.Sevices
 {
-    public class PerfilService : IPerfilService
+    public sealed class PerfilService : IPerfilService
     {
         private readonly IPerfilRepository _perfilRepo;
         private readonly IMediator _mediator;
@@ -22,7 +22,6 @@ namespace IdentidadeAcesso.Domain.Sevices
             _mediator = mediator;
         }
 
-
         public async Task<Perfil> CancelarPermissoesAsync(List<PermissaoAssinada> permissoes, Guid perfilId)
         {
             var perfil = await _perfilRepo.ObterPorId(perfilId);
@@ -32,10 +31,6 @@ namespace IdentidadeAcesso.Domain.Sevices
                 if(perfil.PermissoesAssinadas.Contains(item))
                 {
                     perfil.CancelarPermissao(item.Id);
-                }
-                else
-                {
-                    return null;
                 }
             }
 
