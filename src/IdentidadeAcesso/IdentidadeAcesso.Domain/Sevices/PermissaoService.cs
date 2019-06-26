@@ -25,13 +25,14 @@ namespace IdentidadeAcesso.Domain.Sevices
             _perfilRepository = perfilRepository;
         }
 
-        public async Task<bool> DeletarPermissao(Permissao permissao)
+        public async Task<bool> DeletarPermissaoAsync(Permissao permissao)
         {
             var perfilComPermissao = await _perfilRepository.Buscar(p => p.PermissoesAssinadas.Select(per => per.PermissaoId == permissao.Id).Any());
 
             if (!perfilComPermissao.Any())
             {
                 permissao.Deletar();
+                _permissaoRepository.Atualizar(permissao);
                 return await Task.FromResult(true);
             }
 

@@ -12,6 +12,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders
             var ident = IdentificacaoBuilder.ObterValido();
             var perfil = new Perfil(ident);
             perfil.AssinarPermissao(Guid.NewGuid());
+            perfil.AssinarPermissao(Guid.NewGuid());
             return new Perfil(ident);
         }
     }

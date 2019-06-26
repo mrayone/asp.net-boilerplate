@@ -9,6 +9,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
 {
     public interface IPermissaoService
     {
-        Task<bool> DeletarPermissao(Permissao permissao);
+        Task<bool> DeletarPermissaoAsync(Permissao permissao);
     }
 }

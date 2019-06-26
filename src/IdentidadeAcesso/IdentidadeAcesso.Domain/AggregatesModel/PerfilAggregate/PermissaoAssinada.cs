@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Status Status { get; private set; }
         public Guid PermissaoId { get; private set; }
         
-        protected PermissaoAssinada(){ }
+        protected PermissaoAssinada() { }
 
         public PermissaoAssinada(Guid permissaoId)
         {
@@ -26,6 +26,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public void AtivarAssinatura()
         {
             Status = Status.Ativo;
+        }
+
+        public static class PermissaoAssinadaFactory
+        {
+            public static PermissaoAssinada GerarPermissaoAssinada(Guid id, Guid permissaoId)
+            {
+                return new PermissaoAssinada()
+                {
+                    Id = id,
+                    PermissaoId = permissaoId,
+                    Status = Status.Ativo
+                };
+            }
         }
     }
 }

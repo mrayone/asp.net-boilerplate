@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
 
             //act
-            var result = await _service.DeletarPermissao(permissao);
+            var result = await _service.DeletarPermissaoAsync(permissao);
 
             //assert
             result.Should().BeTrue();
@@ -65,7 +65,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
 
             //act
-            var result = await _service.DeletarPermissao(permissao);
+            var result = await _service.DeletarPermissaoAsync(permissao);
 
             //assert
             result.Should().BeFalse();
