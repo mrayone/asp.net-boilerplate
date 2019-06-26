@@ -10,5 +10,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
     {
         Task<bool> DeletarUsuario(Guid usuarioId);
         Task<Usuario> DesativarUsuario(Guid usuarioId);
+        Task<Usuario> AssociarPerfil(Usuario usuario, Guid perfilId);
     }
 }
