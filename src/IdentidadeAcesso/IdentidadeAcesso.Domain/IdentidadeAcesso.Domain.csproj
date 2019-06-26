@@ -6,7 +6,11 @@
 
   <ItemGroup>
     <Folder Include="AggregatesModel\PermissaoAggregate\" />
-    <Folder Include="AggregatesModel\PerfilAggregate\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="8.4.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

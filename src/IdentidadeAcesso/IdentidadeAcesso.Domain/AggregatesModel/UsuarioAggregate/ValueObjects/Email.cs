@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private const string Pattern = @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
 
-        public readonly string Endereco;
+        public string Endereco { get; private set; }
 
         public Email(string endereco)
         {
@@ -25,21 +25,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         private void ValidaraEndereco()
         {
-            if (Endereco == null)
-            {
-                ValidationResult.AdicionarErro("Email Nulo", "O email não pode ser nulo.");
-                return;
-            }
-
-            if (Endereco == String.Empty)
-            {
-                ValidationResult.AdicionarErro("Email Vazio", "O email não pode estar em branco.");
-                return;
-            }
 
             if (!Regex.IsMatch(Endereco, Pattern))
             {
-                ValidationResult.AdicionarErro("Email Inválido", "O email informado não é um válido.");
+                ValidationResult.AddError("Email","O email informado não é um válido.");
             }
         }
 

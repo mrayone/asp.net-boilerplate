@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Validation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,33 +10,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class EmailSpec
     {
-        [Fact(DisplayName = "Deve retornar erro se valor nulo for definido.")]
-        [Trait("Value Object", "Email")]
-        public void deve_retornar_erro_se_valor_nulo_for_definido()
-        {
-            //arrange
-            var email = new Email(null);
-
-            //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Email Nulo"] = "O email não pode ser nulo."
-            });
-        }
-
-        [Fact(DisplayName = "Deve retornar erro se valor vazio for definido.")]
-        [Trait("Value Object", "Email")]
-        public void deve_retornar_erro_se_valor_vazio_for_definido()
-        {
-            //arrange
-            var email = new Email("");
-
-            //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
-            {
-                ["Email Vazio"] = "O email não pode estar em branco."
-            });
-        }
 
         [Fact(DisplayName = "Deve retornar erro se valor não for um e-mail válido")]
         [Trait("Value Object", "Email")]
@@ -45,9 +19,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var email = new Email("mariana.glogia.com");
 
             //act
-            email.ValidationResult.Erros.Should().Contain(new Dictionary<string, string>()
+            email.ValidationResult.Erros.Should().Contain(new List<ValidationError>()
             {
-                ["Email Inválido"] = "O email informado não é um válido."
+                new ValidationError("Email","O email informado não é um válido.")
             });
         }
 
@@ -71,6 +45,18 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
             //act
             email.ValidationResult.IsValid.Should().Be(isValid);
+        }
+
+        [Fact(DisplayName = "Deve garantir que dois emails com o mesmo endereco sejam o mesmo objeto")]
+        [Trait("Value Object", "Email")]
+        public void deve_garantiar_que_dois_emails_com_mesmo_endereco_sejam_o_mesmo_objeto()
+        {
+            //arrange
+            var email = new Email("maycon.rayone@gmail.com");
+            var email2 = new Email("maycon.rayone@gmail.com");
+
+            //act
+            email.Should().Be(email2);
         }
     }
 }

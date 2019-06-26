@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.Validation;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,11 +8,16 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
 
-        public ValidationResult ValidationResult { get; protected set; }
+        public ValidationDomainResult ValidationResult { get; protected set; }
 
         public ValueObject()
         {
-            ValidationResult = new ValidationResult();
+            ValidationResult = new ValidationDomainResult();
+        }
+
+        public bool EhValido()
+        {
+            return ValidationResult.IsValid;
         }
 
         public override bool Equals(object obj)

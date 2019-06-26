@@ -3,24 +3,43 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
-    public class Sexo : Enumeration
+    public class Sexo : ValueObject<Sexo>
     {
-        public static readonly Sexo Masculino = new Sexo("M", nameof(Masculino).ToLowerInvariant());
-        public static readonly Sexo Feminino = new Sexo("F", nameof(Feminino).ToLowerInvariant());
+        public static Sexo Masculino = new Sexo("M");
+        public static Sexo Feminino = new Sexo("F");
+        public string Tipo { get; private set; }
 
-        public ValidationResult ValidationResult { get; private set; }
-        public Sexo(string id, string nome) : base(id, nome)
+        private Sexo(string tipo)
         {
-            ValidationResult = new ValidationResult();
+            Tipo = tipo;
+            Validar();
+        }
 
+        public Sexo()
+        {
             Validar();
         }
 
         private void Validar()
         {
-            if(!Equals(Sexo.Masculino) || !Equals(Sexo.Feminino))
+            if (string.IsNullOrEmpty(Tipo))
             {
-                ValidationResult.AdicionarErro("Valor Inválido", "O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
+                ValidationResult.AddError("Sexo","O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
+            }
+        }
+
+        protected override bool EqualsCore(Sexo other)
+        {
+            return Tipo.Equals(other.Tipo);
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                var hash = (Tipo.GetHashCode() * 907) ^ Tipo.GetHashCode();
+
+                return hash;
             }
         }
     }

@@ -1,10 +1,25 @@
-﻿using System;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.Validation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IdentidadeAcesso.Domain.SeedOfWork
 {
     public abstract class Entity
     {
         public Guid Id { get; protected set; }
+        protected List<ValidationError> _erros;
+        public IReadOnlyCollection<ValidationError> Erros => _erros;
+
+        public Entity()
+        {
+            _erros = new List<ValidationError>();
+        }
+
+        public virtual bool EhValido()
+        {
+            return !_erros.Any();
+        }
 
         public override bool Equals(object obj)
         {
