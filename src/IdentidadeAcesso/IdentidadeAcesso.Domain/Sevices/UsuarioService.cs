@@ -9,11 +9,6 @@ namespace IdentidadeAcesso.Domain.Sevices
 {
     public class UsuarioService : IUsuarioService
     {
-        public Task<Usuario> AssociarPerfil(Usuario usuario, Guid perfilId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> DeletarUsuario(Guid usuarioId)
         {
             throw new NotImplementedException();
