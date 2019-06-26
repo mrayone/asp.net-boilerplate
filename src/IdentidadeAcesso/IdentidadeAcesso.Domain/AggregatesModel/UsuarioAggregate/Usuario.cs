@@ -95,10 +95,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public void DesativarUsuario ()
         {
-            if(Status.Equals(Status.Ativo))
-            {
-                Status = Status.Inativo;
-            }
+             Status = Status.Inativo;
+        }
+
+        public void AtivarUsuario()
+        {
+            Status = Status.Ativo;
         }
 
         public static class UsuarioFactory

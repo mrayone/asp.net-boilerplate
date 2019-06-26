@@ -30,7 +30,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public Perfil(Identificacao identificacao) : this()
         {
             Identifacao = identificacao;
-            
         }
 
         public void AssinarPermissao(Guid permissaoId)

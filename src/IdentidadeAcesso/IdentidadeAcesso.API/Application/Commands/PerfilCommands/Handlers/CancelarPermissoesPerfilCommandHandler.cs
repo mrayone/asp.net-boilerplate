@@ -35,14 +35,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             if (!await PerfilExiste(request)) return await Task.FromResult(false);
 
             var permissoesAssinadas = DefinirPermissoes(request.PermissoesAssinadas);
-            var perfil = await _perfilService.CancelarPermissoes(permissoesAssinadas);
-            if (perfil == null )
-            {
-                await _mediator.Publish(new DomainNotification(request.GetType().Name, 
-                    "Ocorreu um problema ao cancelar as permissões, verifique se estas já estavam assinadas."));
-
-                return await Task.FromResult(false);
-            }
+            var perfil = await _perfilService.CancelarPermissoesAsync(permissoesAssinadas, request.PerfilId);
 
             if (await Commit())
             {

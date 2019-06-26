@@ -88,46 +88,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             result.Should().BeFalse();
         }
 
-        [Fact(DisplayName = "O Handle deve retornar falso e notificar erro caso nao possa cancelar permissão.")]
-        [Trait("Handler - Perfil", "CancelarPermissão")]
-        public async Task Handle_deve_retornar_falso_e_notificar_erro_caso_nao_possa_cancelar_permissao()
-        {
-            //arrange
-            var perfilId = Guid.NewGuid();
-            var permissao1 = Guid.NewGuid();
-            var permissao2 = Guid.NewGuid();
-
-            var listaPermissao = new List<PermissaoAssinadaDTO>()
-            {
-                new PermissaoAssinadaDTO()
-                {
-                    PermissaoId = permissao1,
-                    Status =  false
-                },
-                new PermissaoAssinadaDTO()
-                {
-                    PermissaoId = permissao2,
-                    Status =  false
-                },
-            };
-
-            var perfil = TestBuilder.PerfilFalsoComPermissoes();
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>()))
-              .ReturnsAsync((Perfil)null);
-            var command = new CancelarPermissoesPerfilCommand(perfilId, listaPermissao);
-            var handle = new CancelarPermissoesPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object,
-                _service.Object, _perfilRepositoryMock.Object);
-            var cancelToken = new System.Threading.CancellationToken();
-
-            //act
-            var result = await handle.Handle(command, cancelToken);
-
-            //assert
-            result.Should().BeFalse();
-            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
-        }
-
         [Fact(DisplayName = "O handle deve retornar verdadeiro se cancelar com sucesso as permissões.")]
         [Trait("Handler - Perfil", "CancelarPermissão")]
         public async Task Handle_deve_retornar_verdadeiro_se_cancelar_com_sucesso_as_permissoes()
@@ -153,7 +113,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             var perfil = TestBuilder.PerfilFalsoComPermissoes();
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissoes(It.IsAny<List<PermissaoAssinada>>()))
+            _service.Setup(s => s.CancelarPermissoesAsync(It.IsAny<List<PermissaoAssinada>>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
