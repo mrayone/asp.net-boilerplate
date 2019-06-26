@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _uow = new Mock<IUnitOfWork>();
             _notifications = new Mock<DomainNotificationHandler>();
 
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.CriarPermissaoFake());
+            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
         }
 
         [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]
@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(), "Usuário", "Cadastrar");
             var listMock = new List<Permissao>()
             {
-                TestBuilder.CriarPermissaoFake()
+                PermissaoBuilder.CriarPermissaoFake()
             };
             _permissaoRepository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Permissao, bool>>>())).ReturnsAsync(listMock);
             var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
