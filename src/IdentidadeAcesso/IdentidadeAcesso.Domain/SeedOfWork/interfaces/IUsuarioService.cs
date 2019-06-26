@@ -8,7 +8,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
 {
     public interface IUsuarioService
     {
-        Task<bool> DeletarUsuario(Guid usuarioId);
-        Task<Usuario> DesativarUsuario(Guid usuarioId);
+        Task<Usuario> DesativarUsuarioAsync(Guid usuarioId);
     }
 }

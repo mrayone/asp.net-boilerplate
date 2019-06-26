@@ -1,5 +1,8 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,14 +12,28 @@ namespace IdentidadeAcesso.Domain.Sevices
 {
     public class UsuarioService : IUsuarioService
     {
-        public Task<bool> DeletarUsuario(Guid usuarioId)
+        private IUsuarioRepository _repository;
+        private IMediator _mediator;
+
+        public UsuarioService(IUsuarioRepository repository, IMediator mediator)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+            _mediator = mediator;
         }
 
-        public Task<Usuario> DesativarUsuario(Guid usuarioId)
+        public async Task<Usuario> DesativarUsuarioAsync(Guid usuarioId)
         {
-            throw new NotImplementedException();
+            var usuario = await _repository.ObterPorId(usuarioId);
+
+            if(usuario == null)
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Não foi possível localizar este usuário."));
+                return null;
+            }
+
+            usuario.DesativarUsuario();
+
+            return await Task.FromResult(usuario);
         }
     }
 }
