@@ -6,7 +6,7 @@ using System.Text;
 
 namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandlers.Builder
 {
-    public static class TestBuilder
+    public static class PermissaoBuilder
     {
         public static Permissao CriarPermissaoFake()
         {

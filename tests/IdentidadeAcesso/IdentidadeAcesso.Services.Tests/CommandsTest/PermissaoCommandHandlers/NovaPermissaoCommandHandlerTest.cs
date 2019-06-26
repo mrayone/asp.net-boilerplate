@@ -56,7 +56,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             var commandFake = new CriarPermissaoCommand("Usuário", "Criar");
             var listMock = new List<Permissao>()
             {
-                TestBuilder.CriarPermissaoFake()
+                PermissaoBuilder.CriarPermissaoFake()
             };
             _permissaoRepository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Permissao, bool>>>())).ReturnsAsync(listMock);
 
