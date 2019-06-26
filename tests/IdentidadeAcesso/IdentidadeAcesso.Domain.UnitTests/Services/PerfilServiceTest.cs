@@ -2,15 +2,19 @@
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Domain.Sevices;
 using IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders;
 using IdentidadeAcesso.Domain.UnitTests.Builders.PermissaoBuilders;
+using IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders;
 using MediatR;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -21,16 +25,23 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
     {
         private readonly Mock<IPerfilRepository> _perfilRepo;
         private readonly Mock<IPermissaoRepository> _permRepo;
+        private readonly Mock<IUsuarioRepository> _usuRepo;
         private readonly Mock<IMediator> _mediator;
         private readonly PerfilService _perfilService;
         private readonly Perfil _perfil;
+        private readonly Usuario _usuario;
+
         public PerfilServiceTest()
         {
             _perfilRepo = new Mock<IPerfilRepository>();
-            _mediator = new Mock<IMediator>();
             _permRepo = new Mock<IPermissaoRepository>();
-            _perfilService = new PerfilService(_perfilRepo.Object, _permRepo.Object, _mediator.Object);
+            _usuRepo = new Mock<IUsuarioRepository>();
+            _mediator = new Mock<IMediator>();
+            _perfilService = new PerfilService(_perfilRepo.Object, _permRepo.Object, _usuRepo.Object, _mediator.Object);
+
             _perfil = PerfilBuilder.ObterPerfil();
+            _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
+
             _perfilRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(_perfil);
         }
 
@@ -69,7 +80,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //act
             var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
             //assert
-            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), 
+            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
         }
 
@@ -91,6 +102,42 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
+        }
+
+        [Fact(DisplayName = "Deve deletar perfil e retornar true.")]
+        [Trait("Services", "Perfil")]
+        public async Task Deve_Deletar_Perfil_e_Retornar_True()
+        {
+            //arrange
+            var perfil = await _perfilRepo.Object.ObterPorId(Guid.NewGuid());
+            //act
+            var result = await _perfilService.DeletarPerfilAsync(perfil);
+            //assert
+
+            result.Should().BeTrue();
+            perfil.DeletadoEm.HasValue.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Deve retornar false se perfil em uso.")]
+        [Trait("Services", "Perfil")]
+        public async Task Deve_Retornar_False_se_Perfil_Em_Uso()
+        {
+            //arrange
+            var list = new List<Usuario>()
+            {
+                _usuario
+            };
+            _usuRepo.Setup(u => u.Buscar(It.IsAny<Expression<Func<Usuario, bool>>>())).ReturnsAsync(list);
+            var perfil = PerfilBuilder.ObterPerfil();
+
+            //act
+            var result = await _perfilService.DeletarPerfilAsync(perfil);
+
+            //assert
+            result.Should().BeFalse();
+            perfil.DeletadoEm.HasValue.Should().BeFalse();
+            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
+                 new System.Threading.CancellationToken()), Times.Once());
         }
     }
 }

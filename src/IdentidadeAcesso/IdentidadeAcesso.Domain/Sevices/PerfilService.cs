@@ -1,6 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -17,13 +18,15 @@ namespace IdentidadeAcesso.Domain.Sevices
         private readonly IPerfilRepository _perfilRepo;
         private readonly IMediator _mediator;
         private readonly IPermissaoRepository _permissaoRepo;
+        private readonly IUsuarioRepository _usuarioRepo;
 
-        public PerfilService(IPerfilRepository perfilRepo, IPermissaoRepository permissaoRepo,
+        public PerfilService(IPerfilRepository perfilRepo, IPermissaoRepository permissaoRepo, IUsuarioRepository usuarioRepository,
             IMediator mediator)
         {
             _perfilRepo = perfilRepo;
             _mediator = mediator;
             _permissaoRepo = permissaoRepo;
+            _usuarioRepo = usuarioRepository;
         }
 
         public async Task<Perfil> CancelarPermissoesAsync(List<PermissaoAssinada> permissoes, Guid perfilId)
@@ -49,9 +52,19 @@ namespace IdentidadeAcesso.Domain.Sevices
             return await Task.FromResult(perfil);
         }
 
-        public async Task<bool> DeletarPerfilAsync(Guid perfil)
+        public async Task<bool> DeletarPerfilAsync(Perfil perfil)
         {
-            return await Task.FromResult(false);
+            var usuariosComPerfil = await _usuarioRepo.Buscar(u => u.PerfilId == perfil.Id);
+            if (usuariosComPerfil.Any())
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "O perfil esta em uso e não pode ser deletado."));
+                return await Task.FromResult(false);
+            }
+
+            perfil.Deletar();
+
+            _perfilRepo.Atualizar(perfil);
+            return await Task.FromResult(true);
         }
     }
 }
