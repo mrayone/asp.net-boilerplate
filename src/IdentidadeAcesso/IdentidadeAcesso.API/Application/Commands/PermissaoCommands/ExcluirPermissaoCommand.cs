@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using IdentidadeAcesso.API.Application.Validations.Permissao;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
 
         public override bool isValid()
         {
+            ValidationResult = new ExcluirPermissaoValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
