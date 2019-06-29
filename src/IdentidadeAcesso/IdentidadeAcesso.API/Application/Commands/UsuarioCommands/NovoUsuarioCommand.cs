@@ -7,22 +7,26 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
     public class NovoUsuarioCommand : BaseUsuarioCommand<NovoUsuarioCommand>
     {
-        public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cPF, DateTime dateDeNascimento, string telefone, 
-            string celular, bool status, AdicionarEnderecoCommand endereco)
+        public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular, 
+            bool status, string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
         {
             Nome = nome;
             Sobrenome = sobrenome;
             Sexo = sexo;
             Email = email;
-            CPF = cPF;
+            CPF = cpf;
             DateDeNascimento = dateDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Status = status;
-            Endereco = endereco;
+            Logradouro = logradouro;
+            Numero = numero;
+            Complemento = complemento;
+            Bairro = bairro;
+            Cep = cep;
+            Cidade = cidade;
+            Estado = estado;
         }
-
-        public AdicionarEnderecoCommand Endereco { get; private set; }
 
         public override bool isValid()
         {
