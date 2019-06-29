@@ -27,7 +27,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string Cidade { get; protected set; }
         public string Estado { get; protected set; }
 
-
         public ValidationResult ValidationResult { get; protected set; }
 
         public abstract bool isValid();
