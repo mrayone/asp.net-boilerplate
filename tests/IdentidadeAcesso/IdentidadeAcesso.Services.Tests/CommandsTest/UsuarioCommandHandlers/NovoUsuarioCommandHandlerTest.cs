@@ -1,7 +1,9 @@
-﻿using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
+﻿using FluentAssertions;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
 using Knowledge.IO.Infra.Data.UoW;
 using MediatR;
 using Moq;
@@ -9,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers
 {
@@ -27,13 +30,17 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _notifications.Object);
         }
 
-        public async Task  Deve_Retornar_True_Se_Usuario_Registrado()
+
+        [Fact(DisplayName = "Deve retornar true se usuário registrado com sucessso.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task  Deve_Retornar_True_Se_Usuario_Registrado_Com_Sucesso()
         {
             //arrange
-            var command = CommandBuilder.ObterCommandFake();
+            var command = UsuarioBuilder.ObterCommandFake();
             //act
-
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
+            result.Should().BeTrue();
         }
 
     }

@@ -21,7 +21,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         public async Task<bool> Handle(NovoUsuarioCommand request, CancellationToken cancellationToken)
         {
-
+            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             return await Task.FromResult(true);
         }
