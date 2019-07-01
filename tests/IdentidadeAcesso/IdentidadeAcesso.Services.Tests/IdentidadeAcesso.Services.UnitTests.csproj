@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\..\src\IdentidadeAcesso\IdentidadeAcesso.API\IdentidadeAcesso.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CommandsTest\UsuarioCommandHandlers\Builder\" />
+  </ItemGroup>
+
 </Project>

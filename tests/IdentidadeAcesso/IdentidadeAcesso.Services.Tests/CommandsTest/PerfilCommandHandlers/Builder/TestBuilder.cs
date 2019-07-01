@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builders
+namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builder
 {
     public class TestBuilder
     {
