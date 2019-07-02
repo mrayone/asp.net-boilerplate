@@ -4,9 +4,9 @@ $nav-item-active: #dd0330;
 
 .sidebar {
     color: $side-bar-cor-interna;
-    position: fixed;
+    position: static;
     background-color: $side-bar-cor;
-    min-width: 290px;
+    max-width: 260px;
     height: 100vh;
     display: block;
 }
@@ -23,7 +23,7 @@ $nav-item-active: #dd0330;
     position: relative;
     max-height: 100%;
     min-height: none;
-    width: 300px;
+    width: 260px;
     overflow: hidden;
     // box-shadow: inset -1px 0 0 0 #ddd;
 }
