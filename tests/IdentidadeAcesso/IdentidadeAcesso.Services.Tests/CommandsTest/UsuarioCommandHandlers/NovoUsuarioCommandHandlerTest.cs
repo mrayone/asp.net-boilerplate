@@ -30,10 +30,21 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _notifications.Object);
         }
 
-
-        [Fact(DisplayName = "Deve retornar true se usuário registrado com sucessso.")]
+        [Fact(DisplayName = "Deve retornar true se comando valido.")]
         [Trait("Handler", "NovoUsuario")]
-        public async Task  Deve_Retornar_True_Se_Usuario_Registrado_Com_Sucesso()
+        public async Task  Deve_Retornar_True_Se_Comando_Valido()
+        {
+            //arrange
+            var command = UsuarioBuilder.ObterCommandFake();
+            //act
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task Deve_retornar_False_se_usuario_ja_existir()
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFake();

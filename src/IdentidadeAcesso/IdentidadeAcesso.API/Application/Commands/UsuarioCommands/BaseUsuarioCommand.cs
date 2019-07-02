@@ -23,7 +23,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string Numero { get; protected set; }
         public string Complemento { get; protected set; }
         public string Bairro { get; protected set; }
-        public string Cep { get; protected set; }
+        public string CEP { get; protected set; }
         public string Cidade { get; protected set; }
         public string Estado { get; protected set; }
 

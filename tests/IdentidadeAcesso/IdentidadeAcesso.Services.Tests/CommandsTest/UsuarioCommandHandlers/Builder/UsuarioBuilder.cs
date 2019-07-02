@@ -9,8 +9,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
     {
         public static NovoUsuarioCommand ObterCommandFake()
         {
-            return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "080.559.820-07", new DateTime(1993,7,22),
-                "", "+5518981928663", true, "R São Paulo", "AZ848", null, "Centro", "784700000", "Cidade Fake", "SP");
+            return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "080.559.820-07", new DateTime(2002,7,22),
+                null, "+5518981928663", null, null, null, null, null, null, null);
         }
     }
 }
