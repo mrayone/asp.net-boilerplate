@@ -49,7 +49,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var tel = new Telefone(numero);
             var dict = new List<ValidationError>()
             {
-                 new ValidationError("Telefone","Telefone com formato inválido."),
+                 new ValidationError("Telefone","O número de telefone não obedece o formato. Ex:'+551134816597'."),
             };
 
             tel.ValidationResult.IsValid.Should().Be(isValid);

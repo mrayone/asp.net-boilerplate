@@ -28,31 +28,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             Cep = cep;
             Cidade = cidade;
             Estado = estado;
-
-            Validar();
         }
 
-        private void Validar()
-        {
-            ValidarCEP();
-        }
-
-        private void ValidarCEP()
-        {
-            if (ObterCEPLimpo(Cep).Length != DigMaxCep)
-            {
-                ValidationResult.AddError("CEP","O CEP deve conter 8 dígitos.");
-                return;
-            }
-
-            if (!Regex.IsMatch(Cep, CepPattern))
-            {
-                ValidationResult.AddError("CEP","O CEP é inválido.");
-                return;
-            }
-        }
-
-        private string ObterCEPLimpo(string cep)
+        public static string ObterCEPLimpo(string cep)
         {
             return Regex.Replace(cep, CepPattern, "");
         }

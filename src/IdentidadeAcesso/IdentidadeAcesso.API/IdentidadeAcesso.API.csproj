@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\UsuarioCommands\" />
     <Folder Include="Application\DomainEventHandlers\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
