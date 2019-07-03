@@ -5,12 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 // components
 import { MenuComponent } from './components/menu/menu.component';
-import { HomeComponent } from './components/home/home.component';
+import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
-    HomeComponent,
+    DashBoardComponent,
     MenuComponent,
     PerfilComponent
   ],
@@ -19,6 +19,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [HomeComponent]
+  bootstrap: [DashBoardComponent]
 })
 export class AppModule { }
