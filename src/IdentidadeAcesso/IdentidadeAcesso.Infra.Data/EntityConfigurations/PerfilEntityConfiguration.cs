@@ -23,11 +23,8 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 i.Property(p => p.Nome).HasColumnName("Nome").IsRequired();
                 i.Ignore(p => p.ValidationResult);
             });
-
-            perfilConfiguration.OwnsOne(p => p.Status, st => 
-            {
-                st.Ignore(p => p.ValidationResult);
-            });
+            perfilConfiguration.Property(p => p.DeletadoEm)
+                .IsRequired(false);
 
             var navigation = perfilConfiguration.Metadata.FindNavigation(nameof(Perfil.PermissoesAssinadas));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);

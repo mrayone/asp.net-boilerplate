@@ -19,8 +19,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
         public IReadOnlyCollection<PermissaoAssinada> PermissoesAssinadas => _permissoesAssinadas;
         public DateTime? DeletadoEm { get; private set; }
 
-        public Status Status { get; private set; }
-
         protected Perfil()
         {
             Id = Guid.NewGuid();
