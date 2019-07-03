@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!Regex.IsMatch(Numero, Pattern))
             {
-                ValidationResult.AddError("Celular", "Celular com formato inválido.");
+                ValidationResult.AddError("Celular", "O número de celular não obedece o formato. Ex:'+5511981928444'.");
                 return;
             }
         }

@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var cel = new Celular(numero);
             var dict = new List<ValidationError>()
             {
-                new ValidationError("Celular", "Celular com formato inválido."),
+                new ValidationError("Celular", "O número de celular não obedece o formato. Ex:'+5511981928444'."),
             };
 
             cel.ValidationResult.IsValid.Should().Be(isValid);

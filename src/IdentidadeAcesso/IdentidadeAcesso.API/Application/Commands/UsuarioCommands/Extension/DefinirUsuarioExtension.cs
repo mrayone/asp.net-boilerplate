@@ -19,13 +19,13 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Extension
             var cpf = new CPF(request.CPF);
             var dataNascimento = new DataDeNascimento(request.DateDeNascimento);
             var endereco = new Endereco(request.Logradouro, request.Numero, request.Bairro, request.Cidade, request.Estado, request.Complemento);
-            //var cel = new Celular(request.Celular);
-            //var tel = new Telefone(request.Telefone);
+            var cel = new Celular(request.Celular);
 
             var usuario = new Usuario(nome, sexo, email, cpf, dataNascimento, request.PerfilId);
             usuario.AdicionarEndereco(endereco); //TODO: validar se nulo.
-            //usuario.AdicionarTelefone(tel); // validar se nulo
-            //usuario.AdicionarCelular(cel); // validar se nulo
+            usuario.AdicionarCelular(cel);
+
+            if (!string.IsNullOrEmpty(request.Telefone)) usuario.AdicionarTelefone(new Telefone(request.Telefone));
 
             return usuario;
         }

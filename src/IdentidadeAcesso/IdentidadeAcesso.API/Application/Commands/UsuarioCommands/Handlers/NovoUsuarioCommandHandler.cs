@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Extension;
+using IdentidadeAcesso.Domain.Events.UsuarioEvents;
+
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
     public class NovoUsuarioCommandHandler : CommandHandler, IRequestHandler<NovoUsuarioCommand, bool>
@@ -37,6 +39,14 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             }
 
             var usuario = this.DefinirUsuario(request);
+            if(!ValidarEntity(usuario)) return await Task.FromResult(false);
+
+            _usuarioRepository.Adicionar(usuario);
+
+            if(await Commit())
+            {
+                await _mediator.Publish(new UsuarioCriadoEvent(usuario));
+            }
 
             return await Task.FromResult(true);
         }

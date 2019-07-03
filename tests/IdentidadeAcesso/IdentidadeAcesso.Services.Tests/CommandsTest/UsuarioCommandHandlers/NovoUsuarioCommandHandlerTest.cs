@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
 
         [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
         [Trait("Handler", "NovoUsuario")]
-        public async Task Deve_retornar_False_se_usuario_ja_existir()
+        public async Task Deve_Retornar_False_Se_Usuario_Ja_Existir()
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFake();
@@ -68,7 +68,32 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
                 new System.Threading.CancellationToken()), Times.Once() );
         }
 
-        //TODO: validar se perfil existe.
-        
+        [Fact(DisplayName = "Deve retornar false se usuário houver erros de domínio.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task Deve_Retornar_False_Se_Houver_Erros_De_Domain()
+        {
+            //arrange
+            var command = UsuarioBuilder.ObterCommandFakeErroDeDomain();
+            //act
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeFalse();
+            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
+                new System.Threading.CancellationToken()), Times.Between(1, 2, Range.Inclusive));
+        }
+
+        [Fact(DisplayName = "Deve retornar false e notificar se perfil atribuido não existir.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task Deve_Retornar_False_E_Notificar_Se_Perfil_Atribuido_Nao_Exisitir()
+        {
+            //arrange
+            var command = UsuarioBuilder.ObterCommandFake();
+            //act
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeFalse();
+            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
+                new System.Threading.CancellationToken()), Times.Once());
+        }   
     }
 }

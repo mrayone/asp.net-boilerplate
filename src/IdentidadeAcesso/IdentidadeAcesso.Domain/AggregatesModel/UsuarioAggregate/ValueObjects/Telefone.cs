@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             if (!Regex.IsMatch(Numero, Pattern ))
             {
-                ValidationResult.AddError("Telefone","Telefone com formato inválido.");
+                ValidationResult.AddError("Telefone", "O número de telefone não obedece o formato. Ex:'+551134816597'.");
                 return;
             }
         }

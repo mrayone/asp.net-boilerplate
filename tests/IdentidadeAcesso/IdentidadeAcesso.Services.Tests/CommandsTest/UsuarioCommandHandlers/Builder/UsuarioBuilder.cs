@@ -15,6 +15,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
                 null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
 
+        public static NovoUsuarioCommand ObterCommandFakeErroDeDomain()
+        {
+            return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "082.559.820-07", new DateTime(2002, 7, 22),
+                null, "18981928663", null, null, null, null, null, null, null, Guid.NewGuid());
+        }
+
         public static Usuario UsuarioFake()
         {
             var nome = new NomeCompleto("Fake", "Sobrenome");
