@@ -2,8 +2,5 @@
     float: left;
 }
 .main-panel {
-    position: relative;
-    overflow: auto;
-    float: right;
-    width: calc(100% - 260px);
+  display: flex;
 }
