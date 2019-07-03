@@ -63,6 +63,10 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 
             RuleFor(c => c.Complemento)
                .Length(2, 150).WithMessage("O bairro deve conter entre 2 e 150 caracteres");
+
+            RuleFor(c => c.PerfilId)
+                .NotEqual(Guid.Empty)
+                .WithMessage("O ID do perfil tem que ser fornecido.");
         }
 
         private bool IdadeMinima(DateTime arg)

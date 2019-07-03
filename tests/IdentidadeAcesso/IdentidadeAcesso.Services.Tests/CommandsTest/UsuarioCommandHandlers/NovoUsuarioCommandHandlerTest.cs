@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
@@ -33,7 +34,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _uow = new Mock<IUnitOfWork>();
             _notifications = new Mock<DomainNotificationHandler>();
             _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _notifications.Object);
-            
+            _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);    
         }
 
         [Fact(DisplayName = "Deve retornar true se comando valido.")]
@@ -63,7 +64,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
             result.Should().BeFalse();
+            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(), 
+                new System.Threading.CancellationToken()), Times.Once() );
         }
 
+        //TODO: validar se perfil existe.
+        
     }
 }
