@@ -7,9 +7,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './components/menu/menu.component';
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
+    AppComponent,
     DashBoardComponent,
     MenuComponent,
     PerfilComponent
@@ -19,6 +21,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [DashBoardComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
