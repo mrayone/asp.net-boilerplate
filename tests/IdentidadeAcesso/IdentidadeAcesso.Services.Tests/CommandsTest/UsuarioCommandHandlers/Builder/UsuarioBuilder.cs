@@ -21,6 +21,16 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
                 null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
 
+        public static ExcluirUsuarioCommand ObterCommandFakeExcluir()
+        {
+            return new ExcluirUsuarioCommand(Guid.NewGuid());
+        }
+
+        public static ExcluirUsuarioCommand ObterCommandFakeExcluirInvalido()
+        {
+            return new ExcluirUsuarioCommand(Guid.Empty);
+        }
+
         public static AtualizarUsuarioCommand ObterCommandFakeAtualizarErroDeDomain()
         {
             return new AtualizarUsuarioCommand(Guid.NewGuid(), "Fake", "Sobrenome Fake", "F", "fake@gmail.com", "082.559.820-07", new DateTime(2002, 7, 22),

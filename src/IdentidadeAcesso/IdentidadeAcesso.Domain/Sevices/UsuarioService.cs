@@ -24,6 +24,23 @@ namespace IdentidadeAcesso.Domain.Sevices
             _perfilRepository = perfilRepository;
         }
 
+        public async Task<Usuario> DeletarUsuarioAsync(Guid usuarioId)
+        {
+            var usuario = await _repository.ObterPorId(usuarioId);
+
+            if (usuario == null)
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Não foi possível localizar este usuário."));
+                return null;
+            }
+
+            usuario.Deletar();
+
+            _repository.Atualizar(usuario);
+
+            return await Task.FromResult(usuario);
+        }
+
         public async Task<Usuario> DesativarUsuarioAsync(Guid usuarioId)
         {
             var usuario = await _repository.ObterPorId(usuarioId);

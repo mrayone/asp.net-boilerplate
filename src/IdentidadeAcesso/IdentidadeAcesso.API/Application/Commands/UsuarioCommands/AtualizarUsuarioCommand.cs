@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
-    public class AtualizarUsuarioCommand : BaseUsuarioCommand<AtualizarUsuarioCommand>, IRequest<bool>
+    public class AtualizarUsuarioCommand : BaseUsuarioCommand<AtualizarUsuarioCommand>
     {
         public AtualizarUsuarioCommand(Guid id, string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular,
                 string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId)

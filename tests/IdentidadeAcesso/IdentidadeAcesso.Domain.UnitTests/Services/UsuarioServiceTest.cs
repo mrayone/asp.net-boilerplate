@@ -30,8 +30,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _perfilRepo = new Mock<IPerfilRepository>();
             _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
             _service = new UsuarioService(_userRepo.Object, _perfilRepo.Object, _mediator.Object);
-            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
-                .ReturnsAsync(_usuario);
         }
 
         [Fact(DisplayName = "Deve desativar o usuário e retornar o mesmo.")]
@@ -39,6 +37,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Desativar_O_Usuario_e_Retornar_O_Mesmo()
         {
             //arrange
+            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+                    .ReturnsAsync(_usuario);
             var userId = Guid.NewGuid();
 
             //act
@@ -53,9 +53,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         [Trait("Services", "Usuario - Desativar")]
         public async Task Deve_retornar_null_caso_nao_encontrar_usuario()
         {
-            //arrange
-            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
-                .ReturnsAsync((Usuario)null);
             //act
             var result = await _service.DesativarUsuarioAsync(Guid.Empty);
 
