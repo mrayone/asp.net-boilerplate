@@ -19,12 +19,14 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUsuarioService _service;
 
-        public NovoUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, 
+        public NovoUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, IUsuarioService service,
             INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _usuarioRepository = usuarioRepository;
+            _service = service;
         }
 
         public async Task<bool> Handle(NovoUsuarioCommand request, CancellationToken cancellationToken)
@@ -35,6 +37,12 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             if(usuarioBusca.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Usuário já cadastrado, verifique 'E-mail' e/ou 'CPF'"));
+                return await Task.FromResult(false);
+            }
+            var perfilExiste = await _service.VerificarPerfilExistenteAsync(request.PerfilId);
+            if (!perfilExiste)
+            {
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, "O perfil que você esta tentando vincular ao usuário não existe!"));
                 return await Task.FromResult(false);
             }
 

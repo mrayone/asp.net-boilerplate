@@ -3,9 +3,11 @@ using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
+using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builder;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
 using Knowledge.IO.Infra.Data.UoW;
 using MediatR;
@@ -25,6 +27,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<IUsuarioRepository> _repository;
+        private readonly Mock<IUsuarioService> _service;
         private readonly Mock<DomainNotificationHandler> _notifications;
 
         public NovoUsuarioCommandHandlerTest()
@@ -32,9 +35,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _mediator = new Mock<IMediator>();
             _repository = new Mock<IUsuarioRepository>();
             _uow = new Mock<IUnitOfWork>();
+            _service = new Mock<IUsuarioService>();
             _notifications = new Mock<DomainNotificationHandler>();
-            _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _notifications.Object);
-            _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);    
+            _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
+            _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
+            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(true);
         }
 
         [Fact(DisplayName = "Deve retornar true se comando valido.")]
@@ -88,12 +94,28 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFake();
+            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(false);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
             result.Should().BeFalse();
             _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
-        }   
+        }
+
+        [Fact(DisplayName = "Deve persistir Usuario e Disparar Evento.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task Deve_Persistir_Usuario_E_Disparar_Evento()
+        {
+            //arrange
+            var command = UsuarioBuilder.ObterCommandFake();
+            //act
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeTrue();
+            _mediator.Verify(p => p.Publish(It.IsAny<UsuarioCriadoEvent>(),
+                new System.Threading.CancellationToken()), Times.Once());
+        }
     }
 }

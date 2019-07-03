@@ -9,5 +9,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
     public interface IUsuarioService
     {
         Task<Usuario> DesativarUsuarioAsync(Guid usuarioId);
+        Task<bool> VerificarPerfilExistenteAsync(Guid perfilId);
     }
 }
