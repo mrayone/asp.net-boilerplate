@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
@@ -18,6 +19,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IUsuarioRepository> _userRepo;
+        private readonly Mock<IPerfilRepository> _perfilRepo;
         private readonly Usuario _usuario;
         private readonly UsuarioService _service;
 
@@ -25,8 +27,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             _mediator = new Mock<IMediator>();
             _userRepo = new Mock<IUsuarioRepository>();
+            _perfilRepo = new Mock<IPerfilRepository>();
             _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
-            _service = new UsuarioService(_userRepo.Object, _mediator.Object);
+            _service = new UsuarioService(_userRepo.Object, _perfilRepo.Object, _mediator.Object);
             _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
                 .ReturnsAsync(_usuario);
         }

@@ -27,16 +27,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         protected Usuario()
         {
+
+            Status = Status.Ativo;
         }
 
         public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
             DataDeNascimento dataDeNascimento, Guid perfilId)
             : this()
         {
-
             Id = Guid.NewGuid();
-            Status = Status.Ativo;
-
             Nome = nome;
             Sexo = sexo;
             Email = email;
@@ -105,15 +104,26 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public static class UsuarioFactory
         {
-            public static Usuario CriarUsuario(NomeCompleto nome, Sexo sexo, Email email,
+            public static Usuario CriarUsuario(Guid? id, NomeCompleto nome, Sexo sexo, Email email,
                 CPF cpf, DataDeNascimento dataDeNascimento,
                 Guid perfilId, Celular celular, Telefone telefone, Endereco endereco)
             {
-                var usuario = new Usuario(nome, sexo, email, cpf, dataDeNascimento, perfilId);
+                var usuario = new Usuario
+                {
+                    Nome = nome,
+                    Sexo = sexo,
+                    DataDeNascimento = dataDeNascimento,
+                    Email = email,
+                    CPF = cpf,
+                    PerfilId = perfilId,
+                    Id = id.HasValue ? id.Value : Guid.NewGuid()
+                };
 
-                usuario.AdicionarTelefone(telefone);
                 usuario.AdicionarCelular(celular);
-                usuario.AdicionarEndereco(endereco);
+
+                if(telefone != null) usuario.AdicionarTelefone(telefone);
+                if(endereco != null) usuario.AdicionarEndereco(endereco);
+
 
                 return usuario;
             }

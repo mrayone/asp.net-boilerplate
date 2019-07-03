@@ -50,7 +50,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var telefone = TelefoneBuilder.ObterTelefoneValido();
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
-            return UsuarioFactory.CriarUsuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid(),celular,
+            return UsuarioFactory.CriarUsuario(null, nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid(),celular,
                 telefone, endereco);
         }
     }

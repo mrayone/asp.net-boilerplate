@@ -10,6 +10,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
     public abstract class BaseUsuarioCommand<T> : ICommand, IRequest<bool> where T : BaseUsuarioCommand<T>
     {
+        public Guid Id { get; protected set; }
         public string Nome { get; protected set; }
         public string Sobrenome { get; protected set; }
         public string Sexo { get; protected set; }
