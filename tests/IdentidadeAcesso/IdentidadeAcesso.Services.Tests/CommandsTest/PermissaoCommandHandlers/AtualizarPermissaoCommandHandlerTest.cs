@@ -71,11 +71,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         }
 
         [Fact(DisplayName = "O Handle deve atualizar com sucesso a permissão.")]
-        [Trait("Handler - Permissão", "NovaPermissão")]
+        [Trait("Handler - Permissão", "AtualizarPermissão")]
         public async Task Handle_deve_cadastrar_com_sucesso()
         {
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
-            var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Criar");
+            var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Editar");
             var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());

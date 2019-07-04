@@ -33,5 +33,18 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
         {
             DeletadoEm = DateTime.Now;
         } 
+
+
+        public abstract class PermissaoFactory
+        {
+            public static Permissao CriarPermissao(Guid? id, Atribuicao atr)
+            {
+                return new Permissao()
+                {
+                    Id = id.HasValue ? id.Value : Guid.NewGuid(),
+                    Atribuicao = atr
+                };
+            }
+        }
     }
 }

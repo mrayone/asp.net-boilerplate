@@ -1,4 +1,4 @@
-﻿using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Extension;
+﻿using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;

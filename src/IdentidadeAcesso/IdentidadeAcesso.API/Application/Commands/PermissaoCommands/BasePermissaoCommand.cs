@@ -11,6 +11,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
     {
         public string Tipo { get; protected set; }
         public string Valor { get; protected set; }
+        public Guid Id { get; protected set; }
 
         public ValidationResult ValidationResult { get; set; }
 

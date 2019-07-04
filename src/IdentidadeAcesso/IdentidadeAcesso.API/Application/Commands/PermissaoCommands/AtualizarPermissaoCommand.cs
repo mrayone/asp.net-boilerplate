@@ -16,8 +16,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
             Id = id;
         }
 
-        public Guid Id { get; private set; }
-
         public override bool isValid()
         {
             ValidationResult = new AtualizarPermissaoValidation().Validate(this);
