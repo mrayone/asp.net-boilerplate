@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
+﻿using IdentidadeAcesso.API.Application.Extensions;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.PermissaoEvents;
@@ -37,7 +38,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
                 return await Task.FromResult(false);
             }
 
-            var permissao = DefinirPermissao(request);
+            var permissao = this.DefinirPermissao(request);
 
             _permissaoRepository.Adicionar(permissao);
 
@@ -47,12 +48,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
             }
 
             return await Task.FromResult(true);
-        }
-
-        private Permissao DefinirPermissao(CriarPermissaoCommand request)
-        {
-            var atr = new Atribuicao(request.Tipo, request.Valor);
-            return new Permissao(atr);
         }
     }
 }
