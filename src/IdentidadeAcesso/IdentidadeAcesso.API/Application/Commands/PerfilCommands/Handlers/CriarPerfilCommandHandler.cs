@@ -10,6 +10,7 @@ using System;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
 using System.Linq;
+using IdentidadeAcesso.API.Application.Extensions;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
@@ -30,7 +31,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 
-            var perfil = DefinirPerfil(request);
+            var perfil = this.DefinirPerfil(request);
 
             if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
@@ -49,18 +50,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             }
 
             return await Task.FromResult(true);
-        }
-
-        private Perfil DefinirPerfil(CriarPerfilCommand request)
-        {
-            var perfil = new Perfil(new Identificacao(request.Nome, request.Descricao));
-
-            foreach (var item in request.PermissoesAssinadas)
-            {
-                perfil.AssinarPermissao(item.PermissaoId);
-            }
-
-            return perfil;
         }
     }
 }

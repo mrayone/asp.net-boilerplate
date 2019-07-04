@@ -21,8 +21,6 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
             RuleFor(command => command.Descricao)
                 .Length(3, 50).WithMessage("A descrição só pode conter entre 3 e 150 caracteres.");
 
-            RuleFor(command => command.Id).NotEqual(Guid.Empty);
-
             RuleFor(command => command.PermissoesAssinadas).ForEach(permissaoAssinada =>
             {
                 permissaoAssinada.Must(p => p.PermissaoId != Guid.Empty).WithMessage("A permissão assinada não é valida.");

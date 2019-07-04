@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+﻿using IdentidadeAcesso.API.Application.Extensions;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
@@ -35,7 +36,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             if ( !await PerfilExitente(request)) return await Task.FromResult(false);
 
-            var perfil = DefinirPerfil(request);
+            var perfil = this.DefinirPerfil(request);
 
             if (!ValidarEntity(perfil)) return await Task.FromResult(false);
 
@@ -65,16 +66,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             return await Task.FromResult(true);
         }
 
-        private Perfil DefinirPerfil(AtualizarPerfilCommand request)
-        {
-            var perfil = Perfil.PerfilFactory.NovoPerfil(request.Id,request.Nome, request.Descricao);
-
-            foreach (var item in request.PermissoesAssinadas)
-            {
-                perfil.AssinarPermissao(item.PermissaoId);
-            }
-
-            return perfil;
-        }
     }
 }

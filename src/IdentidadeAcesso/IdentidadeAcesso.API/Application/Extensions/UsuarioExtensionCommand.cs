@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Extensions
 {
-    public static class DefinirUsuarioExtension
+    public static class UsuarioExtensionCommand
     {
         public static Usuario DefinirUsuario<T>(this CommandHandler command, BaseUsuarioCommand<T> request) where T : BaseUsuarioCommand<T>
         {

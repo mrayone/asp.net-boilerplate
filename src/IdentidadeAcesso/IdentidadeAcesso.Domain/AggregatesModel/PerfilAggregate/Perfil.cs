@@ -70,11 +70,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         public class PerfilFactory
         {
-            public static Perfil NovoPerfil(Guid id, string nome, string descricao)
+            public static Perfil NovoPerfil(Guid? id, string nome, string descricao)
             {
                 return new Perfil()
                 {
-                    Id = id,
+                    Id = id.HasValue ? id.Value : Guid.NewGuid(),
                     Identifacao = new Identificacao(nome, descricao)
                 };
             }

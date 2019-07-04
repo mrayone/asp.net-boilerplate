@@ -29,7 +29,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public static CriarPerfilCommand FalsoPerfilRequestComPermissoes()
         {
             return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
                 nome: "1",
                 descricao: "a",
                 status: true,
@@ -67,7 +66,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public static CriarPerfilCommand FalsoAtualizarPerfilRequestComNomeExistente()
         {
             return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
                 status: true,
@@ -120,7 +118,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public static CriarPerfilCommand FalsoPerfilRequestOk()
         {
             return new CriarPerfilCommand(
-                id: Guid.NewGuid(),
                 nome: "Perfil RH 02",
                 descricao: "Perfil de acesso nível 1",
                 status: true,

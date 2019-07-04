@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
+﻿using FluentValidation;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
     {
         public AtualizarPerfilCommandValidation() : base()
         {
-
+            RuleFor(command => command.Id).NotEqual(Guid.Empty);
         }
     }
 }
