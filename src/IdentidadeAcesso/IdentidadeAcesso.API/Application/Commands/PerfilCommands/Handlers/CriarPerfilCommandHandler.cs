@@ -13,11 +13,10 @@ using System.Linq;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CriarPerfilCommandHandler : CommandHandler ,IRequestHandler<CriarPerfilCommand, bool>
+    public class CriarPerfilCommandHandler : CommandHandler, IRequestHandler<CriarPerfilCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilRepository _perfilRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public CriarPerfilCommandHandler(IMediator mediator, 
             IPerfilRepository perfilRepository, 
@@ -25,7 +24,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             _mediator = mediator;
             _perfilRepository = perfilRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
