@@ -10,8 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Extension;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
+using IdentidadeAcesso.API.Application.Extensions;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
