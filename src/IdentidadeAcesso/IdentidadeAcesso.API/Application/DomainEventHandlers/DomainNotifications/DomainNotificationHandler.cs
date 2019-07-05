@@ -24,12 +24,10 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotificatio
             return _notifications;
         }
 
-        public Task Handle(DomainNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(DomainNotification notification, CancellationToken cancellationToken)
         {
             _notifications.Add(notification);
             //TODO: Implementar Domain Evento.
-
-            return Task.CompletedTask;
         }
 
         public bool HasNotifications()

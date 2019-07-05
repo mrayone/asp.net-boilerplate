@@ -37,7 +37,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             if (await Commit())
             {
-                await _mediator.Publish(new PermissaoCanceladaEvent(perfil));
+                await _mediator.Publish(new AssinaturaPermissaoCanceladaEvent(perfil));
             }
 
             return await Task.FromResult(true);

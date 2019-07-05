@@ -128,7 +128,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             //assert
             result.Should().BeTrue();
-            _mediator.Verify(m => m.Publish(It.IsAny<PermissaoCanceladaEvent>(), default), Times.Once());
+            _mediator.Verify(m => m.Publish(It.IsAny<AssinaturaPermissaoCanceladaEvent>(), default), Times.Once());
         }
     }
 }
