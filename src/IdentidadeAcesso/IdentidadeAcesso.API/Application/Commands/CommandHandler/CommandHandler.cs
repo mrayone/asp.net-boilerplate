@@ -1,4 +1,6 @@
-﻿using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.SeedOfWork;
+using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
@@ -6,15 +8,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler
+namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
 {
-    public class CommandHandler
+    public class BaseCommandHandler
     {
         readonly IMediator _mediator;
         readonly IUnitOfWork _unitOfWork;
         readonly DomainNotificationHandler _notifications;
 
-        public CommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public BaseCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;

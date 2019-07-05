@@ -1,20 +1,17 @@
-﻿using IdentidadeAcesso.API.Application.Extensions;
-using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
-using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class AtulizarPerfilCommandHandler : CommandHandler, IRequestHandler<AtualizarPerfilCommand, bool>
+    public class AtulizarPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPerfilCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilRepository _perfilRepository;

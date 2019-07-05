@@ -1,20 +1,17 @@
-﻿using IdentidadeAcesso.API.Application.Extensions;
-using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
-    public class AtualizarUsuarioCommandHandler : CommandHandler, IRequestHandler<AtualizarUsuarioCommand, bool>
+    public class AtualizarUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarUsuarioCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;

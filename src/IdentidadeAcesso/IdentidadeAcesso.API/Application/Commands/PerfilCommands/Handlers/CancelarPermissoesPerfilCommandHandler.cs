@@ -1,19 +1,17 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CancelarPermissoesPerfilCommandHandler : CommandHandler, IRequestHandler<CancelarPermissoesPerfilCommand, bool>
+    public class CancelarPermissoesPerfilCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissoesPerfilCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;

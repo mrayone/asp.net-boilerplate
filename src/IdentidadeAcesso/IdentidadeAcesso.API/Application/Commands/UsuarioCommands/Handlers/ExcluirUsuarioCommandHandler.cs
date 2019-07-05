@@ -1,18 +1,15 @@
-﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
-    public class ExcluirUsuarioCommandHandler : CommandHandler, IRequestHandler<ExcluirUsuarioCommand, bool>
+    public class ExcluirUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<ExcluirUsuarioCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;
