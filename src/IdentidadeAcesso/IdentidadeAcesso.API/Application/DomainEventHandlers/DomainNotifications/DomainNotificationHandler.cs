@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.Notifications
+namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications
 {
     public class DomainNotificationHandler : INotificationHandler<DomainNotification>
     {
@@ -23,12 +24,10 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Notifications
             return _notifications;
         }
 
-        public Task Handle(DomainNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(DomainNotification notification, CancellationToken cancellationToken)
         {
             _notifications.Add(notification);
             //TODO: Implementar Domain Evento.
-
-            return Task.CompletedTask;
         }
 
         public bool HasNotifications()

@@ -1,21 +1,17 @@
-﻿using IdentidadeAcesso.API.Application.Extensions;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.PermissaoEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 {
-    public class CriarPermissaoCommandHandler : CommandHandler, IRequestHandler<CriarPermissaoCommand, bool>
+    public class CriarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CriarPermissaoCommand, bool>
     {
         private readonly IPermissaoRepository _permissaoRepository;
         private readonly IMediator _mediator;

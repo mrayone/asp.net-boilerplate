@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
@@ -127,7 +128,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             //assert
             result.Should().BeTrue();
-            _mediator.Verify(m => m.Publish(It.IsAny<PermissaoCanceladaEvent>(), default), Times.Once());
+            _mediator.Verify(m => m.Publish(It.IsAny<AssinaturaPermissaoCanceladaEvent>(), default), Times.Once());
         }
     }
 }

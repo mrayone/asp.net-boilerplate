@@ -2,6 +2,7 @@
 using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;

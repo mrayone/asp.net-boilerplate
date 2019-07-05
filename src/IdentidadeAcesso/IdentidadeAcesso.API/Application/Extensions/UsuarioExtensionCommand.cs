@@ -1,18 +1,13 @@
-﻿using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
-using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
+﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
-using IdentidadeAcesso.Domain.SeedOfWork.Commands.CommandHandler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Extensions
 {
     public static class UsuarioExtensionCommand
     {
-        public static Usuario DefinirUsuario<T>(this CommandHandler command, BaseUsuarioCommand<T> request) where T : BaseUsuarioCommand<T>
+        public static Usuario DefinirUsuario<T>(this BaseCommandHandler command, BaseUsuarioCommand<T> request) where T : BaseUsuarioCommand<T>
         {
             var nome = new NomeCompleto(request.Nome, request.Sobrenome);
             var sexo = request.Sexo.Equals("M") ? Sexo.Masculino : Sexo.Feminino;

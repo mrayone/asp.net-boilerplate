@@ -6,9 +6,9 @@ using System.Text;
 
 namespace IdentidadeAcesso.Domain.Events.PerfilEvents
 {
-    public class PermissaoCanceladaEvent : INotification
+    public class AssinaturaPermissaoCanceladaEvent : INotification
     {
-        public PermissaoCanceladaEvent(Perfil perfil)
+        public AssinaturaPermissaoCanceladaEvent(Perfil perfil)
         {
             Perfil = perfil;
         }
