@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Queries;
+using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +18,13 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
+        private readonly INotificationHandler<DomainNotification> _notification;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, INotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
+            _notification = notification;
         }
 
         [HttpGet]
@@ -47,6 +52,18 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CriarPermissaoAsync([FromBody] CriarPermissaoCommand command)
+        {
+            var result = await _mediator.Send(command);
 
+            if(result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notification);
+        }
     }
 }

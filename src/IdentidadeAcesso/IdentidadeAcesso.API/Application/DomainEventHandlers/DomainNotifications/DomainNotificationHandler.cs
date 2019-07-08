@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications
 {
-    public class DomainNotificationHandler : INotificationHandler<DomainNotification>
+    public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotification>
     {
         private List<DomainNotification> _notifications;
 
@@ -17,7 +18,6 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotificatio
         {
             _notifications = new List<DomainNotification>();
         }
-
 
         public List<DomainNotification> GetNotifications()
         {
@@ -34,6 +34,11 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotificatio
         {
             _notifications = new List<DomainNotification>() ?? _notifications;
             return _notifications.Any();
+        }
+
+        public void Dispose()
+        {
+            _notifications = new List<DomainNotification>();
         }
     }
 }
