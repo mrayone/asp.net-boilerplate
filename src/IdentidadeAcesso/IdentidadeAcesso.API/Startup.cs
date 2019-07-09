@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace IdentidadeAcesso.API
 {
@@ -29,9 +30,42 @@ namespace IdentidadeAcesso.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddMediatR(typeof(Startup))
+            services.AddMediatR(typeof(Startup).GetType().Assembly)
                 .AddDomainServices()
-                .AddDataDependencies();
+                .AddDataDependencies()
+                .AddDomainNotifications()
+                .AddApplicationQueries()
+                .AddApplicationHandlers();
+
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new Info()
+                {
+                    Version = "v1",
+                    Title = "Knowledge.IO.API",
+                    Description = "API do site Knowledge.IO",
+                    TermsOfService = "Nenhum",
+                    Contact = new Contact()
+                    {
+                        Name = "Desenvolver Maycon Rayone Rodrigues Xavier",
+                        Email = "maycon.rayone@gmail.com",
+                        Url = ""
+                    },
+                    License = new License()
+                    {
+                        Name = "MIT",
+                        Url = "http://eventos.io/license"
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +80,16 @@ namespace IdentidadeAcesso.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowledge.IO API V1");
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

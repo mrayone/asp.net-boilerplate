@@ -13,21 +13,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IdentidadeAcesso.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{ver:apiVersion}/permissoes")]
     [ApiController]
     public class PermissoesController : ControllerBase
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notification;
+        private readonly INotificationHandler<DomainNotification> _notification;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, IDomainNotificationHandler<DomainNotification> notification )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, INotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
             _notification = notification;
         }
 
+        [Route("obter-todas")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()

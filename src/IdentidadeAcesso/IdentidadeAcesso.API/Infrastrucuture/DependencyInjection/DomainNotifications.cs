@@ -1,6 +1,7 @@
 ﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -14,7 +15,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.DependencyInjection
     {
         public static IServiceCollection AddDomainNotifications(this IServiceCollection services)
         {
-            services.TryAddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.TryAddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             return services;
         }
