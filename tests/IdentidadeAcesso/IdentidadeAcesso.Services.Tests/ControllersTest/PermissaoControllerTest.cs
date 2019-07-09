@@ -110,9 +110,9 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
 
-        [Fact(DisplayName = "Deve retonar BadRequest ao persistir permissão.")]
+        [Fact(DisplayName = "Deve retonar BadRequest ao criar permissão.")]
         [Trait("Controller", "Permissão")]
-        public async Task Deve_Retornar_BadRequest_Ao_Persistir_Permissao()
+        public async Task Deve_Retornar_BadRequest_Ao_Criar_Permissao()
         {
             //arrange
             var command = new CriarPermissaoCommand("Perfil", "Atualizar");
@@ -124,6 +124,40 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             result.Should().BeAssignableTo<BadRequestResult>();
             var vr = result as BadRequestResult;
             vr.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+        }
+
+        [Fact(DisplayName = "Deve retonar Ok ao editar permissão.")]
+        [Trait("Controller", "Permissão")]
+        public async Task Deve_Retornar_Ok_Ao_Editar_Permissao()
+        {
+            //arrange
+            var command = new AtualizarPermissaoCommand(Guid.NewGuid(),"Perfil", "Atualizar");
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(true);
+            //act
+            var result = await _controller.AtualizarPermissaoAsync(command);
+
+            //assert
+            result.Should().BeAssignableTo<OkResult>();
+            var vr = result as OkResult;
+            vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+        }
+
+        [Fact(DisplayName = "Deve retonar Ok ao excluir permissão.")]
+        [Trait("Controller", "Permissão")]
+        public async Task Deve_Retornar_Ok_Ao_Deletar_Permissao()
+        {
+            //arrange
+            var command = new ExcluirPermissaoCommand(Guid.NewGuid());
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(true);
+            //act
+            var result = await _controller.ExcluirPermissaoAsync(command);
+
+            //assert
+            result.Should().BeAssignableTo<OkResult>();
+            var vr = result as OkResult;
+            vr.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
     }
 }

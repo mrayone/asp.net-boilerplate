@@ -65,5 +65,31 @@ namespace IdentidadeAcesso.API.Controllers
 
             return this.NotificarDomainErros(_notification);
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notification);
+        }
+
+        public async Task<IActionResult> ExcluirPermissaoAsync([FromBody] ExcluirPermissaoCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notification);
+        }
     }
 }
