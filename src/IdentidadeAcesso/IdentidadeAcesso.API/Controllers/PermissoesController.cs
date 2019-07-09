@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -18,9 +19,9 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
-        private readonly INotificationHandler<DomainNotification> _notification;
+        private readonly IDomainNotificationHandler<DomainNotification> _notification;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, INotificationHandler<DomainNotification> notification )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, IDomainNotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
@@ -80,6 +81,8 @@ namespace IdentidadeAcesso.API.Controllers
             return this.NotificarDomainErros(_notification);
         }
 
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPermissaoAsync([FromBody] ExcluirPermissaoCommand command)
         {
             var result = await _mediator.Send(command);

@@ -1,0 +1,111 @@
+﻿using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
+using IdentidadeAcesso.API.Application.Queries;
+using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace IdentidadeAcesso.API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PerfisController : ControllerBase
+    {
+        private readonly IPerfilQueries _perfilQueris;
+        private readonly IMediator _mediator;
+        private readonly IDomainNotificationHandler<DomainNotification> _notifications;
+
+        public PerfisController( IPerfilQueries perfilQueries, 
+            IMediator mediator, IDomainNotificationHandler<DomainNotification> notifications )
+        {
+            _perfilQueris = perfilQueries;
+            _mediator = mediator;
+            _notifications = notifications;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPerfisAsync()
+        {
+            var list = await _perfilQueris.ObterTodasAsync();
+
+            return Ok(list);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetPerfilAsync(Guid guid)
+        {
+            try
+            {
+                var model = await _perfilQueris.ObterPorIdAsync(guid);
+                return Ok(model);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CancelarPermissoesAsync(CancelarPermissoesPerfilCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result) return Ok();
+
+            return this.NotificarDomainErros(_notifications);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CriarPerfilAsync([FromBody] CriarPerfilCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notifications);
+        }
+
+
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AtualizarPerfilAsync([FromBody] AtualizarPerfilCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notifications);
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ExcluirPerfilAsync([FromBody] ExcluirPerfilCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (result)
+            {
+                return Ok();
+            }
+
+            return this.NotificarDomainErros(_notifications);
+        }
+    }
+}
