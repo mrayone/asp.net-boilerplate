@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace IdentidadeAcesso.API.Controllers.Extensions
 {
     public static class ControllerExtensions
     {
-        public static IActionResult NotificarDomainErros(this ControllerBase controller, INotificationHandler<DomainNotification> notifications)
+        public static IActionResult NotificarDomainErros(this ControllerBase controller, IDomainNotificationHandler<DomainNotification> notifications)
         {
             var _notifications = (DomainNotificationHandler) notifications;
 

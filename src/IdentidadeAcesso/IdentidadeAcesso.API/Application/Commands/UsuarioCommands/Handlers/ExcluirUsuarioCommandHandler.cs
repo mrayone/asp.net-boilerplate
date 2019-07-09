@@ -15,7 +15,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IUsuarioService _service;
         public ExcluirUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, IUsuarioService service,
-            INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
+            IDomainNotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _usuarioRepository = usuarioRepository;

@@ -26,13 +26,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<DomainNotificationHandler> _notifications;
+        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
         public NovaPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<DomainNotificationHandler>();
+            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
         }
 
         [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]

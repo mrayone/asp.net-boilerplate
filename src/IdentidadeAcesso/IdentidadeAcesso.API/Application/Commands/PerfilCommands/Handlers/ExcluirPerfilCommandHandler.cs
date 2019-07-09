@@ -15,8 +15,8 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         private readonly INotificationHandler<DomainNotification> _notifications;
         private readonly IPerfilRepository _perfilRepository;
         private readonly IPerfilService _domainService;
-        public ExcluirPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, 
-            INotificationHandler<DomainNotification> notifications, 
+        public ExcluirPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+            IDomainNotificationHandler<DomainNotification> notifications, 
             IPerfilRepository perfilRepository, IPerfilService domainService) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;

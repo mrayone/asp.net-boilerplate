@@ -20,9 +20,9 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
-        private readonly INotificationHandler<DomainNotification> _notification;
+        private readonly IDomainNotificationHandler<DomainNotification> _notification;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, INotificationHandler<DomainNotification> notification )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, IDomainNotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
