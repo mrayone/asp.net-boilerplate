@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{ver:apiVersion}/perfis")]
     [ApiController]
     public class PerfisController : ControllerBase
     {
@@ -28,6 +29,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notifications;
         }
 
+        [Route("obter-todos")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
@@ -53,6 +55,7 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
+        [Route("cancelar-permissoes")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync(CancelarPermissoesPerfilCommand command)

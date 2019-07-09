@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IdentidadeAcesso.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{ver:apiVersion}/permissoes")]
     [ApiController]
     public class PermissoesController : ControllerBase
     {
@@ -28,6 +29,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notification = notification;
         }
 
+        [Route("obter-todas")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
