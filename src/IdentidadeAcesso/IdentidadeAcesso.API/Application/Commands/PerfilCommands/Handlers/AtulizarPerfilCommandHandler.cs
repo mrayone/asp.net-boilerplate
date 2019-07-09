@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         public AtulizarPerfilCommandHandler(IMediator mediator, 
             IPerfilRepository perfilRepository, 
             IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<INotification> notifications) : base(mediator, unitOfWork, notifications )
+            IDomainNotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications )
         {
             _mediator = mediator;
             _perfilRepository = perfilRepository;

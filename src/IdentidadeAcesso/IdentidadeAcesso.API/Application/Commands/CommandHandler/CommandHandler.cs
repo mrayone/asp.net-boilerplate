@@ -14,10 +14,10 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
     {
         readonly IMediator _mediator;
         readonly IUnitOfWork _unitOfWork;
-        readonly IDomainNotificationHandler<INotification> _notifications;
+        readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
         public BaseCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<INotification> notifications)
+            IDomainNotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;
             _unitOfWork = unitOfWork;

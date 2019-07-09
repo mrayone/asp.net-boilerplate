@@ -15,7 +15,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.DependencyInjection
     {
         public static IServiceCollection AddDomainNotifications(this IServiceCollection services)
         {
-            services.TryAddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.TryAddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             return services;
         }

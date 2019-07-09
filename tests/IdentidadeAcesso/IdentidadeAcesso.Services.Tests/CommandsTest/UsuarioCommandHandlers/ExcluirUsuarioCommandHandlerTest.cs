@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<IUsuarioRepository> _repository;
         private readonly Mock<IUsuarioService> _service;
-        private readonly Mock<IDomainNotificationHandler<INotification>> _notifications;
+        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
         
         public ExcluirUsuarioCommandHandlerTest()
         {
@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _repository = new Mock<IUsuarioRepository>();
             _uow = new Mock<IUnitOfWork>();
             _service = new Mock<IUsuarioService>();
-            _notifications = new Mock<IDomainNotificationHandler<INotification>>();
+            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
             _handler = new ExcluirUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
 
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);

@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
         private readonly IUsuarioService _service;
 
         public NovoUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, IUsuarioService service,
-            IDomainNotificationHandler<INotification> notifications) : base(mediator, unitOfWork, notifications)
+            IDomainNotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _usuarioRepository = usuarioRepository;
