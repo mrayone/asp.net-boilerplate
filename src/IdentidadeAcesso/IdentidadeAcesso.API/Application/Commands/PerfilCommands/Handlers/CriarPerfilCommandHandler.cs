@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public CriarPerfilCommandHandler(IMediator mediator, 
             IPerfilRepository perfilRepository, 
-            IUnitOfWork unitOfWork, INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
+            IUnitOfWork unitOfWork, IDomainNotificationHandler<INotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _perfilRepository = perfilRepository;

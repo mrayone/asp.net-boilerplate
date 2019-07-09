@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
         private readonly IMediator _mediator;
 
         public AtualizarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            INotificationHandler<DomainNotification> notifications, IPermissaoRepository permissaoRepository) : base(mediator, unitOfWork, notifications)
+            IDomainNotificationHandler<INotification> notifications, IPermissaoRepository permissaoRepository) : base(mediator, unitOfWork, notifications)
         {
             _permissaoRepository = permissaoRepository;
             _mediator = mediator;

@@ -28,14 +28,14 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<DomainNotificationHandler> _notifications;
+        private readonly Mock<IDomainNotificationHandler<INotification>> _notifications;
         private readonly IList<Perfil>_listMock;
         public NovoPerfilCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<DomainNotificationHandler>();
+            _notifications = new Mock<IDomainNotificationHandler<INotification>>();
 
             _listMock = new List<Perfil>()
             { 
