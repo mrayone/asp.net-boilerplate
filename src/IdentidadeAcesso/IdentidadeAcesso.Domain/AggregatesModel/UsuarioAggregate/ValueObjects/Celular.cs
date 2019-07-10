@@ -12,28 +12,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         public Celular(string numero)
         {
             Numero = numero;
-
-            Validar();
-        }
-
-        private void Validar()
-        {
-            ValidarNumero();
-        }
-
-        private void ValidarNumero()
-        {
-            if (Numero.Length > MaxNumeros)
-            {
-                ValidationResult.AddError("Celular","O celular não pode exceder 14 caracteres.");
-                return;
-            }
-
-            if (!Regex.IsMatch(Numero, Pattern))
-            {
-                ValidationResult.AddError("Celular", "O número de celular não obedece o formato. Ex:'+5511981928444'.");
-                return;
-            }
         }
 
         protected override bool EqualsCore(Celular other)

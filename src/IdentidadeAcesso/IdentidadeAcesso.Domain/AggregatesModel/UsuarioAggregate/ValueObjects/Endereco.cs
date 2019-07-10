@@ -6,9 +6,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Endereco : ValueObject<Endereco>
     {
-
-        private const int DigMaxCep = 8;
-        private const string CepPattern = @"\d{8}";
         public string Logradouro { get; private set; }
         public string Numero { get; private set; }
         public string Complemento { get; private set; }
@@ -28,11 +25,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             Cep = cep;
             Cidade = cidade;
             Estado = estado;
-        }
-
-        public static string ObterCEPLimpo(string cep)
-        {
-            return Regex.Replace(cep, CepPattern, "");
         }
 
         protected override bool EqualsCore(Endereco other)

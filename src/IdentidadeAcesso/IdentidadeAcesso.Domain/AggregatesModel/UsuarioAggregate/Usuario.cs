@@ -44,46 +44,18 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             PerfilId = perfilId;
         }
 
-        public override bool EhValido()
-        {
-            _erros.AddRangeIfNotEmpty(Nome.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Sexo.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Email.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(CPF.ValidationResult.Erros);
-
-            return base.EhValido();
-        }
-
         public void AdicionarEndereco(Endereco endereco)
         {
-            if (!endereco.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(endereco.ValidationResult.Erros);
-                return;
-            }
-
             Endereco = endereco;
         }
 
         public void AdicionarTelefone(Telefone telefone)
         {
-            if (!telefone.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(telefone.ValidationResult.Erros);
-                return;
-            }
-
             Telefone = telefone;
         }
 
         public void AdicionarCelular(Celular celular)
         {
-            if (!celular.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(celular.ValidationResult.Erros);
-                return;
-            }
-
             Celular = celular;
         }
 
