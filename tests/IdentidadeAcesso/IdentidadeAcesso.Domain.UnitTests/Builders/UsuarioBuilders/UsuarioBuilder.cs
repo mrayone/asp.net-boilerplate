@@ -9,26 +9,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
     public abstract class UsuarioBuilder
     {
-        public static Usuario ObterUsuarioInvalido()
-        {
-            var nome = NomeBuilder.ObterNomeInvalido();
-            var email = EmailBuilder.ObterEmailInvalido();
-            var sexo = SexoBuilder.ObterSexoInvalido();
-            var cpf = CPFBuilder.ObterCPFInvalido();
-            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
-        }
-
-        public static Usuario ObterUsuarioParcialmenteInvalido()
-        {
-            var nome = NomeBuilder.ObterNomeValido();
-            var email = EmailBuilder.ObterEmailValido();
-            var sexo = SexoBuilder.ObterSexoInvalido();
-            var cpf = CPFBuilder.ObterCPFInvalido();
-            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
-        }
-
         public static Usuario ObterUsuarioValido()
         {
             var nome = NomeBuilder.ObterNomeValido();

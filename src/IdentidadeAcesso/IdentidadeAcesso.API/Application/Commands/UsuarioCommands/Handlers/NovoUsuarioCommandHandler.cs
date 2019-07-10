@@ -43,7 +43,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             }
 
             var usuario = this.DefinirUsuario(request);
-            if(!ValidarEntity(usuario)) return await Task.FromResult(false);
 
             _usuarioRepository.Adicionar(usuario);
 

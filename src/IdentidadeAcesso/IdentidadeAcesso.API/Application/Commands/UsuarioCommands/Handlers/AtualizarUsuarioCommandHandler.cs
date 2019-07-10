@@ -34,7 +34,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 return await Task.FromResult(podeAtualizar);
             }
             var usuario = this.DefinirUsuario(request);
-            if (!ValidarEntity(usuario)) return await Task.FromResult(false);
 
             _usuarioRepository.Atualizar(usuario);
 

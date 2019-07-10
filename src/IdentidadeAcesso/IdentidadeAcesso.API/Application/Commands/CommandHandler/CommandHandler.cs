@@ -48,18 +48,6 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
             return true;
         }
 
-        protected bool ValidarEntity(Entity entity)
-        {
-            if (!entity.EhValido())
-            {
-                NotificarErros(entity);
-
-                return false;
-            }
-
-            return true;
-        }
-
         protected void NotificarErros(ICommand request)
         {
             foreach (var item in request.ValidationResult.Errors)
@@ -67,14 +55,5 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
                 _mediator.Publish(new DomainNotification(request.GetType().Name, item.ErrorMessage));
             }
         }
-
-        protected void NotificarErros(Entity entity)
-        {
-            foreach (var item in entity.Erros)
-            {
-                _mediator.Publish(new DomainNotification(item.Property, item.MessageError));
-            }
-        }
-
     }
 }

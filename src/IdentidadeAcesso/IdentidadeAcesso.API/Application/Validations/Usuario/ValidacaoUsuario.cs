@@ -42,13 +42,13 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                 .NotEmpty().EmailAddress();
 
             RuleFor(c => c.Celular)
-                .Must(n => !Regex.IsMatch(n, @"(\+\d{2})+(\d{11})"))
+                .Must(ValidarCelular)
                 .WithMessage("O celular deve obedecer o padrão Ex: +5518999928663")
                 .Length(11, 15)
                 .NotEmpty().NotNull();
 
             RuleFor(c => c.Telefone)
-                .Must(n => !Regex.IsMatch(n, @"(\+\d{2})+(\d{10})"))
+                .Must(ValidarTelefone)
                 .WithMessage("O telefone deve obedecer o padrão Ex: +551832815555")
                 .Length(11, 13);
 
@@ -76,6 +76,22 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(c => c.PerfilId)
                 .NotEqual(Guid.Empty)
                 .WithMessage("O ID do perfil tem que ser fornecido.");
+        }
+
+        private bool ValidarTelefone(string arg)
+        {
+            if (arg != null)
+                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{10})");
+
+            return true;
+        }
+
+        private bool ValidarCelular(string arg)
+        {
+            if (arg != null)
+                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{11})");
+
+            return true;
         }
 
         private bool CPFValido(string arg)

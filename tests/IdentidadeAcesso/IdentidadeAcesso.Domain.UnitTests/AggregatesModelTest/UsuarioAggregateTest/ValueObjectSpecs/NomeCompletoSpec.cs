@@ -28,19 +28,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             nomeCompleto.Should().Be(NOME + " " + SOBRENOME);
         }
 
-        [Fact(DisplayName = "O estado do nome deve ser valido")]
-        [Trait("Value Object", "Nome")]
-        public void o_estado_do_nome_deve_ser_valido()
-        {
-            //arrange
-            var nome = new NomeCompleto(NOME, SOBRENOME);
-            //act
-
-            //assert
-            nome.ValidationResult.Erros.Should().HaveCount(0);
-            nome.ValidationResult.IsValid.Should().BeTrue();
-        }
-
         [Fact(DisplayName = "Objetos de valores devem ser iguais quando possuem os mesmos dados")]
         [Trait("Value Object", "Nome")]
         public void deve_ser_verdadeiro_para_duas_instancias_com_os_mesmos_dados()

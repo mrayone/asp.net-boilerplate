@@ -11,7 +11,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public CPF(string digitos)
         {
-            Digitos = digitos;
+            Digitos = CPF.LimparFormatacaoCPF(digitos);
         }
 
         public static string LimparFormatacaoCPF(string cpf)

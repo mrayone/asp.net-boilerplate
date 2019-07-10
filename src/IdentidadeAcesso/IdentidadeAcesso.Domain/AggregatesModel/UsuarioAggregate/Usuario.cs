@@ -23,8 +23,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Endereco Endereco { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
-
-
         protected Usuario()
         {
 

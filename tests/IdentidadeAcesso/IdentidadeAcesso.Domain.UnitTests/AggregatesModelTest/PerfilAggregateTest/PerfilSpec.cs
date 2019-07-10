@@ -47,10 +47,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             //act
             perfil.CancelarPermissao(permissao.Id);
             var permissaoAssinada = perfil.PermissoesAssinadas.FirstOrDefault();
-            var isValid = perfil.EhValido();
             //assert
             permissaoAssinada.Status.Should().Be(Status.Inativo);
-            perfil.Erros.Should().BeEmpty();
 
         }
 
@@ -70,7 +68,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PerfilAggregateT
             //assert
             var permissaoAssinada = perfil.PermissoesAssinadas.FirstOrDefault();
 
-            perfil.EhValido().Should().BeTrue();
             perfil.PermissoesAssinadas.Should().HaveCount(1);
             permissaoAssinada.PermissaoId.Should().Be(permissao.Id);
             permissaoAssinada.Status.Should().Be(Status.Ativo);
