@@ -43,6 +43,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(true);
 
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(true);
         }
 
         [Fact(DisplayName = "Deve retornar true se comando valido.")]
@@ -74,6 +76,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         public async Task Deve_Retornar_False_Se_Usuario_Ja_Existir()
         {
             //arrange
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>()))
+                         .ReturnsAsync(false);
             var command = UsuarioBuilder.ObterCommandFake();
             _repository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Usuario, bool>>>()))
                 .ReturnsAsync(new List<Usuario>()

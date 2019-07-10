@@ -6,6 +6,7 @@ using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,15 +29,12 @@ namespace IdentidadeAcesso.Domain.Sevices
         {
             var perfil = await _perfilRepository.ObterPorId(perfilId);
 
-            if (perfil == null)
-            {
-                await _mediator.Publish(new DomainNotification(GetType().Name, "O Perfil fornecido para definir ao usuário não foi encontrado."));
-            }
-            else
+            if (perfil != null)
             {
                 usuario.SetarPerfil(perfil.Id);
                 return true;
             }
+            await _mediator.Publish(new DomainNotification(GetType().Name, "O Perfil fornecido para definir ao usuário não foi encontrado."));
 
             return false;
         }
@@ -71,6 +69,24 @@ namespace IdentidadeAcesso.Domain.Sevices
             usuario.DesativarUsuario();
 
             return await Task.FromResult(usuario);
+        }
+
+        public async Task<bool> DisponivelEmailECpfAsync(string email, string cpf)
+        {
+            var usuarioBusca = await _repository.Buscar(u => u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf));
+
+            if (usuarioBusca.Any()) return false;
+
+            return true;
+        }
+
+        public async Task<bool> DisponivelEmailECpfAsync(string email, string cpf, Guid usuarioId)
+        {
+            var usuarioBusca = await _repository.Buscar(u => (u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf)) && u.Id != usuarioId);
+
+            if (usuarioBusca.Any()) return false;
+
+            return true;
         }
     }
 }

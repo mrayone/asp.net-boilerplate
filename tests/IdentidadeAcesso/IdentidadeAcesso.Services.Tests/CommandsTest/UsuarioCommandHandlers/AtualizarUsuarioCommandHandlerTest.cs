@@ -40,20 +40,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(true);
 
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
+                .ReturnsAsync(true);
+
             _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>()))
                 .ReturnsAsync(UsuarioBuilder.UsuarioFake());
-        }
-
-        [Fact(DisplayName = "Deve retornar true se comando valido.")]
-        [Trait("Handler", "AtualizarUsuario")]
-        public async Task Deve_Retornar_True_Se_Comando_Valido()
-        {
-            //arrange
-            var command = UsuarioBuilder.ObterCommandFakeAtualizar();
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
