@@ -44,17 +44,17 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public void AdicionarEndereco(Endereco endereco)
         {
-            Endereco = endereco;
+            Endereco = endereco ?? throw new ArgumentNullException("Não é possível atribuir um endereço nulo.");
         }
 
         public void AdicionarTelefone(Telefone telefone)
         {
-            Telefone = telefone;
+            Telefone = telefone ?? throw new ArgumentNullException("Não é possível atribuir um telefone nulo.");
         }
 
         public void AdicionarCelular(Celular celular)
         {
-            Celular = celular;
+            Celular = celular ?? throw new ArgumentNullException("Não é possível atribuir um celular nulo.");
         }
 
         public void Deletar()
