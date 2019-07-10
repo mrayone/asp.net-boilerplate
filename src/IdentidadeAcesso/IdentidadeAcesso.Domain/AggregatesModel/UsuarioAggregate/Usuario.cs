@@ -23,8 +23,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Endereco Endereco { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
-
-
         protected Usuario()
         {
 
@@ -44,47 +42,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             PerfilId = perfilId;
         }
 
-        public override bool EhValido()
-        {
-            _erros.AddRangeIfNotEmpty(Nome.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Sexo.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Email.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(CPF.ValidationResult.Erros);
-
-            return base.EhValido();
-        }
-
         public void AdicionarEndereco(Endereco endereco)
         {
-            if (!endereco.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(endereco.ValidationResult.Erros);
-                return;
-            }
-
-            Endereco = endereco;
+            Endereco = endereco ?? throw new ArgumentNullException("Não é possível atribuir um endereço nulo.");
         }
 
         public void AdicionarTelefone(Telefone telefone)
         {
-            if (!telefone.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(telefone.ValidationResult.Erros);
-                return;
-            }
-
-            Telefone = telefone;
+            Telefone = telefone ?? throw new ArgumentNullException("Não é possível atribuir um telefone nulo.");
         }
 
         public void AdicionarCelular(Celular celular)
         {
-            if (!celular.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(celular.ValidationResult.Erros);
-                return;
-            }
-
-            Celular = celular;
+            Celular = celular ?? throw new ArgumentNullException("Não é possível atribuir um celular nulo.");
         }
 
         public void Deletar()

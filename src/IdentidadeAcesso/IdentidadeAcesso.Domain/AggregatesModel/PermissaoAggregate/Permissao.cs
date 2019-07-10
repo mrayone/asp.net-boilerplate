@@ -26,14 +26,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate
 
         public void DefinirAtribuicao(Atribuicao atribuicao)
         {
-            Atribuicao = atribuicao;
+            Atribuicao = atribuicao ?? throw new ArgumentNullException("Não é possível definir uma atribuição nula.");
         }
 
         public void Deletar()
         {
             DeletadoEm = DateTime.Now;
         } 
-
 
         public abstract class PermissaoFactory
         {

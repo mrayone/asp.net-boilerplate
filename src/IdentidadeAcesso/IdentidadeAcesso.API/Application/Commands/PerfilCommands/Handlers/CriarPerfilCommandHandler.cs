@@ -30,8 +30,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             var perfil = this.DefinirPerfil(request);
 
-            if (!ValidarEntity(perfil)) return await Task.FromResult(false);
-
             var perfilExistente = await _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);
             if (perfilExistente.Any())
             {

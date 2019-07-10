@@ -16,12 +16,8 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             builder.ToTable("permissoes_assinadas", IdentidadeAcessoContext.DEFAULT_SCHEMA);
 
             builder.HasKey(p => p.Id);
-            builder.Ignore(p => p.Erros);
 
-            builder.OwnsOne(p => p.Status, st => 
-            {
-                st.Ignore(s => s.ValidationResult);
-            });
+            builder.OwnsOne(p => p.Status);
 
             builder.HasOne<Permissao>()
                 .WithMany()

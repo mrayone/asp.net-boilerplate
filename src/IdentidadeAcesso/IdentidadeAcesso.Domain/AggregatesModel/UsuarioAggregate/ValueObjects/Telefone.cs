@@ -6,34 +6,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Telefone : ValueObject<Telefone>
     {
-        private const int MaxNumeros = 13;
-        private const string Pattern = @"(\+\d{2})+(\d{10})";
         public string Numero { get; private set; }
         public Telefone(string numero)
         {
             Numero = numero;
-            Validar();
-        }
-
-        private void Validar()
-        {
-            ValidarNumero();
-        }
-
-        private void ValidarNumero()
-        {
-
-            if (Numero.Length > MaxNumeros)
-            {
-                ValidationResult.AddError("Telefone","O telefone não pode exceder 13 caracteres.");
-                return;
-            }
-
-            if (!Regex.IsMatch(Numero, Pattern ))
-            {
-                ValidationResult.AddError("Telefone", "O número de telefone não obedece o formato. Ex:'+551134816597'.");
-                return;
-            }
         }
 
         protected override bool EqualsCore(Telefone other)

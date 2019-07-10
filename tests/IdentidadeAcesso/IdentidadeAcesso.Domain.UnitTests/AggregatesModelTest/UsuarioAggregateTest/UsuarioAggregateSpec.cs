@@ -7,24 +7,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class UsuarioAggregateTest
     {
-        [Fact(DisplayName = "Deve retonar erros caso estado inválido.")]
-        [Trait("Raiz de Agregação", "Usuário")]
-        public void deve_retornar_erros_caso_estado_invalido()
-        {
-            //arrange
-            var usuario = UsuarioBuilder.ObterUsuarioInvalido();
-
-            //act
-            var isValid = usuario.EhValido();
-
-            //assert
-            isValid.Should().BeFalse();
-            usuario.Erros.Should().NotBeEmpty();
-        }
-
         [Fact(DisplayName = "Deve setar a data caso a ação de deletar seja invocada")]
         [Trait("Raiz de Agregação", "Usuário")]
-        public void deve_setar_uma_data_caso_a_acao_de_deletar_seja_invocada()
+        public void Deve_Setar_Uma_Data_Caso_a_Acao_De_Deletar_Seja_Invocada()
         {
             //arrange
             var usuario = UsuarioBuilder.ObterUsuarioValido();
@@ -34,21 +19,43 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             usuario.DeletadoEm?.Date.Should().Be(DateTime.Today);
         }
 
-
-        [Fact(DisplayName = "Deve retornar estado falso ao adicionar telefone, endereço e celular inválido.")]
+        [Fact(DisplayName = "Deve disparar exceção se atribuir VO telefone nulo.")]
         [Trait("Raiz de Agregação", "Usuário")]
-        public void deve_retornar_estado_falso_ao_adicionar_telefone_endereco_e_celular_invalido()
+        public void Deve_Disparar_Excecao_Se_Atribuir_Telefone_Nulo()
         {
+            //arrange
             var usuario = UsuarioBuilder.ObterUsuarioValido();
-
             //act
-            usuario.AdicionarCelular(CelularBuilder.ObterCelularInvalido());
-            usuario.AdicionarEndereco(EnderecoBuilder.ObterEnderecoInvalido());
-            usuario.AdicionarTelefone(TelefoneBuilder.ObterTelefoneInvalido());
-            var isValid = usuario.EhValido();
+            Action act = ()=> { usuario.AdicionarTelefone(null); };
+            //assert
 
-            isValid.Should().BeFalse();
-            usuario.Erros.Should().NotBeEmpty();
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact(DisplayName = "Deve disparar exceção se atribuir VO celular nulo.")]
+        [Trait("Raiz de Agregação", "Usuário")]
+        public void Deve_Disparar_Excecao_Se_Atribuir_Celular_Nulo()
+        {
+            //arrange
+            var usuario = UsuarioBuilder.ObterUsuarioValido();
+            //act
+            Action act = () => { usuario.AdicionarCelular(null); };
+            //assert
+
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact(DisplayName = "Deve disparar exceção se atribuir VO endereço nulo.")]
+        [Trait("Raiz de Agregação", "Usuário")]
+        public void Deve_Disparar_Excecao_Se_Atribuir_Endereco_Nulo()
+        {
+            //arrange
+            var usuario = UsuarioBuilder.ObterUsuarioValido();
+            //act+
+            Action act = () => { usuario.AdicionarEndereco(null); };
+            //assert
+
+            act.Should().Throw<ArgumentNullException>();
         }
     }
 }

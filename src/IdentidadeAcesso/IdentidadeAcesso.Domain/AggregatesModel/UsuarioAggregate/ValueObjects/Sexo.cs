@@ -12,20 +12,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
         private Sexo(string tipo)
         {
             Tipo = tipo;
-            Validar();
-        }
-
-        public Sexo()
-        {
-            Validar();
-        }
-
-        private void Validar()
-        {
-            if (string.IsNullOrEmpty(Tipo))
-            {
-                ValidationResult.AddError("Sexo","O sexo deve ser definido como 'Masculino' ou 'Feminino'.");
-            }
         }
 
         protected override bool EqualsCore(Sexo other)

@@ -56,6 +56,18 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             result.Should().BeTrue();
         }
 
+        [Fact(DisplayName = "Deve retornar false se comando invalido.")]
+        [Trait("Handler", "NovoUsuario")]
+        public async Task Deve_Retornar_False_Se_Comando_Invalido()
+        {
+            //arrange
+            var command = UsuarioBuilder.ObterCommandInvalidoFake();
+            //act
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+            //assert
+            result.Should().BeFalse();
+        }
+
         [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
         [Trait("Handler", "NovoUsuario")]
         public async Task Deve_Retornar_False_Se_Usuario_Ja_Existir()

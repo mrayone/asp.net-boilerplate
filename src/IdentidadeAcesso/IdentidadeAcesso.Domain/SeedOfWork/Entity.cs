@@ -8,17 +8,10 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
     public abstract class Entity
     {
         public Guid Id { get; protected set; }
-        protected List<ValidationError> _erros;
-        public IReadOnlyCollection<ValidationError> Erros => _erros;
 
         public Entity()
         {
-            _erros = new List<ValidationError>();
-        }
 
-        public virtual bool EhValido()
-        {
-            return !_erros.Any();
         }
 
         public override bool Equals(object obj)
@@ -56,6 +49,5 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
         {
             return GetType().Name + " [Id=" + Id + "]";
         }
-
     }
 }

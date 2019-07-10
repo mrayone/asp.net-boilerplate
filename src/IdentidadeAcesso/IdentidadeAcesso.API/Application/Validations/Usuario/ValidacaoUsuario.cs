@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Validations.Usuario
@@ -22,6 +24,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                  .MinimumLength(3);
 
             RuleFor(c => c.CPF).NotNull()
+                 .Must(CPFValido).WithMessage("O CPF informado é inválido.")
                  .NotEmpty()
                  .MaximumLength(14)
                  .MinimumLength(11);
@@ -38,10 +41,16 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(c => c.Email).NotNull()
                 .NotEmpty().EmailAddress();
 
-            RuleFor(c => c.Celular).Length(11, 14)
+            RuleFor(c => c.Celular)
+                .Must(ValidarCelular)
+                .WithMessage("O celular deve obedecer o padrão Ex: +5518999928663")
+                .Length(11, 15)
                 .NotEmpty().NotNull();
 
-            RuleFor(c => c.Telefone).Length(11, 14);
+            RuleFor(c => c.Telefone)
+                .Must(ValidarTelefone)
+                .WithMessage("O telefone deve obedecer o padrão Ex: +551832815555")
+                .Length(11, 13);
 
             RuleFor(c => c.Logradouro)
                 .Length(2, 150).WithMessage("O logradouro deve conter entre 2 e 150 caracteres");
@@ -67,6 +76,77 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(c => c.PerfilId)
                 .NotEqual(Guid.Empty)
                 .WithMessage("O ID do perfil tem que ser fornecido.");
+        }
+
+        private bool ValidarTelefone(string arg)
+        {
+            if (arg != null)
+                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{10})");
+
+            return true;
+        }
+
+        private bool ValidarCelular(string arg)
+        {
+            if (arg != null)
+                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{11})");
+
+            return true;
+        }
+
+        private bool CPFValido(string arg)
+        {
+            var MaxDigitos = 11;
+            var cpf = CPF.LimparFormatacaoCPF(arg);
+
+            if (cpf.Length > MaxDigitos)
+                return false;
+
+            while (cpf.Length != MaxDigitos)
+                cpf = '0' + cpf;
+
+            var igual = true;
+            for (var i = 1; i < 11 && igual; i++)
+                if (cpf[i] != cpf[0])
+                    igual = false;
+
+            if (igual || cpf == "12345678909")
+                return false;
+
+            var numeros = new int[11];
+
+            for (var i = 0; i < MaxDigitos; i++)
+                numeros[i] = int.Parse(cpf[i].ToString());
+
+            var soma = 0;
+            for (var i = 0; i < 9; i++)
+                soma += (10 - i) * numeros[i];
+
+            var resultado = soma % 11;
+
+            if (resultado == 1 || resultado == 0)
+            {
+                if (numeros[9] != 0)
+                    return false;
+            }
+            else if (numeros[9] != MaxDigitos - resultado)
+                return false;
+
+            soma = 0;
+            for (var i = 0; i < 10; i++)
+                soma += (11 - i) * numeros[i];
+
+            resultado = soma % MaxDigitos;
+
+            if (resultado == 1 || resultado == 0)
+            {
+                if (numeros[10] != 0)
+                    return false;
+            }
+            else if (numeros[10] != MaxDigitos - resultado)
+                return false;
+
+            return true;
         }
 
         private bool IdadeMinima(DateTime arg)
