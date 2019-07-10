@@ -24,6 +24,23 @@ namespace IdentidadeAcesso.Domain.Sevices
             _perfilRepository = perfilRepository;
         }
 
+        public async Task<bool> VincularAoPerfilAsync(Guid perfilId, Usuario usuario)
+        {
+            var perfil = await _perfilRepository.ObterPorId(perfilId);
+
+            if (perfil == null)
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "O Perfil fornecido para definir ao usuário não foi encontrado."));
+            }
+            else
+            {
+                usuario.SetarPerfil(perfil.Id);
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<Usuario> DeletarUsuarioAsync(Guid usuarioId)
         {
             var usuario = await _repository.ObterPorId(usuarioId);
@@ -54,12 +71,6 @@ namespace IdentidadeAcesso.Domain.Sevices
             usuario.DesativarUsuario();
 
             return await Task.FromResult(usuario);
-        }
-
-        public async Task<bool> VerificarPerfilExistenteAsync(Guid perfilId)
-        {
-            var perfil = await _perfilRepository.ObterPorId(perfilId);
-            return await Task.FromResult(perfil != null);
         }
     }
 }

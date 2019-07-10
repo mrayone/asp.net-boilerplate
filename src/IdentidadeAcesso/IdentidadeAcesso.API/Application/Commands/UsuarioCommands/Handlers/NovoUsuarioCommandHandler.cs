@@ -35,14 +35,11 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Usuário já cadastrado, verifique 'E-mail' e/ou 'CPF'"));
                 return await Task.FromResult(false);
             }
-            var perfilExiste = await _service.VerificarPerfilExistenteAsync(request.PerfilId);
-            if (!perfilExiste)
-            {
-                await _mediator.Publish(new DomainNotification(request.GetType().Name, "O perfil que você esta tentando vincular ao usuário não existe!"));
-                return await Task.FromResult(false);
-            }
 
             var usuario = this.DefinirUsuario(request);
+            var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
+
+            if (!vinculouPerfil) return await Task.FromResult(vinculouPerfil);
 
             _usuarioRepository.Adicionar(usuario);
 

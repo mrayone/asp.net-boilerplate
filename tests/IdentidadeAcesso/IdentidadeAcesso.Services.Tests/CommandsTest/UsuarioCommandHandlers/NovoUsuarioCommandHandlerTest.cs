@@ -40,8 +40,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
             _handler = new NovoUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
-            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+            _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(true);
+
         }
 
         [Fact(DisplayName = "Deve retornar true se comando valido.")]
@@ -107,14 +108,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFake();
-            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+            _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(false);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
             result.Should().BeFalse();
-            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
-                new System.Threading.CancellationToken()), Times.Once());
         }
 
         [Fact(DisplayName = "Deve persistir Usuario e Disparar Evento.")]

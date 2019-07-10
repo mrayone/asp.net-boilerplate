@@ -33,7 +33,10 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             {
                 return await Task.FromResult(podeAtualizar);
             }
+
             var usuario = this.DefinirUsuario(request);
+            var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
+            if (!vinculouPerfil) return await Task.FromResult(vinculouPerfil);
 
             _usuarioRepository.Atualizar(usuario);
 
@@ -59,13 +62,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             if (usuarioBusca.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Um usuário já esta usando esse CPF e E-mail."));
-                return await Task.FromResult(false);
-            }
-
-            var perfilExiste = await _service.VerificarPerfilExistenteAsync(request.PerfilId);
-            if (!perfilExiste)
-            {
-                await _mediator.Publish(new DomainNotification(request.GetType().Name, "O perfil que você esta tentando vincular ao usuário não existe!"));
                 return await Task.FromResult(false);
             }
 

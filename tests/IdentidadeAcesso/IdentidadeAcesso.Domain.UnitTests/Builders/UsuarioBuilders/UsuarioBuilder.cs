@@ -16,7 +16,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var sexo = SexoBuilder.ObterSexoValido();
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
+            return new Usuario(nome, sexo, email, cpf, dataDeNascimento);
         }
 
         public static Usuario ObterUsuarioCompletoValido()
@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var telefone = TelefoneBuilder.ObterTelefoneValido();
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
-            return UsuarioFactory.CriarUsuario(null, nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid(),celular,
+            return UsuarioFactory.CriarUsuario(null, nome, sexo, email, cpf, dataDeNascimento,celular,
                 telefone, endereco);
         }
     }

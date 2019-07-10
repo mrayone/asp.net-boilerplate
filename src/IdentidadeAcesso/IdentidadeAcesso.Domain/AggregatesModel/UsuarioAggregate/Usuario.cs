@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         }
 
         public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
-            DataDeNascimento dataDeNascimento, Guid perfilId)
+            DataDeNascimento dataDeNascimento)
             : this()
         {
             Id = Guid.NewGuid();
@@ -39,7 +39,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Email = email;
             CPF = cpf;
             DataDeNascimento = dataDeNascimento;
-            PerfilId = perfilId;
         }
 
         public void AdicionarEndereco(Endereco endereco)
@@ -72,11 +71,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Status = Status.Ativo;
         }
 
+        internal void SetarPerfil(Guid? perfilId)
+        {
+            PerfilId = perfilId.HasValue ? perfilId.Value : throw new ArgumentNullException("Não é possível setar um perfil nulo.");
+        }
+
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, NomeCompleto nome, Sexo sexo, Email email,
-                CPF cpf, DataDeNascimento dataDeNascimento,
-                Guid perfilId, Celular celular, Telefone telefone, Endereco endereco)
+                CPF cpf, DataDeNascimento dataDeNascimento, Celular celular, Telefone telefone, Endereco endereco)
             {
                 var usuario = new Usuario
                 {
@@ -85,7 +88,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     DataDeNascimento = dataDeNascimento,
                     Email = email,
                     CPF = cpf,
-                    PerfilId = perfilId,
                     Id = id.HasValue ? id.Value : Guid.NewGuid()
                 };
 
