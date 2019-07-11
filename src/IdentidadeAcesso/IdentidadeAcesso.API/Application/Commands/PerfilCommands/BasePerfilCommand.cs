@@ -3,6 +3,8 @@ using FluentValidation.Results;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
@@ -21,7 +23,10 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 
     public class PermissaoAssinadaDTO
     {
+        [Required]
         public Guid PermissaoId { get; set; }
+
+        [Required]
         public Guid PerfilId { get; set; }
         public bool Status { get; set; }
     }
