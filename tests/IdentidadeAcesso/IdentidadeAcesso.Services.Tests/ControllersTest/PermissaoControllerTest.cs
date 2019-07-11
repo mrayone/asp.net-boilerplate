@@ -4,6 +4,7 @@ using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -21,17 +22,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly PermissoesController _controller;
         private readonly Mock<IPermissaoQueries> _permissaoQueries;
-        private readonly DomainNotificationHandler _notifications;
+        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
         private readonly Mock<IMediator> _mediator;
         private readonly IList<PermissaoViewModel> _list;
         public PermissaoControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoQueries = new Mock<IPermissaoQueries>();
-            _notifications = new DomainNotificationHandler();
+            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
 
             _controller = new PermissoesController(_permissaoQueries.Object,
-                _mediator.Object, _notifications);
+                _mediator.Object, _notifications.Object);
             _list = new List<PermissaoViewModel>()
             {
                 ViewModelBuilder.PermissaoViewFake(),

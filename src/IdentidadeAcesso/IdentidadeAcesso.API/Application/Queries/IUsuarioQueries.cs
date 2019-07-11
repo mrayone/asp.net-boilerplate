@@ -9,6 +9,6 @@ namespace IdentidadeAcesso.API.Application.Queries
     public interface IUsuarioQueries
     {
         Task<UsuarioViewModel> ObterPorIdAsync(Guid id);
-        Task<IEnumerable<UsuarioViewModel>> ObterTodasAsync();
+        Task<IEnumerable<UsuarioViewModel>> ObterTodosAsync();
     }
 }

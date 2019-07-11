@@ -36,5 +36,18 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                 Status = true
             };
         }
+
+        internal static UsuarioViewModel UsuarioFake()
+        {
+            return new UsuarioViewModel()
+            {
+                Nome = "Fake",
+                Sobrenome = "News",
+                Sexo = "M",
+                DateDeNascimento = new DateTime(1993,7, 22),
+                Email = "email@gmail.com",
+                Celular = "+5511999948663"
+            };
+        }
     }
 }

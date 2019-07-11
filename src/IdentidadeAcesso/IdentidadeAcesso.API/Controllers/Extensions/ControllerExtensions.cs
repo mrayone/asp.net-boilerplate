@@ -14,14 +14,13 @@ namespace IdentidadeAcesso.API.Controllers.Extensions
     {
         public static IActionResult NotificarDomainErros(this ControllerBase controller, IDomainNotificationHandler<DomainNotification> notifications)
         {
-            var _notifications = (DomainNotificationHandler) notifications;
 
-            if(_notifications.HasNotifications())
+            if(notifications.HasNotifications())
             {
                 return controller.BadRequest(new
                 {
                     status = 404,
-                    errors = _notifications.GetNotifications().Select(n => n.Value)
+                    errors = notifications.GetNotifications().Select(n => n.Value)
                 });
             }
 

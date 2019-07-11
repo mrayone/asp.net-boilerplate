@@ -13,7 +13,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<UsuarioViewModel>> ObterTodasAsync()
+        public async Task<IEnumerable<UsuarioViewModel>> ObterTodosAsync()
         {
             throw new NotImplementedException();
         }
