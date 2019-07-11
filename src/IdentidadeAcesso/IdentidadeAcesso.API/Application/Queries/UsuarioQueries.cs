@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public class PermissaoQueries : IPermissaoQueries
+    public class UsuarioQueries : IUsuarioQueries
     {
-        public async Task<PermissaoViewModel> ObterPorIdAsync(Guid id)
+        public async Task<UsuarioViewModel> ObterPorIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync()
+        public async Task<IEnumerable<UsuarioViewModel>> ObterTodasAsync()
         {
             throw new NotImplementedException();
         }

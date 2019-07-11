@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace IdentidadeAcesso.API.Application.Queries
+namespace IdentidadeAcesso.API.Application.Models
 {
     public class PerfilViewModel
     {

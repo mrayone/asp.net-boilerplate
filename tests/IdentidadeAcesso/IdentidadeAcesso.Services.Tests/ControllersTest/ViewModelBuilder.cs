@@ -1,5 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
-using IdentidadeAcesso.API.Application.Queries;
+using IdentidadeAcesso.API.Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

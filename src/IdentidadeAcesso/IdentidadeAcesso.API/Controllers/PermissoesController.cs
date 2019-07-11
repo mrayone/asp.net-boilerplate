@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
+using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
