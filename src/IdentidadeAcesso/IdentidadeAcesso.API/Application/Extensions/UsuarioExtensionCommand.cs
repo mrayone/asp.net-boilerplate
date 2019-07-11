@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.API.Application.Extensions
             var celular = new Celular(request.Celular);
             var telefone = request.Telefone == null ? null : new Telefone(request.Telefone);
             var usuario = Usuario.UsuarioFactory.CriarUsuario(request.Id, nome, sexo, email, cpf, dataNascimento,
-                request.PerfilId, celular, telefone, endereco);
+                celular, telefone, endereco);
 
             return usuario;
         }

@@ -62,5 +62,22 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _mediator.Verify(n => n.Publish(It.IsAny<DomainNotification>(), 
                 new System.Threading.CancellationToken()));
         }
+
+        [Fact(DisplayName = "Deve retoranr false se não vincular o perfil ao Usuário.")]
+        [Trait("Services", "Usuario - Desativar")]
+        public async Task Deve_Retornar_False_Se_Nao_Vincular_Perfil_Ao_Usuario()
+        {
+            //arrange
+            var usuario = UsuarioBuilder.ObterUsuarioValido();
+
+            //act
+            var result = await _service.VincularAoPerfilAsync(Guid.Empty, usuario);
+
+            //assert
+
+            result.Should().BeFalse();
+            _mediator.Verify(n => n.Publish(It.IsAny<DomainNotification>(),
+                new System.Threading.CancellationToken()));
+        }
     }
 }

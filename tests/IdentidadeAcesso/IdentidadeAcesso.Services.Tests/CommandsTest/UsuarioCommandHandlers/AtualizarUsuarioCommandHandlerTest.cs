@@ -5,7 +5,7 @@ using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
 using MediatR;
@@ -37,23 +37,14 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
             _handler = new AtualizarUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
-            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+            _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
+                .ReturnsAsync(true);
+
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
                 .ReturnsAsync(true);
 
             _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>()))
                 .ReturnsAsync(UsuarioBuilder.UsuarioFake());
-        }
-
-        [Fact(DisplayName = "Deve retornar true se comando valido.")]
-        [Trait("Handler", "AtualizarUsuario")]
-        public async Task Deve_Retornar_True_Se_Comando_Valido()
-        {
-            //arrange
-            var command = UsuarioBuilder.ObterCommandFakeAtualizar();
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
@@ -62,11 +53,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFakeAtualizar();
-            _repository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Usuario, bool>>>()))
-                .ReturnsAsync(new List<Usuario>()
-                {
-                    UsuarioBuilder.UsuarioFake()
-                });
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
+                .ReturnsAsync(false);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
@@ -95,14 +83,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFakeAtualizar();
-            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
+            _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(false);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
             result.Should().BeFalse();
-            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
-                new System.Threading.CancellationToken()), Times.Once());
         }
 
         [Fact(DisplayName = "Deve persistir Usuario e Disparar Evento.")]

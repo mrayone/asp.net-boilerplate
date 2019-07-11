@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
 using MediatR;
@@ -36,8 +37,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _handler = new ExcluirUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
 
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
-            _service.Setup(s => s.VerificarPerfilExistenteAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(true);
+
         }
 
         [Fact(DisplayName = "Deve retornar false se comando inválido.")]

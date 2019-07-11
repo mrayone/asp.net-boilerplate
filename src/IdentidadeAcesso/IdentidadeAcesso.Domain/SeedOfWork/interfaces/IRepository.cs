@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
+namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity, IAggregateRoot
     {

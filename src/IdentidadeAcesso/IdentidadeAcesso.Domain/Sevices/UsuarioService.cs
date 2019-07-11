@@ -1,11 +1,12 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,20 @@ namespace IdentidadeAcesso.Domain.Sevices
             _repository = repository;
             _mediator = mediator;
             _perfilRepository = perfilRepository;
+        }
+
+        public async Task<bool> VincularAoPerfilAsync(Guid perfilId, Usuario usuario)
+        {
+            var perfil = await _perfilRepository.ObterPorId(perfilId);
+
+            if (perfil != null)
+            {
+                usuario.SetarPerfil(perfil.Id);
+                return true;
+            }
+            await _mediator.Publish(new DomainNotification(GetType().Name, "O Perfil fornecido para definir ao usuário não foi encontrado."));
+
+            return false;
         }
 
         public async Task<Usuario> DeletarUsuarioAsync(Guid usuarioId)
@@ -56,10 +71,22 @@ namespace IdentidadeAcesso.Domain.Sevices
             return await Task.FromResult(usuario);
         }
 
-        public async Task<bool> VerificarPerfilExistenteAsync(Guid perfilId)
+        public async Task<bool> DisponivelEmailECpfAsync(string email, string cpf)
         {
-            var perfil = await _perfilRepository.ObterPorId(perfilId);
-            return await Task.FromResult(perfil != null);
+            var usuarioBusca = await _repository.Buscar(u => u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf));
+
+            if (usuarioBusca.Any()) return false;
+
+            return true;
+        }
+
+        public async Task<bool> DisponivelEmailECpfAsync(string email, string cpf, Guid usuarioId)
+        {
+            var usuarioBusca = await _repository.Buscar(u => (u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf)) && u.Id != usuarioId);
+
+            if (usuarioBusca.Any()) return false;
+
+            return true;
         }
     }
 }
