@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class CancelarPermissoesPerfilCommand : ICommand, IRequest<bool>
+    public class CancelarPermissaoPerfilCommand : ICommand, IRequest<bool>
     {
-        public CancelarPermissoesPerfilCommand(Guid perfilId, IList<PermissaoAssinadaDTO> permissoesAssinadas)
+        public CancelarPermissaoPerfilCommand(Guid perfilId, Guid permissaoId)
         {
             PerfilId = perfilId;
-            PermissoesAssinadas = permissoesAssinadas;
+            PermissaoId = permissaoId;
         }
 
-        public Guid PerfilId { get; private set; }
-        public IList<PermissaoAssinadaDTO> PermissoesAssinadas { get; private set; }
         public ValidationResult ValidationResult { get ; set ; }
+        public Guid PerfilId { get; }
+        public Guid PermissaoId { get; }
 
         public bool isValid()
         {

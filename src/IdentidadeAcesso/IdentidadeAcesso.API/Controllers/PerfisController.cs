@@ -58,8 +58,9 @@ namespace IdentidadeAcesso.API.Controllers
         [Route("cancelar-permissoes")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync(CancelarPermissoesPerfilCommand command)
+        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaDTO permissao)
         {
+            var command = new CancelarPermissaoPerfilCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
 
             if (result) return Ok();
@@ -80,8 +81,6 @@ namespace IdentidadeAcesso.API.Controllers
 
             return this.NotificarDomainErros(_notifications);
         }
-
-
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]

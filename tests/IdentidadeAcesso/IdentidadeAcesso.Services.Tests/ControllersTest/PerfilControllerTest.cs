@@ -38,16 +38,15 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
             .ReturnsAsync(true);
-            var list = new List<PermissaoAssinadaDTO>()
+            var permissao = new PermissaoAssinadaDTO
             {
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
+                PermissaoId = Guid.NewGuid(),
+                PerfilId = Guid.NewGuid(),
+                Status = true
             };
-            var command = new CancelarPermissoesPerfilCommand(Guid.NewGuid(), list);
+
             //act
-            var result = await _controller.CancelarPermissoesAsync(command);
+            var result = await _controller.CancelarPermissoesAsync(permissao);
 
             //assert
             result.Should().BeAssignableTo<OkResult>();

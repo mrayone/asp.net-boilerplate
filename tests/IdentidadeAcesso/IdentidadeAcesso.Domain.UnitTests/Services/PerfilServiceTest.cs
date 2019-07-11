@@ -53,14 +53,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var permissao = PermissaoBuilder.ObterPermissaoFake();
             _perfil.AssinarPermissao(permissao.Id);
             var permissaoAssinadaFake = _perfil.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).Single();
-            var list = new List<PermissaoAssinada>()
-            {
-                PermissaoAssinada
-                .PermissaoAssinadaFactory
-                .GerarPermissaoAssinada(permissaoAssinadaFake.Id, permissaoAssinadaFake.PermissaoId)
-            };
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.CancelarPermissoesAsync(permissao.Id, _perfil.Id);
             var permissaoAssinada = act.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
             permissaoAssinada.Status.Valor.Should().BeFalse();
@@ -73,12 +67,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
             _permRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(permissao);
-            var list = new List<PermissaoAssinada>()
-            {
-                new PermissaoAssinada(permissao.Id)
-            };
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.CancelarPermissoesAsync(_perfil.Id, permissao.Id);
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
@@ -91,13 +81,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            var list = new List<PermissaoAssinada>()
-            {
-                new PermissaoAssinada(permissao.Id)
-            };
 
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.CancelarPermissoesAsync(_perfil.Id, permissao.Id);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),

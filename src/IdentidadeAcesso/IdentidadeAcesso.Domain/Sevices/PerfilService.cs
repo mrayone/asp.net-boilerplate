@@ -29,24 +29,19 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> CancelarPermissoesAsync(List<PermissaoAssinada> permissoes, Guid perfilId)
+        public async Task<Perfil> CancelarPermissoesAsync(Guid permissaoId, Guid perfilId)
         {
             var perfil = await _perfilRepo.ObterPorId(perfilId);
+            var permissao = await _permissaoRepo.ObterPorId(permissaoId);
 
-            foreach (var item in permissoes)
+            var containsPermissao = perfil.PermissoesAssinadas.Select(p => p.PermissaoId == permissaoId).SingleOrDefault();
+            if (!containsPermissao)
             {
-                if(perfil.PermissoesAssinadas.Contains(item))
-                {
-                    perfil.CancelarPermissao(item.PermissaoId);
-                } else
-                {
-                    var permissao = await _permissaoRepo.ObterPorId(item.PermissaoId);
-                    var mensagem = permissao != null ? $"Não foi possível cancelar a permissão {permissao.Atribuicao.Tipo} - {permissao.Atribuicao.Valor}, pois não foi assinada anteriormente." :
-                        $"Erro ao cancelar permissão ID:{item.PermissaoId}.";
-                    await _mediator.Publish(new DomainNotification(GetType().Name,
-                    mensagem));
-                }
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));
+                
             }
+
+            perfil.CancelarPermissao(permissaoId);
             _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);

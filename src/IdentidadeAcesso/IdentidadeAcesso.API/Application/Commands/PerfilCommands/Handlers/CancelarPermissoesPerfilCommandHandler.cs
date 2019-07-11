@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CancelarPermissoesPerfilCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissoesPerfilCommand, bool>
+    public class CancelarPermissaoPerfilCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoPerfilCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
-        public CancelarPermissoesPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public CancelarPermissaoPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             IDomainNotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
@@ -26,14 +26,13 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<bool> Handle(CancelarPermissoesPerfilCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CancelarPermissaoPerfilCommand request, CancellationToken cancellationToken)
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             if (!await PerfilExiste(request)) return await Task.FromResult(false);
 
-            var permissoesAssinadas = DefinirPermissoes(request.PermissoesAssinadas);
-            var perfil = await _perfilService.CancelarPermissoesAsync(permissoesAssinadas, request.PerfilId);
+            var perfil = await _perfilService.CancelarPermissoesAsync(request.PermissaoId, request.PerfilId);
 
             if (await Commit())
             {
@@ -43,22 +42,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             return await Task.FromResult(true);
         }
 
-        private List<PermissaoAssinada> DefinirPermissoes(IList<PermissaoAssinadaDTO> permissoesAssinadas)
-        {
-            var list = new List<PermissaoAssinada>();
-
-            foreach(var item in permissoesAssinadas)
-            {
-                if (!item.Status)
-                {
-                    list.Add(new PermissaoAssinada(item.PermissaoId));
-                }
-            }
-
-            return list;
-        }
-
-        private async Task<bool> PerfilExiste(CancelarPermissoesPerfilCommand request)
+        private async Task<bool> PerfilExiste(CancelarPermissaoPerfilCommand request)
         {
             var perfil = _perfilRepository.ObterPorId(request.PerfilId);
             if (perfil != null)  return await Task.FromResult(true);
