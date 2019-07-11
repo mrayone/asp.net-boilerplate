@@ -1,5 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Domain.Sevices;
 using Microsoft.Extensions.DependencyInjection;

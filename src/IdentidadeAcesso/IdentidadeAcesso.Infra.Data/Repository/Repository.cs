@@ -1,6 +1,6 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using Knowledge.IO.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -1,7 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using Knowledge.IO.Infra.Data.Context;
 using Knowledge.IO.Infra.Data.Repository;
 using Knowledge.IO.Infra.Data.UoW;

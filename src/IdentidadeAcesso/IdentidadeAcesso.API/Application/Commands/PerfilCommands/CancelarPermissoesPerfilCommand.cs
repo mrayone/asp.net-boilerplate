@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 using IdentidadeAcesso.API.Application.Validations.Perfil;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;

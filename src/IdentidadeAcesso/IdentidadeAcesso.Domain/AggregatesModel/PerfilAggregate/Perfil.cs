@@ -1,14 +1,9 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
-using IdentidadeAcesso.Domain.Exceptions;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
-using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {

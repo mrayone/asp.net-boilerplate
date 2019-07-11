@@ -5,7 +5,7 @@ using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandlers.Builder;
 using MediatR;
@@ -53,11 +53,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         {
             //arrange
             var command = UsuarioBuilder.ObterCommandFakeAtualizar();
-            _repository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Usuario, bool>>>()))
-                .ReturnsAsync(new List<Usuario>()
-                {
-                    UsuarioBuilder.UsuarioFake()
-                });
+            _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
+                .ReturnsAsync(false);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert

@@ -14,9 +14,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public NomeCompletoSpec()
         { }
 
-        [Fact(DisplayName = "A concatenação de primeiro nome e sobrenome devem formar o nome completo")]
+        [Fact(DisplayName = "Deve retornar a concatenação do primeiro nome e sobrenome.")]
         [Trait("Value Object", "Nome")]
-        public void deve_retornar_o_nome_completo()
+        public void Deve_Retornar_a_Concatenacao_do_PrimeiroNome_e_Sobrenome()
         {
             //arrange
             var nome = new NomeCompleto(NOME, SOBRENOME);

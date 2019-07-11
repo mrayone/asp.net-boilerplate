@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
+namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
 {
     public interface IDomainNotificationHandler<T> : IDisposable, INotificationHandler<T> where T : INotification
     {

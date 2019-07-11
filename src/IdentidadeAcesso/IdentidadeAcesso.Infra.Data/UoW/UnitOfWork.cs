@@ -1,5 +1,5 @@
 ﻿using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using Knowledge.IO.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
