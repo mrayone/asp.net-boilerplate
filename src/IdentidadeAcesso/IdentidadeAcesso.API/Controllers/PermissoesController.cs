@@ -43,11 +43,11 @@ namespace IdentidadeAcesso.API.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPermissaoAsync(Guid guid)
+        public async Task<IActionResult> GetPermissaoAsync(Guid id)
         {
             try
             {
-                var model = await _permissaoQueries.ObterPorIdAsync(guid);
+                var model = await _permissaoQueries.ObterPorIdAsync(id);
                 return Ok(model);
             }
             catch
@@ -58,8 +58,9 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarPermissaoAsync([FromBody] CriarPermissaoCommand command)
+        public async Task<IActionResult> CriarPermissaoAsync([FromBody] PermissaoViewModel model)
         {
+            var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
             var result = await _mediator.Send(command);
 
             if(result)
@@ -72,8 +73,9 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand command)
+        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] PermissaoViewModel model)
         {
+            var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
             var result = await _mediator.Send(command);
 
             if (result)
@@ -86,8 +88,9 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ExcluirPermissaoAsync([FromBody] ExcluirPermissaoCommand command)
+        public async Task<IActionResult> ExcluirPermissaoAsync( Guid id )
         {
+            var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
 
             if (result)
