@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class CancelarPermissaoPerfilCommand : ICommand, IRequest<bool>
+    public class CancelarPermissaoPerfilCommand : BasePermissaoPerfil<CancelarPermissaoPerfilCommand>
     {
         public CancelarPermissaoPerfilCommand(Guid perfilId, Guid permissaoId)
         {
@@ -17,13 +17,9 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
             PermissaoId = permissaoId;
         }
 
-        public ValidationResult ValidationResult { get ; set ; }
-        public Guid PerfilId { get; }
-        public Guid PermissaoId { get; }
-
-        public bool isValid()
+        public override bool isValid()
         {
-            ValidationResult = new CancelarPermissoesValidation().Validate(this);
+            ValidationResult = new CancelarPermissaoValidation().Validate(this);
             return ValidationResult.IsValid;
         }
     }
