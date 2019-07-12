@@ -15,8 +15,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public string Descricao { get; protected set; }
         public bool Status { get; protected set; }
 
-        public IList<PermissaoAssinadaDTO> PermissoesAssinadas { get; protected set; }
-
         public ValidationResult ValidationResult { get; set; }
         public abstract bool isValid();
     }

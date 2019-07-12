@@ -31,18 +31,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new CriarPerfilCommand(
                 nome: "1",
                 descricao: "a",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        },
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        },
-                    }
+                status: true
                 );
         }
 
@@ -52,14 +41,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 id: Guid.NewGuid(),
                 nome: "1",
                 descricao: "a",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
 
@@ -68,14 +50,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new CriarPerfilCommand(
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                     new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
 
@@ -85,14 +60,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
 
@@ -104,14 +72,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
                 descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
 
@@ -120,14 +81,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new CriarPerfilCommand(
                 nome: "Perfil RH 02",
                 descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
 
@@ -137,14 +91,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 02",
                 descricao: "Perfil de acesso nível 1",
-                status: true,
-                permissoesAssinadas: new List<PermissaoAssinadaDTO>()
-                    {
-                        new PermissaoAssinadaDTO()
-                        {
-                            PermissaoId = Guid.NewGuid()
-                        }
-                    }
+                status: true
                 );
         }
     }

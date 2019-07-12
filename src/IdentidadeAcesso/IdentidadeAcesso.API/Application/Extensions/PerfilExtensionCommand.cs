@@ -10,11 +10,6 @@ namespace IdentidadeAcesso.API.Application.Extensions
         {
             var perfil = Perfil.PerfilFactory.NovoPerfil(request.Id, request.Nome, request.Descricao);
 
-            foreach (var item in request.PermissoesAssinadas)
-            {
-                perfil.AssinarPermissao(item.PermissaoId);
-            }
-
             return perfil;
         }
     }
