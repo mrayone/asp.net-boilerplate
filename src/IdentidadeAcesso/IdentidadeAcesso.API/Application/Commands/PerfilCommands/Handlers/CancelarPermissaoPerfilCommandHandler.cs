@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
@@ -30,7 +31,11 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 
-            if (!await PerfilExiste(request)) return await Task.FromResult(false);
+            if (!await this.BuscarPerfil(request.PerfilId, _perfilRepository)) {
+
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
+                return await Task.FromResult(false);
+            }
 
             var perfil = await _perfilService.CancelarPermissoesAsync(request.PermissaoId, request.PerfilId);
 
@@ -40,16 +45,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             }
 
             return await Task.FromResult(true);
-        }
-
-        private async Task<bool> PerfilExiste(CancelarPermissaoPerfilCommand request)
-        {
-            var perfil = _perfilRepository.ObterPorId(request.PerfilId);
-            if (perfil != null)  return await Task.FromResult(true);
-
-            await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
-
-            return await Task.FromResult(false);
         }
     }
 }
