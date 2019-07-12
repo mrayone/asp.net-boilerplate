@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(false);
             }
 
-            var perfil = await _perfilService.CancelarPermissoesAsync(request.PermissaoId, request.PerfilId);
+            var perfil = await _perfilService.CancelarPermissaoAsync(request.PermissaoId, request.PerfilId);
 
             if (await Commit())
             {

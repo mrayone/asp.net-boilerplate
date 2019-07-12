@@ -93,7 +93,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             
             var perfil = TestBuilder.PerfilFalso();
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissoesAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);

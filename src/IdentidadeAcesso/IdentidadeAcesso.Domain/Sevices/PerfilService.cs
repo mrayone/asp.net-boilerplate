@@ -29,7 +29,26 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> CancelarPermissoesAsync(Guid permissaoId, Guid perfilId)
+        public async Task<Perfil> AssinarPermissaoAsync(Guid permissaoId, Guid perfilId)
+        {
+            var perfil = await _perfilRepo.ObterPorId(perfilId);
+            var permissao = await _permissaoRepo.ObterPorId(permissaoId);
+
+            if (permissao == null)
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Permissão não encontrada."));
+
+            }
+            else
+            {
+                perfil.AssinarPermissao(permissao.Id);
+                _perfilRepo.Atualizar(perfil);
+            }
+
+            return await Task.FromResult(perfil);
+        }
+
+        public async Task<Perfil> CancelarPermissaoAsync(Guid permissaoId, Guid perfilId)
         {
             var perfil = await _perfilRepo.ObterPorId(perfilId);
             var permissao = await _permissaoRepo.ObterPorId(permissaoId);
@@ -38,11 +57,12 @@ namespace IdentidadeAcesso.Domain.Sevices
             if (!containsPermissao)
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));
-                
             }
-
-            perfil.CancelarPermissao(permissaoId);
-            _perfilRepo.Atualizar(perfil);
+            else
+            {
+                perfil.CancelarPermissao(permissaoId);
+                _perfilRepo.Atualizar(perfil);
+            }
 
             return await Task.FromResult(perfil);
         }

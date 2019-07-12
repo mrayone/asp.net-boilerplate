@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             Identifacao = identificacao;
         }
 
-        public void AssinarPermissao(Guid permissaoId)
+        internal void AssinarPermissao(Guid permissaoId)
         {
             var permissaoExistente = EncontrarPermissao(permissaoId);
             if (permissaoExistente != null)
