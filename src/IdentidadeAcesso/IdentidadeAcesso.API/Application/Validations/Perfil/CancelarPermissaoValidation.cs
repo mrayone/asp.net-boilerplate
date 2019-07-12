@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Validations.Perfil
 {
-    public class CancelarPermissaoValidation : ValidacaoPermissaoPerfil<CancelarPermissaoPerfilCommand>
+    public class CancelarPermissaoValidation : ValidacaoPermissaoPerfil<CancelarPermissaoCommand>
     {
         public CancelarPermissaoValidation() : base()
         {

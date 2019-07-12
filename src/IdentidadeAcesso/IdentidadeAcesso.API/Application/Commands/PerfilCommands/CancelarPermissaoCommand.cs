@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class CancelarPermissaoPerfilCommand : BasePermissaoPerfil<CancelarPermissaoPerfilCommand>
+    public class CancelarPermissaoCommand : BasePermissaoPerfil<CancelarPermissaoCommand>
     {
-        public CancelarPermissaoPerfilCommand(Guid perfilId, Guid permissaoId)
+        public CancelarPermissaoCommand(Guid perfilId, Guid permissaoId)
         {
             PerfilId = perfilId;
             PermissaoId = permissaoId;

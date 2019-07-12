@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CancelarPermissaoPerfilCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoPerfilCommand, bool>
+    public class CancelarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
-        public CancelarPermissaoPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public CancelarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             IDomainNotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<bool> Handle(CancelarPermissaoPerfilCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 

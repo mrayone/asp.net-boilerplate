@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class AssinarPermissaoPerfilCommand : BasePermissaoPerfil<AssinarPermissaoPerfilCommand>
+    public class AssinarPermissaoCommand : BasePermissaoPerfil<AssinarPermissaoCommand>
     {
-        public AssinarPermissaoPerfilCommand(Guid perfilId, Guid permissaoId)
+        public AssinarPermissaoCommand(Guid perfilId, Guid permissaoId)
         {
             PerfilId = perfilId;
             PermissaoId = permissaoId;

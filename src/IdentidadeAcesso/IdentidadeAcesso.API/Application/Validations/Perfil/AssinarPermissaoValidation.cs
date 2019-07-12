@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Validations.Perfil
 {
-    public class AssinarPermissaoValidation : ValidacaoPermissaoPerfil<AssinarPermissaoPerfilCommand>
+    public class AssinarPermissaoValidation : ValidacaoPermissaoPerfil<AssinarPermissaoCommand>
     {
         public AssinarPermissaoValidation() : base()
         {

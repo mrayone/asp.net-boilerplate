@@ -61,7 +61,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaDTO permissao)
         {
-            var command = new CancelarPermissaoPerfilCommand(permissao.PerfilId, permissao.PermissaoId);
+            var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
 
             if (result) return Ok();

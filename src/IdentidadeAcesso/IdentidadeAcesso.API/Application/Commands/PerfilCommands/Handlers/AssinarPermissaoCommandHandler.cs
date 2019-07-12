@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class AssinarPermissaoPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AssinarPermissaoPerfilCommand, bool>
+    public class AssinarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<AssinarPermissaoCommand, bool>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
-        public AssinarPermissaoPerfilCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public AssinarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             IDomainNotificationHandler<DomainNotification> notifications, IPerfilService domainService,
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<bool> Handle(AssinarPermissaoPerfilCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AssinarPermissaoCommand request, CancellationToken cancellationToken)
         {
             if (!ValidarCommand(request)) return await Task.FromResult(false);
 
