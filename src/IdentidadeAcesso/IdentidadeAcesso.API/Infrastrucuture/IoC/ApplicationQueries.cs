@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentidadeAcesso.API.Infrastrucuture.DependencyInjection
+namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 {
     public static class ApplicationQueries
     {

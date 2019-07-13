@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IdentidadeAcesso.API.Infrastrucuture.DependencyInjection;
+using IdentidadeAcesso.API.Infrastrucuture.IoC;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
