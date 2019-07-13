@@ -60,7 +60,70 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         [Fact(DisplayName = "Deve retonar um usuário ao passar o Id por parametro.")]
         public async Task Deve_Retornar_Um_Usuario_Ao_Passar_O_Id_Por_Parametro()
         {
+            //arrange
+            var usuarioFake = ViewModelBuilder.UsuarioFake();
+            _usuarioQueries.Setup(q => q.ObterPorIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync(usuarioFake);
+            //act
+            var result = await _controller.GetUsuarioAsync(Guid.NewGuid());
 
+            //assert
+            result.Should().BeAssignableTo<OkObjectResult>();
+            var vr = result as OkObjectResult;
+            vr.Value.Should().Be(usuarioFake);
+            vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+        }
+
+        [Trait("Controller", "UsuariosController")]
+        [Fact(DisplayName = "Deve retonar NotFound ao passar o Id por parametro.")]
+        public async Task Deve_Retornar_NotFound_Ao_Passar_O_Id_Por_Parametro()
+        {
+            //arrange
+            var usuarioFake = ViewModelBuilder.UsuarioFake();
+            _usuarioQueries.Setup(q => q.ObterPorIdAsync(It.IsAny<Guid>()))
+                .Throws(new KeyNotFoundException());
+            //act
+            var result = await _controller.GetUsuarioAsync(Guid.NewGuid());
+
+            //assert
+            result.Should().BeAssignableTo<NotFoundResult>();
+        }
+
+        [Fact(DisplayName = "Deve cadastrar novo usuário e retornar ok.")]
+        [Trait("Controller", "UsuariosController")]
+        public async Task Deve_Cadastrar_Novo_Usuario_E_Retornar_Ok()
+        {
+            //arrange
+            var usuario = ViewModelBuilder.UsuarioFake();
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(true);
+            //act
+            var result = await _controller.CriarUsuarioAsync(usuario);
+
+            //assert
+            result.Should().BeAssignableTo<OkResult>();
+            var vr = result as OkResult;
+            vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+            _mediator.Verify(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()), Times.Once);
+        }
+
+        [Fact(DisplayName = "Deve atualizar usuário e retornar ok.")]
+        [Trait("Controller", "UsuariosController")]
+        public async Task Deve_Atualizar_Usuario_E_Retornar_Ok()
+        {
+            //arrange
+            var usuario = ViewModelBuilder.UsuarioFake();
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(true)
+                .Verifiable();
+            //act
+            var result = await _controller.AtualizarUsuarioAsync(usuario);
+
+            //assert
+            result.Should().BeAssignableTo<OkResult>();
+            var vr = result as OkResult;
+            vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+            _mediator.Verify();
         }
     }
 }
