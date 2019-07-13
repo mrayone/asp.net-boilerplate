@@ -3,6 +3,8 @@ using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,17 +20,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly PerfisController _controller;
         private readonly Mock<IPerfilQueries> _perfilQueries;
-        private readonly DomainNotificationHandler _notifications;
+        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
         private readonly Mock<IMediator> _mediator;
 
         public PerfilControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilQueries = new Mock<IPerfilQueries>();
-            _notifications = new DomainNotificationHandler();
+            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
 
             _controller = new PerfisController(_perfilQueries.Object,
-                _mediator.Object, _notifications);
+                _mediator.Object, _notifications.Object);
         }
 
         [Fact(DisplayName = "Deve cancelar permissões assinadas e retornar Ok.")]
@@ -38,16 +40,15 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
             .ReturnsAsync(true);
-            var list = new List<PermissaoAssinadaDTO>()
+            var permissao = new PermissaoAssinadaDTO
             {
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
-                ViewModelBuilder.PermissaoAssinadaFake(),
+                PermissaoId = Guid.NewGuid(),
+                PerfilId = Guid.NewGuid(),
+                Status = true
             };
-            var command = new CancelarPermissoesPerfilCommand(Guid.NewGuid(), list);
+
             //act
-            var result = await _controller.CancelarPermissoesAsync(command);
+            var result = await _controller.CancelarPermissoesAsync(permissao);
 
             //assert
             result.Should().BeAssignableTo<OkResult>();

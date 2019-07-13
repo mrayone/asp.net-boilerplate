@@ -15,7 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace IdentidadeAcesso.API.Infrastrucuture.DependencyInjection
+namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 {
     public static class DataDependencies
     {

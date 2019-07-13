@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public interface IPermissaoQueries
+    public interface IUsuarioQueries
     {
-        Task<PermissaoViewModel> ObterPorIdAsync(Guid id);
-        Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync();
+        Task<UsuarioViewModel> ObterPorIdAsync(Guid id);
+        Task<IEnumerable<UsuarioViewModel>> ObterTodosAsync();
     }
 }

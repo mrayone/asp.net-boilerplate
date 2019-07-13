@@ -45,23 +45,34 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _perfilRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(_perfil);
         }
 
-        [Fact(DisplayName = "Deve cancelar permissões e retornar perfil modificado.")]
+        [Fact(DisplayName = "Deve assinar permissão e retornar perfil modificado.")]
         [Trait("Services", "Perfil")]
-        public async Task Deve_Cancelar_Permissoes_E_Retornar_Perfil()
+        public async Task Deve_Assinar_Permissao_E_Retornar_Perfil()
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _perfil.AssinarPermissao(permissao.Id);
-            var permissaoAssinadaFake = _perfil.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).Single();
-            var list = new List<PermissaoAssinada>()
-            {
-                PermissaoAssinada
-                .PermissaoAssinadaFactory
-                .GerarPermissaoAssinada(permissaoAssinadaFake.Id, permissaoAssinadaFake.PermissaoId)
-            };
+            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+                .ReturnsAsync(permissao);
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
             var permissaoAssinada = act.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
+            //assert
+            permissaoAssinada.Status.Valor.Should().BeTrue();
+        }
+
+
+        [Fact(DisplayName = "Deve cancelar permissão e retornar perfil modificado.")]
+        [Trait("Services", "Perfil")]
+        public async Task Deve_Cancelar_Permissao_E_Retornar_Perfil()
+        {
+            //arrange
+            var permissao = PermissaoBuilder.ObterPermissaoFake();
+            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+                .ReturnsAsync(permissao);
+            //act
+            var assinada = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
+            var cancelada = await _perfilService.CancelarPermissaoAsync(permissao.Id, _perfil.Id);
+            var permissaoAssinada = cancelada.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
             permissaoAssinada.Status.Valor.Should().BeFalse();
         }
@@ -73,12 +84,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
             _permRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(permissao);
-            var list = new List<PermissaoAssinada>()
-            {
-                new PermissaoAssinada(permissao.Id)
-            };
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.CancelarPermissaoAsync(_perfil.Id, permissao.Id);
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
@@ -91,13 +98,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            var list = new List<PermissaoAssinada>()
-            {
-                new PermissaoAssinada(permissao.Id)
-            };
 
             //act
-            var act = await _perfilService.CancelarPermissoesAsync(list, _perfil.Id);
+            var act = await _perfilService.CancelarPermissaoAsync(_perfil.Id, permissao.Id);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),

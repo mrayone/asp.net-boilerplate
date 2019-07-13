@@ -7,13 +7,11 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class CriarPerfilCommand : BasePerfilCommand<CriarPerfilCommand>, IRequest<bool>
     {
-        public CriarPerfilCommand(string nome, string descricao, bool status,
-            IList<PermissaoAssinadaDTO> permissoesAssinadas)
+        public CriarPerfilCommand(string nome, string descricao, bool status)
         {
             Nome = nome;
             Descricao = descricao;
             Status = status;
-            PermissoesAssinadas = permissoesAssinadas;
         }
 
         public override bool isValid()
