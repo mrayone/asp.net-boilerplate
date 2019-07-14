@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class ValidatorBahavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse> where TResponse : Response
+        where TRequest : IRequest<TResponse> where TResponse : CommandResponse
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
         private readonly IDomainNotificationHandler<DomainNotification> _notifications;
@@ -36,7 +37,7 @@ namespace IdentidadeAcesso.API.Application.Behaviors
 
         private static Task<TResponse> Erros(IEnumerable<ValidationFailure> failures)
         {
-            var response = new Response();
+            var response = new CommandResponse();
 
             foreach (var failure in failures)
             {

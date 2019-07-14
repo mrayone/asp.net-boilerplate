@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.Commands.CommandHandler;
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PermissaoEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 {
-    public class AtualizarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPermissaoCommand, Response>
+    public class AtualizarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPermissaoCommand, CommandResponse>
     {
         private readonly IPermissaoRepository _permissaoRepository;
         private readonly IMediator _mediator;
@@ -24,18 +25,18 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
             _mediator = mediator;
         }
 
-        public async Task<Response> Handle(AtualizarPermissaoCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AtualizarPermissaoCommand request, CancellationToken cancellationToken)
         {
             var permissao = await _permissaoRepository.ObterPorId(request.Id);
             if(permissao == null)
             {
-                return await Task.FromResult(new Response().AddError($"Permissão não encontrada."));
+                return await Task.FromResult(new CommandResponse().AddError($"Permissão não encontrada."));
             }
 
             var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor && p.Id != request.Id);
             if (permissaoBusca.Any())
             {
-                return await Task.FromResult(new Response().AddError($"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
+                return await Task.FromResult(new CommandResponse().AddError($"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
             }
 
             permissao = this.DefinirPermissao(request);
@@ -47,7 +48,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
                 await _mediator.Publish(new PermissaoAtualizadaEvent(permissao));
             }
 
-            return await Task.FromResult(new Response());
+            return await Task.FromResult(CommandResponse.Ok);
         }
     }
 }

@@ -37,19 +37,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
         }
 
-        [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]
-        [Trait("Handler - Permissão", "AtualizarPermissão")]
-        public async Task Handle_deve_retornar_false_para_comando_invalido()
-        {
-            //arrange
-            var commandFake = new AtualizarPermissaoCommand(Guid.Empty,"", "C");
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
-            //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
-            //assert
-            result.Errors.Should().NotBeEmpty();
-        }
-
         [Fact(DisplayName = "O handle deve retornar false e disparar notificação se permissão com mesmo valor já existir.")]
         [Trait("Handler - Permissão", "AtualizarPermissão")]
         public async Task Handle_deve_retornar_false_e_disparar_notificacao_se_permissao_com_mesmo_valor_ja_existir()

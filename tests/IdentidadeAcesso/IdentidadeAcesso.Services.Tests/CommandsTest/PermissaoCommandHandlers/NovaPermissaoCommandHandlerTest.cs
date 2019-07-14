@@ -35,19 +35,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
         }
 
-        [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]
-        [Trait("Handler - Permissão", "NovaPermissão")]
-        public async Task Handle_deve_retornar_false_para_comando_invalido()
-        {
-            //arrange
-            var commandFake = new CriarPermissaoCommand("","C");
-            var handle = new CriarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
-            //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
-            //assert
-            result.Errors.Should().NotBeEmpty();
-        }
-
         [Fact(DisplayName = "O handle deve retornar false se comando com mesmo tipo e valor existir.")]
         [Trait("Handler - Permissão", "NovaPermissão")]
         public async Task Handle_deve_retornar_false_se_comando_com_mesmo_tipo_e_valor_existir()
@@ -64,7 +51,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Errors.Should().NotBeEmpty();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O Handle deve cadastrar com sucesso a permissão.")]
@@ -77,7 +64,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Errors.Should().NotBeEmpty();
+            result.Success.Should().BeTrue();
         }
     }
 }

@@ -56,20 +56,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         }
 
         [Trait("Handler - Permissão", "ExcluirPermissão")]
-        [Fact(DisplayName = "O handle deve retornar false se comando inválido.")]
-        public async Task Handle_Deve_Retornar_False_Se_Comando_Invalido()
-        {
-            //arrange
-            var command = new ExcluirPermissaoCommand(Guid.Empty);
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-
-            //assert
-            result.Errors.Should().NotBeEmpty();
-        }
-
-        [Trait("Handler - Permissão", "ExcluirPermissão")]
         [Fact(DisplayName = "O handle deve notificar se permissão não encontrada.")]
         public async Task Handle_Deve_Notificar_Se_Permissao_Nao_Encontrada()
         {
