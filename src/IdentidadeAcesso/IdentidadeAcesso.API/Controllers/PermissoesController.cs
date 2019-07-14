@@ -62,14 +62,14 @@ namespace IdentidadeAcesso.API.Controllers
         public async Task<IActionResult> CriarPermissaoAsync([FromBody] PermissaoViewModel model)
         {
             var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(command).ConfigureAwait(false);
 
             if(result)
             {
                 return Ok();
             }
 
-            return this.NotificarDomainErros(_notification);
+            return BadRequest(_notification.GetNotifications());
         }
 
         [HttpPut]

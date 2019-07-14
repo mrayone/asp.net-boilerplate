@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class ValidatorBahavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TRequest> where TResponse : Response
     {
         private readonly IEnumerable<IValidator<IRequest>> _validators;
 
@@ -29,19 +28,8 @@ namespace IdentidadeAcesso.API.Application.Behaviors
                             .SelectMany(result => result.Errors)
                             .Where(f => f != null);
 
-            return await (falhas.Any() ? AdicionarErros(falhas) : next());
-        }
 
-        private Task<TResponse> AdicionarErros(IEnumerable<ValidationFailure> falhas)
-        {
-            var response = new Response();
-
-            foreach (var falha in falhas)
-            {
-                response.AddError(falha.ErrorMessage);
-            }
-
-            return Task.FromResult(response as TResponse);
+            return await next();
         }
     }
 }
