@@ -31,6 +31,7 @@ namespace IdentidadeAcesso.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMediatR(typeof(Startup).GetType().Assembly)
+                .AddValidationBehavior()
                 .AddDomainServices()
                 .AddDataDependencies()
                 .AddDomainNotifications()
