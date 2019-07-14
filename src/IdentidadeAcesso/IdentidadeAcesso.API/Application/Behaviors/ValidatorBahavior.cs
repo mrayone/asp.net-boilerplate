@@ -13,10 +13,12 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class ValidatorBahavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse> where TResponse : Response
     {
-        private readonly IEnumerable<IValidator<IRequest>> _validators;
+        private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
-        public ValidatorBahavior(IEnumerable<IValidator<IRequest>> validators)
+        public ValidatorBahavior(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
@@ -27,9 +29,21 @@ namespace IdentidadeAcesso.API.Application.Behaviors
             var falhas = _validators.Select(v => v.Validate(request))
                             .SelectMany(result => result.Errors)
                             .Where(f => f != null);
+            return await (falhas.Any()
+             ? Erros(falhas)
+             : next());
+        }
 
+        private static Task<TResponse> Erros(IEnumerable<ValidationFailure> failures)
+        {
+            var response = new Response();
 
-            return await next();
+            foreach (var failure in failures)
+            {
+                response.AddError(failure.ErrorMessage);
+            }
+
+            return Task.FromResult(response as TResponse);
         }
     }
 }

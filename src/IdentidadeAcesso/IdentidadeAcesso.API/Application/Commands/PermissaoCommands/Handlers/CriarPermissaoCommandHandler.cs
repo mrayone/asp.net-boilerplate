@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
+﻿using IdentidadeAcesso.API.Application.Behaviors;
+using IdentidadeAcesso.API.Application.Commands.CommandHandler;
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PermissaoEvents;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 {
-    public class CriarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CriarPermissaoCommand, bool>
+    public class CriarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CriarPermissaoCommand, Response>
     {
         private readonly IPermissaoRepository _permissaoRepository;
         private readonly IMediator _mediator;
@@ -23,15 +24,14 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
             _mediator = mediator;
         }
 
-        public async Task<bool> Handle(CriarPermissaoCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(CriarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
+            //if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor);
             if(permissaoBusca.Any())
             {
-                await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
-                return await Task.FromResult(false);
+                return await Task.FromResult(new Response().AddError($"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
             }
 
             var permissao = this.DefinirPermissao(request);
@@ -43,7 +43,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
                 await _mediator.Publish(new PermissaoCriadaEvent(permissao));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(new Response());
         }
     }
 }

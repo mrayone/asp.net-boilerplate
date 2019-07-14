@@ -64,12 +64,12 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
             var result = await _mediator.Send(command).ConfigureAwait(false);
 
-            if(result)
+            if(!result.Errors.Any())
             {
                 return Ok();
             }
 
-            return BadRequest(_notification.GetNotifications());
+            return BadRequest(result.Errors);
         }
 
         [HttpPut]
@@ -79,7 +79,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Errors.Any())
             {
                 return Ok();
             }
@@ -94,7 +94,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Errors.Any())
             {
                 return Ok();
             }

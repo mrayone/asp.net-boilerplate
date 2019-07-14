@@ -8,7 +8,6 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
 {
     public interface ICommand
     {
-        ValidationResult ValidationResult { get; }
         bool isValid();
     }
 }

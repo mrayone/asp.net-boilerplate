@@ -47,13 +47,5 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
 
             return true;
         }
-
-        protected void NotificarErros(ICommand request)
-        {
-            foreach (var item in request.ValidationResult.Errors)
-            {
-                _mediator.Publish(new DomainNotification(request.GetType().Name, item.ErrorMessage));
-            }
-        }
     }
 }
