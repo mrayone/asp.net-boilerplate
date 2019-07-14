@@ -24,8 +24,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         public async Task<bool> Handle(ExcluirUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             var usuario = await _usuarioRepository.ObterPorId(request.Id);
             if (usuario == null)
             {

@@ -27,7 +27,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(ExcluirPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             if(!await PerfilExitente(request)) return await Task.FromResult(false);
 

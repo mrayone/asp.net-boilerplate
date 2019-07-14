@@ -35,17 +35,5 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
 
             return await Task.FromResult(false);
         }
-
-        protected bool ValidarCommand(ICommand request)
-        {
-            if (!request.isValid())
-            {
-                NotificarErros(request);
-
-                return false;
-            }
-
-            return true;
-        }
     }
 }

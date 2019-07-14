@@ -5,15 +5,15 @@ namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class Response
     {
-        private readonly IList<string> _messages = new List<string>();
+        private List<string> _messages;
 
-        public IEnumerable<string> Errors { get; }
+        public IReadOnlyCollection<string> Errors => _messages;
         public object Result { get; }
 
-        public Response() => Errors = new ReadOnlyCollection<string>(_messages);
-
-        public Response(object result) : this() => Result = result;
-
+        public Response()
+        {
+            _messages = new List<string>();
+        }
         public Response AddError(string message)
         {
             _messages.Add(message);

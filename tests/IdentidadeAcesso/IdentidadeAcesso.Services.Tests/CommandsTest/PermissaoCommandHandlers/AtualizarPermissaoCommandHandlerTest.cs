@@ -47,8 +47,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
-            commandFake.ValidationResult.Errors.Should().NotBeEmpty();
+            result.Errors.Should().NotBeEmpty();
         }
 
         [Fact(DisplayName = "O handle deve retornar false e disparar notificação se permissão com mesmo valor já existir.")]
@@ -66,9 +65,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
-            _mediator.Verify(p=> p.Publish(It.IsAny<DomainNotification>(), 
-                new System.Threading.CancellationToken()));
+            result.Errors.Should().NotBeEmpty();
         }
 
         [Fact(DisplayName = "O Handle deve atualizar com sucesso a permissão.")]
@@ -81,8 +78,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
-            commandFake.ValidationResult.Errors.Should().BeEmpty();
+            result.Errors.Should().BeEmpty();
             _mediator.Verify(m => m.Publish(It.IsAny<PermissaoAtualizadaEvent>(), default), Times.Once());
         }
     }

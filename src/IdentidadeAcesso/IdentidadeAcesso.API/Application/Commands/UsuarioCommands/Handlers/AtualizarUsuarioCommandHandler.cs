@@ -26,7 +26,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
         }
         public async Task<bool> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             var podeAtualizar = await ValidarOperacao(request);
 

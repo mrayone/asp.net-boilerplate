@@ -29,8 +29,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             if (!await this.BuscarPerfil(request.PerfilId, _perfilRepository)) {
 
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));

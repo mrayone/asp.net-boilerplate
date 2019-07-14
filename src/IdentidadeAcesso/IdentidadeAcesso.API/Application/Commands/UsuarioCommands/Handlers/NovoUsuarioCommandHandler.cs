@@ -27,8 +27,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         public async Task<bool> Handle(NovoUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             var DisponivelEmailECpf = await _service.DisponivelEmailECpfAsync(request.Email, request.CPF);
             if (!DisponivelEmailECpf)
             {

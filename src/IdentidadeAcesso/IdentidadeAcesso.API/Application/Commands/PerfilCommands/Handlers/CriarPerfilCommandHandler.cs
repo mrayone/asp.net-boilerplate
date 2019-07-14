@@ -26,8 +26,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(CriarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             var perfil = this.DefinirPerfil(request);
 
             var perfilExistente = await _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);

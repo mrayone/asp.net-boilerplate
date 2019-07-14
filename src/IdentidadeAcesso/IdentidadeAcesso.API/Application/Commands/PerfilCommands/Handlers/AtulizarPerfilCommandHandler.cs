@@ -29,8 +29,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<bool> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             if ( !await PerfilExitente(request)) return await Task.FromResult(false);
 
             var perfil = this.DefinirPerfil(request);
