@@ -79,7 +79,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
             var result = await _mediator.Send(command);
 
-            if (result.Errors.Any())
+            if (!result.Errors.Any())
             {
                 return Ok();
             }
@@ -94,7 +94,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
 
-            if (result.Errors.Any())
+            if (!result.Errors.Any())
             {
                 return Ok();
             }

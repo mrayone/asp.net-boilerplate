@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -95,8 +96,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var usuario = ViewModelBuilder.UsuarioFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
             var result = await _controller.CriarUsuarioAsync(usuario);
 
@@ -104,7 +105,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             result.Should().BeAssignableTo<OkResult>();
             var vr = result as OkResult;
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
-            _mediator.Verify(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()), Times.Once);
+            _mediator.Verify();
         }
 
         [Fact(DisplayName = "Deve atualizar usuário e retornar ok.")]
@@ -113,9 +114,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var usuario = ViewModelBuilder.UsuarioFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true)
-                .Verifiable();
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
             var result = await _controller.AtualizarUsuarioAsync(usuario);
 

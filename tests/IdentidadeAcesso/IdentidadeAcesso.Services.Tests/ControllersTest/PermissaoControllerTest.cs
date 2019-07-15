@@ -4,6 +4,7 @@ using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -101,8 +102,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
             var result = await _controller.CriarPermissaoAsync(permissao);
 
@@ -110,6 +111,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             result.Should().BeAssignableTo<OkResult>();
             var vr = result as OkResult;
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+            _mediator.Verify();
         }
 
         [Fact(DisplayName = "Deve retonar BadRequest ao criar permissão.")]
@@ -118,13 +120,14 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
-
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+            .ReturnsAsync(CommandResponse.Fail.AddError("Erro Fake")).Verifiable();
             //act
             var result = await _controller.CriarPermissaoAsync(permissao);
 
             //assert
-            result.Should().BeAssignableTo<BadRequestResult>();
-            var vr = result as BadRequestResult;
+            result.Should().BeAssignableTo<BadRequestObjectResult>();
+            var vr = result as BadRequestObjectResult;
             vr.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
 
@@ -134,8 +137,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok);
             //act
             var result = await _controller.AtualizarPermissaoAsync(permissao);
 
@@ -150,8 +153,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Retornar_Ok_Ao_Deletar_Permissao()
         {
             //arrange
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok);
             //act
             var result = await _controller.ExcluirPermissaoAsync(Guid.NewGuid());
 

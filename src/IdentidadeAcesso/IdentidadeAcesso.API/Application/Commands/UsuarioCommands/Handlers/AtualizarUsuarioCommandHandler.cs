@@ -43,7 +43,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new UsuarioAtualizadoEvent(usuario));
             }
 
-            return await Task.FromResult(CommandResponse.Fail);
+            return await Task.FromResult(CommandResponse.Ok);
         }
 
         private async Task<bool> ValidarOperacao(AtualizarUsuarioCommand request)

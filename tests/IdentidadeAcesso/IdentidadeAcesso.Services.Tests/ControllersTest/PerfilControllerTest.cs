@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -38,8 +39,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
             //arrange
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-            .ReturnsAsync(true);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             var permissao = new PermissaoAssinadaDTO
             {
                 PermissaoId = Guid.NewGuid(),
