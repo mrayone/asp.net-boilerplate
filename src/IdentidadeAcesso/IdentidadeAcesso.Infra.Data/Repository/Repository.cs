@@ -14,10 +14,10 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, IAggregateRoot
     {
-        protected IdentidadeAcessoContext Context;
+        protected IdentidadeAcessoDbContext Context;
         protected DbSet<TEntity> DbSet;
 
-        public Repository(IdentidadeAcessoContext context)
+        public Repository(IdentidadeAcessoDbContext context)
         {
             Context = context;
             DbSet = Context.Set<TEntity>();

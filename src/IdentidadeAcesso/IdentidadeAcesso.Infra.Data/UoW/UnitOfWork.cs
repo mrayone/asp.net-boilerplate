@@ -10,9 +10,9 @@ namespace Knowledge.IO.Infra.Data.UoW
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public readonly IdentidadeAcessoContext Context;
+        public readonly IdentidadeAcessoDbContext Context;
 
-        public UnitOfWork(IdentidadeAcessoContext context)
+        public UnitOfWork(IdentidadeAcessoDbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }

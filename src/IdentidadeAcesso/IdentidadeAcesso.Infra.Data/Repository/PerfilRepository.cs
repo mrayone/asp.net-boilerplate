@@ -6,7 +6,7 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class PerfilRepository : Repository<Perfil>, IPerfilRepository
     {
-        public PerfilRepository(IdentidadeAcessoContext context) : base(context)
+        public PerfilRepository(IdentidadeAcessoDbContext context) : base(context)
         {
 
         }

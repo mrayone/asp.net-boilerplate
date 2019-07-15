@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Knowledge.IO.Infra.Data.Context
 {
-    public class IdentidadeAcessoContext : DbContext
+    public class IdentidadeAcessoDbContext : DbContext
     {
 
         public const string DEFAULT_SCHEMA = "identidade";
@@ -18,7 +18,7 @@ namespace Knowledge.IO.Infra.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Perfil> Perfis { get; set; }
         public DbSet<Permissao> Permissoes { get; set; }
-        public IdentidadeAcessoContext(DbContextOptions<IdentidadeAcessoContext> options) : base(options)
+        public IdentidadeAcessoDbContext(DbContextOptions<IdentidadeAcessoDbContext> options) : base(options)
         { }
 
 
@@ -31,14 +31,14 @@ namespace Knowledge.IO.Infra.Data.Context
         }
     }
 
-    public class IdentidadeAcessoContextDesignFactory : IDesignTimeDbContextFactory<IdentidadeAcessoContext>
+    public class IdentidadeAcessoContextDesignFactory : IDesignTimeDbContextFactory<IdentidadeAcessoDbContext>
     {
-        public IdentidadeAcessoContext CreateDbContext(string[] args)
+        public IdentidadeAcessoDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<IdentidadeAcessoContext>()
+            var optionsBuilder = new DbContextOptionsBuilder<IdentidadeAcessoDbContext>()
                 .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true");
 
-            return new IdentidadeAcessoContext(optionsBuilder.Options);
+            return new IdentidadeAcessoDbContext(optionsBuilder.Options);
         }
     }
 }

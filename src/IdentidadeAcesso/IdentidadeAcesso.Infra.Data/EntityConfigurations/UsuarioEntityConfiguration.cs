@@ -13,7 +13,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Usuario> usuarioConfiguration)
         {
-            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
             usuarioConfiguration.HasKey(u => u.Id);
 
             usuarioConfiguration.OwnsOne(u => u.Nome, n =>

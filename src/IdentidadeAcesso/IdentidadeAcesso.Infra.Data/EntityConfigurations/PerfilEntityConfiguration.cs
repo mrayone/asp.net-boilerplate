@@ -13,7 +13,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Perfil> perfilConfiguration)
         {
-            perfilConfiguration.ToTable("perfis", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            perfilConfiguration.ToTable("perfis", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
             perfilConfiguration.HasKey(p => p.Id);
 
             perfilConfiguration.OwnsOne(p => p.Identifacao, i => 

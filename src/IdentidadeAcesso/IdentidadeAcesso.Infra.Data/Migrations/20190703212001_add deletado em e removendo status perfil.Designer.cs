@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
-    [DbContext(typeof(IdentidadeAcessoContext))]
+    [DbContext(typeof(IdentidadeAcessoDbContext))]
     [Migration("20190703212001_add deletado em e removendo status perfil")]
     partial class adddeletadoemeremovendostatusperfil
     {

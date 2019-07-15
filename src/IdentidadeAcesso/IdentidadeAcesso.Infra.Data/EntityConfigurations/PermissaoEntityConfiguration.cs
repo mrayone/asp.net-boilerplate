@@ -12,7 +12,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Permissao> builder)
         {
-            builder.ToTable("permissoes", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            builder.ToTable("permissoes", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(p => p.Id);
             builder.Property(p => p.DeletadoEm).IsRequired(false);

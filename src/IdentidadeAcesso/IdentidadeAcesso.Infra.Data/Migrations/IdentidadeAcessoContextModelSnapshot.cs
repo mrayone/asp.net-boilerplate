@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
-    [DbContext(typeof(IdentidadeAcessoContext))]
+    [DbContext(typeof(IdentidadeAcessoDbContext))]
     partial class IdentidadeAcessoContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

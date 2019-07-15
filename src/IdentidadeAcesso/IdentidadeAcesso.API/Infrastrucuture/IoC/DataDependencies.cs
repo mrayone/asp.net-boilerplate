@@ -26,7 +26,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
             services.TryAddScoped<IPermissaoRepository, PermissaoRepository>();
             services.TryAddScoped<IUnitOfWork, UnitOfWork>();
             services.AddEntityFrameworkSqlServer()
-                   .AddDbContext<IdentidadeAcessoContext>(options =>
+                   .AddDbContext<IdentidadeAcessoDbContext>(options =>
                    {
                        options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true",
                            sqlServerOptionsAction: sqlOptions =>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
-    [DbContext(typeof(IdentidadeAcessoContext))]
+    [DbContext(typeof(IdentidadeAcessoDbContext))]
     [Migration("20190609145453_Refatorando Schema de Permissões Assinadas")]
     partial class RefatorandoSchemadePermissõesAssinadas
     {
