@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API;
 using IdentidadeAcesso.API.Application.Models;
+using IdentidadeAcesso.Services.IntegrationTests.WebService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -16,11 +17,11 @@ using Xunit;
 namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 {
     public class PermissaoControllerTests :
-        IClassFixture<WebApplicationFactory<IdentidadeAcesso.API.Startup>>
+        IClassFixture<WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup>>
     {
         private readonly WebApplicationFactory<Startup> _factory;
 
-        public PermissaoControllerTests(WebApplicationFactory<IdentidadeAcesso.API.Startup> factory)
+        public PermissaoControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
             _factory = factory;
         }
