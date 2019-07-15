@@ -39,7 +39,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new UsuarioDeletadoEvent(usuarioDeletado));
             }
 
-            return await Task.FromResult(CommandResponse.Fail);
+            return await Task.FromResult(CommandResponse.Ok);
         }
     }
 }

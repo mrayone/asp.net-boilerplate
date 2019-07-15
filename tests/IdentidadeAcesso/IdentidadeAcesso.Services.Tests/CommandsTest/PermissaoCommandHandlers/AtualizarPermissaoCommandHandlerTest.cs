@@ -52,7 +52,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Errors.Should().NotBeEmpty();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O Handle deve atualizar com sucesso a permissão.")]
@@ -65,7 +65,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             //act
             var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Errors.Should().BeEmpty();
+            result.Success.Should().BeTrue();
+
             _mediator.Verify(m => m.Publish(It.IsAny<PermissaoAtualizadaEvent>(), default), Times.Once());
         }
     }
