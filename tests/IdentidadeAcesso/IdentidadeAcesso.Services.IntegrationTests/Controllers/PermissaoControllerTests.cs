@@ -34,17 +34,18 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var model = JsonConvert.SerializeObject(
                 new PermissaoViewModel()
                 {
-                    Tipo = "as",
-                    Valor = "aasds"
+                    Tipo = "a",
+                    Valor = "a"
                 });
 
             var content = new StringContent(model);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await client.PostAsync("api/v1/permissoes", content);
+            var value = await response.Content.ReadAsStringAsync();
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            var result = response.Content;
+            value.Should().NotBeEmpty();
         }
     }
 }
