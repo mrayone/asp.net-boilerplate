@@ -26,16 +26,19 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
+        private readonly ExcluirPerfilCommandHandler _handler;
 
         public ExcluirPerfilCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
             _service = new Mock<IPerfilService>();
+            _handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, 
+                _notifications, _perfilRepositoryMock.Object, _service.Object);
         }
 
         [Fact(DisplayName = "O Handle deve verificar se comando invalido e retornar false.")]
@@ -44,10 +47,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             //arrange
             var command = new ExcluirPerfilCommand(Guid.Empty);
-            var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
-
             //act
-            var result = await handler.Handle(command, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
             result.Success.Should().BeFalse();
@@ -58,12 +59,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_retornar_falso_se_perfil_nao_existir()
         {
             //arrange
-
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
-            var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
 
             //act
-            var result = await handler.Handle(command, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
             result.Success.Should().BeFalse();
@@ -74,14 +73,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_retornar_falso_se_perfil_nao_existir_e_disparar_notificacao_de_dominio()
         {
             //arrange
-
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
-            var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
 
             //act
-            var result = await handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
+            //assert
             result.Success.Should().BeFalse();
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
@@ -91,17 +88,14 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_retornar_false_se_perfil_em_uso_e_disparar_notificacao()
         {
             //arrange
-
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
-
             _service.Setup(s => s.DeletarPerfilAsync(It.IsAny<Perfil>())).ReturnsAsync(false);
-            var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
 
             //act
-            var result = await handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
+            //assert
             result.Success.Should().BeFalse();
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
@@ -111,18 +105,15 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_retornar_verdadeiro_se_excluir_o_perfil_com_sucesso()
         {
             //arrange
-
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.DeletarPerfilAsync(It.IsAny<Perfil>())).ReturnsAsync(true);
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
 
-            var handler = new ExcluirPerfilCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _perfilRepositoryMock.Object, _service.Object);
-
             //act
-            var result = await handler.Handle(command, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
+           
             //assert
-
             result.Success.Should().BeTrue();
             _mediator.Verify(m => m.Publish(It.IsAny<PerfilDeletadoEvent>(), default), Times.Once());
         }

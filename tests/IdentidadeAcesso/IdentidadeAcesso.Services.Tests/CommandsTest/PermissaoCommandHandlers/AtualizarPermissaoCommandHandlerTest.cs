@@ -25,15 +25,15 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
-
+        private readonly DomainNotificationHandler _notifications;
+        private readonly AtualizarPermissaoCommandHandler _handler;
         public AtualizarPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
-
+            _notifications = new DomainNotificationHandler();
+            _handler = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications, _permissaoRepository.Object);
             _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
         }
 
@@ -48,9 +48,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
                 PermissaoBuilder.CriarPermissaoFake()
             };
             _permissaoRepository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Permissao, bool>>>())).ReturnsAsync(listMock);
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
+            
             //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
             result.Success.Should().BeFalse();
         }
@@ -61,9 +61,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         {
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Editar");
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
             //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
             result.Success.Should().BeTrue();
 

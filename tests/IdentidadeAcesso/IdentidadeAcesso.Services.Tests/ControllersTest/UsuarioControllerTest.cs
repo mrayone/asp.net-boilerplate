@@ -22,16 +22,16 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IUsuarioQueries> _usuarioQueries;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly UsuariosController _controller;
         public UsuarioControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _usuarioQueries = new Mock<IUsuarioQueries>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _controller = new UsuariosController(_usuarioQueries.Object, _mediator.Object,
-                _notifications.Object);
+                _notifications);
         }
 
         [Trait("Controller","UsuariosController")]

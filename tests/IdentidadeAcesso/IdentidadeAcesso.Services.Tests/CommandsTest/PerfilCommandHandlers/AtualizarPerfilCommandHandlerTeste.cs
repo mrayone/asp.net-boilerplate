@@ -22,7 +22,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
+        private readonly AtulizarPerfilCommandHandler _handler;
         private readonly IList<Perfil> _listMock;
 
         public AtualizarPerfilCommandHandlerTeste()
@@ -30,8 +31,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
-
+            _notifications = new DomainNotificationHandler();
+            _handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications);
 
             _listMock = new List<Perfil>()
             {
@@ -51,11 +52,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             .ReturnsAsync(_listMock);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
-            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
@@ -69,11 +69,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var command = TestBuilder.AtualizarPerfilRequestOk();
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
 
-            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
             result.Success.Should().BeTrue();

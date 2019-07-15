@@ -23,17 +23,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly PermissoesController _controller;
         private readonly Mock<IPermissaoQueries> _permissaoQueries;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
         private readonly IList<PermissaoViewModel> _list;
         public PermissaoControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoQueries = new Mock<IPermissaoQueries>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _controller = new PermissoesController(_permissaoQueries.Object,
-                _mediator.Object, _notifications.Object);
+                _mediator.Object, _notifications);
             _list = new List<PermissaoViewModel>()
             {
                 ViewModelBuilder.PermissaoViewFake(),

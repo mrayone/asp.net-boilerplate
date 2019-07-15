@@ -21,17 +21,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly PerfisController _controller;
         private readonly Mock<IPerfilQueries> _perfilQueries;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
 
         public PerfilControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilQueries = new Mock<IPerfilQueries>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _controller = new PerfisController(_perfilQueries.Object,
-                _mediator.Object, _notifications.Object);
+                _mediator.Object, _notifications);
         }
 
         [Fact(DisplayName = "Deve cancelar permissões assinadas e retornar Ok.")]

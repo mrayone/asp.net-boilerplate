@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
         private readonly CancelarPermissaoCommandHandler _handler;
 
@@ -33,10 +33,10 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<INotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
             _service = new Mock<IPerfilService>();
 
-            _handler = new CancelarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object,
+            _handler = new CancelarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications,
                 _service.Object, _perfilRepositoryMock.Object);
         }
 
