@@ -53,24 +53,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             _service.Verify(s => s.AssinarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
             _uow.Verify(u => u.Commit(), Times.Once);
-        }
-
-        [Fact(DisplayName = "Deve Validar O Command e Retornar Falso.")]
-        [Trait("Handler - Perfil", "AssinarPermissaoCommand")]
-        public async Task Deve_Validar_O_Command_E_Retornar_Falso()
-        {
-            //arrange
-            var command = new AssinarPermissaoCommand(Guid.Empty, 
-                Guid.Empty);
-
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
-            command.ValidationResult.Errors.Should().NotBeEmpty();
         }
     }
 }

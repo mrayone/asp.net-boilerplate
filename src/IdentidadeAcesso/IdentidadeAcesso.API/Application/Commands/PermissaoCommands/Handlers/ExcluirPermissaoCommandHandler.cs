@@ -44,7 +44,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
                 await _mediator.Publish(new PermissaoExcluidaEvent(permissao));
             }
 
-            return await Task.FromResult(new CommandResponse());
+            return await Task.FromResult(CommandResponse.Ok);
         }
     }
 }

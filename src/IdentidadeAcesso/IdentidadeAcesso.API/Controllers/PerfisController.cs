@@ -64,7 +64,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
 
-            if (result) return Ok();
+            if (result.Success) return Ok();
 
             return this.NotificarDomainErros(_notifications);
         }
@@ -76,7 +76,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CriarPerfilCommand(perfil.Nome, perfil.Descricao, perfil.Status);
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Success)
             {
                 return Ok();
             }
@@ -93,7 +93,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Success)
             {
                 return Ok();
             }
@@ -108,7 +108,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new ExcluirPerfilCommand(id);
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Success)
             {
                 return Ok();
             }

@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class AtulizarPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPerfilCommand, bool>
+    public class AtulizarPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPerfilCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilRepository _perfilRepository;
@@ -27,9 +28,9 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
         {
-            if ( !await PerfilExitente(request)) return await Task.FromResult(false);
+            if ( !await PerfilExitente(request)) return await Task.FromResult(CommandResponse.Fail);
 
             var perfil = this.DefinirPerfil(request);
 
@@ -37,7 +38,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             if (perfilExistente.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));
-                return await Task.FromResult(false);
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
             _perfilRepository.Atualizar(perfil);
@@ -47,7 +48,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 await _mediator.Publish(new PerfilAtualizadoEvent(perfil));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(CommandResponse.Ok);
         }
 
         private async Task<bool> PerfilExitente(AtualizarPerfilCommand request)

@@ -40,24 +40,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 _service.Object, _perfilRepositoryMock.Object);
         }
 
-        [Fact(DisplayName = "O Handle deve verificar se comando invalido e retornar false.")]
-        [Trait("Handler - Perfil", "CancelarPermissão")]
-        public async Task Handle_deve_verificar_se_comando_invalido_e_retornar_false()
-        {
-            //arrange
-            var perfilId = Guid.Empty;
-            var permissaoId = Guid.Empty;
-            var command = new CancelarPermissaoCommand(perfilId, permissaoId);
-            
-            var cancelToken = new System.Threading.CancellationToken();
-            
-            //act
-            var result = await _handler.Handle(command, cancelToken);
-            
-            //assert
-            result.Should().BeFalse();
-        }
-
         [Fact(DisplayName = "O Handle deve retornar falso se o perfil não existir.")]
         [Trait("Handler - Perfil", "CancelarPermissão")]
         public async Task Handle_deve_retornar_falso_se_perfil_nao_existir()
@@ -80,7 +62,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await _handler.Handle(command, cancelToken);
 
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O handle deve retornar verdadeiro se cancelar com sucesso as permissões.")]
@@ -104,7 +86,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await _handler.Handle(command, cancelToken);
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             _mediator.Verify(m => m.Publish(It.IsAny<AssinaturaPermissaoCanceladaEvent>(), default), Times.Once());
         }
     }

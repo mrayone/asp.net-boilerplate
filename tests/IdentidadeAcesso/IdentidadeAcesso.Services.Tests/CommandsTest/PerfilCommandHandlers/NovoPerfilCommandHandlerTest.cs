@@ -45,23 +45,6 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
         }
 
-        [Fact(DisplayName = "O Handle retorna falso se o perfil não for persistido.")]
-        [Trait("Handler - Perfil", "NovoPerfil")]
-        public async Task Handle_retorna_falso_se_o_perfil_estiver_invalidoAsync()
-        {
-            //arrange
-            var command = TestBuilder.FalsoPerfilRequestComPermissoes();
-            var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
-            var cancelToken = new System.Threading.CancellationToken();
-
-            //act
-            var result = await handler.Handle(command, cancelToken);
-
-            //assert
-            result.Should().BeFalse();
-        }
-
-
         [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]
         [Trait("Handler - Perfil", "NovoPerfil")]
         public async Task Handle_deve_disparar_evento_se_um_perfil_como_mesmo_nome_ja_existir()
@@ -79,7 +62,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
 
@@ -97,7 +80,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, cancelToken);
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
         }
     }
 }

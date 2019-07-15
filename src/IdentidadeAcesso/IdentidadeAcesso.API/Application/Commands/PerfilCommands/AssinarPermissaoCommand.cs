@@ -13,11 +13,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
             PerfilId = perfilId;
             PermissaoId = permissaoId;
         }
-
-        public override bool isValid()
-        {
-            ValidationResult = new AssinarPermissaoValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
     }
 }

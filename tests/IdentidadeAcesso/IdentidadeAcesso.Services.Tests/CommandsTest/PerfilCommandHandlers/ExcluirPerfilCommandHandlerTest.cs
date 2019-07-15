@@ -50,7 +50,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
-            result.Should().Be(false);
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O handle deve retornar falso se o perfil não existir.")]
@@ -66,7 +66,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
-            result.Should().Be(false);
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O deve retornar falso se o perfil não existir e disparar notificação de domínio.")]
@@ -82,7 +82,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
-            result.Should().Be(false);
+            result.Success.Should().BeFalse();
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
 
@@ -102,7 +102,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
-            result.Should().Be(false);
+            result.Success.Should().BeFalse();
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
 
@@ -123,7 +123,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var result = await handler.Handle(command, new System.Threading.CancellationToken());
             //assert
 
-            result.Should().Be(true);
+            result.Success.Should().BeTrue();
             _mediator.Verify(m => m.Publish(It.IsAny<PerfilDeletadoEvent>(), default), Times.Once());
         }
     }

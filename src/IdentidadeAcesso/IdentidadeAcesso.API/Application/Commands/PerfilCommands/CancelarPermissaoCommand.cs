@@ -16,11 +16,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
             PerfilId = perfilId;
             PermissaoId = permissaoId;
         }
-
-        public override bool isValid()
-        {
-            ValidationResult = new CancelarPermissaoValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
     }
 }

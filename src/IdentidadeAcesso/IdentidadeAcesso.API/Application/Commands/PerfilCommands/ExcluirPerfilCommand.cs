@@ -7,17 +7,11 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class ExcluirPerfilCommand : BasePerfilCommand<ExcluirPerfilCommand>, IRequest<bool>
+    public class ExcluirPerfilCommand : BasePerfilCommand<ExcluirPerfilCommand>
     {
         public ExcluirPerfilCommand(Guid id)
         {
             Id = id;
-        }
-
-        public override bool isValid()
-        {
-            ValidationResult = new ExcluirPerfilCommandValidation().Validate(this);
-            return ValidationResult.IsValid;
         }
     }
 }
