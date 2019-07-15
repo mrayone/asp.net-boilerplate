@@ -77,9 +77,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
         {
             return new List<Permissao>()
             {
-                Permissao.PermissaoFactory.CriarPermissao(null, new Atribuicao("Usuário", "Cadastrar")),
-                Permissao.PermissaoFactory.CriarPermissao(null, new Atribuicao("Usuário", "Remover")),
-                Permissao.PermissaoFactory.CriarPermissao(null, new Atribuicao("Usuário", "Visualizar Cadastro")),
+                Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Cadastrar"),
+                Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Remover"),
+                Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Visualizar Cadastro"),
             };
         }
     }

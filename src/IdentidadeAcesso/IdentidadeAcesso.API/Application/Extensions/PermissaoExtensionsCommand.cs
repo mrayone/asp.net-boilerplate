@@ -9,8 +9,7 @@ namespace IdentidadeAcesso.API.Application.Extensions
     {
         public static Permissao DefinirPermissao<T>(this BaseCommandHandler command, BasePermissaoCommand<T> request) where T : BasePermissaoCommand<T>
         {
-            var atribuicao = new Atribuicao(request.Tipo, request.Valor);
-            return Permissao.PermissaoFactory.CriarPermissao(request.Id, atribuicao);
+            return Permissao.PermissaoFactory.CriarPermissao(request.Id, request.Tipo, request.Valor);
         }
     }
 }
