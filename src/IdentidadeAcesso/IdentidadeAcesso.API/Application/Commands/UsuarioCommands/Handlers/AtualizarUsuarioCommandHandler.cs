@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
-    public class AtualizarUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarUsuarioCommand, bool>
+    public class AtualizarUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarUsuarioCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;
@@ -24,16 +25,16 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             _usuarioRepository = usuarioRepository;
             _service = service;
         }
-        public async Task<bool> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
 
             var podeAtualizar = await ValidarOperacao(request);
 
-            if (!podeAtualizar) return await Task.FromResult(false);
+            if (!podeAtualizar) return await Task.FromResult(CommandResponse.Fail);
 
             var usuario = this.DefinirUsuario(request);
             var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
-            if (!vinculouPerfil) return await Task.FromResult(false);
+            if (!vinculouPerfil) return await Task.FromResult(CommandResponse.Fail);
 
             _usuarioRepository.Atualizar(usuario);
 
@@ -42,7 +43,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new UsuarioAtualizadoEvent(usuario));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(CommandResponse.Fail);
         }
 
         private async Task<bool> ValidarOperacao(AtualizarUsuarioCommand request)

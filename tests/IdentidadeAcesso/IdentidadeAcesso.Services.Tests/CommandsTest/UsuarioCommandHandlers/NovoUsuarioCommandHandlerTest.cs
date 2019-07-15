@@ -56,19 +56,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
-        }
-
-        [Fact(DisplayName = "Deve retornar false se comando invalido.")]
-        [Trait("Handler", "NovoUsuario")]
-        public async Task Deve_Retornar_False_Se_Comando_Invalido()
-        {
-            //arrange
-            var command = UsuarioBuilder.ObterCommandInvalidoFake();
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Deve retornar false se usuário ja existir.")]
@@ -87,23 +75,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
             _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(), 
                 new System.Threading.CancellationToken()), Times.Once() );
-        }
-
-        [Fact(DisplayName = "Deve retornar false se usuário houver erros de domínio.")]
-        [Trait("Handler", "NovoUsuario")]
-        public async Task Deve_Retornar_False_Se_Houver_Erros_De_Domain()
-        {
-            //arrange
-            var command = UsuarioBuilder.ObterCommandFakeErroDeDomain();
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
-            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
-                new System.Threading.CancellationToken()), Times.Between(1, 2, Range.Inclusive));
         }
 
         [Fact(DisplayName = "Deve retornar false e notificar se perfil atribuido não existir.")]
@@ -117,7 +91,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve persistir Usuario e Disparar Evento.")]
@@ -129,7 +103,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             _mediator.Verify(p => p.Publish(It.IsAny<UsuarioCriadoEvent>(),
                 new System.Threading.CancellationToken()), Times.Once());
         }

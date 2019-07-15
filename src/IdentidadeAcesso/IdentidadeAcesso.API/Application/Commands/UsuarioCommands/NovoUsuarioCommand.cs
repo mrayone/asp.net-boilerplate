@@ -28,12 +28,5 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Estado = estado;
             PerfilId = perfilId;
         }
-
-
-        public override bool isValid()
-        {
-            ValidationResult = new NovoUsuarioValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
     }
 }

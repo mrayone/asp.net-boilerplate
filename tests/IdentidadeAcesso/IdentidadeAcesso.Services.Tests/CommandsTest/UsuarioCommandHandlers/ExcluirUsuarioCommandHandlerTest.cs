@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar false se usuário não existir.")]
@@ -65,7 +65,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar true e marcar usuario como deletado.")]
@@ -85,7 +85,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             usuarioFake.DeletadoEm.HasValue.Should().BeTrue();
             _mediator.Verify(p => p.Publish(It.IsAny<UsuarioDeletadoEvent>(), 
                 new System.Threading.CancellationToken()), Times.Once());

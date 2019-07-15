@@ -63,7 +63,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if(result)
+            if(result.Success)
             {
                 return Ok();
             }
@@ -81,7 +81,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Success)
             {
                 return Ok();
             }
@@ -97,7 +97,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result)
+            if (result.Success)
             {
                 return Ok();
             }

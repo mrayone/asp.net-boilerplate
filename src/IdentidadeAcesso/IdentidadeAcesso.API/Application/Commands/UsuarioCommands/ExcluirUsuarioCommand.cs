@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Results;
 using IdentidadeAcesso.API.Application.Validations.Usuario;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using MediatR;
 using System;
@@ -9,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
-    public class ExcluirUsuarioCommand : IRequest<bool>, ICommand
+    public class ExcluirUsuarioCommand : IRequest<CommandResponse>
     {
-        public ValidationResult ValidationResult { get; protected set; }
         public Guid Id { get; private set; }
 
         public ExcluirUsuarioCommand(Guid id)
         {
             Id = id;
-        }
-
-        public bool isValid()
-        {
-            ValidationResult = new ExcluirUsuarioValidation().Validate(this);
-            return ValidationResult.IsValid;
         }
     }
 }
