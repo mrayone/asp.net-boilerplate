@@ -15,18 +15,19 @@ namespace IdentidadeAcesso.API.Controllers.Extensions
         public static IActionResult VerificarErros(this ControllerBase controller, INotificationHandler<DomainNotification> notifications, CommandResponse result)
         {
             var _notifications = (DomainNotificationHandler) notifications;
+
             if (result.Success)
             {
-                if (_notifications.HasNotifications())
-                {
-                    return controller.BadRequest(_notifications.GetNotifications()
-                        .Select(n => n.Value));
-                }
-
                 return controller.Ok();
             }
 
-            return controller.BadRequest(result.Errors);
+            foreach (var item in result.Errors)
+            {
+                _notifications.GetNotifications().Add(new DomainNotification("", item));
+            }
+
+            return controller.BadRequest(_notifications.GetNotifications()
+                        .Select(n => n.Value));
         }
     }
 }

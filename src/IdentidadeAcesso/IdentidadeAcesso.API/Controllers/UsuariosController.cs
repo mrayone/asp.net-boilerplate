@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{ver:apiVersion}/usuarios")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
