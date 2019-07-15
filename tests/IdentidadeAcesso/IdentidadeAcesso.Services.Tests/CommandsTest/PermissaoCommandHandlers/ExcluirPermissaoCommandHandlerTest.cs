@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
         private readonly Mock<IPermissaoService> _service;
         private readonly ExcluirPermissaoCommandHandler _handler;
         public ExcluirPermissaoCommandHandlerTest()
@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new Mock<INotificationHandler<DomainNotification>>();
             _service = new Mock<IPermissaoService>();
             _handler = new ExcluirPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object , _service.Object);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);

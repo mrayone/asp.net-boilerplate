@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
         private readonly IMediator _mediator;
 
         public ExcluirPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<DomainNotification> notifications, IPermissaoRepository permissaoRepository,
+            INotificationHandler<DomainNotification> notifications, IPermissaoRepository permissaoRepository,
             IPermissaoService service) : base(mediator, unitOfWork, notifications)
         {
             _permissaoService = service;

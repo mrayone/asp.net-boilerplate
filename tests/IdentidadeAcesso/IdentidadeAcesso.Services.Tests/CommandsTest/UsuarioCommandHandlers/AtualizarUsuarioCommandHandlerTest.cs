@@ -26,7 +26,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<IUsuarioRepository> _repository;
         private readonly Mock<IUsuarioService> _service;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
 
         public AtualizarUsuarioCommandHandlerTest()
         {
@@ -34,7 +34,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _repository = new Mock<IUsuarioRepository>();
             _uow = new Mock<IUnitOfWork>();
             _service = new Mock<IUsuarioService>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new Mock<INotificationHandler<DomainNotification>>();
             _handler = new AtualizarUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))

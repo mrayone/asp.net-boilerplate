@@ -34,8 +34,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var model = JsonConvert.SerializeObject(
                 new PermissaoViewModel()
                 {
-                    Tipo = null,
-                    Valor = null
+                    Tipo = "as",
+                    Valor = "aasds"
                 });
 
             var content = new StringContent(model);

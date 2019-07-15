@@ -15,7 +15,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddDomainNotifications(this IServiceCollection services)
         {
-            services.TryAddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.TryAddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             return services;
         }

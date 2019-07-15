@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
@@ -20,10 +21,10 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPerfilQueries _perfilQueris;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notifications;
+        private readonly INotificationHandler<DomainNotification> _notifications;
 
         public PerfisController( IPerfilQueries perfilQueries, 
-            IMediator mediator, IDomainNotificationHandler<DomainNotification> notifications )
+            IMediator mediator, INotificationHandler<DomainNotification> notifications )
         {
             _perfilQueris = perfilQueries;
             _mediator = mediator;
@@ -64,9 +65,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
 
-            if (result.Success) return Ok();
-
-            return this.NotificarDomainErros(_notifications);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPost]
@@ -76,12 +75,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CriarPerfilCommand(perfil.Nome, perfil.Descricao, perfil.Status);
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notifications);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
@@ -93,12 +87,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notifications);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpDelete]
@@ -108,12 +97,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new ExcluirPerfilCommand(id);
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notifications);
+            return this.VerificarErros(_notifications, result);
         }
     }
 }

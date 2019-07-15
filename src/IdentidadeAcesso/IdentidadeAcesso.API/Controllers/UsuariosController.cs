@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
@@ -19,14 +20,14 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IUsuarioQueries _usuarioQuereis;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notification;
+        private readonly INotificationHandler<DomainNotification> _notifications;
 
         public UsuariosController(IUsuarioQueries usuarioQuereis, IMediator mediator,
-            IDomainNotificationHandler<DomainNotification> notification)
+            INotificationHandler<DomainNotification> notification)
         {
             _usuarioQuereis = usuarioQuereis;
             _mediator = mediator;
-            _notification = notification;
+            _notifications = notification;
         }
 
         [Route("obter-todos")]
@@ -63,12 +64,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if(result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
@@ -81,12 +77,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpDelete]
@@ -97,12 +88,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result.Success)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
     }
 }

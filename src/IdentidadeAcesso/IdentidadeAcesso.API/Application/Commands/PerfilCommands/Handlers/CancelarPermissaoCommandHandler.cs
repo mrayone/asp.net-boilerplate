@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         private readonly IPerfilRepository _perfilRepository;
 
         public CancelarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
+            INotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;

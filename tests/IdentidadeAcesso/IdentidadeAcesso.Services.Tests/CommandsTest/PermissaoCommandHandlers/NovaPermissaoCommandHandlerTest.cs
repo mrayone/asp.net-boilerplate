@@ -26,13 +26,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly Mock<INotificationHandler<DomainNotification>> _notifications;
         public NovaPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new Mock<INotificationHandler<DomainNotification>>();
         }
 
         [Fact(DisplayName = "O handle deve retornar false se comando com mesmo tipo e valor existir.")]

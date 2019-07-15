@@ -17,7 +17,6 @@ namespace IdentidadeAcesso.API.Application.Behaviors
         where TRequest : IRequest<TResponse> where TResponse : CommandResponse
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
-        private readonly IDomainNotificationHandler<DomainNotification> _notifications;
 
         public ValidatorBahavior(IEnumerable<IValidator<TRequest>> validators)
         {

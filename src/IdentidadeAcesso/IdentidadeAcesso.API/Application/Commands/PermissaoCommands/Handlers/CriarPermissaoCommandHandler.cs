@@ -19,7 +19,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
         private readonly IMediator _mediator;
 
         public CriarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<DomainNotification> notifications, IPermissaoRepository permissaoRepository) : base(mediator, unitOfWork, notifications)
+            INotificationHandler<DomainNotification> notifications, IPermissaoRepository permissaoRepository) : base(mediator, unitOfWork, notifications)
         {
             _permissaoRepository = permissaoRepository;
             _mediator = mediator;

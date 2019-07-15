@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
+﻿using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
@@ -11,6 +7,10 @@ using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
 {
@@ -21,14 +21,14 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notification;
+        private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, 
-            IDomainNotificationHandler<DomainNotification> notification )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator,
+            INotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
-            _notification = notification;
+            _notifications = notification;
         }
 
         [Route("obter-todas")]
@@ -64,12 +64,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
             var result = await _mediator.Send(command).ConfigureAwait(false);
 
-            if(!result.Errors.Any())
-            {
-                return Ok();
-            }
-
-            return BadRequest(result.Errors);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
@@ -79,12 +74,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
             var result = await _mediator.Send(command);
 
-            if (!result.Errors.Any())
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpDelete]
@@ -94,12 +84,7 @@ namespace IdentidadeAcesso.API.Controllers
             var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
 
-            if (!result.Errors.Any())
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
     }
 }
