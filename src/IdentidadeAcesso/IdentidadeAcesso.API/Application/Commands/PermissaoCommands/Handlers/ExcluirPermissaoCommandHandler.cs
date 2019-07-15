@@ -32,11 +32,12 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 
             if(permissao == null)
             {
-                return await Task.FromResult(new CommandResponse().AddError("Permissão não encontrada."));
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, "Permissão não encontrada."));
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
             var result = await _permissaoService.DeletarPermissaoAsync(permissao);
-            if(!result) return await Task.FromResult(new CommandResponse().AddError("Não foi possível deletar a permissão."));
+            if(!result) return await Task.FromResult(CommandResponse.Fail);
 
 
             if (await Commit())

@@ -30,13 +30,16 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
             var permissao = await _permissaoRepository.ObterPorId(request.Id);
             if(permissao == null)
             {
-                return await Task.FromResult(new CommandResponse().AddError($"Permissão não encontrada."));
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, "Permissão não encontrada."));
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
             var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor && p.Id != request.Id);
             if (permissaoBusca.Any())
             {
-                return await Task.FromResult(new CommandResponse().AddError($"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada."));
+
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
             permissao = this.DefinirPermissao(request);

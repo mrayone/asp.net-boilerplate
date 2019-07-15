@@ -30,7 +30,8 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
             var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor);
             if(permissaoBusca.Any())
             {
-                return await Task.FromResult(new CommandResponse().AddError($"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
             var permissao = this.DefinirPermissao(request);
