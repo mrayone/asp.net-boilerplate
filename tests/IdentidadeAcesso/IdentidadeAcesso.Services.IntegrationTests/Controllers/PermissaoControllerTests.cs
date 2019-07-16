@@ -118,5 +118,51 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
+
+        [Fact(DisplayName = "Deve atualizar permissão com sucesso.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_Atualizar_Permissao_ComSucesso()
+        {
+            //arrange
+            var client = _factory.CreateDefaultClient();
+
+            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            {
+                Id = new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"),
+                Tipo = "Perfil",
+                Valor = "Pode atribuir permissão a perfil."
+            }));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var response = await client.PutAsync("api/v1/permissoes", content);
+            var todos = await client.GetAsync($"api/v1/permissoes/obter-todas");
+            var value = await response.Content.ReadAsStringAsync();
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact(DisplayName = "Deve excluir permissão com sucesso.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_Excluir_Permissao_ComSucesso()
+        {
+            //arrange
+            var client = _factory.CreateDefaultClient();
+
+            //act
+            var response = await client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var todos = await client.GetAsync($"api/v1/permissoes/obter-todas");
+            var value = await todos.Content.ReadAsStringAsync();
+
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        //[Fact(DisplayName = "Deve gerar erro ao excluir permissão em uso.")]
+        //[Trait("Testes de Integração", "PermissaoControllerTests")]
+        //public async Task Deve_Gerar_Erro_Ao_Excluir_Permissao_Em_Uso()
+        //{
+        //}
     }
 }

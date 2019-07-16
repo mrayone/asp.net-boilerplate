@@ -15,7 +15,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public Guid Id { get; protected set; }
         public string Nome { get; protected set; }
         public string Descricao { get; protected set; }
-        public bool Status { get; protected set; }
 
     }
 

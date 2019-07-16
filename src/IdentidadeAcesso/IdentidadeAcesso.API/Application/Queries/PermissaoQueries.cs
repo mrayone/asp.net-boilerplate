@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             var sql = @"SELECT [Id]
                               ,[Atribuicao_Valor] as Valor
                               ,[Atribuicao_Tipo] as Tipo
-                FROM [permissoes] WHERE [Id] = @uid";
+                FROM [permissoes] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
             var result = await _dapper.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = id });
 
             return result;

@@ -16,7 +16,10 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddApplicationHandlers(this IServiceCollection services)
         {
+            //Permissão Handlers
             services.TryAddScoped<IRequestHandler<CriarPermissaoCommand, CommandResponse>, CriarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarPermissaoCommand, CommandResponse>, AtualizarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirPermissaoCommand, CommandResponse>, ExcluirPermissaoCommandHandler>();
 
             return services;
         }

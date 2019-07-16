@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using Knowledge.IO.Infra.Data.Context;
@@ -72,14 +73,13 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
     {
         internal static void InitializeDbForTests(IdentidadeAcessoDbContext db)
         {
-            db.Permissoes.AddRange(obterPermissoes());
-
-
+            db.Permissoes.AddRange(ObterPermissoes());
+            db.Perfis.AddRange(ObterPerfis());
 
             db.SaveChangesAsync();
         }
 
-        private static List<Permissao> obterPermissoes()
+        private static List<Permissao> ObterPermissoes()
         {
             var list = new List<Permissao>()
             {
@@ -88,6 +88,20 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Visualizar Cadastro"),
             };
 
+            return list;
+        }
+
+        private static List<Perfil> ObterPerfis()
+        {
+            var list = new List<Perfil>()
+            {
+                Perfil.PerfilFactory
+                .NovoPerfil(new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), "Administração", "Perfil que possui os maiores níveis de acesso"),
+                Perfil.PerfilFactory
+                .NovoPerfil(null, "Recursos Humanos 1", "Perfil que possui alguns níveis de RH."),
+                Perfil.PerfilFactory
+                .NovoPerfil(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.")
+            };
             return list;
         }
     }

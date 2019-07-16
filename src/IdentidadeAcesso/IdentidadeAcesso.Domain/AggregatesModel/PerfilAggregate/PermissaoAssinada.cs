@@ -30,11 +30,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         public static class PermissaoAssinadaFactory
         {
-            public static PermissaoAssinada GerarPermissaoAssinada(Guid id, Guid permissaoId)
+            public static PermissaoAssinada GerarPermissaoAssinada(Guid? id, Guid permissaoId)
             {
                 return new PermissaoAssinada()
                 {
-                    Id = id,
+                    Id = id.HasValue ? id.Value : Guid.NewGuid(),
                     PermissaoId = permissaoId,
                     Status = Status.Ativo
                 };

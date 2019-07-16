@@ -15,7 +15,6 @@ namespace IdentidadeAcesso.API.Application.Models
 
         [Required(ErrorMessage = "A descrição deve ser informada.")]
         public string Descricao { get; set; }
-        public bool Status { get; set; }
         public IList<PermissaoAssinadaDTO> PermissoesAssinadas { get; set; }
     }
 }

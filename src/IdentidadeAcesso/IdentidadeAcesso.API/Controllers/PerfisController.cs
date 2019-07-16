@@ -70,7 +70,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CriarPerfilAsync([FromBody] PerfilViewModel perfil)
         {
-            var command = new CriarPerfilCommand(perfil.Nome, perfil.Descricao, perfil.Status);
+            var command = new CriarPerfilCommand(perfil.Nome, perfil.Descricao);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -81,7 +81,7 @@ namespace IdentidadeAcesso.API.Controllers
         public async Task<IActionResult> AtualizarPerfilAsync([FromBody] PerfilViewModel perfil)
         {
             var command = new AtualizarPerfilCommand(perfil.Id, perfil.Nome,
-                perfil.Descricao, perfil.Status);
+                perfil.Descricao);
 
             var result = await _mediator.Send(command);
 
