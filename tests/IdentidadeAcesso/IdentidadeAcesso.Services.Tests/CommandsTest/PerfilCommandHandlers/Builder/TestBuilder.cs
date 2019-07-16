@@ -19,8 +19,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "1",
-                descricao: "a",
-                status: true
+                descricao: "a"
                 );
         }
 
@@ -29,8 +28,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "1",
-                descricao: "a",
-                status: true
+                descricao: "a"
                 );
         }
 
@@ -38,8 +36,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1",
-                status: true
+                descricao: "Perfil de acesso nível 1"
                 );
         }
 
@@ -48,8 +45,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1",
-                status: true
+                descricao: "Perfil de acesso nível 1"
                 );
         }
 
@@ -60,8 +56,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1",
-                status: true
+                descricao: "Perfil de acesso nível 1"
                 );
         }
 
@@ -69,8 +64,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "Perfil RH 02",
-                descricao: "Perfil de acesso nível 1",
-                status: true
+                descricao: "Perfil de acesso nível 1"
                 );
         }
 
@@ -79,8 +73,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 02",
-                descricao: "Perfil de acesso nível 1",
-                status: true
+                descricao: "Perfil de acesso nível 1"
                 );
         }
     }
