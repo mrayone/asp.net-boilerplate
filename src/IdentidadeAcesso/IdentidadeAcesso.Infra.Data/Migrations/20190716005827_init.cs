@@ -3,23 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "identidade");
+                name: "dbo");
 
             migrationBuilder.CreateTable(
                 name: "perfis",
-                schema: "identidade",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Nome = table.Column<string>(nullable: false),
                     Descricao = table.Column<string>(nullable: false),
-                    DeletadoEm = table.Column<DateTime>(nullable: true),
-                    Status_Valor = table.Column<bool>(nullable: false)
+                    DeletadoEm = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,13 +27,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "permissoes",
-                schema: "identidade",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Atribuicao_Valor = table.Column<string>(nullable: false),
                     Atribuicao_Tipo = table.Column<string>(nullable: false),
-                    Status_Valor = table.Column<bool>(nullable: false)
+                    DeletadoEm = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +42,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "usuarios",
-                schema: "identidade",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -65,14 +64,15 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     table.ForeignKey(
                         name: "FK_usuarios_perfis_PerfilId",
                         column: x => x.PerfilId,
-                        principalSchema: "identidade",
+                        principalSchema: "dbo",
                         principalTable: "perfis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PermissaoAssinada",
+                name: "permissoes_assinadas",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -82,18 +82,18 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PermissaoAssinada", x => x.Id);
+                    table.PrimaryKey("PK_permissoes_assinadas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PermissaoAssinada_perfis_PerfilId",
+                        name: "FK_permissoes_assinadas_perfis_PerfilId",
                         column: x => x.PerfilId,
-                        principalSchema: "identidade",
+                        principalSchema: "dbo",
                         principalTable: "perfis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PermissaoAssinada_permissoes_PermissaoId",
+                        name: "FK_permissoes_assinadas_permissoes_PermissaoId",
                         column: x => x.PermissaoId,
-                        principalSchema: "identidade",
+                        principalSchema: "dbo",
                         principalTable: "permissoes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -101,7 +101,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "usuario_endereco",
-                schema: "identidade",
+                schema: "dbo",
                 columns: table => new
                 {
                     UsuarioId = table.Column<Guid>(nullable: false),
@@ -119,25 +119,27 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     table.ForeignKey(
                         name: "FK_usuario_endereco_usuarios_UsuarioId",
                         column: x => x.UsuarioId,
-                        principalSchema: "identidade",
+                        principalSchema: "dbo",
                         principalTable: "usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissaoAssinada_PerfilId",
-                table: "PermissaoAssinada",
+                name: "IX_permissoes_assinadas_PerfilId",
+                schema: "dbo",
+                table: "permissoes_assinadas",
                 column: "PerfilId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PermissaoAssinada_PermissaoId",
-                table: "PermissaoAssinada",
+                name: "IX_permissoes_assinadas_PermissaoId",
+                schema: "dbo",
+                table: "permissoes_assinadas",
                 column: "PermissaoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_usuarios_PerfilId",
-                schema: "identidade",
+                schema: "dbo",
                 table: "usuarios",
                 column: "PerfilId");
         }
@@ -145,23 +147,24 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PermissaoAssinada");
+                name: "permissoes_assinadas",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "usuario_endereco",
-                schema: "identidade");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "permissoes",
-                schema: "identidade");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "usuarios",
-                schema: "identidade");
+                schema: "dbo");
 
             migrationBuilder.DropTable(
                 name: "perfis",
-                schema: "identidade");
+                schema: "dbo");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Knowledge.IO.Infra.Data.Context
     public class IdentidadeAcessoDbContext : DbContext
     {
 
-        public const string DEFAULT_SCHEMA = "identidade";
+        public const string DEFAULT_SCHEMA = "dbo";
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Perfil> Perfis { get; set; }

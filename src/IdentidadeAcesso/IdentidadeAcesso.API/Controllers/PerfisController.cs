@@ -31,8 +31,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notifications;
         }
 
-        [Route("obter-todos")]
-        [HttpGet]
+        [HttpGet("obter-todos")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
         {
@@ -57,8 +56,7 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
-        [Route("cancelar-permissoes")]
-        [HttpPost]
+        [HttpPost("cancelar-permissoes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaDTO permissao)
         {

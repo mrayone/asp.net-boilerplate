@@ -31,8 +31,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notification;
         }
 
-        [Route("obter-todas")]
-        [HttpGet]
+        [HttpGet("obter-todas")]
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
         {
@@ -41,13 +40,14 @@ namespace IdentidadeAcesso.API.Controllers
             return Ok(list);
         }
 
-        [HttpGet]
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPermissaoAsync(Guid id)
         {
             try
             {
+
                 var model = await _permissaoQueries.ObterPorIdAsync(id);
                 return Ok(model);
             }
@@ -77,7 +77,7 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPermissaoAsync( Guid id )
         {

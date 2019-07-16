@@ -2,15 +2,11 @@
 using IdentidadeAcesso.API;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -49,6 +45,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             value.Should().NotBeEmpty();
         }
+
         [Theory(DisplayName = "Deve retornar erro ao cadastrar permissão que já exista.")]
         [InlineData("Usuário", "Cadastrar")]
         [InlineData("Usuário", "Remover")]
@@ -71,6 +68,55 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             value.Should().NotBeEmpty();
+        }
+
+        [Fact(DisplayName = "Deve retornar ok ao cadastrar permissão")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_RetornarOk_Ao_CadastrarPermissao()
+        {
+            //arrange
+            var client = _factory.CreateDefaultClient();
+
+            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            {
+                Tipo = "Perfil",
+                Valor = "Criar Perfil"
+            }));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var response = await client.PostAsync("api/v1/permissoes", content);
+            var value = await response.Content.ReadAsStringAsync();
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact(DisplayName = "Deve retornar viewmodel ao consultar por id.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_Retonar_ViewModel_Ao_Consultar_PorId()
+        {
+            //arrange
+            var client = _factory.CreateDefaultClient();
+            //act
+            var response = await client.GetAsync($"api/v1/permissoes/{new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")}");
+            var value = await response.Content.ReadAsStringAsync();
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact(DisplayName = "Deve retornar Todas as Permissões.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_Retornar_Todas_As_Permissoes()
+        {
+            //arrange
+            var client = _factory.CreateDefaultClient();
+            //act
+            var response = await client.GetAsync($"api/v1/permissoes/obter-todas");
+            var value = await response.Content.ReadAsStringAsync();
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }
