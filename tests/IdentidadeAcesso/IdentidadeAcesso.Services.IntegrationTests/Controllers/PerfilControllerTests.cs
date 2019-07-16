@@ -22,11 +22,26 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         [Fact(DisplayName = "Deve retornar todos os perfis cadastrados.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
-        public async Task Deve_Retornar_todas_Os_Perfis_Cadastrados()
+        public async Task Deve_Retornar_Todos_Os_Perfis_Cadastrados()
         {
             //act
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync();
+            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //assert
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            value.Should().NotBeEmpty();
+        }
+
+        [Fact(DisplayName = "Deve retornar perfil por Id.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Retornar_Perfil_Por_Id()
+        {
+            //arrange
+            var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
+            //act 
+            var response = await _client.GetAsync($"api/v1/perfis/{id}");
+            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);

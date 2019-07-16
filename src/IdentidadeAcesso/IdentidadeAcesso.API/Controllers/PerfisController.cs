@@ -40,14 +40,14 @@ namespace IdentidadeAcesso.API.Controllers
             return Ok(list);
         }
 
-        [HttpGet]
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetPerfilAsync(Guid guid)
+        public async Task<IActionResult> GetPerfilAsync(Guid id)
         {
             try
             {
-                var model = await _perfilQueris.ObterPorIdAsync(guid);
+                var model = await _perfilQueris.ObterPorIdAsync(id);
                 return Ok(model);
             }
             catch
@@ -56,11 +56,21 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
-        [HttpPost("cancelar-permissoes")]
+        [HttpPut("cancelar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaDTO permissao)
         {
             var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        [HttpPost("assinar-permissao")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaDTO permissao)
+        {
+            var command = new AssinarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -88,7 +98,7 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPerfilAsync([FromBody] Guid id)
         {

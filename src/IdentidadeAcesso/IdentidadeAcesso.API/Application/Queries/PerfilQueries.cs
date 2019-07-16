@@ -21,7 +21,15 @@ namespace IdentidadeAcesso.API.Application.Queries
 
         public async Task<PerfilViewModel> ObterPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var sql = @"SELECT [Id]
+                              ,[Nome]
+                              ,[Descricao]
+                              ,[DeletadoEm]
+                          FROM [perfis] WHERE [Id] = @uid";
+
+            var perfil = await _dapper.QueryFirstOrDefaultAsync<PerfilViewModel>(sql, new { uid = id });
+
+            return perfil;
         }
 
         public async Task<IEnumerable<PerfilViewModel>> ObterTodasAsync()
