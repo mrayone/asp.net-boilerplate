@@ -47,7 +47,6 @@ namespace IdentidadeAcesso.API.Controllers
         {
             try
             {
-
                 var model = await _permissaoQueries.ObterPorIdAsync(id);
                 return Ok(model);
             }

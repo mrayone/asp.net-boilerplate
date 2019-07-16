@@ -98,7 +98,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var client = _factory.CreateDefaultClient();
             //act
-            var response = await client.GetAsync($"api/v1/permissoes/{new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")}");
+            var response = await client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var value = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
