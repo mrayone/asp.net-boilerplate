@@ -16,9 +16,9 @@ namespace IdentidadeAcesso.API.Application.Extensions
             return perfil;
         }
 
-        public static async Task<Perfil> BuscarPerfil(this BaseCommandHandler command, System.Guid id, IPerfilRepository repository)
+        public static async Task<Perfil> BuscarPerfilComPermissoes(this BaseCommandHandler command, System.Guid id, IPerfilRepository repository)
         {
-            var perfil = await repository.ObterPorIdAsync(id);
+            var perfil = await repository.ObterComPermissoesAsync(id);
             if (perfil != null) return perfil;
 
             return null;

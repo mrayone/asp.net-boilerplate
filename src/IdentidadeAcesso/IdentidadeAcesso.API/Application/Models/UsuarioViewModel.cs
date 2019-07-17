@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace IdentidadeAcesso.API.Application.Models
 {
     public class UsuarioViewModel
     {
-        [Key]
+        [BindNever]
         public Guid Id { get; set; }
+
         [Required(ErrorMessage = "O Nome deve ser informado.")]
         public string Nome { get; set; }
         [Required(ErrorMessage = "O sobrenome deve ser informado.")]

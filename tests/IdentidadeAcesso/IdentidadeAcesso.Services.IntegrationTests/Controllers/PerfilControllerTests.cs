@@ -63,7 +63,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var assinatura = new
             {
                 PerfilId = perfilId,
-                Permissoes = new object[] 
+                Assinaturas = new object[] 
                 {
                    new { PermissaoId = permissaoId, Status =  true }
                 }
@@ -88,7 +88,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var assinatura = new
             {
                 PerfilId = perfilId,
-                Permissoes = new object[]
+                Assinaturas = new object[]
                 {
                    new { PermissaoId = permissaoId },
                    new { PermissaoId = permissao2 }
@@ -101,6 +101,79 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //assert
             response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+        }
+
+        [Fact(DisplayName = "Deve cancelar permissões e retornar ok.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
+        {
+            //arrange
+            var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
+            var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
+            var assinatura = new
+            {
+                PerfilId = perfilId,
+                Assinaturas = new object[]
+                {
+                   new { PermissaoId = permissaoId }
+                }
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(assinatura));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            //act
+            var response = await _client.PutAsync("api/v1/perfis/cancelar-permissao", content);
+            //assert
+            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+        }
+
+        [Fact(DisplayName = "Deve cadastrar perfil e retornar Ok.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Cadastrar_Perfil_E_Retornar_Ok()
+        {
+            //arrange
+            var perfil = new
+            {
+                Nome = "Vendas 002",
+                Descricao = "Perfil para vendedores gerenciar suas vendas"
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(perfil));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var result = await _client.PostAsync("api/v1/perfis", content);
+            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
+            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //assert
+            result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact(DisplayName = "Deve atualizar perfil e retornar Ok.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Atualizar_Perfil_E_Retornar_Ok()
+        {
+            //arrange
+            var perfil = new
+            {
+                Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
+                Nome = "Vendas 003",
+                Descricao = "Perfil para vendedores gerenciar suas vendas"
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(perfil));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var result = await _client.PutAsync("api/v1/perfis", content);
+            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
+            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //assert
+            result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

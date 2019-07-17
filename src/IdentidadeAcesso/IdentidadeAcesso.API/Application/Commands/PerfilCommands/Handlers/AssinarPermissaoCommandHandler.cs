@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<CommandResponse> Handle(AssinarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            var perfil = await this.BuscarPerfil(request.PerfilId, _perfilRepository);
+            var perfil = await this.BuscarPerfilComPermissoes(request.PerfilId, _perfilRepository);
             if (perfil == null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));

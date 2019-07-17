@@ -39,7 +39,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpGet("{id:Guid}")]
-        [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PerfilViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPerfilAsync(Guid id)
         {
@@ -56,9 +56,9 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut("cancelar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaViewModel permissao)
+        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] AssinaturaViewModel assinatura)
         {
-            var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.Permissoes);
+            var command = new CancelarPermissaoCommand(assinatura.PerfilId, assinatura.Assinaturas);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -66,9 +66,10 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut("assinar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaViewModel permissao)
+        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinaturaViewModel assinatura)
         {
-            var command = new AssinarPermissaoCommand(permissao.PerfilId, permissao.Permissoes);
+            var command = new AssinarPermissaoCommand(assinatura.PerfilId, assinatura.Assinaturas);
+
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -88,9 +89,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarPerfilAsync([FromBody] PerfilViewModel perfil)
         {
-            var command = new AtualizarPerfilCommand(perfil.Id, perfil.Nome,
-                perfil.Descricao);
-
+            var command = new AtualizarPerfilCommand(perfil.Id, perfil.Nome, perfil.Descricao);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);

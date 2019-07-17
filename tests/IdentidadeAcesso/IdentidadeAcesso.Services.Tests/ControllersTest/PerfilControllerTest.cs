@@ -42,10 +42,10 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
-            var permissao = new PermissaoAssinadaViewModel
+            var permissao = new AssinaturaViewModel
             {
                 PerfilId = Guid.NewGuid(),
-                Permissoes = new List<AssinaturaDTO>()
+                Assinaturas = new List<AssinaturaDTO>()
                 {
                     new AssinaturaDTO()
                     {

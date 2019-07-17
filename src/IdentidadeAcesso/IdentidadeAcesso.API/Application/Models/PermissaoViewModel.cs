@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace IdentidadeAcesso.API.Application.Models
 {
     public class PermissaoViewModel
     {
-        [Key]
+        [BindNever]
         public Guid Id { get; set; }
         [Required(ErrorMessage = "O Tipo deve ser preenchido")]
         public string Tipo { get; set; }
