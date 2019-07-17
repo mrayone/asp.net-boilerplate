@@ -16,16 +16,9 @@ namespace Knowledge.IO.Infra.Data.Repository
             _context = context;
         }
 
-        public void Atualizar(Perfil perfil)
-        {
-            _context.Entry(perfil).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-
-            base.Atualizar(perfil);
-        }
-
         public async Task<Perfil> ObterComPermissoesAsync(Guid id)
         {
-            var perfil = await base.ObterPorIdAsync(id);
+            var perfil = await _context.Perfis.FindAsync(id); 
             if (perfil != null)
             {
                 await _context.Entry(perfil)

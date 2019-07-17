@@ -73,8 +73,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
             //assert
-            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
-            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact(DisplayName = "Deve assinar muitas permissões e retornar ok.")]
@@ -99,8 +99,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
             //assert
-            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
-            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact(DisplayName = "Deve cancelar permissões e retornar ok.")]
@@ -125,8 +125,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await _client.PutAsync("api/v1/perfis/cancelar-permissao", content);
             //assert
-            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
-            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
         }
 
         [Fact(DisplayName = "Deve cadastrar perfil e retornar Ok.")]
