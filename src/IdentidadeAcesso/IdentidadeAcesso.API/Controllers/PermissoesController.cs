@@ -58,20 +58,18 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarPermissaoAsync([FromBody] PermissaoViewModel model)
+        public async Task<IActionResult> CriarPermissaoAsync([FromBody] CriarPermissaoCommand criarPermissao)
         {
-            var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(criarPermissao);
 
             return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] PermissaoViewModel model)
+        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand atualizarPermissao)
         {
-            var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(atualizarPermissao);
 
             return this.VerificarErros(_notifications, result);
         }

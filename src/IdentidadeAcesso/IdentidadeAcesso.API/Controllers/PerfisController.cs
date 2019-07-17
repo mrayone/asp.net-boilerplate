@@ -56,9 +56,8 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut("cancelar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] AssinaturaViewModel assinatura)
+        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] CancelarPermissaoCommand command)
         {
-            var command = new CancelarPermissaoCommand(assinatura.PerfilId, assinatura.Assinaturas);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -66,10 +65,8 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut("assinar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinaturaViewModel assinatura)
+        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinarPermissaoCommand command)
         {
-            var command = new AssinarPermissaoCommand(assinatura.PerfilId, assinatura.Assinaturas);
-
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -77,9 +74,8 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarPerfilAsync([FromBody] PerfilViewModel perfil)
+        public async Task<IActionResult> CriarPerfilAsync([FromBody] CriarPerfilCommand command)
         {
-            var command = new CriarPerfilCommand(perfil.Nome, perfil.Descricao);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -87,9 +83,8 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarPerfilAsync([FromBody] PerfilViewModel perfil)
+        public async Task<IActionResult> AtualizarPerfilAsync([FromBody] AtualizarPerfilCommand command)
         {
-            var command = new AtualizarPerfilCommand(perfil.Id, perfil.Nome, perfil.Descricao);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);

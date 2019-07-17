@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var client = _factory.CreateDefaultClient();
 
-            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 Tipo = tipo,
                 Valor = valor
@@ -56,7 +56,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var client = _factory.CreateDefaultClient();
 
-            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 Tipo = tipo,
                 Valor = valor
@@ -77,7 +77,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var client = _factory.CreateDefaultClient();
 
-            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 Tipo = "Perfil",
                 Valor = "Criar Perfil"
@@ -117,6 +117,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            value.Should().NotBeNullOrEmpty();
         }
 
         [Fact(DisplayName = "Deve atualizar permissão com sucesso.")]
@@ -126,7 +127,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var client = _factory.CreateDefaultClient();
 
-            var content = new StringContent(JsonConvert.SerializeObject(new PermissaoViewModel()
+            var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 Id = new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"),
                 Tipo = "Perfil",
@@ -135,8 +136,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await client.PutAsync("api/v1/permissoes", content);
-            var todos = await client.GetAsync($"api/v1/permissoes/obter-todas");
-            var value = await response.Content.ReadAsStringAsync();
+            var result = await client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var value = await result.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
