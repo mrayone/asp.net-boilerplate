@@ -78,7 +78,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var permissao1 = Guid.NewGuid();
             
             var perfil = TestBuilder.PerfilFalso();
-            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
+            _perfilRepositoryMock.Setup(p => p.ObterComPermissoesAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
             _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
