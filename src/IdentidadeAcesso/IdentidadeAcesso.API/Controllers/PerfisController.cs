@@ -92,7 +92,7 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ExcluirPerfilAsync([FromBody] Guid id)
+        public async Task<IActionResult> ExcluirPerfilAsync(Guid id)
         {
             var command = new ExcluirPerfilCommand(id);
             var result = await _mediator.Send(command);

@@ -176,5 +176,22 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
             result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
+
+        [Fact(DisplayName = "Deve excluir perfil e retornar Ok.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Excluir_Perfil_E_Retornar_Ok()
+        {
+           
+            //act
+            var result = await _client.DeleteAsync("api/v1/perfis/8cd6c8ca-7db7-4551-b6c5-f7a724286709");
+            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
+            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //assert
+            result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        //TODO: validar se perfil está em uso.
     }
 }
