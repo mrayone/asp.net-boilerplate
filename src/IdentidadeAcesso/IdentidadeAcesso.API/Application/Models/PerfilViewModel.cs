@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.API.Application.Models
     {
         public PerfilViewModel()
         {
-            PermissoesAssinadas = new List<PermissaoAssinadaViewModel>();
+            PermissoesAssinadas = new List<AssinaturaDTO>();
         }
 
         [Key]
@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.API.Application.Models
         public string Nome { get; set; }
         [Required(ErrorMessage = "A descrição deve ser informada.")]
         public string Descricao { get; set; }
-        public IList<PermissaoAssinadaViewModel> PermissoesAssinadas { get; set; }
+        public IList<AssinaturaDTO> PermissoesAssinadas { get; set; }
     }
 
     public class PermissaoAssinadaViewModel

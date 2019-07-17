@@ -57,7 +57,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var act = await _perfilService.AssinarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
             var permissaoAssinada = act.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
-            permissaoAssinada.Status.Valor.Should().BeTrue();
+            permissaoAssinada.Status.Should().BeTrue();
         }
 
 
@@ -75,7 +75,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var cancelada = await _perfilService.CancelarPermissaoAsync(perfil, permissao.Id);
             var permissaoAssinada = cancelada.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
-            permissaoAssinada.Status.Valor.Should().BeFalse();
+            permissaoAssinada.Status.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve notificar quando tentar cancelar permissão não assinada.")]

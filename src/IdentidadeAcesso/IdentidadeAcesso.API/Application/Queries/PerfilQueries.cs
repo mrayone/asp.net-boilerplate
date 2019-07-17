@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Models;
 using Knowledge.IO.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -25,24 +26,41 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Nome]
                               ,[Descricao]
                               ,[DeletadoEm]
-                              ,[permissoes_assinadas].[Id] as IdAssinatura
-                              ,[permissoes_assinadas].[Status_Valor] as Status
+                              ,[permissoes_assinadas].[Id] as AssinaturaId
+                              ,[permissoes_assinadas].[Ativo]
                               ,[permissoes_assinadas].[PermissaoId]
                           FROM [perfis] LEFT JOIN [permissoes_assinadas] ON [permissoes_assinadas].[PerfilId] = [perfis].[Id]
                           WHERE [perfis].[Id] = @uid";
 
-                var result = await _dapper.QueryAsync<PerfilViewModel, PermissaoAssinadaViewModel,
-                    PerfilViewModel>(sql, (p, a) =>
+            var result = await _dapper.QueryAsync<PerfilViewModel, AssinaturaDTO,
+                PerfilViewModel>(sql, (p, a) =>
+            {
+                if (a != null)
                 {
-                    if(a != null)
-                    {
-                        p.PermissoesAssinadas.Add(a);
-                    }
+                    p.PermissoesAssinadas.Add(a);
+                }
 
-                    return p;
-                }, new { uid = id}, splitOn:"Status");
+                return p;
+            }, new { uid = id }, splitOn: "AssinaturaId");
 
-                return result.FirstOrDefault();
+
+            return MapResult(result.ToList());
+        }
+
+        private PerfilViewModel MapResult(List<PerfilViewModel> result)
+        {
+            var response = result.FirstOrDefault();
+
+            if (result.Count() > 1)
+            {
+                result.RemoveAt(0);
+                foreach (var item in result)
+                {
+                    response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
+                }
+            }
+
+            return response;
         }
 
         public async Task<IEnumerable<PerfilViewModel>> ObterTodasAsync()

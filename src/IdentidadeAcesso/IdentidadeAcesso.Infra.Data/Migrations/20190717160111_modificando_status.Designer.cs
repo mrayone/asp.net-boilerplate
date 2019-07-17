@@ -4,14 +4,16 @@ using Knowledge.IO.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
     [DbContext(typeof(IdentidadeAcessoDbContext))]
-    partial class IdentidadeAcessoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190717160111_modificando_status")]
+    partial class modificando_status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,9 +41,6 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.Property<Guid?>("PerfilId");
 
                     b.Property<Guid>("PermissaoId");
-
-                    b.Property<bool>("Status")
-                        .HasColumnName("Ativo");
 
                     b.HasKey("Id");
 
@@ -115,6 +114,23 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         .WithMany()
                         .HasForeignKey("PermissaoId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "Status", b1 =>
+                        {
+                            b1.Property<Guid>("PermissaoAssinadaId");
+
+                            b1.Property<bool>("Valor")
+                                .HasColumnName("Ativo");
+
+                            b1.HasKey("PermissaoAssinadaId");
+
+                            b1.ToTable("permissoes_assinadas","dbo");
+
+                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.PermissaoAssinada")
+                                .WithOne("Status")
+                                .HasForeignKey("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "PermissaoAssinadaId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao", b =>

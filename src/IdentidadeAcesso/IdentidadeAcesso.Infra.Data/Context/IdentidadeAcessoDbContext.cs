@@ -37,7 +37,6 @@ namespace Knowledge.IO.Infra.Data.Context
         {
             var optionsBuilder = new DbContextOptionsBuilder<IdentidadeAcessoDbContext>()
                 .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true");
-
             return new IdentidadeAcessoDbContext(optionsBuilder.Options);
         }
     }

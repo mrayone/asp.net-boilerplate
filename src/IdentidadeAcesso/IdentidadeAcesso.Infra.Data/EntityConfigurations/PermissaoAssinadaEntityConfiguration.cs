@@ -17,7 +17,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             builder.HasKey(p => p.Id);
 
-            builder.OwnsOne(p => p.Status);
+            builder.Property(p => p.Status).HasColumnName("Ativo");
 
             builder.HasOne<Permissao>()
                 .WithMany()

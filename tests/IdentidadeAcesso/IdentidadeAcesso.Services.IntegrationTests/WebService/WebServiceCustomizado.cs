@@ -82,7 +82,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
             var list = new List<Permissao>()
             {
                 Permissao.PermissaoFactory.CriarPermissao(new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"), "Usuário", "Cadastrar"),
-                Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Remover"),
+                Permissao.PermissaoFactory.CriarPermissao(new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), "Usuário", "Remover"),
                 Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Visualizar Cadastro"),
             };
 

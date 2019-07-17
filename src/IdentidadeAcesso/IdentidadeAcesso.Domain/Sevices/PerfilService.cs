@@ -41,8 +41,8 @@ namespace IdentidadeAcesso.Domain.Sevices
             else
             {
                 perfil.AssinarPermissao(permissao.Id);
-                _perfilRepo.Atualizar(perfil);
             }
+            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }
@@ -59,8 +59,9 @@ namespace IdentidadeAcesso.Domain.Sevices
             else
             {
                 perfil.CancelarPermissao(permissaoId);
-                _perfilRepo.Atualizar(perfil);
             }
+
+            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }

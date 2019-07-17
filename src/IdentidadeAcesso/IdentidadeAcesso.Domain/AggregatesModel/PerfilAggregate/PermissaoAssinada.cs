@@ -6,7 +6,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
     public class PermissaoAssinada : Entity
     {
-        public Status Status { get; private set; }
+        public bool Status { get; private set; }
         public Guid PermissaoId { get; private set; }
 
         protected PermissaoAssinada()
@@ -16,18 +16,18 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         public PermissaoAssinada(Guid permissaoId) : this()
         {
-            Status = Status.Ativo;
+            Status = true;
             PermissaoId = permissaoId;
         }
 
         public void DesativarAssinatura()
         {
-            Status = Status.Inativo;
+            Status = false;
         }
 
         public void AtivarAssinatura()
         {
-            Status = Status.Ativo;
+            Status = true;
         }
 
         public static class PermissaoAssinadaFactory
@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
                 {
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
                     PermissaoId = permissaoId,
-                    Status = Status.Ativo
+                    Status = true
                 };
             }
         }

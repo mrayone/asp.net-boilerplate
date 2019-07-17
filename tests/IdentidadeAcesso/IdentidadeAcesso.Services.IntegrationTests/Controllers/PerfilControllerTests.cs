@@ -60,21 +60,47 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
-            var permissao2 = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
             {
                 PerfilId = perfilId,
-                PermissaoId = permissaoId
+                Permissoes = new object[] 
+                {
+                   new { PermissaoId = permissaoId, Status =  true }
+                }
             };
             var content = new StringContent(JsonConvert.SerializeObject(assinatura));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
-            var obtendoPerfil = await _client.GetAsync($"api/v1/perfis/{perfilId}");
-            var value = await obtendoPerfil.Content.ReadAsStringAsync().ConfigureAwait(false);
             //assert
             response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
-            value.Should().NotBeEmpty();
+            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
+        }
+
+        [Fact(DisplayName = "Deve assinar muitas permissões e retornar ok.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
+        {
+            //arrange
+            var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
+            var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
+            var permissao2 = "4cf679e7-ef92-49e4-b677-2ec8d4e91453";
+            var assinatura = new
+            {
+                PerfilId = perfilId,
+                Permissoes = new object[]
+                {
+                   new { PermissaoId = permissaoId },
+                   new { PermissaoId = permissao2 }
+                }
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(assinatura));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var response = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
+            //assert
+            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
         }
     }
 }
