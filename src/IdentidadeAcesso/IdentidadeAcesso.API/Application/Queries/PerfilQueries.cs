@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[permissoes_assinadas].[Ativo]
                               ,[permissoes_assinadas].[PermissaoId]
                           FROM [perfis] LEFT JOIN [permissoes_assinadas] ON [permissoes_assinadas].[PerfilId] = [perfis].[Id]
-                          WHERE [perfis].[Id] = @uid";
+                          WHERE [perfis].[Id] = @uid AND [permissoes_assinadas].[Ativo] = 1";
 
             var result = await _dapper.QueryAsync<PerfilViewModel, AssinaturaDTO,
                 PerfilViewModel>(sql, (p, a) =>

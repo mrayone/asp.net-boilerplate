@@ -64,7 +64,7 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
-        [HttpPost("assinar-permissao")]
+        [HttpPut("assinar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaViewModel permissao)
         {

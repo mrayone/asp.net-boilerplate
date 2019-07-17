@@ -51,8 +51,8 @@ namespace IdentidadeAcesso.Domain.Sevices
         {
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
-            var containsPermissao = perfil.PermissoesAssinadas.Select(p => p.PermissaoId == permissaoId).SingleOrDefault();
-            if (!containsPermissao)
+            var containsPermissao = perfil.PermissoesAssinadas.Where(p => p.PermissaoId == permissaoId);
+            if (!containsPermissao.Any())
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));
             }

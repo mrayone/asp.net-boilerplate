@@ -71,7 +71,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(assinatura));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
+            var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
             //assert
             response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
@@ -97,7 +97,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(assinatura));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
+            var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
             //assert
             response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             response.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);

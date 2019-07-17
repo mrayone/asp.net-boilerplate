@@ -20,6 +20,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
     {
         public Guid AssinaturaId { get; set; }
         public Guid PermissaoId { get; set; }
-        public bool Ativo { get; set; }
     }
 }
