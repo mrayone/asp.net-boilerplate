@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 
         public async Task<CommandResponse> Handle(AtualizarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            var permissao = await _permissaoRepository.ObterPorId(request.Id);
+            var permissao = await _permissaoRepository.ObterPorIdAsync(request.Id);
             if(permissao == null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Permissão não encontrada."));

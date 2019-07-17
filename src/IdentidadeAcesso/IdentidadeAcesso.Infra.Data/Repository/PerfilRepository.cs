@@ -15,7 +15,7 @@ namespace Knowledge.IO.Infra.Data.Repository
             _context = context;
         }
 
-        public override async Task<Perfil> ObterPorId(Guid id)
+        public override async Task<Perfil> ObterPorIdAsync(Guid id)
         {
             var perfil = await _context.Perfis.FindAsync(id);
             if(perfil != null)

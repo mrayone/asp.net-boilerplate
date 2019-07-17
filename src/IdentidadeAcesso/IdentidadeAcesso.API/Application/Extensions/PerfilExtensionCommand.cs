@@ -16,12 +16,12 @@ namespace IdentidadeAcesso.API.Application.Extensions
             return perfil;
         }
 
-        public static async Task<bool> BuscarPerfil(this BaseCommandHandler command, System.Guid id, IPerfilRepository repository)
+        public static async Task<Perfil> BuscarPerfil(this BaseCommandHandler command, System.Guid id, IPerfilRepository repository)
         {
-            var perfil = repository.ObterPorId(id);
-            if (perfil != null) return await Task.FromResult(true);
+            var perfil = await repository.ObterPorIdAsync(id);
+            if (perfil != null) return perfil;
 
-            return await Task.FromResult(false);
+            return null;
         }
     }
 }

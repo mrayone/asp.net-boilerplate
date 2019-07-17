@@ -34,7 +34,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _uow = new Mock<IUnitOfWork>();
             _notifications = new DomainNotificationHandler();
             _handler = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications, _permissaoRepository.Object);
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
         }
 
         [Fact(DisplayName = "O handle deve retornar false e disparar notificação se permissão com mesmo valor já existir.")]

@@ -75,7 +75,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //arrange
             var command = UsuarioBuilder.ObterCommandFakeExcluir();
             var usuarioFake = UsuarioBuilder.UsuarioFake();
-            _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(usuarioFake);
+            _repository.Setup(u => u.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(usuarioFake);
             _service.Setup(u => u.DeletarUsuarioAsync(It.IsAny<Guid>())).ReturnsAsync(() => 
             {
                 usuarioFake.Deletar();

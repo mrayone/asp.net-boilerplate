@@ -39,7 +39,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 TestBuilder.PerfilFalso()
             };
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
         }
 
         [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]

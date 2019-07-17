@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         private async Task<bool> ValidarOperacao(AtualizarUsuarioCommand request)
         {
-            var encontrarUsuario = await _usuarioRepository.ObterPorId(request.Id);
+            var encontrarUsuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
             if (encontrarUsuario == null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Não existe o usuario que você esta tentando modificar."));

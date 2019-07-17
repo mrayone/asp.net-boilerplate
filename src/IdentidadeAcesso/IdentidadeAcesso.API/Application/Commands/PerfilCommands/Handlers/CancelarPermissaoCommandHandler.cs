@@ -30,13 +30,17 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
         public async Task<CommandResponse> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            if (!await this.BuscarPerfil(request.PerfilId, _perfilRepository)) {
-
+            var perfil = await this.BuscarPerfil(request.PerfilId, _perfilRepository);
+            if (perfil == null)
+            {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
                 return await Task.FromResult(CommandResponse.Fail);
             }
 
-            var perfil = await _perfilService.CancelarPermissaoAsync(request.PermissaoId, request.PerfilId);
+            foreach (var item in request.Assinaturas)
+            {
+                perfil = await _perfilService.CancelarPermissaoAsync(perfil, item.PermissaoId);
+            }
 
             if (await Commit())
             {

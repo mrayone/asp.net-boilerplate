@@ -42,7 +42,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _perfil = PerfilBuilder.ObterPerfil();
             _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
 
-            _perfilRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(_perfil);
+            _perfilRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(_perfil);
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar perfil modificado.")]
@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
             var act = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
@@ -67,7 +67,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
             var assinada = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
@@ -83,7 +83,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(permissao);
+            _permRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(permissao);
             //act
             var act = await _perfilService.CancelarPermissaoAsync(_perfil.Id, permissao.Id);
             //assert
@@ -112,7 +112,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Deletar_Perfil_e_Retornar_True()
         {
             //arrange
-            var perfil = await _perfilRepo.Object.ObterPorId(Guid.NewGuid());
+            var perfil = await _perfilRepo.Object.ObterPorIdAsync(Guid.NewGuid());
             //act
             var result = await _perfilService.DeletarPerfilAsync(perfil);
             //assert

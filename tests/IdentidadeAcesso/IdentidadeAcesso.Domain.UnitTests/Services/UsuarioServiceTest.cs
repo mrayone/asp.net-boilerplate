@@ -37,7 +37,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Desativar_O_Usuario_e_Retornar_O_Mesmo()
         {
             //arrange
-            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _userRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                     .ReturnsAsync(_usuario);
             var userId = Guid.NewGuid();
 

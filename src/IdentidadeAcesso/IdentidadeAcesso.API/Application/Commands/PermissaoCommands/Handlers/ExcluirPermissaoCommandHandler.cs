@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 
         public async Task<CommandResponse> Handle(ExcluirPermissaoCommand request, CancellationToken cancellationToken)
         {
-            var permissao = await _permissaoRepository.ObterPorId(request.PermissaoId);
+            var permissao = await _permissaoRepository.ObterPorIdAsync(request.PermissaoId);
 
             if(permissao == null)
             {

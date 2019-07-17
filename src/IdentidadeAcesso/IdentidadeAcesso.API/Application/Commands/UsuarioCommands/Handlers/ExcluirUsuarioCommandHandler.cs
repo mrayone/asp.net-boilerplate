@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         public async Task<CommandResponse> Handle(ExcluirUsuarioCommand request, CancellationToken cancellationToken)
         {
-            var usuario = await _usuarioRepository.ObterPorId(request.Id);
+            var usuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
             if (usuario == null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Usuário não encontrado."));

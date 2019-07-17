@@ -37,7 +37,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _handler = new ExcluirPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications, _permissaoRepository.Object , _service.Object);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.DeletarPermissaoAsync(It.IsAny<Permissao>())).ReturnsAsync(true);
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
 
         }
 
@@ -61,7 +61,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         {
             //arrange
             var command = new ExcluirPermissaoCommand(Guid.NewGuid());
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync((Permissao) null);
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync((Permissao) null);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 

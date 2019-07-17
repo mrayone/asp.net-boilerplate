@@ -8,10 +8,16 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class AssinarPermissaoCommand : BasePermissaoPerfil<AssinarPermissaoCommand>
     {
-        public AssinarPermissaoCommand(Guid perfilId, Guid permissaoId)
+        public AssinarPermissaoCommand(Guid perfilId, IList<AssinaturaDTO> assinaturas)
         {
+            Assinaturas = assinaturas;
             PerfilId = perfilId;
-            PermissaoId = permissaoId;
         }
+
+    }
+
+    public class AssinaturaDTO
+    {
+        public Guid PermissaoId { get; set; }
     }
 }

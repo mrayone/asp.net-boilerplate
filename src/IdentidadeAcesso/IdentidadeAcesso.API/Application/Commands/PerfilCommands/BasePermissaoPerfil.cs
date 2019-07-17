@@ -12,6 +12,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
     public abstract class BasePermissaoPerfil<T> : IRequest<CommandResponse> where T : BasePermissaoPerfil<T>
     {
         public Guid PerfilId { get; protected set; }
-        public Guid PermissaoId { get; protected set; }
+        public IList<AssinaturaDTO> Assinaturas { get; protected set; }
+
     }
 }

@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var perfilId = Guid.NewGuid();
             var PermissaoId = Guid.NewGuid();
 
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>()));
+            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>()));
 
             var command = new CancelarPermissaoCommand(perfilId, PermissaoId);
             var cancelToken = new System.Threading.CancellationToken();
@@ -69,7 +69,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var permissao1 = Guid.NewGuid();
             
             var perfil = TestBuilder.PerfilFalso();
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(perfil);
+            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
             _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 

@@ -60,6 +60,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
+            var permissao2 = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
             {
                 PerfilId = perfilId,

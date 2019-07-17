@@ -89,7 +89,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             //arrange
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
             _service.Setup(s => s.DeletarPerfilAsync(It.IsAny<Perfil>())).ReturnsAsync(false);
 
             //act
@@ -108,7 +108,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.DeletarPerfilAsync(It.IsAny<Perfil>())).ReturnsAsync(true);
-            _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
 
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());

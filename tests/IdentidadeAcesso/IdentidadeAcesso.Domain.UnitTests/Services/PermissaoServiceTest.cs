@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _mediator = new Mock<IMediator>();
             _service = new PermissaoService(_repositoryMock.Object, _mediator.Object, _perfilRepoMock.Object);
 
-            _repositoryMock.Setup(e => e.ObterPorId(It.IsAny<Guid>()))
+            _repositoryMock.Setup(e => e.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(PermissaoBuilder.ObterPermissaoFake());
             _listMock = new List<Perfil>()
             {
@@ -43,7 +43,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Deletar_a_Permissao_e_Retornar_True()
         {
             //arrange
-            var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
+            var permissao = await _repositoryMock.Object.ObterPorIdAsync(Guid.NewGuid());
 
             //act
             var result = await _service.DeletarPermissaoAsync(permissao);
@@ -60,7 +60,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //arrange
             _perfilRepoMock.Setup(e => e.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
             .ReturnsAsync(_listMock);
-            var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
+            var permissao = await _repositoryMock.Object.ObterPorIdAsync(Guid.NewGuid());
 
             //act
             var result = await _service.DeletarPermissaoAsync(permissao);

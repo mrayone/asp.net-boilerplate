@@ -44,7 +44,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
                 .ReturnsAsync(true);
 
-            _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>()))
+            _repository.Setup(u => u.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(UsuarioBuilder.UsuarioFake());
         }
 

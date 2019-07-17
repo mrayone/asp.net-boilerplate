@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
     public interface IPerfilService
     {
         Task<bool> DeletarPerfilAsync(Perfil perfil);
-        Task<Perfil> CancelarPermissaoAsync(Guid permissaoId, Guid perfilId);
-        Task<Perfil> AssinarPermissaoAsync(Guid permissaoId, Guid perfilId);
+        Task<Perfil> CancelarPermissaoAsync(Perfil perfil, Guid permissaoId);
+        Task<Perfil> AssinarPermissaoAsync(Perfil perfil, Guid permissaoId);
     }
 }

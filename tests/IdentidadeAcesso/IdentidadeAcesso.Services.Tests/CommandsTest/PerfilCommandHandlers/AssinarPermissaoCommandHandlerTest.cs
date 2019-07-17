@@ -37,7 +37,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _handler = new AssinarPermissaoCommandHandler(_mediator.Object, _uow.Object, 
                 _notifications, _service.Object, _perfilRepositoryMock.Object);
 
-            _perfilRepositoryMock.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _perfilRepositoryMock.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(TestBuilder.PerfilFalso());
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);

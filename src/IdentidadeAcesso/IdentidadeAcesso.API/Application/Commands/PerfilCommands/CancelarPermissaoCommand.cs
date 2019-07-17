@@ -11,10 +11,10 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class CancelarPermissaoCommand : BasePermissaoPerfil<CancelarPermissaoCommand>
     {
-        public CancelarPermissaoCommand(Guid perfilId, Guid permissaoId)
+        public CancelarPermissaoCommand(Guid perfilId, IList<AssinaturaDTO> assinaturas)
         {
             PerfilId = perfilId;
-            PermissaoId = permissaoId;
+            Assinaturas = assinaturas;
         }
     }
 }
