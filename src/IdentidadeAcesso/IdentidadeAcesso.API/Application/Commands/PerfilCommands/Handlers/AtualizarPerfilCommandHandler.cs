@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class AtulizarPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPerfilCommand, CommandResponse>
+    public class AtualizarPerfilCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarPerfilCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilRepository _perfilRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AtulizarPerfilCommandHandler(IMediator mediator, 
+        public AtualizarPerfilCommandHandler(IMediator mediator, 
             IPerfilRepository perfilRepository, 
             IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications )

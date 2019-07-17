@@ -8,13 +8,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
     {
         public Status Status { get; private set; }
         public Guid PermissaoId { get; private set; }
-        
-        protected PermissaoAssinada() { }
 
-        public PermissaoAssinada(Guid permissaoId)
+        protected PermissaoAssinada()
         {
             Id = Guid.NewGuid();
-            Status = Status.Inativo;
+        }
+
+        public PermissaoAssinada(Guid permissaoId) : this()
+        {
+            Status = Status.Ativo;
             PermissaoId = permissaoId;
         }
 

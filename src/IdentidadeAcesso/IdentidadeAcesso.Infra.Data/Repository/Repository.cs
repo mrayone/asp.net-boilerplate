@@ -45,7 +45,7 @@ namespace Knowledge.IO.Infra.Data.Repository
             Context.Dispose();
         }
 
-        public async Task<TEntity> ObterPorId(Guid id)
+        public virtual async Task<TEntity> ObterPorId(Guid id)
         {
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }

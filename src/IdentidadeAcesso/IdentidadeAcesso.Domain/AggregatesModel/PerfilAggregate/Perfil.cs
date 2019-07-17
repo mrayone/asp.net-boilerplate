@@ -35,7 +35,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             else
             {
                 var permissaoAssinada = new PermissaoAssinada(permissaoId);
-                permissaoAssinada.AtivarAssinatura();
                 _permissoesAssinadas.Add(permissaoAssinada);
             }
         }

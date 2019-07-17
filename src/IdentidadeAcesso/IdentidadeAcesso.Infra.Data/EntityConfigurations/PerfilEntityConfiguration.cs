@@ -16,11 +16,12 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             perfilConfiguration.ToTable("perfis", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
             perfilConfiguration.HasKey(p => p.Id);
 
-            perfilConfiguration.OwnsOne(p => p.Identifacao, i => 
+            perfilConfiguration.OwnsOne(p => p.Identifacao, i =>
             {
                 i.Property(p => p.Descricao).HasColumnName("Descricao").IsRequired();
                 i.Property(p => p.Nome).HasColumnName("Nome").IsRequired();
             });
+
             perfilConfiguration.Property(p => p.DeletadoEm)
                 .IsRequired(false);
 

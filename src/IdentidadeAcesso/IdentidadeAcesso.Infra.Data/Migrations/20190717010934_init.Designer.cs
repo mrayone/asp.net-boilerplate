@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
     [DbContext(typeof(IdentidadeAcessoDbContext))]
-    [Migration("20190716005827_init")]
+    [Migration("20190717010934_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("PerfilId");
+                    b.Property<Guid>("PerfilId");
 
                     b.Property<Guid>("PermissaoId");
 
@@ -108,7 +108,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 {
                     b.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Perfil")
                         .WithMany("PermissoesAssinadas")
-                        .HasForeignKey("PerfilId");
+                        .HasForeignKey("PerfilId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao")
                         .WithMany()

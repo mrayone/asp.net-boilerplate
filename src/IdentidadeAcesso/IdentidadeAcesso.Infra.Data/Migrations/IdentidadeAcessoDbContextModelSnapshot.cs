@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("PerfilId");
+                    b.Property<Guid>("PerfilId");
 
                     b.Property<Guid>("PermissaoId");
 
@@ -106,7 +106,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 {
                     b.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Perfil")
                         .WithMany("PermissoesAssinadas")
-                        .HasForeignKey("PerfilId");
+                        .HasForeignKey("PerfilId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao")
                         .WithMany()

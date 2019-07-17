@@ -78,7 +78,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Status_Valor = table.Column<bool>(nullable: false),
                     PermissaoId = table.Column<Guid>(nullable: false),
-                    PerfilId = table.Column<Guid>(nullable: true)
+                    PerfilId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,7 +89,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "perfis",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_permissoes_assinadas_permissoes_PermissaoId",
                         column: x => x.PermissaoId,

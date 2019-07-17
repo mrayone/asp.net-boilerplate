@@ -1,4 +1,6 @@
 ﻿using IdentidadeAcesso.API.Application.Behaviors;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers;
 using IdentidadeAcesso.Domain.SeedOfWork;
@@ -20,6 +22,14 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
             services.TryAddScoped<IRequestHandler<CriarPermissaoCommand, CommandResponse>, CriarPermissaoCommandHandler>();
             services.TryAddScoped<IRequestHandler<AtualizarPermissaoCommand, CommandResponse>, AtualizarPermissaoCommandHandler>();
             services.TryAddScoped<IRequestHandler<ExcluirPermissaoCommand, CommandResponse>, ExcluirPermissaoCommandHandler>();
+
+
+            //Perfil Handlers
+            services.TryAddScoped<IRequestHandler<AssinarPermissaoCommand, CommandResponse>, AssinarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<CancelarPermissaoCommand, CommandResponse>, CancelarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<CriarPerfilCommand, CommandResponse>, CriarPerfilCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarPerfilCommand, CommandResponse>, AtualizarPerfilCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirPerfilCommand, CommandResponse>, ExcluirPerfilCommandHandler>();
 
             return services;
         }

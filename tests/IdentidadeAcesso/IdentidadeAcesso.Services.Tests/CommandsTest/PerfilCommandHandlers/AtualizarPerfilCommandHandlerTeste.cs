@@ -23,7 +23,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly DomainNotificationHandler _notifications;
-        private readonly AtulizarPerfilCommandHandler _handler;
+        private readonly AtualizarPerfilCommandHandler _handler;
         private readonly IList<Perfil> _listMock;
 
         public AtualizarPerfilCommandHandlerTeste()
@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
             _notifications = new DomainNotificationHandler();
-            _handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications);
+            _handler = new AtualizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications);
 
             _listMock = new List<Perfil>()
             {
