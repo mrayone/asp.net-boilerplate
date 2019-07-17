@@ -69,13 +69,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
-            var resp2 = await _client.PostAsync("api/v1/perfis/assinar-permissao", content);
             var obtendoPerfil = await _client.GetAsync($"api/v1/perfis/{perfilId}");
             var value = await obtendoPerfil.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var perfil = JsonConvert.DeserializeObject(value) as PerfilViewModel;
             //assert
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            perfil.PermissoesAssinadas.Should().NotBeEmpty();
+            response.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
+            value.Should().NotBeEmpty();
         }
     }
 }

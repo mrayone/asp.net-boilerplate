@@ -2,14 +2,12 @@
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
@@ -50,7 +48,7 @@ namespace IdentidadeAcesso.API.Controllers
                 var model = await _perfilQueris.ObterPorIdAsync(id);
                 return Ok(model);
             }
-            catch
+            catch (Exception e)
             {
                 return NotFound();
             }
@@ -58,7 +56,7 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPut("cancelar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaDTO permissao)
+        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaViewModel permissao)
         {
             var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);
@@ -68,7 +66,7 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost("assinar-permissao")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaDTO permissao)
+        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaViewModel permissao)
         {
             var command = new AssinarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
             var result = await _mediator.Send(command);

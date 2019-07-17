@@ -27,16 +27,6 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             };
         }
 
-        public static PermissaoAssinadaDTO PermissaoAssinadaFake()
-        {
-            return new PermissaoAssinadaDTO()
-            {
-                PerfilId = Guid.NewGuid(),
-                PermissaoId = Guid.NewGuid(),
-                Status = true
-            };
-        }
-
         internal static UsuarioViewModel UsuarioFake()
         {
             return new UsuarioViewModel()

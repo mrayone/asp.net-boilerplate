@@ -21,15 +21,28 @@ namespace IdentidadeAcesso.API.Application.Queries
 
         public async Task<PerfilViewModel> ObterPorIdAsync(Guid id)
         {
-            var sql = @"SELECT [Id]
+            var sql = @"SELECT [perfis].[Id]
                               ,[Nome]
                               ,[Descricao]
                               ,[DeletadoEm]
-                          FROM [perfis] WHERE [Id] = @uid";
+                              ,[permissoes_assinadas].[Id] as IdAssinatura
+                              ,[permissoes_assinadas].[Status_Valor] as Status
+                              ,[permissoes_assinadas].[PermissaoId]
+                          FROM [perfis] LEFT JOIN [permissoes_assinadas] ON [permissoes_assinadas].[PerfilId] = [perfis].[Id]
+                          WHERE [perfis].[Id] = @uid";
 
-            var perfil = await _dapper.QueryFirstOrDefaultAsync<PerfilViewModel>(sql, new { uid = id });
+                var result = await _dapper.QueryAsync<PerfilViewModel, PermissaoAssinadaViewModel,
+                    PerfilViewModel>(sql, (p, a) =>
+                {
+                    if(a != null)
+                    {
+                        p.PermissoesAssinadas.Add(a);
+                    }
 
-            return perfil;
+                    return p;
+                }, new { uid = id}, splitOn:"Status");
+
+                return result.FirstOrDefault();
         }
 
         public async Task<IEnumerable<PerfilViewModel>> ObterTodasAsync()

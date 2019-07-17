@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using Knowledge.IO.Infra.Data.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IdentidadeAcesso.Services.IntegrationTests.WebService
 {
@@ -26,7 +24,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkSqlite()
                 .BuildServiceProvider();
-
+                
                 var sqlite = new SqliteConnection("DataSource=:memory:");
                 sqlite.Open();
                 services.AddDbContext<IdentidadeAcessoDbContext>(options =>

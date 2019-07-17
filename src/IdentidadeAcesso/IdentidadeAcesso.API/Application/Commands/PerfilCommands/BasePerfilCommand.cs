@@ -17,14 +17,4 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public string Descricao { get; protected set; }
 
     }
-
-    public class PermissaoAssinadaDTO
-    {
-        [Required]
-        public Guid PermissaoId { get; set; }
-
-        [Required]
-        public Guid PerfilId { get; set; }
-        public bool Status { get; set; }
-    }
 }

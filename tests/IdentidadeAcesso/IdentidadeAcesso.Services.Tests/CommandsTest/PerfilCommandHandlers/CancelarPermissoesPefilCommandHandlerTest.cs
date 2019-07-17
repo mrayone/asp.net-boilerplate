@@ -46,16 +46,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             //arrange
             var perfilId = Guid.NewGuid();
-            var permissao =
-                new PermissaoAssinadaDTO()
-                {
-                    PermissaoId = Guid.NewGuid(),
-                    Status = true
-                };
+            var PermissaoId = Guid.NewGuid();
 
             _perfilRepositoryMock.Setup(p => p.ObterPorId(It.IsAny<Guid>()));
 
-            var command = new CancelarPermissaoCommand(perfilId, permissao.PermissaoId);
+            var command = new CancelarPermissaoCommand(perfilId, PermissaoId);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act

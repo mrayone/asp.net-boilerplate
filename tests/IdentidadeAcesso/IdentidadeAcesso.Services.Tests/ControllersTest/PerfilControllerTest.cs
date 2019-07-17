@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
 using IdentidadeAcesso.Domain.SeedOfWork;
@@ -41,7 +42,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
-            var permissao = new PermissaoAssinadaDTO
+            var permissao = new PermissaoAssinadaViewModel
             {
                 PermissaoId = Guid.NewGuid(),
                 PerfilId = Guid.NewGuid(),
