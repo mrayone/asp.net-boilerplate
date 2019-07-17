@@ -27,6 +27,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
         private readonly CancelarPermissaoCommandHandler _handler;
+        private readonly List<AssinaturaDTO> _list;
 
         public CancelarPermissoesPefilCommandHandlerTest()
         {
@@ -38,6 +39,18 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             _handler = new CancelarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications,
                 _service.Object, _perfilRepositoryMock.Object);
+
+            _list = new List<AssinaturaDTO>()
+            {
+                new AssinaturaDTO()
+                {
+                    PermissaoId = Guid.NewGuid(),
+                },
+                new AssinaturaDTO()
+                {
+                    PermissaoId = Guid.NewGuid(),
+                }
+            };
         }
 
         [Fact(DisplayName = "O Handle deve retornar falso se o perfil não existir.")]
@@ -46,11 +59,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             //arrange
             var perfilId = Guid.NewGuid();
-            var PermissaoId = Guid.NewGuid();
 
-            _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>()));
-
-            var command = new CancelarPermissaoCommand(perfilId, PermissaoId);
+            var command = new CancelarPermissaoCommand(perfilId, _list);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
@@ -65,16 +75,15 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         public async Task Handle_deve_retornar_verdadeiro_se_cancelar_com_sucesso_as_permissoes()
         {
             //arrange
-            var perfilId = Guid.NewGuid();
             var permissao1 = Guid.NewGuid();
             
             var perfil = TestBuilder.PerfilFalso();
             _perfilRepositoryMock.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
-            var command = new CancelarPermissaoCommand(perfilId, permissao1);
+            var command = new CancelarPermissaoCommand(perfil.Id, _list);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act

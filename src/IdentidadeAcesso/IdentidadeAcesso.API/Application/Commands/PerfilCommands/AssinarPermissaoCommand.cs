@@ -19,5 +19,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
     public class AssinaturaDTO
     {
         public Guid PermissaoId { get; set; }
+
+        public bool Status { get; set; }
     }
 }

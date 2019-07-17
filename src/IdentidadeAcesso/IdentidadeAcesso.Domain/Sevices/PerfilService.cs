@@ -29,9 +29,8 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> AssinarPermissaoAsync(Guid permissaoId, Guid perfilId)
+        public async Task<Perfil> AssinarPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
-            var perfil = await _perfilRepo.ObterPorIdAsync(perfilId);
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
             if (permissao == null)
@@ -48,9 +47,8 @@ namespace IdentidadeAcesso.Domain.Sevices
             return await Task.FromResult(perfil);
         }
 
-        public async Task<Perfil> CancelarPermissaoAsync(Guid permissaoId, Guid perfilId)
+        public async Task<Perfil> CancelarPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
-            var perfil = await _perfilRepo.ObterPorIdAsync(perfilId);
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
             var containsPermissao = perfil.PermissoesAssinadas.Select(p => p.PermissaoId == permissaoId).SingleOrDefault();

@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync([FromBody] PermissaoAssinadaViewModel permissao)
         {
-            var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
+            var command = new CancelarPermissaoCommand(permissao.PerfilId, permissao.Permissoes);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
@@ -68,7 +68,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AssinarPermissaoAsync([FromBody] PermissaoAssinadaViewModel permissao)
         {
-            var command = new AssinarPermissaoCommand(permissao.PerfilId, permissao.PermissaoId);
+            var command = new AssinarPermissaoCommand(permissao.PerfilId, permissao.Permissoes);
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);

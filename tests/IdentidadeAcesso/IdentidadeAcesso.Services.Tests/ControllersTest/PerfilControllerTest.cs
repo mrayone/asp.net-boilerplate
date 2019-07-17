@@ -44,9 +44,14 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
             var permissao = new PermissaoAssinadaViewModel
             {
-                PermissaoId = Guid.NewGuid(),
                 PerfilId = Guid.NewGuid(),
-                Status = true
+                Permissoes = new List<AssinaturaDTO>()
+                {
+                    new AssinaturaDTO()
+                    {
+                        PermissaoId = Guid.NewGuid()
+                    }
+                }
             };
 
             //act
