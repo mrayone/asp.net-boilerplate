@@ -40,7 +40,7 @@ namespace Knowledge.IO.Infra.Data.Repository
             return await Task.FromResult(result);  
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Context.Dispose();
         }
