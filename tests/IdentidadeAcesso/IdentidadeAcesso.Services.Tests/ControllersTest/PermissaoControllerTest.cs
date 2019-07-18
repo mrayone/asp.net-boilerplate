@@ -102,10 +102,11 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
+            var command = new CriarPermissaoCommand(permissao.Tipo, permissao.Valor);
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
-            var result = await _controller.CriarPermissaoAsync(permissao);
+            var result = await _controller.CriarPermissaoAsync(command);
 
             //assert
             result.Should().BeAssignableTo<OkResult>();
@@ -120,10 +121,11 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
+            var command = new CriarPermissaoCommand(permissao.Tipo, permissao.Valor);
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
             .ReturnsAsync(CommandResponse.Fail.AddError("Erro Fake")).Verifiable();
             //act
-            var result = await _controller.CriarPermissaoAsync(permissao);
+            var result = await _controller.CriarPermissaoAsync(command);
 
             //assert
             result.Should().BeAssignableTo<BadRequestObjectResult>();
@@ -137,10 +139,11 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var permissao = ViewModelBuilder.PermissaoViewFake();
+            var command = new AtualizarPermissaoCommand(permissao.Id, permissao.Tipo, permissao.Valor);
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok);
             //act
-            var result = await _controller.AtualizarPermissaoAsync(permissao);
+            var result = await _controller.AtualizarPermissaoAsync(command);
 
             //assert
             result.Should().BeAssignableTo<OkResult>();

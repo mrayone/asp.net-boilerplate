@@ -42,17 +42,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
-            var permissao = new AssinaturaViewModel
-            {
-                PerfilId = Guid.NewGuid(),
-                Assinaturas = new List<AssinaturaDTO>()
+            var permissao = new CancelarPermissaoCommand(
+            
+                perfilId: Guid.NewGuid(),
+                assinaturas: new List<AssinaturaDTO>()
                 {
                     new AssinaturaDTO()
                     {
                         PermissaoId = Guid.NewGuid()
                     }
                 }
-            };
+            );
 
             //act
             var result = await _controller.CancelarPermissoesAsync(permissao);

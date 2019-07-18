@@ -114,10 +114,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await client.GetAsync($"api/v1/permissoes/obter-todas");
             var value = await response.Content.ReadAsStringAsync();
+            var permissao = JsonConvert.DeserializeObject(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            value.Should().NotBeNullOrEmpty();
+            
         }
 
         [Fact(DisplayName = "Deve atualizar permissão com sucesso.")]
@@ -160,6 +161,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
+        //TODO: validar se permissão está em uso.
         //[Fact(DisplayName = "Deve gerar erro ao excluir permissão em uso.")]
         //[Trait("Testes de Integração", "PermissaoControllerTests")]
         //public async Task Deve_Gerar_Erro_Ao_Excluir_Permissao_Em_Uso()
