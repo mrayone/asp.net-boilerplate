@@ -46,12 +46,12 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.OwnsOne(u => u.Celular, c => 
             {
-                c.Property(p => p.Numero).IsRequired(false);
+                c.Property(p => p.NumeroCel).HasColumnName("Celular").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Telefone, t =>
             {
-                t.Property(p => p.Numero).IsRequired(false);
+                t.Property(p => p.Numero).IsRequired(false).HasColumnName("Telefone");
             });
 
             usuarioConfiguration.OwnsOne(u => u.Endereco, e => 

@@ -14,17 +14,17 @@ namespace IdentidadeAcesso.API.Application.Queries
     public class PerfilQueries : IPerfilQueries
     {
         private readonly IdentidadeAcessoDbContext _context;
-        private readonly DbConnection _dapper;
 
         public PerfilQueries(IdentidadeAcessoDbContext context)
         {
             _context = context;
-            _dapper = context.Database.GetDbConnection();
         }
 
         public async Task<PerfilViewModel> ObterPorIdAsync(Guid id)
         {
-            var sql = @"SELECT [perfis].[Id]
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [perfis].[Id]
                               ,[Nome]
                               ,[Descricao]
                               ,[DeletadoEm]
@@ -35,48 +35,55 @@ namespace IdentidadeAcesso.API.Application.Queries
                           AND [permissoes_assinadas].[Ativo] = 1
                           WHERE [perfis].[Id] = @uid AND [DeletadoEm] IS NULL";
 
-            var result = await _dapper.QueryAsync<PerfilViewModel, AssinaturaDTO,
-                PerfilViewModel>(sql, (p, a) =>
-            {
-                if (a != null)
-                {
-                    p.PermissoesAssinadas.Add(a);
-                }
+                var result = await connection.QueryAsync<PerfilViewModel, AssinaturaDTO,
+                    PerfilViewModel>(sql, (p, a) =>
+                    {
+                        if (a != null)
+                        {
+                            p.PermissoesAssinadas.Add(a);
+                        }
 
-                return p;
-            }, new { uid = id }, splitOn: "AssinaturaId");
+                        return p;
+                    }, new { uid = id }, splitOn: "AssinaturaId");
 
 
-            return MapResult(result.ToList());
+                return MapResult(result.ToList());
+            }
         }
 
         private PerfilViewModel MapResult(List<PerfilViewModel> result)
         {
-            var response = result.FirstOrDefault();
-
-            if (result.Count() > 1)
+            using (var connection = _context.Database.GetDbConnection())
             {
-                result.RemoveAt(0);
-                foreach (var item in result)
-                {
-                    response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
-                }
-            }
+                var response = result.FirstOrDefault();
 
-            return response;
+                if (result.Count() > 1)
+                {
+                    result.RemoveAt(0);
+                    foreach (var item in result)
+                    {
+                        response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
+                    }
+                }
+
+                return response;
+            }
         }
 
         public async Task<IEnumerable<PerfilViewModel>> ObterTodasAsync()
         {
-            var sql = @"SELECT [Id]
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
                               ,[Nome]
                               ,[Descricao]
                               ,[DeletadoEm]
                           FROM [perfis] WHERE [DeletadoEm] IS NULL";
 
-            var perfis = await _dapper.QueryAsync<PerfilViewModel>(sql);
+                var perfis = await connection.QueryAsync<PerfilViewModel>(sql);
 
-            return perfis;
+                return perfis;
+            }  
         }
 
         public void Dispose()

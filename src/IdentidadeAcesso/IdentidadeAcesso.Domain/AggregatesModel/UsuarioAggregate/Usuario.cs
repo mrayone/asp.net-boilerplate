@@ -88,7 +88,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
                 usuario.AdicionarCelular(celular);
 
-                if(telefone != null) usuario.AdicionarTelefone(telefone);
+               // if(telefone != null) usuario.AdicionarTelefone(telefone);
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
 
 

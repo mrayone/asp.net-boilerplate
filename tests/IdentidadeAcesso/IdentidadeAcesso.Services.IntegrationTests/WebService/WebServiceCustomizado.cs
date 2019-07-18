@@ -18,6 +18,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
     public class WebServiceCustomizadoFactory<TStartup> 
         : WebApplicationFactory<TStartup> where TStartup : class
     {
+        private SqliteConnection sqlite;
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services => 
@@ -27,7 +29,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 .AddEntityFrameworkSqlite()
                 .BuildServiceProvider();
                 
-                var sqlite = new SqliteConnection("DataSource=:memory:");
+                sqlite = new SqliteConnection("DataSource=:memory:");
+                sqlite.Open();
                 services.AddDbContext<IdentidadeAcessoDbContext>(options =>
                 {
                     options.UseSqlite(sqlite).EnableSensitiveDataLogging();
@@ -46,7 +49,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                     var db = scopedServices.GetRequiredService<IdentidadeAcessoDbContext>();
                     var logger = scopedServices
                         .GetRequiredService<ILogger<WebApplicationFactory<TStartup>>>();
-                    db.Database.OpenConnection();
 
                     // Ensure the database is created.
                     db.Database.EnsureCreated();
@@ -64,6 +66,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 }
             });
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 
     internal class Utilities
@@ -72,7 +79,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
         {
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
-            db.Usuarios.AddRange(ObterUsuarios());
+            //db.Usuarios.AddRange(ObterUsuarios());
 
             await db.SaveChangesAsync();
         }

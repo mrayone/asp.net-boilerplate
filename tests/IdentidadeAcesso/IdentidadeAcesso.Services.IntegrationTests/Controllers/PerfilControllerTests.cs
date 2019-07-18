@@ -1,14 +1,16 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API;
-using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
+using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
+using Knowledge.IO.Infra.Data.Context;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -29,7 +31,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         {
 
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
             //act
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
             var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -45,7 +47,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Perfil_Por_Id()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
             var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
 
             //act 
@@ -63,7 +65,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_Permissao_E_Retornar_Ok()
         {
             //arrange
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
+
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -88,7 +91,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
+
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var permissao2 = "4cf679e7-ef92-49e4-b677-2ec8d4e91453";
@@ -115,7 +119,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.CreateDefaultClient();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -143,7 +147,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cadastrar_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
+
             var perfil = new
             {
                 Nome = "Vendas 002",
@@ -167,7 +172,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Atualizar_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
             var perfil = new
             {
                 Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
@@ -192,7 +197,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Excluir_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateClient();
+            var _client = _factory.AmbienteParaAlterarDados().CreateClient();
             //act
             var result = await _client.DeleteAsync("api/v1/perfis/8cd6c8ca-7db7-4551-b6c5-f7a724286709");
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");

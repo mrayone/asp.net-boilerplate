@@ -8,22 +8,22 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
     {
         private const int MaxNumeros = 14;
         private const string Pattern = @"(\+\d{2})+(\d{11})";
-        public string Numero { get; private set; }
-        public Celular(string numero)
+        public string NumeroCel { get; private set; }
+        public Celular(string numeroCel)
         {
-            Numero = numero;
+            NumeroCel = numeroCel;
         }
 
         protected override bool EqualsCore(Celular other)
         {
-            return Numero.Equals(other.Numero);
+            return NumeroCel.Equals(other.NumeroCel);
         }
 
         protected override int GetHashCodeCore()
         {
             unchecked
             {
-                var hash = (Numero.GetHashCode() * 907) ^ Numero.GetHashCode();
+                var hash = (NumeroCel.GetHashCode() * 907) ^ NumeroCel.GetHashCode();
 
                 return hash;
             }

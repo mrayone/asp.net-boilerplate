@@ -14,12 +14,10 @@ namespace IdentidadeAcesso.API.Application.Queries
 {
     public class PermissaoQueries : IPermissaoQueries
     {
-        private readonly DbConnection _dapper;
         private readonly IdentidadeAcessoDbContext _context;
 
         public PermissaoQueries(IdentidadeAcessoDbContext context)
         {
-            _dapper = context.Database.GetDbConnection();
             _context = context;
         }
 
@@ -30,24 +28,30 @@ namespace IdentidadeAcesso.API.Application.Queries
 
         public async Task<PermissaoViewModel> ObterPorIdAsync(Guid id)
         {
-            var sql = @"SELECT [Id]
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
                               ,[Atribuicao_Valor] as Valor
                               ,[Atribuicao_Tipo] as Tipo
                 FROM [permissoes] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
-            var result = await _dapper.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = id });
+                var result = await connection.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = id });
 
-            return result;
+                return result;
+            }
         }
 
         public async Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync()
         {
-            var sql = @"SELECT [Id]
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
                               ,[Atribuicao_Valor] as Valor
                               ,[Atribuicao_Tipo] as Tipo
                 FROM [permissoes] WHERE [DeletadoEm] IS NULL";
-            var result = await _dapper.QueryAsync<PermissaoViewModel>(sql);
+                var result = await connection.QueryAsync<PermissaoViewModel>(sql);
 
-            return result;
+                return result;
+            }
         }
     }
 }
