@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
 using IdentidadeAcesso.API.Application.Models;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,18 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                 Email = "email@gmail.com",
                 Celular = "+5511999948663"
             };
+        }
+
+        internal static NovoUsuarioCommand UsuarioCommand()
+        {
+            return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "332.447.920-73", new DateTime(2002, 7, 22),
+                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
+        }
+
+        internal static AtualizarUsuarioCommand AtualizarUsuarioCommand()
+        {
+            return new AtualizarUsuarioCommand(Guid.NewGuid(), "Fake", "Sobrenome Fake", "F", "fake@gmail.com", "332.447.920-73", new DateTime(2002, 7, 22),
+                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
     }
 }

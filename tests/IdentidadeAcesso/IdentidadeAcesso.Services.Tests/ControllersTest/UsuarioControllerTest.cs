@@ -95,7 +95,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Cadastrar_Novo_Usuario_E_Retornar_Ok()
         {
             //arrange
-            var usuario = ViewModelBuilder.UsuarioFake();
+            var usuario = ViewModelBuilder.UsuarioCommand();
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
@@ -113,7 +113,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Atualizar_Usuario_E_Retornar_Ok()
         {
             //arrange
-            var usuario = ViewModelBuilder.UsuarioFake();
+            var usuario = ViewModelBuilder.AtualizarUsuarioCommand();
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act

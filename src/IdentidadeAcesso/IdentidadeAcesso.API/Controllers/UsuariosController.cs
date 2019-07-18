@@ -57,26 +57,20 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarUsuarioAsync([FromBody] UsuarioViewModel usuario)
+        public async Task<IActionResult> CriarUsuarioAsync([FromBody] NovoUsuarioCommand usuario)
         {
-            var command = new NovoUsuarioCommand(usuario.Nome, usuario.Sobrenome, usuario.Sexo, usuario.Email, usuario.CPF,
-                usuario.DateDeNascimento, usuario.Telefone, usuario.Celular, usuario.Logradouro, usuario.Numero,
-                usuario.Complemento, usuario.Bairro, usuario.CEP, usuario.Cidade, usuario.Estado, usuario.PerfilId);
 
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(usuario);
 
             return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] UsuarioViewModel usuario)
+        public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] AtualizarUsuarioCommand usuario)
         {
-            var command = new AtualizarUsuarioCommand(usuario.Id, usuario.Nome, usuario.Sobrenome, usuario.Sexo, usuario.Email, usuario.CPF,
-                usuario.DateDeNascimento, usuario.Telefone, usuario.Celular, usuario.Logradouro, usuario.Numero,
-                usuario.Complemento, usuario.Bairro, usuario.CEP, usuario.Cidade, usuario.Estado, usuario.PerfilId);
 
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(usuario);
 
             return this.VerificarErros(_notifications, result);
         }
