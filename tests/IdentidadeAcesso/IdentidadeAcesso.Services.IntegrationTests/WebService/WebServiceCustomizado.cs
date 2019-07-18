@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using Knowledge.IO.Infra.Data.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -66,12 +68,13 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
 
     internal class Utilities
     {
-        internal static void InitializeDbForTests(IdentidadeAcessoDbContext db)
+        internal static async void InitializeDbForTests(IdentidadeAcessoDbContext db)
         {
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
+            db.Usuarios.AddRange(ObterUsuarios());
 
-            db.SaveChangesAsync();
+            await db.SaveChangesAsync();
         }
 
         private static List<Permissao> ObterPermissoes()
@@ -81,6 +84,25 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Permissao.PermissaoFactory.CriarPermissao(new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"), "Usuário", "Cadastrar"),
                 Permissao.PermissaoFactory.CriarPermissao(new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), "Usuário", "Remover"),
                 Permissao.PermissaoFactory.CriarPermissao(null, "Usuário", "Visualizar Cadastro"),
+            };
+
+            return list;
+        }
+
+        private static List<Usuario> ObterUsuarios()
+        {
+            var list = new List<Usuario>()
+            {
+                Usuario.UsuarioFactory.CriarUsuario(null, "Usuario Fake", "Fake Dói", Sexo.Masculino, "fakedoi@gmail.com", "89051799080",
+                new DateTime(1993,7,22), new Celular("+5518981928663"), null, null),
+
+                Usuario.UsuarioFactory.CriarUsuario(null, "Fake", "Fake L", Sexo.Feminino, "fakedoi_2@gmail.com", "28999953084",
+                new DateTime(1993,7,22), new Celular("+5518981928363"), new Telefone("+551832544487"), 
+                new Endereco("R Tal", "19ew", "Centro", "18971000", "Seilandia",
+                "Seilão")),
+
+                Usuario.UsuarioFactory.CriarUsuario(null, "Usuario Fake", "Fake Dói Jr.", Sexo.Masculino, "fakedoi33_jr@gmail.com", "35163271032",
+                new DateTime(1993,7,22), new Celular("+5518981928443"), null, null),
             };
 
             return list;

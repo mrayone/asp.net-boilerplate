@@ -59,7 +59,6 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CriarUsuarioAsync([FromBody] NovoUsuarioCommand usuario)
         {
-
             var result = await _mediator.Send(usuario);
 
             return this.VerificarErros(_notifications, result);

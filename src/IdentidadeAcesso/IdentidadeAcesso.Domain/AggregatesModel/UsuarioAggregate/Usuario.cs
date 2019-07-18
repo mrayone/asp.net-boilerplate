@@ -21,7 +21,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Guid PerfilId { get; private set; }
         protected Usuario()
         {
-
+            Id = Guid.NewGuid();
             Status = Status.Ativo;
         }
 
@@ -29,7 +29,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             DataDeNascimento dataDeNascimento)
             : this()
         {
-            Id = Guid.NewGuid();
             Nome = nome;
             Sexo = sexo;
             Email = email;
@@ -74,16 +73,16 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public static class UsuarioFactory
         {
-            public static Usuario CriarUsuario(Guid? id, NomeCompleto nome, Sexo sexo, Email email,
-                CPF cpf, DataDeNascimento dataDeNascimento, Celular celular, Telefone telefone, Endereco endereco)
+            public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, Sexo sexo, string email,
+                string cpf, DateTime dataDeNascimento, Celular celular, Telefone telefone, Endereco endereco)
             {
                 var usuario = new Usuario
                 {
-                    Nome = nome,
+                    Nome = new NomeCompleto(nome, sobrenome),
                     Sexo = sexo,
-                    DataDeNascimento = dataDeNascimento,
-                    Email = email,
-                    CPF = cpf,
+                    DataDeNascimento = new DataDeNascimento(dataDeNascimento),
+                    Email = new Email(email),
+                    CPF = new CPF(cpf),
                     Id = id.HasValue ? id.Value : Guid.NewGuid()
                 };
 
