@@ -16,41 +16,48 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 {
     public class PerfilControllerTests : IClassFixture<WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup>>
     {
-        private readonly HttpClient _client;
+        private readonly WebServiceCustomizadoFactory<Startup> _factory;
 
         public PerfilControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            _client = factory.CreateDefaultClient();
+            _factory = factory;
         }
 
         [Fact(DisplayName = "Deve retornar todos os perfis cadastrados.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Retornar_Todos_Os_Perfis_Cadastrados()
         {
+
+            //arrange 
+            var _client = _factory.CreateClient();
             //act
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
             var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var perfis = JsonConvert.DeserializeObject<IList<PerfilViewModel>>(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            value.Should().NotBeEmpty();
+            perfis.Should().NotBeEmpty();
         }
 
         [Fact(DisplayName = "Deve retornar perfil por Id.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Retornar_Perfil_Por_Id()
         {
-            //arrange
+            //arrange 
+            var _client = _factory.CreateClient();
             var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
 
             //act 
             var response = await _client.GetAsync($"api/v1/perfis/{id}");
             var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
+            var perfil = JsonConvert.DeserializeObject<PerfilViewModel>(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            value.Should().NotBeEmpty();
+            perfil.Id.Should().Be("8cd6c8ca-7db7-4551-b6c5-f7a724286709");
+            perfil.Nome.Should().Be("Administração");
+            perfil.Descricao.Should().Be("Perfil que possui os maiores níveis de acesso");
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar ok.")]
@@ -58,6 +65,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_Permissao_E_Retornar_Ok()
         {
             //arrange
+            var _client = _factory.CreateClient();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -72,16 +80,21 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
+            var perfilResp = await _client.GetAsync($"api/v1/perfis/{perfilId}");
+            var value = await perfilResp.Content.ReadAsStringAsync();
+            var perfil = JsonConvert.DeserializeObject<PerfilViewModel>(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            perfil.PermissoesAssinadas.Should().HaveCount(1);
         }
 
         [Fact(DisplayName = "Deve assinar muitas permissões e retornar ok.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
         {
-            //arrange
+            //arrange 
+            var _client = _factory.CreateClient();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var permissao2 = "4cf679e7-ef92-49e4-b677-2ec8d4e91453";
@@ -107,7 +120,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
-            //arrange
+            //arrange 
+            var _client = _factory.CreateClient();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -134,7 +148,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Cadastrar_Perfil_E_Retornar_Ok()
         {
-            //arrange
+            //arrange 
+            var _client = _factory.CreateClient();
             var perfil = new
             {
                 Nome = "Vendas 002",
@@ -146,7 +161,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var result = await _client.PostAsync("api/v1/perfis", content);
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var value = await response.Content.ReadAsStringAsync();
             //assert
             result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
@@ -157,7 +172,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Atualizar_Perfil_E_Retornar_Ok()
         {
-            //arrange
+            //arrange 
+            var _client = _factory.CreateClient();
             var perfil = new
             {
                 Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
@@ -181,7 +197,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Excluir_Perfil_E_Retornar_Ok()
         {
-           
+            //arrange 
+            var _client = _factory.CreateClient();
             //act
             var result = await _client.DeleteAsync("api/v1/perfis/8cd6c8ca-7db7-4551-b6c5-f7a724286709");
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");

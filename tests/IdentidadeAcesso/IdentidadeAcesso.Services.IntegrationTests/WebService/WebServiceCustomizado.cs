@@ -26,10 +26,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 .BuildServiceProvider();
                 
                 var sqlite = new SqliteConnection("DataSource=:memory:");
-                sqlite.Open();
                 services.AddDbContext<IdentidadeAcessoDbContext>(options =>
                 {
-                    options.UseSqlite(sqlite);
+                    options.UseSqlite(sqlite).EnableSensitiveDataLogging();
                     options.UseInternalServiceProvider(serviceProvider);
                 });
 
@@ -45,6 +44,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                     var db = scopedServices.GetRequiredService<IdentidadeAcessoDbContext>();
                     var logger = scopedServices
                         .GetRequiredService<ILogger<WebApplicationFactory<TStartup>>>();
+                    db.Database.OpenConnection();
 
                     // Ensure the database is created.
                     db.Database.EnsureCreated();
@@ -61,9 +61,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                     }
                 }
             });
-
-
-
         }
     }
 

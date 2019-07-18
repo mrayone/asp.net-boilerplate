@@ -5,6 +5,7 @@ using IdentidadeAcesso.Services.IntegrationTests.WebService;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -114,10 +115,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await client.GetAsync($"api/v1/permissoes/obter-todas");
             var value = await response.Content.ReadAsStringAsync();
-            var permissao = JsonConvert.DeserializeObject(value);
+            var permissoes = JsonConvert.DeserializeObject(value) as IList;
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            permissoes.Should().NotBeEmpty();
             
         }
 
@@ -139,9 +141,14 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var response = await client.PutAsync("api/v1/permissoes", content);
             var result = await client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var value = await result.Content.ReadAsStringAsync();
+            var permissao = JsonConvert.DeserializeObject<PermissaoViewModel>(value);
+
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            permissao.Tipo.Should().Be("Perfil");
+            permissao.Valor.Should().Be("Pode atribuir permissão a perfil.");
+            permissao.Id.Should().Be("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
         }
 
         [Fact(DisplayName = "Deve excluir permissão com sucesso.")]
@@ -155,10 +162,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var response = await client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var todos = await client.GetAsync($"api/v1/permissoes/obter-todas");
             var value = await todos.Content.ReadAsStringAsync();
-
+            var permissoes = JsonConvert.DeserializeObject(value) as IList;
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            permissoes.Should().HaveCount(2);
         }
 
         //TODO: validar se permissão está em uso.
