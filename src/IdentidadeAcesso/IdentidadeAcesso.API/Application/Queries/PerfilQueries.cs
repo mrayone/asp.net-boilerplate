@@ -13,10 +13,12 @@ namespace IdentidadeAcesso.API.Application.Queries
 {
     public class PerfilQueries : IPerfilQueries
     {
+        private readonly IdentidadeAcessoDbContext _context;
         private readonly DbConnection _dapper;
 
         public PerfilQueries(IdentidadeAcessoDbContext context)
         {
+            _context = context;
             _dapper = context.Database.GetDbConnection();
         }
 
@@ -75,6 +77,11 @@ namespace IdentidadeAcesso.API.Application.Queries
             var perfis = await _dapper.QueryAsync<PerfilViewModel>(sql);
 
             return perfis;
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

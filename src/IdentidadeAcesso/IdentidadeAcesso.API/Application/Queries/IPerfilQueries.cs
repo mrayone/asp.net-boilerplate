@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public interface IPerfilQueries
+    public interface IPerfilQueries : IDisposable
     {
         Task<PerfilViewModel> ObterPorIdAsync(Guid id);
         Task<IEnumerable<PerfilViewModel>> ObterTodasAsync();

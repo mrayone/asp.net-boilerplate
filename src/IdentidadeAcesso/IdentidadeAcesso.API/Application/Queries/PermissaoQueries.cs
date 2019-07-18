@@ -15,9 +15,17 @@ namespace IdentidadeAcesso.API.Application.Queries
     public class PermissaoQueries : IPermissaoQueries
     {
         private readonly DbConnection _dapper;
+        private readonly IdentidadeAcessoDbContext _context;
+
         public PermissaoQueries(IdentidadeAcessoDbContext context)
         {
             _dapper = context.Database.GetDbConnection();
+            _context = context;
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         public async Task<PermissaoViewModel> ObterPorIdAsync(Guid id)

@@ -56,8 +56,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             perfil.Id.Should().Be("8cd6c8ca-7db7-4551-b6c5-f7a724286709");
-            perfil.Nome.Should().Be("Administração");
-            perfil.Descricao.Should().Be("Perfil que possui os maiores níveis de acesso");
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar ok.")]
@@ -80,13 +78,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
-            var perfilResp = await _client.GetAsync($"api/v1/perfis/{perfilId}");
-            var value = await perfilResp.Content.ReadAsStringAsync();
-            var perfil = JsonConvert.DeserializeObject<PerfilViewModel>(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            perfil.PermissoesAssinadas.Should().HaveCount(1);
         }
 
         [Fact(DisplayName = "Deve assinar muitas permissões e retornar ok.")]

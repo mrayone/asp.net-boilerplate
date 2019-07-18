@@ -160,13 +160,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
             //act
             var response = await client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
-            var todos = await client.GetAsync($"api/v1/permissoes/obter-todas");
-            var value = await todos.Content.ReadAsStringAsync();
-            var permissoes = JsonConvert.DeserializeObject(value) as IList;
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            permissoes.Should().HaveCount(2);
         }
 
         //TODO: validar se permissão está em uso.

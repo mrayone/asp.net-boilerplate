@@ -8,6 +8,11 @@ namespace IdentidadeAcesso.API.Application.Queries
 {
     public class UsuarioQueries : IUsuarioQueries
     {
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<UsuarioViewModel> ObterPorIdAsync(Guid id)
         {
             throw new NotImplementedException();

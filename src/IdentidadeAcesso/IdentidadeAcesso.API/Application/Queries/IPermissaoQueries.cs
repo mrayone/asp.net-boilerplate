@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public interface IPermissaoQueries
+    public interface IPermissaoQueries : IDisposable
     {
         Task<PermissaoViewModel> ObterPorIdAsync(Guid id);
         Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync();
