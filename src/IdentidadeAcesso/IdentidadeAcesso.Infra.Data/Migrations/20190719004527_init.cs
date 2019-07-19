@@ -52,9 +52,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     Email = table.Column<string>(nullable: false),
                     CPF_Digitos = table.Column<string>(nullable: false),
                     DataDeNascimento_Data = table.Column<DateTime>(nullable: false),
-                    Telefone_Numero = table.Column<string>(nullable: true),
-                    Celular_Numero = table.Column<string>(nullable: true),
-                    Status_Valor = table.Column<bool>(nullable: false),
+                    Celular = table.Column<string>(nullable: true),
+                    Status = table.Column<bool>(nullable: false),
                     DeletadoEm = table.Column<DateTime>(nullable: true),
                     PerfilId = table.Column<Guid>(nullable: false)
                 },
@@ -76,9 +75,9 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Status_Valor = table.Column<bool>(nullable: false),
+                    Ativo = table.Column<bool>(nullable: false),
                     PermissaoId = table.Column<Guid>(nullable: false),
-                    PerfilId = table.Column<Guid>(nullable: false)
+                    PerfilId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,7 +88,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         principalSchema: "dbo",
                         principalTable: "perfis",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_permissoes_assinadas_permissoes_PermissaoId",
                         column: x => x.PermissaoId,

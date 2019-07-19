@@ -32,16 +32,16 @@ namespace IdentidadeAcesso.API.Application.Queries
         {
             using (var connection = _context.Database.GetDbConnection())
             {
-                var sql = @"SELECT [Id]
+                var sql = @"SELECT
+                               [Id]
                               ,[PrimeiroNome]
                               ,[Sobrenome]
                               ,[Sexo]
                               ,[Email]
-                              ,[CPF_Digitos]
-                              ,[DataDeNascimento_Data]
-                              ,[Telefone]
+                              ,[CPF_Digitos] AS CPF
+                              ,[DataDeNascimento_Data] as DataDeNascimento
                               ,[Celular]
-                              ,[Status_Valor]
+                              ,[Status]
                               ,[DeletadoEm]
                               ,[PerfilId]
                           FROM [usuarios]";

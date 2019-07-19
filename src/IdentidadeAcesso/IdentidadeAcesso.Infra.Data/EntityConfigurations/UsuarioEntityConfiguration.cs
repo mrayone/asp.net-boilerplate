@@ -27,7 +27,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 s.Property(p => p.Tipo).HasColumnName("Sexo").IsRequired();
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Status);
+            usuarioConfiguration.Property(u => u.Status);
 
             usuarioConfiguration.OwnsOne(u => u.Email, e => 
             {
@@ -49,11 +49,6 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 c.Property(p => p.NumeroCel).HasColumnName("Celular").IsRequired(false);
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Telefone, t =>
-            {
-                t.Property(p => p.Numero).IsRequired(false).HasColumnName("Telefone");
-            });
-
             usuarioConfiguration.OwnsOne(u => u.Endereco, e => 
             {
                 e.ToTable("usuario_endereco");
@@ -64,8 +59,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.HasOne<Perfil>()
                 .WithMany()
-                .HasForeignKey("PerfilId")
-                .IsRequired();
+                .HasForeignKey("PerfilId");
         }
     }
 }

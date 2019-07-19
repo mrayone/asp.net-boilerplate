@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
+using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
@@ -55,7 +56,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Erro_Ao_Cadastrar_Permissao_Que_Ja_Exista(string tipo, string valor)
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
+            var client = _factory.ComNovoDb().CreateClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -76,7 +77,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_RetornarOk_Ao_CadastrarPermissao()
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
+            var client = _factory.ComNovoDb().CreateClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -128,7 +129,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Atualizar_Permissao_ComSucesso()
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
+            var client = _factory.ComNovoDb().CreateClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -156,7 +157,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Excluir_Permissao_ComSucesso()
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
+            var client = _factory.ComNovoDb().CreateClient();
 
             //act
             var response = await client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");

@@ -46,7 +46,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
 
             //assert
 
-            result.Status.Valor.Should().BeFalse();
+            result.Status.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar null caso não encontrar usuário pelo id.")]

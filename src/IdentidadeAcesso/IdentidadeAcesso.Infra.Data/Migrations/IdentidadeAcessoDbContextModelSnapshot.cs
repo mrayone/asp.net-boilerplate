@@ -73,6 +73,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                     b.Property<Guid>("PerfilId");
 
+                    b.Property<bool>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PerfilId");
@@ -280,39 +282,6 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Sexo")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Sexo", "UsuarioId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Telefone", "Telefone", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId");
-
-                            b1.Property<string>("Numero")
-                                .HasColumnName("Telefone");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("usuarios","dbo");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
-                                .WithOne("Telefone")
-                                .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Telefone", "UsuarioId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "Status", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId");
-
-                            b1.Property<bool>("Valor");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("usuarios","dbo");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
-                                .WithOne("Status")
-                                .HasForeignKey("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

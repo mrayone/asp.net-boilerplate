@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService.Extension
 {
     public static class ExtensionServerFake
     {
-        public static WebApplicationFactory<TStartup> AmbienteParaAlterarDados<TStartup>(this WebApplicationFactory<TStartup> factory) where TStartup : class
+        public static WebApplicationFactory<TStartup> ComNovoDb<TStartup>(this WebApplicationFactory<TStartup> factory) where TStartup : class
         {
             return factory.WithWebHostBuilder(builder =>
             {
@@ -28,6 +28,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService.Extension
                             .GetRequiredService<ILogger<WebApplicationFactory<TStartup>>>();
 
                         // Ensure the database is created.
+                        db.Database.EnsureDeleted();
                         db.Database.EnsureCreated();
 
                         try

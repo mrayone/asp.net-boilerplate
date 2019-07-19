@@ -27,11 +27,11 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
             var celular = CelularBuilder.ObterCelularValido();
-            var telefone = TelefoneBuilder.ObterTelefoneValido();
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
-            return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo, email.Endereco, cpf.Digitos, dataDeNascimento.Data,celular,
-                telefone, endereco);
+            return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
+                cpf.Digitos, dataDeNascimento.Data,celular.NumeroCel,
+                endereco, Guid.NewGuid());
         }
     }
 }

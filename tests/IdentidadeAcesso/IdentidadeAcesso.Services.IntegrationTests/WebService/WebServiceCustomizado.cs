@@ -51,6 +51,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                         .GetRequiredService<ILogger<WebApplicationFactory<TStartup>>>();
 
                     // Ensure the database is created.
+                    db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
 
                     try
@@ -79,8 +80,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
         {
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
-            //db.Usuarios.AddRange(ObterUsuarios());
-
+            db.Usuarios.AddRange(ObterUsuarios());
             await db.SaveChangesAsync();
         }
 
@@ -100,16 +100,10 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
         {
             var list = new List<Usuario>()
             {
-                Usuario.UsuarioFactory.CriarUsuario(null, "Usuario Fake", "Fake Dói", Sexo.Masculino, "fakedoi@gmail.com", "89051799080",
-                new DateTime(1993,7,22), new Celular("+5518981928663"), null, null),
-
-                Usuario.UsuarioFactory.CriarUsuario(null, "Fake", "Fake L", Sexo.Feminino, "fakedoi_2@gmail.com", "28999953084",
-                new DateTime(1993,7,22), new Celular("+5518981928363"), new Telefone("+551832544487"), 
+                Usuario.UsuarioFactory.CriarUsuario(null, "Fake", "Fake L", "M", "fakedoi_2@gmail.com", "28999953084",
+                new DateTime(1993,7,22), "+5518981928363",
                 new Endereco("R Tal", "19ew", "Centro", "18971000", "Seilandia",
-                "Seilão")),
-
-                Usuario.UsuarioFactory.CriarUsuario(null, "Usuario Fake", "Fake Dói Jr.", Sexo.Masculino, "fakedoi33_jr@gmail.com", "35163271032",
-                new DateTime(1993,7,22), new Celular("+5518981928443"), null, null),
+                "Seilão"), Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709")),
             };
 
             return list;
@@ -122,7 +116,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Perfil.PerfilFactory
                 .NovoPerfil(new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), "Administração", "Perfil que possui os maiores níveis de acesso"),
                 Perfil.PerfilFactory
-                .NovoPerfil(null, "Recursos Humanos 1", "Perfil que possui alguns níveis de RH."),
+                .NovoPerfil(new Guid("c5ecd8a8-f086-4058-b205-a561603415f9"), "Recursos Humanos 1", "Perfil que possui alguns níveis de RH."),
                 Perfil.PerfilFactory
                 .NovoPerfil(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.")
             };

@@ -23,7 +23,6 @@ namespace IdentidadeAcesso.API.Application.Models
         public DateTime DateDeNascimento { get; set; }
         [Required]
         public Guid PerfilId { get; set; }
-        public string Telefone { get; set; }
         [Required(ErrorMessage = "Um número de celular deve ser fornecido.")]
         public string Celular { get; set; }
         public bool Status { get; set; }
