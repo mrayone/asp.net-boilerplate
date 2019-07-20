@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
+using IdentidadeAcesso.API;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
+using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         public UsuarioControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            _client = factory.CreateDefaultClient();
+            _client = factory.ComNovoDb().CreateDefaultClient();
         }
 
         [Fact(DisplayName = "Deve retornar todos os usuários ativos.")]
@@ -27,7 +29,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Todos_UsuariosAtivos()
         {
             //arrange
-
             //act
             var result = await _client.GetAsync("api/v1/usuarios/obter-todos");
             var usuarios = JsonConvert.DeserializeObject<List<UsuarioViewModel>>(await result.Content.ReadAsStringAsync());

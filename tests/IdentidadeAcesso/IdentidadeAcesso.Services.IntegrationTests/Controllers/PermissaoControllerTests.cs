@@ -17,11 +17,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
     public class PermissaoControllerTests :
         IClassFixture<WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup>>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly HttpClient _client;
 
         public PermissaoControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            _factory = factory;
+            _client = factory.ComNovoDb().CreateDefaultClient();
         }
 
         [Theory(DisplayName = "Deve Retornar erros ao enviar comando post invalido de permissão.")]
@@ -32,7 +32,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Erro_Ao_Enviar_Comando_Post_Invalido_De_Permissao(string tipo, string valor)
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -41,7 +40,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             }));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await client.PostAsync("api/v1/permissoes", content);
+            var response = await _client.PostAsync("api/v1/permissoes", content);
             var value = await response.Content.ReadAsStringAsync();
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -56,8 +55,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Erro_Ao_Cadastrar_Permissao_Que_Ja_Exista(string tipo, string valor)
         {
             //arrange
-            var client = _factory.ComNovoDb().CreateClient();
-
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
                 Tipo = tipo,
@@ -65,7 +62,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             }));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await client.PostAsync("api/v1/permissoes", content);
+            var response = await _client.PostAsync("api/v1/permissoes", content);
             var value = await response.Content.ReadAsStringAsync();
             //assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -77,7 +74,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_RetornarOk_Ao_CadastrarPermissao()
         {
             //arrange
-            var client = _factory.ComNovoDb().CreateClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -86,7 +82,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             }));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await client.PostAsync("api/v1/permissoes", content);
+            var response = await _client.PostAsync("api/v1/permissoes", content);
             var value = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
@@ -98,9 +94,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retonar_ViewModel_Ao_Consultar_PorId()
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
             //act
-            var response = await client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var response = await _client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var value = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
@@ -112,9 +107,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Todas_As_Permissoes()
         {
             //arrange
-            var client = _factory.CreateDefaultClient();
             //act
-            var response = await client.GetAsync($"api/v1/permissoes/obter-todas");
+            var response = await _client.GetAsync($"api/v1/permissoes/obter-todas");
             var value = await response.Content.ReadAsStringAsync();
             var permissoes = JsonConvert.DeserializeObject(value) as IList;
             //assert
@@ -129,7 +123,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Atualizar_Permissao_ComSucesso()
         {
             //arrange
-            var client = _factory.ComNovoDb().CreateClient();
 
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
@@ -139,8 +132,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             }));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await client.PutAsync("api/v1/permissoes", content);
-            var result = await client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var response = await _client.PutAsync("api/v1/permissoes", content);
+            var result = await _client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var value = await result.Content.ReadAsStringAsync();
             var permissao = JsonConvert.DeserializeObject<PermissaoViewModel>(value);
 
@@ -157,10 +150,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Excluir_Permissao_ComSucesso()
         {
             //arrange
-            var client = _factory.ComNovoDb().CreateClient();
 
             //act
-            var response = await client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var response = await _client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);

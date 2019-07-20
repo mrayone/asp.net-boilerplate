@@ -18,11 +18,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 {
     public class PerfilControllerTests : IClassFixture<WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup>>
     {
-        private readonly WebServiceCustomizadoFactory<Startup> _factory;
+        private readonly HttpClient _client;
 
         public PerfilControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            _factory = factory;
+            _client = factory.ComNovoDb().CreateClient();
         }
 
         [Fact(DisplayName = "Deve retornar todos os perfis cadastrados.")]
@@ -31,7 +31,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         {
 
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
             //act
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
             var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -47,7 +46,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Perfil_Por_Id()
         {
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
             var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
 
             //act 
@@ -65,7 +63,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_Permissao_E_Retornar_Ok()
         {
             //arrange
-            var _client = _factory.ComNovoDb().CreateClient();
 
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
@@ -91,7 +88,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
 
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
@@ -119,7 +115,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.CreateDefaultClient();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -147,7 +142,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cadastrar_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
+            
 
             var perfil = new
             {
@@ -172,7 +167,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Atualizar_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
             var perfil = new
             {
                 Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
@@ -197,7 +191,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Excluir_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            var _client = _factory.ComNovoDb().CreateClient();
             //act
             var result = await _client.DeleteAsync("api/v1/perfis/c5ecd8a8-f086-4058-b205-a561603415f9");
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
