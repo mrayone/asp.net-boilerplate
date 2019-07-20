@@ -62,6 +62,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                .Length(2, 150).WithMessage("A cidade deve conter entre 2 e 150 caracteres");
 
             RuleFor(c => c.CEP)
+                .Must(ValidarCEP).WithMessage("O CEP informado é inválido")
                .Length(8).WithMessage("O CEP deve conter exatamente 8 caracteres");
 
             RuleFor(c => c.Estado)
@@ -76,6 +77,13 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(c => c.PerfilId)
                 .NotEqual(Guid.Empty)
                 .WithMessage("O ID do perfil tem que ser fornecido.");
+        }
+
+        private bool ValidarCEP(string arg)
+        {
+            if (!string.IsNullOrEmpty(arg))
+                return Regex.IsMatch(arg, @"\d{8}");
+            return true;
         }
 
         private bool ValidarTelefone(string arg)
