@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
     {
         void Adicionar(TEntity obj);
         void Atualizar(TEntity obj);
-        Task<TEntity> ObterPorId(Guid id);
+        Task<TEntity> ObterPorIdAsync(Guid id);
         Task<IEnumerable<TEntity>> Buscar(Expression<Func<TEntity, bool>> predicate);
     }
 }

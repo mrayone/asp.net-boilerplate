@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
@@ -21,24 +23,38 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
         private readonly AssinarPermissaoCommandHandler _handler;
+        private readonly List<AssinaturaDTO> _list;
 
         public AssinarPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
+
             _service = new Mock<IPerfilService>();
             _handler = new AssinarPermissaoCommandHandler(_mediator.Object, _uow.Object, 
-                _notifications.Object, _service.Object, _perfilRepositoryMock.Object);
+                _notifications, _service.Object, _perfilRepositoryMock.Object);
 
-            _perfilRepositoryMock.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _perfilRepositoryMock.Setup(r => r.ObterComPermissoesAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(TestBuilder.PerfilFalso());
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
+
+            _list = new List<AssinaturaDTO>()
+            {
+                new AssinaturaDTO()
+                {
+                    PermissaoId = Guid.NewGuid(),
+                },
+                new AssinaturaDTO()
+                {
+                    PermissaoId = Guid.NewGuid(),
+                }
+            };
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar true .")]
@@ -47,30 +63,15 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             //arrange
             var perfil = TestBuilder.PerfilFalso();
-            _service.Setup(s => s.AssinarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.AssinarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
-            var command = new AssinarPermissaoCommand(Guid.NewGuid(), Guid.NewGuid());
+            var command = new AssinarPermissaoCommand(perfil.Id, _list);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
-            _service.Verify(s => s.AssinarPermissaoAsync(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Once);
+            result.Success.Should().BeTrue();
+            _service.Verify(s => s.AssinarPermissaoAsync(perfil, It.IsAny<Guid>()), Times.Once);
             _uow.Verify(u => u.Commit(), Times.Once);
-        }
-
-        [Fact(DisplayName = "Deve Validar O Command e Retornar Falso.")]
-        [Trait("Handler - Perfil", "AssinarPermissaoCommand")]
-        public async Task Deve_Validar_O_Command_E_Retornar_Falso()
-        {
-            //arrange
-            var command = new AssinarPermissaoCommand(Guid.Empty, 
-                Guid.Empty);
-
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
-            command.ValidationResult.Errors.Should().NotBeEmpty();
         }
     }
 }

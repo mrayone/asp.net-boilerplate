@@ -26,7 +26,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<IUsuarioRepository> _repository;
         private readonly Mock<IUsuarioService> _service;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
 
         public AtualizarUsuarioCommandHandlerTest()
         {
@@ -34,8 +34,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _repository = new Mock<IUsuarioRepository>();
             _uow = new Mock<IUnitOfWork>();
             _service = new Mock<IUsuarioService>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
-            _handler = new AtualizarUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
+            _notifications = new DomainNotificationHandler();
+            _handler = new AtualizarUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications);
+
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.VincularAoPerfilAsync(It.IsAny<Guid>(), It.IsAny<Usuario>()))
                 .ReturnsAsync(true);
@@ -43,7 +44,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _service.Setup(s => s.DisponivelEmailECpfAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
                 .ReturnsAsync(true);
 
-            _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>()))
+            _repository.Setup(u => u.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(UsuarioBuilder.UsuarioFake());
         }
 
@@ -58,23 +59,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
             _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
-        }
-
-        [Fact(DisplayName = "Deve retornar false se usuário houver erros de domínio.")]
-        [Trait("Handler", "AtualizarUsuario")]
-        public async Task Deve_Retornar_False_Se_Houver_Erros_De_Domain()
-        {
-            //arrange
-            var command = UsuarioBuilder.ObterCommandFakeAtualizarErroDeDomain();
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
-            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(),
-                new System.Threading.CancellationToken()), Times.Between(1, 2, Range.Inclusive));
         }
 
         [Fact(DisplayName = "Deve retornar false e notificar se perfil atribuido não existir.")]
@@ -88,7 +75,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve persistir Usuario e Disparar Evento.")]
@@ -100,7 +87,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             _mediator.Verify(p => p.Publish(It.IsAny<UsuarioAtualizadoEvent>(),
                 new System.Threading.CancellationToken()), Times.Once());
         }

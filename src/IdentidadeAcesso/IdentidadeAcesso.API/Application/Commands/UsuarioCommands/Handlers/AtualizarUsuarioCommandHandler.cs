@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -11,30 +12,29 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
-    public class AtualizarUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarUsuarioCommand, bool>
+    public class AtualizarUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<AtualizarUsuarioCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IUsuarioService _service;
 
         public AtualizarUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, IUsuarioService service,
-            IDomainNotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
+            INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _usuarioRepository = usuarioRepository;
             _service = service;
         }
-        public async Task<bool> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
 
             var podeAtualizar = await ValidarOperacao(request);
 
-            if (!podeAtualizar) return await Task.FromResult(false);
+            if (!podeAtualizar) return await Task.FromResult(CommandResponse.Fail);
 
             var usuario = this.DefinirUsuario(request);
             var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
-            if (!vinculouPerfil) return await Task.FromResult(false);
+            if (!vinculouPerfil) return await Task.FromResult(CommandResponse.Fail);
 
             _usuarioRepository.Atualizar(usuario);
 
@@ -43,12 +43,12 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new UsuarioAtualizadoEvent(usuario));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(CommandResponse.Ok);
         }
 
         private async Task<bool> ValidarOperacao(AtualizarUsuarioCommand request)
         {
-            var encontrarUsuario = await _usuarioRepository.ObterPorId(request.Id);
+            var encontrarUsuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
             if (encontrarUsuario == null)
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Não existe o usuario que você esta tentando modificar."));

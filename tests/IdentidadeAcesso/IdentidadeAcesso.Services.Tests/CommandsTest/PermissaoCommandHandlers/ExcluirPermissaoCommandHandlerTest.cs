@@ -24,7 +24,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPermissaoService> _service;
         private readonly ExcluirPermissaoCommandHandler _handler;
         public ExcluirPermissaoCommandHandlerTest()
@@ -32,18 +32,18 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
             _service = new Mock<IPermissaoService>();
-            _handler = new ExcluirPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object , _service.Object);
+            _handler = new ExcluirPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications, _permissaoRepository.Object , _service.Object);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             _service.Setup(s => s.DeletarPermissaoAsync(It.IsAny<Permissao>())).ReturnsAsync(true);
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
 
         }
 
         [Trait("Handler - Permissão", "ExcluirPermissão")]
-        [Fact(DisplayName = "O handle deve excluir a permissão e retornar true.")]
-        public async Task Handle_Deve_Excluir_Permissao_e_Retornar_True()
+        [Fact(DisplayName = "O handle deve excluir a permissão e não conter erros.")]
+        public async Task Handle_Deve_Excluir_Permissao_e_NaoConter_Erros()
         {
             //arrange
             var command = new ExcluirPermissaoCommand(Guid.NewGuid());
@@ -52,21 +52,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeTrue();
-        }
-
-        [Trait("Handler - Permissão", "ExcluirPermissão")]
-        [Fact(DisplayName = "O handle deve retornar false se comando inválido.")]
-        public async Task Handle_Deve_Retornar_False_Se_Comando_Invalido()
-        {
-            //arrange
-            var command = new ExcluirPermissaoCommand(Guid.Empty);
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
-            //act
-            var result = await _handler.Handle(command, new System.Threading.CancellationToken());
-
-            //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeTrue();
         }
 
         [Trait("Handler - Permissão", "ExcluirPermissão")]
@@ -75,13 +61,12 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         {
             //arrange
             var command = new ExcluirPermissaoCommand(Guid.NewGuid());
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync((Permissao) null);
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync((Permissao) null);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeFalse();
-            _mediator.Verify(p => p.Publish(It.IsAny<DomainNotification>(), new System.Threading.CancellationToken()), Times.Once());
+            result.Success.Should().BeFalse();
         }
 
         [Trait("Handler - Permissão", "ExcluirPermissão")]
@@ -95,7 +80,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Trait("Handler - Permissão", "ExcluirPermissão")]
@@ -109,7 +94,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             _mediator.Verify(p => p.Publish(It.IsAny<PermissaoExcluidaEvent>(), new System.Threading.CancellationToken()), Times.Once());
         }
 

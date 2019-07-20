@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -21,16 +22,16 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IUsuarioQueries> _usuarioQueries;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly UsuariosController _controller;
         public UsuarioControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _usuarioQueries = new Mock<IUsuarioQueries>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _controller = new UsuariosController(_usuarioQueries.Object, _mediator.Object,
-                _notifications.Object);
+                _notifications);
         }
 
         [Trait("Controller","UsuariosController")]
@@ -94,9 +95,9 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Cadastrar_Novo_Usuario_E_Retornar_Ok()
         {
             //arrange
-            var usuario = ViewModelBuilder.UsuarioFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true);
+            var usuario = ViewModelBuilder.UsuarioCommand();
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
             var result = await _controller.CriarUsuarioAsync(usuario);
 
@@ -104,7 +105,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             result.Should().BeAssignableTo<OkResult>();
             var vr = result as OkResult;
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
-            _mediator.Verify(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()), Times.Once);
+            _mediator.Verify();
         }
 
         [Fact(DisplayName = "Deve atualizar usuário e retornar ok.")]
@@ -112,10 +113,9 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Atualizar_Usuario_E_Retornar_Ok()
         {
             //arrange
-            var usuario = ViewModelBuilder.UsuarioFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-                .ReturnsAsync(true)
-                .Verifiable();
+            var usuario = ViewModelBuilder.AtualizarUsuarioCommand();
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
             //act
             var result = await _controller.AtualizarUsuarioAsync(usuario);
 

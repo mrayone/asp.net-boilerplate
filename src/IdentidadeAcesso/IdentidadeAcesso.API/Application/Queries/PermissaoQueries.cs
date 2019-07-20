@@ -1,6 +1,12 @@
-﻿using IdentidadeAcesso.API.Application.Models;
+﻿using Dapper;
+using IdentidadeAcesso.API.Application.Models;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
+using Knowledge.IO.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,14 +14,44 @@ namespace IdentidadeAcesso.API.Application.Queries
 {
     public class PermissaoQueries : IPermissaoQueries
     {
+        private readonly IdentidadeAcessoDbContext _context;
+
+        public PermissaoQueries(IdentidadeAcessoDbContext context)
+        {
+            _context = context;
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+
         public async Task<PermissaoViewModel> ObterPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
+                              ,[Atribuicao_Valor] as Valor
+                              ,[Atribuicao_Tipo] as Tipo
+                FROM [permissoes] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
+                var result = await connection.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = id });
+
+                return result;
+            }
         }
 
         public async Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync()
         {
-            throw new NotImplementedException();
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
+                              ,[Atribuicao_Valor] as Valor
+                              ,[Atribuicao_Tipo] as Tipo
+                FROM [permissoes] WHERE [DeletadoEm] IS NULL";
+                var result = await connection.QueryAsync<PermissaoViewModel>(sql);
+
+                return result;
+            }
         }
     }
 }

@@ -4,14 +4,16 @@ using Knowledge.IO.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
-    [DbContext(typeof(IdentidadeAcessoContext))]
-    partial class IdentidadeAcessoContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(IdentidadeAcessoDbContext))]
+    [Migration("20190719004527_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("perfis","identidade");
+                    b.ToTable("perfis","dbo");
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.PermissaoAssinada", b =>
@@ -40,13 +42,16 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                     b.Property<Guid>("PermissaoId");
 
+                    b.Property<bool>("Status")
+                        .HasColumnName("Ativo");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PerfilId");
 
                     b.HasIndex("PermissaoId");
 
-                    b.ToTable("permissoes_assinadas","identidade");
+                    b.ToTable("permissoes_assinadas","dbo");
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao", b =>
@@ -58,7 +63,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("permissoes","identidade");
+                    b.ToTable("permissoes","dbo");
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario", b =>
@@ -70,11 +75,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                     b.Property<Guid>("PerfilId");
 
+                    b.Property<bool>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PerfilId");
 
-                    b.ToTable("usuarios","identidade");
+                    b.ToTable("usuarios","dbo");
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Perfil", b =>
@@ -93,7 +100,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("PerfilId");
 
-                            b1.ToTable("perfis","identidade");
+                            b1.ToTable("perfis","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Perfil")
                                 .WithOne("Identifacao")
@@ -112,22 +119,6 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         .WithMany()
                         .HasForeignKey("PermissaoId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "Status", b1 =>
-                        {
-                            b1.Property<Guid>("PermissaoAssinadaId");
-
-                            b1.Property<bool>("Valor");
-
-                            b1.HasKey("PermissaoAssinadaId");
-
-                            b1.ToTable("permissoes_assinadas","identidade");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.PermissaoAssinada")
-                                .WithOne("Status")
-                                .HasForeignKey("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "PermissaoAssinadaId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao", b =>
@@ -144,7 +135,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("PermissaoId");
 
-                            b1.ToTable("permissoes","identidade");
+                            b1.ToTable("permissoes","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao")
                                 .WithOne("Atribuicao")
@@ -169,7 +160,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("CPF")
@@ -181,11 +172,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         {
                             b1.Property<Guid>("UsuarioId");
 
-                            b1.Property<string>("Numero");
+                            b1.Property<string>("NumeroCel")
+                                .HasColumnName("Celular");
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Celular")
@@ -201,7 +193,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("DataDeNascimento")
@@ -219,7 +211,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Email")
@@ -247,7 +239,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuario_endereco","identidade");
+                            b1.ToTable("usuario_endereco","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Endereco")
@@ -269,7 +261,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Nome")
@@ -287,43 +279,11 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
 
                             b1.HasKey("UsuarioId");
 
-                            b1.ToTable("usuarios","identidade");
+                            b1.ToTable("usuarios","dbo");
 
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Sexo")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Sexo", "UsuarioId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Telefone", "Telefone", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId");
-
-                            b1.Property<string>("Numero");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("usuarios","identidade");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
-                                .WithOne("Telefone")
-                                .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Telefone", "UsuarioId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "Status", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId");
-
-                            b1.Property<bool>("Valor");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("usuarios","identidade");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
-                                .WithOne("Status")
-                                .HasForeignKey("IdentidadeAcesso.Domain.SeedOfWork.ValueObjects.Status", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
                 });

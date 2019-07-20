@@ -11,16 +11,10 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class CancelarPermissaoCommand : BasePermissaoPerfil<CancelarPermissaoCommand>
     {
-        public CancelarPermissaoCommand(Guid perfilId, Guid permissaoId)
+        public CancelarPermissaoCommand(Guid perfilId, IList<AssinaturaDTO> assinaturas)
         {
             PerfilId = perfilId;
-            PermissaoId = permissaoId;
-        }
-
-        public override bool isValid()
-        {
-            ValidationResult = new CancelarPermissaoValidation().Validate(this);
-            return ValidationResult.IsValid;
+            Assinaturas = assinaturas;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
         {
             services.TryAddScoped<IPermissaoQueries, PermissaoQueries>();
             services.TryAddScoped<IPerfilQueries, PerfilQueries>();
+            services.TryAddScoped<IUsuarioQueries, UsuarioQueries>();
 
             return services;
         }

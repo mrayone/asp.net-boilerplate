@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.Domain.Sevices
 
         public async Task<bool> VincularAoPerfilAsync(Guid perfilId, Usuario usuario)
         {
-            var perfil = await _perfilRepository.ObterPorId(perfilId);
+            var perfil = await _perfilRepository.ObterPorIdAsync(perfilId);
 
             if (perfil != null)
             {
@@ -41,7 +41,7 @@ namespace IdentidadeAcesso.Domain.Sevices
 
         public async Task<Usuario> DeletarUsuarioAsync(Guid usuarioId)
         {
-            var usuario = await _repository.ObterPorId(usuarioId);
+            var usuario = await _repository.ObterPorIdAsync(usuarioId);
 
             if (usuario == null)
             {
@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.Domain.Sevices
 
         public async Task<Usuario> DesativarUsuarioAsync(Guid usuarioId)
         {
-            var usuario = await _repository.ObterPorId(usuarioId);
+            var usuario = await _repository.ObterPorIdAsync(usuarioId);
 
             if(usuario == null)
             {

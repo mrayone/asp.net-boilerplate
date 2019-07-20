@@ -1,5 +1,5 @@
 ﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +12,22 @@ namespace IdentidadeAcesso.API.Controllers.Extensions
 {
     public static class ControllerExtensions
     {
-        public static IActionResult NotificarDomainErros(this ControllerBase controller, IDomainNotificationHandler<DomainNotification> notifications)
+        public static IActionResult VerificarErros(this ControllerBase controller, INotificationHandler<DomainNotification> notifications, CommandResponse result)
         {
+            var _notifications = (DomainNotificationHandler) notifications;
 
-            if(notifications.HasNotifications())
+            if (result.Success)
             {
-                return controller.BadRequest(new
-                {
-                    status = 404,
-                    errors = notifications.GetNotifications().Select(n => n.Value)
-                });
+                return controller.Ok();
             }
 
-            return controller.BadRequest();
+            foreach (var item in result.Errors)
+            {
+                _notifications.GetNotifications().Add(new DomainNotification("", item));
+            }
+
+            return controller.BadRequest(_notifications.GetNotifications()
+                        .Select(n => n.Value));
         }
     }
 }

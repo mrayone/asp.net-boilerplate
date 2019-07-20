@@ -5,19 +5,12 @@ using System.Collections.Generic;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class CriarPerfilCommand : BasePerfilCommand<CriarPerfilCommand>, IRequest<bool>
+    public class CriarPerfilCommand : BasePerfilCommand<CriarPerfilCommand>
     {
-        public CriarPerfilCommand(string nome, string descricao, bool status)
+        public CriarPerfilCommand(string nome, string descricao)
         {
             Nome = nome;
             Descricao = descricao;
-            Status = status;
-        }
-
-        public override bool isValid()
-        {
-            ValidationResult = new CriarPerfilCommandValidation().Validate(this);
-            return ValidationResult.IsValid;
         }
     }
 }

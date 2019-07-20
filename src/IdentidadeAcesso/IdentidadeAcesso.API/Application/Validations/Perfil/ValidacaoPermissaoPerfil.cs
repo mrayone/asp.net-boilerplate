@@ -13,8 +13,10 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
         {
             RuleFor(c => c.PerfilId).NotNull()
                 .NotEqual(Guid.Empty).WithMessage("É necessário informar o ID do perfil.");
-            RuleFor(c => c.PermissaoId).NotNull()
-                .NotEqual(Guid.Empty).WithMessage("É necessário fornecer o ID da permissão.");
+            RuleFor(c => c.Assinaturas).NotEmpty();
+            RuleForEach(c => c.Assinaturas)
+                .Must(i => i.PermissaoId != Guid.Empty)
+                .WithMessage($"Os uids das permissões precisam ser diferentes de {Guid.Empty}.");
         }
     }
 }

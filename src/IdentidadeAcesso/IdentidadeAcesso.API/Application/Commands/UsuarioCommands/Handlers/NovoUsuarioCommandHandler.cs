@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -11,35 +12,33 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 {
-    public class NovoUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<NovoUsuarioCommand, bool>
+    public class NovoUsuarioCommandHandler : BaseCommandHandler, IRequestHandler<NovoUsuarioCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IUsuarioService _service;
 
         public NovoUsuarioCommandHandler(IMediator mediator, IUnitOfWork unitOfWork, IUsuarioRepository usuarioRepository, IUsuarioService service,
-            IDomainNotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
+            INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
             _usuarioRepository = usuarioRepository;
             _service = service;
         }
 
-        public async Task<bool> Handle(NovoUsuarioCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(NovoUsuarioCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
             var DisponivelEmailECpf = await _service.DisponivelEmailECpfAsync(request.Email, request.CPF);
             if (!DisponivelEmailECpf)
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Usuário já cadastrado, verifique 'E-mail' e/ou 'CPF'"));
-                return await Task.FromResult(DisponivelEmailECpf);
+                return await Task.FromResult(CommandResponse.Fail);
             };
 
             var usuario = this.DefinirUsuario(request);
             var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
 
-            if (!vinculouPerfil) return await Task.FromResult(false);
+            if (!vinculouPerfil) return await Task.FromResult(CommandResponse.Fail);
 
             _usuarioRepository.Adicionar(usuario);
 
@@ -48,7 +47,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 await _mediator.Publish(new UsuarioCriadoEvent(usuario));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(CommandResponse.Ok);
         }
     }
 }

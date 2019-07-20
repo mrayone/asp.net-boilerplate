@@ -28,39 +28,25 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly IList<Perfil>_listMock;
+        private readonly CriarPerfilCommandHandler _handler;
+
         public NovoPerfilCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _listMock = new List<Perfil>()
             { 
                 TestBuilder.PerfilFalso()
             };
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
+            _handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications);
         }
-
-        [Fact(DisplayName = "O Handle retorna falso se o perfil não for persistido.")]
-        [Trait("Handler - Perfil", "NovoPerfil")]
-        public async Task Handle_retorna_falso_se_o_perfil_estiver_invalidoAsync()
-        {
-            //arrange
-            var command = TestBuilder.FalsoPerfilRequestComPermissoes();
-            var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
-            var cancelToken = new System.Threading.CancellationToken();
-
-            //act
-            var result = await handler.Handle(command, cancelToken);
-
-            //assert
-            result.Should().BeFalse();
-        }
-
 
         [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]
         [Trait("Handler - Perfil", "NovoPerfil")]
@@ -71,15 +57,14 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
              .ReturnsAsync(_listMock);
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
 
-            var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
 
@@ -90,14 +75,13 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             var command = TestBuilder.FalsoPerfilRequestOk();
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
             
-            var handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
         }
     }
 }

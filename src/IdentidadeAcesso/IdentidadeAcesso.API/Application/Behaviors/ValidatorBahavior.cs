@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -13,11 +14,11 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class ValidatorBahavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TRequest> where TResponse : Response
+        where TRequest : IRequest<TResponse> where TResponse : CommandResponse
     {
-        private readonly IEnumerable<IValidator<IRequest>> _validators;
+        private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public ValidatorBahavior(IEnumerable<IValidator<IRequest>> validators)
+        public ValidatorBahavior(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;
         }
@@ -28,17 +29,18 @@ namespace IdentidadeAcesso.API.Application.Behaviors
             var falhas = _validators.Select(v => v.Validate(request))
                             .SelectMany(result => result.Errors)
                             .Where(f => f != null);
-
-            return await (falhas.Any() ? AdicionarErros(falhas) : next());
+            return await (falhas.Any()
+             ? Erros(falhas)
+             : next());
         }
 
-        private Task<TResponse> AdicionarErros(IEnumerable<ValidationFailure> falhas)
+        private static Task<TResponse> Erros(IEnumerable<ValidationFailure> failures)
         {
-            var response = new Response();
+            var response = new CommandResponse();
 
-            foreach (var falha in falhas)
+            foreach (var failure in failures)
             {
-                response.AddError(falha.ErrorMessage);
+                response.AddError(failure.ErrorMessage);
             }
 
             return Task.FromResult(response as TResponse);

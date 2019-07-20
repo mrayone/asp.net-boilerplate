@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using IdentidadeAcesso.API.Application.Behaviors;
+using IdentidadeAcesso.API.Application.Validations.Permissao;
+using IdentidadeAcesso.API.Application.Validations.Usuario;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,14 +16,16 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddValidationBehavior(this IServiceCollection services)
         {
-            const string applicationAssemblyName = "IdentidadeAcesso.API.Application";
-            var assembly = AppDomain.CurrentDomain.Load(applicationAssemblyName);
+            var assembly = typeof(CriarPermissaoValidation).Assembly;
 
             AssemblyScanner
                 .FindValidatorsInAssembly(assembly)
-                .ForEach(validator => services.TryAddScoped(validator.InterfaceType, validator.ValidatorType));
+                .ForEach(result => 
+                {
+                    services.AddScoped(result.InterfaceType, result.ValidatorType);
+                });
 
-            services.TryAddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBahavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBahavior<,>));
 
             return services;
         }

@@ -19,19 +19,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             usuario.DeletadoEm?.Date.Should().Be(DateTime.Today);
         }
 
-        [Fact(DisplayName = "Deve disparar exceção se atribuir VO telefone nulo.")]
-        [Trait("Raiz de Agregação", "Usuário")]
-        public void Deve_Disparar_Excecao_Se_Atribuir_Telefone_Nulo()
-        {
-            //arrange
-            var usuario = UsuarioBuilder.ObterUsuarioValido();
-            //act
-            Action act = ()=> { usuario.AdicionarTelefone(null); };
-            //assert
-
-            act.Should().Throw<ArgumentNullException>();
-        }
-
         [Fact(DisplayName = "Deve disparar exceção se atribuir VO celular nulo.")]
         [Trait("Raiz de Agregação", "Usuário")]
         public void Deve_Disparar_Excecao_Se_Atribuir_Celular_Nulo()

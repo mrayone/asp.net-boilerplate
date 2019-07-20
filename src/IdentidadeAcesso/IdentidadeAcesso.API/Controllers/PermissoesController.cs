@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
+﻿using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
@@ -11,6 +7,10 @@ using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
 {
@@ -21,18 +21,17 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notification;
+        private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator, 
-            IDomainNotificationHandler<DomainNotification> notification )
+        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator,
+            INotificationHandler<DomainNotification> notification )
         {
             _permissaoQueries = permissoQueries;
             _mediator = mediator;
-            _notification = notification;
+            _notifications = notification;
         }
 
-        [Route("obter-todas")]
-        [HttpGet]
+        [HttpGet("obter-todas")]
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
         {
@@ -41,7 +40,7 @@ namespace IdentidadeAcesso.API.Controllers
             return Ok(list);
         }
 
-        [HttpGet]
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPermissaoAsync(Guid id)
@@ -59,47 +58,30 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarPermissaoAsync([FromBody] PermissaoViewModel model)
+        public async Task<IActionResult> CriarPermissaoAsync([FromBody] CriarPermissaoCommand criarPermissao)
         {
-            var command = new CriarPermissaoCommand(model.Tipo, model.Valor);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(criarPermissao);
 
-            if(result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] PermissaoViewModel model)
+        public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand atualizarPermissao)
         {
-            var command = new AtualizarPermissaoCommand(model.Id, model.Tipo, model.Valor);
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(atualizarPermissao);
 
-            if (result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPermissaoAsync( Guid id )
         {
             var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
 
-            if (result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
     }
 }

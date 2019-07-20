@@ -14,14 +14,14 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
     {
         readonly IMediator _mediator;
         readonly IUnitOfWork _unitOfWork;
-        readonly IDomainNotificationHandler<DomainNotification> _notifications;
+        readonly DomainNotificationHandler _notifications;
 
         public BaseCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<DomainNotification> notifications)
+            INotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;
             _unitOfWork = unitOfWork;
-            _notifications = notifications;
+            _notifications = (DomainNotificationHandler) notifications;
         }
 
         protected async Task<bool> Commit()
@@ -34,26 +34,6 @@ namespace IdentidadeAcesso.API.Application.Commands.CommandHandler
             await _mediator.Publish(new DomainNotification("Commit", "Ocorreu um erro ao persistir os dados."));
 
             return await Task.FromResult(false);
-        }
-
-        protected bool ValidarCommand(ICommand request)
-        {
-            if (!request.isValid())
-            {
-                NotificarErros(request);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        protected void NotificarErros(ICommand request)
-        {
-            foreach (var item in request.ValidationResult.Errors)
-            {
-                _mediator.Publish(new DomainNotification(request.GetType().Name, item.ErrorMessage));
-            }
         }
     }
 }

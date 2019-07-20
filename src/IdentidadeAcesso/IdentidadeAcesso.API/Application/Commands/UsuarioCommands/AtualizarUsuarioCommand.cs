@@ -30,11 +30,5 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             PerfilId = perfilId;
             Id = id;
         }
-
-        public override bool isValid()
-        {
-            ValidationResult = new AtualizarUsuarioValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
     }
 }

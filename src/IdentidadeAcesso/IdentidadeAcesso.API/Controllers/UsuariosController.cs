@@ -9,24 +9,26 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{ver:apiVersion}/usuarios")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioQueries _usuarioQuereis;
         private readonly IMediator _mediator;
-        private readonly IDomainNotificationHandler<DomainNotification> _notification;
+        private readonly INotificationHandler<DomainNotification> _notifications;
 
         public UsuariosController(IUsuarioQueries usuarioQuereis, IMediator mediator,
-            IDomainNotificationHandler<DomainNotification> notification)
+            INotificationHandler<DomainNotification> notification)
         {
             _usuarioQuereis = usuarioQuereis;
             _mediator = mediator;
-            _notification = notification;
+            _notifications = notification;
         }
 
         [Route("obter-todos")]
@@ -38,7 +40,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             return Ok(list);
         }
-        [HttpGet]
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(UsuarioViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuarioAsync(Guid id)
         {
@@ -55,38 +57,21 @@ namespace IdentidadeAcesso.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CriarUsuarioAsync([FromBody] UsuarioViewModel usuario)
+        public async Task<IActionResult> CriarUsuarioAsync([FromBody] NovoUsuarioCommand usuario)
         {
-            var command = new NovoUsuarioCommand(usuario.Nome, usuario.Sobrenome, usuario.Sexo, usuario.Email, usuario.CPF,
-                usuario.DateDeNascimento, usuario.Telefone, usuario.Celular, usuario.Logradouro, usuario.Numero,
-                usuario.Complemento, usuario.Bairro, usuario.CEP, usuario.Cidade, usuario.Estado, usuario.PerfilId);
+            var result = await _mediator.Send(usuario);
 
-            var result = await _mediator.Send(command);
-
-            if(result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] UsuarioViewModel usuario)
+        public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] AtualizarUsuarioCommand usuario)
         {
-            var command = new AtualizarUsuarioCommand(usuario.Id, usuario.Nome, usuario.Sobrenome, usuario.Sexo, usuario.Email, usuario.CPF,
-                usuario.DateDeNascimento, usuario.Telefone, usuario.Celular, usuario.Logradouro, usuario.Numero,
-                usuario.Complemento, usuario.Bairro, usuario.CEP, usuario.Cidade, usuario.Estado, usuario.PerfilId);
 
-            var result = await _mediator.Send(command);
+            var result = await _mediator.Send(usuario);
 
-            if (result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
 
         [HttpDelete]
@@ -97,12 +82,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             var result = await _mediator.Send(command);
 
-            if (result)
-            {
-                return Ok();
-            }
-
-            return this.NotificarDomainErros(_notification);
+            return this.VerificarErros(_notifications, result);
         }
     }
 }

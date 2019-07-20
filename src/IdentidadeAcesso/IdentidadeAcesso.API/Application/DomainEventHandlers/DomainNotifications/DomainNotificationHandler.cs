@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications
 {
-    public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotification>
+    public class DomainNotificationHandler : INotificationHandler<DomainNotification>
     {
         private List<DomainNotification> _notifications;
 

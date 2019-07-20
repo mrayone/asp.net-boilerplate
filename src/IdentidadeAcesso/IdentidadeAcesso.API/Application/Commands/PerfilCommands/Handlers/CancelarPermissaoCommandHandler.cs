@@ -3,6 +3,7 @@ using IdentidadeAcesso.API.Application.Extensions;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PerfilEvents;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -12,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CancelarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoCommand, bool>
+    public class CancelarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
         public CancelarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
-            IDomainNotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
+            INotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
             _mediator = mediator;
@@ -27,24 +28,26 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<bool> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            if (!ValidarCommand(request)) return await Task.FromResult(false);
-
-            if (!await this.BuscarPerfil(request.PerfilId, _perfilRepository)) {
-
+            var perfil = await this.BuscarPerfilComPermissoes(request.PerfilId, _perfilRepository);
+            if (perfil == null)
+            {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, "Perfil não encontrado."));
-                return await Task.FromResult(false);
+                return await Task.FromResult(CommandResponse.Fail);
             }
 
-            var perfil = await _perfilService.CancelarPermissaoAsync(request.PermissaoId, request.PerfilId);
+            foreach (var item in request.Assinaturas)
+            {
+                perfil = await _perfilService.CancelarPermissaoAsync(perfil, item.PermissaoId);
+            }
 
             if (await Commit())
             {
                 await _mediator.Publish(new AssinaturaPermissaoCanceladaEvent(perfil));
             }
 
-            return await Task.FromResult(true);
+            return await Task.FromResult(CommandResponse.Ok);
         }
     }
 }

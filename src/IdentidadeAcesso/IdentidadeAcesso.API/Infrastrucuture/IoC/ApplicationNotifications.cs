@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddApplicationNotifications(this IServiceCollection services)
         {
-
 
             return services;
         }

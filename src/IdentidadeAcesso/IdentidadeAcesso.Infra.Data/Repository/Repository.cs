@@ -14,10 +14,10 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, IAggregateRoot
     {
-        protected IdentidadeAcessoContext Context;
+        protected IdentidadeAcessoDbContext Context;
         protected DbSet<TEntity> DbSet;
 
-        public Repository(IdentidadeAcessoContext context)
+        public Repository(IdentidadeAcessoDbContext context)
         {
             Context = context;
             DbSet = Context.Set<TEntity>();
@@ -40,12 +40,12 @@ namespace Knowledge.IO.Infra.Data.Repository
             return await Task.FromResult(result);  
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Context.Dispose();
         }
 
-        public async Task<TEntity> ObterPorId(Guid id)
+        public virtual async Task<TEntity> ObterPorIdAsync(Guid id)
         {
             return await DbSet.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }

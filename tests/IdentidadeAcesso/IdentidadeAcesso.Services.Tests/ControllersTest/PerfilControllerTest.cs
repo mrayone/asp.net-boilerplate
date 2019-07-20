@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
+using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
@@ -20,17 +22,17 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     {
         private readonly PerfisController _controller;
         private readonly Mock<IPerfilQueries> _perfilQueries;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
 
         public PerfilControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilQueries = new Mock<IPerfilQueries>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
+            _notifications = new DomainNotificationHandler();
 
             _controller = new PerfisController(_perfilQueries.Object,
-                _mediator.Object, _notifications.Object);
+                _mediator.Object, _notifications);
         }
 
         [Fact(DisplayName = "Deve cancelar permissões assinadas e retornar Ok.")]
@@ -38,14 +40,19 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
             //arrange
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<bool>>(), new System.Threading.CancellationToken()))
-            .ReturnsAsync(true);
-            var permissao = new PermissaoAssinadaDTO
-            {
-                PermissaoId = Guid.NewGuid(),
-                PerfilId = Guid.NewGuid(),
-                Status = true
-            };
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(CommandResponse.Ok).Verifiable();
+            var permissao = new CancelarPermissaoCommand(
+            
+                perfilId: Guid.NewGuid(),
+                assinaturas: new List<AssinaturaDTO>()
+                {
+                    new AssinaturaDTO()
+                    {
+                        PermissaoId = Guid.NewGuid()
+                    }
+                }
+            );
 
             //act
             var result = await _controller.CancelarPermissoesAsync(permissao);

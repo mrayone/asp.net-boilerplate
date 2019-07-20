@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
 {
-    public class ExcluirPermissaoCommand : BasePermissaoCommand<ExcluirPermissaoCommand>, IRequest<bool>
+    public class ExcluirPermissaoCommand : BasePermissaoCommand<ExcluirPermissaoCommand>
     {
         public ExcluirPermissaoCommand(Guid permissaoId)
         {
@@ -15,11 +15,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
         }
 
         public Guid PermissaoId { get; private set; }
-
-        public override bool isValid()
-        {
-            ValidationResult = new ExcluirPermissaoValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
     }
 }

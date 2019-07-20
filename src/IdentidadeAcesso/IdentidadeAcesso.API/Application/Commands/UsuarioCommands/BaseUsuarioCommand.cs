@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using MediatR;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
-    public abstract class BaseUsuarioCommand<T> : ICommand, IRequest<bool> where T : BaseUsuarioCommand<T>
+    public abstract class BaseUsuarioCommand<T> : IRequest<CommandResponse> where T : BaseUsuarioCommand<T>
     {
         public Guid Id { get; protected set; }
         public string Nome { get; protected set; }
@@ -28,9 +29,5 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string CEP { get; protected set; }
         public string Cidade { get; protected set; }
         public string Estado { get; protected set; }
-
-        public ValidationResult ValidationResult { get; protected set; }
-
-        public abstract bool isValid();
     }
 }

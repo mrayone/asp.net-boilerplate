@@ -29,10 +29,9 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> AssinarPermissaoAsync(Guid permissaoId, Guid perfilId)
+        public async Task<Perfil> AssinarPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
-            var perfil = await _perfilRepo.ObterPorId(perfilId);
-            var permissao = await _permissaoRepo.ObterPorId(permissaoId);
+            var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
             if (permissao == null)
             {
@@ -42,27 +41,27 @@ namespace IdentidadeAcesso.Domain.Sevices
             else
             {
                 perfil.AssinarPermissao(permissao.Id);
-                _perfilRepo.Atualizar(perfil);
             }
+            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }
 
-        public async Task<Perfil> CancelarPermissaoAsync(Guid permissaoId, Guid perfilId)
+        public async Task<Perfil> CancelarPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
-            var perfil = await _perfilRepo.ObterPorId(perfilId);
-            var permissao = await _permissaoRepo.ObterPorId(permissaoId);
+            var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
-            var containsPermissao = perfil.PermissoesAssinadas.Select(p => p.PermissaoId == permissaoId).SingleOrDefault();
-            if (!containsPermissao)
+            var containsPermissao = perfil.PermissoesAssinadas.Where(p => p.PermissaoId == permissaoId);
+            if (!containsPermissao.Any())
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));
             }
             else
             {
                 perfil.CancelarPermissao(permissaoId);
-                _perfilRepo.Atualizar(perfil);
             }
+
+            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }

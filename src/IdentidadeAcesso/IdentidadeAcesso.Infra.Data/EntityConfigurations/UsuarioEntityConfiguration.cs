@@ -13,7 +13,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Usuario> usuarioConfiguration)
         {
-            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
             usuarioConfiguration.HasKey(u => u.Id);
 
             usuarioConfiguration.OwnsOne(u => u.Nome, n =>
@@ -27,7 +27,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 s.Property(p => p.Tipo).HasColumnName("Sexo").IsRequired();
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Status);
+            usuarioConfiguration.Property(u => u.Status);
 
             usuarioConfiguration.OwnsOne(u => u.Email, e => 
             {
@@ -44,14 +44,10 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 d.Property(p => p.Data).IsRequired();
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Celular, c => 
+            usuarioConfiguration.OwnsOne(u => u.NumerosContato, c => 
             {
-                c.Property(p => p.Numero).IsRequired(false);
-            });
-
-            usuarioConfiguration.OwnsOne(u => u.Telefone, t =>
-            {
-                t.Property(p => p.Numero).IsRequired(false);
+                c.Property(p => p.NumeroCel).HasColumnName("Celular").IsRequired(false);
+                c.Property(p => p.NumeroTelefone).HasColumnName("Telefone").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Endereco, e => 
@@ -64,8 +60,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.HasOne<Perfil>()
                 .WithMany()
-                .HasForeignKey("PerfilId")
-                .IsRequired();
+                .HasForeignKey("PerfilId");
         }
     }
 }

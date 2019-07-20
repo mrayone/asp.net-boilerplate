@@ -6,7 +6,7 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class PermissaoRepository : Repository<Permissao>, IPermissaoRepository
     {
-        public PermissaoRepository(IdentidadeAcessoContext context) : base(context)
+        public PermissaoRepository(IdentidadeAcessoDbContext context) : base(context)
         {
 
         }

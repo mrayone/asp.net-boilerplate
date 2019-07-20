@@ -92,7 +92,7 @@ namespace IdentidadeAcesso.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowledge.IO API V1");
             });
 
-            app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

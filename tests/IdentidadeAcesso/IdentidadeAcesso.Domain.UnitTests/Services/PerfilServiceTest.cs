@@ -42,7 +42,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _perfil = PerfilBuilder.ObterPerfil();
             _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
 
-            _perfilRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(_perfil);
+            _perfilRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(_perfil);
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar perfil modificado.")]
@@ -51,13 +51,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
-            var act = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
+            var act = await _perfilService.AssinarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
             var permissaoAssinada = act.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
-            permissaoAssinada.Status.Valor.Should().BeTrue();
+            permissaoAssinada.Status.Should().BeTrue();
         }
 
 
@@ -66,15 +66,16 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Cancelar_Permissao_E_Retornar_Perfil()
         {
             //arrange
+            var perfil = PerfilBuilder.ObterPerfil();
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
+            _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
-            var assinada = await _perfilService.AssinarPermissaoAsync(permissao.Id, _perfil.Id);
-            var cancelada = await _perfilService.CancelarPermissaoAsync(permissao.Id, _perfil.Id);
+            var assinada = await _perfilService.AssinarPermissaoAsync(perfil, permissao.Id);
+            var cancelada = await _perfilService.CancelarPermissaoAsync(perfil, permissao.Id);
             var permissaoAssinada = cancelada.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
-            permissaoAssinada.Status.Valor.Should().BeFalse();
+            permissaoAssinada.Status.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve notificar quando tentar cancelar permissão não assinada.")]
@@ -83,9 +84,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(permissao);
+            _permRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(permissao);
             //act
-            var act = await _perfilService.CancelarPermissaoAsync(_perfil.Id, permissao.Id);
+            var act = await _perfilService.CancelarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
@@ -100,7 +101,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             var permissao = PermissaoBuilder.ObterPermissaoFake();
 
             //act
-            var act = await _perfilService.CancelarPermissaoAsync(_perfil.Id, permissao.Id);
+            var act = await _perfilService.CancelarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
@@ -112,7 +113,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Deletar_Perfil_e_Retornar_True()
         {
             //arrange
-            var perfil = await _perfilRepo.Object.ObterPorId(Guid.NewGuid());
+            var perfil = await _perfilRepo.Object.ObterPorIdAsync(Guid.NewGuid());
             //act
             var result = await _perfilService.DeletarPerfilAsync(perfil);
             //assert

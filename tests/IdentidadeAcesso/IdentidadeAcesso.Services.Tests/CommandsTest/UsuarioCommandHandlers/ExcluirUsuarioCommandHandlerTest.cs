@@ -25,7 +25,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         private readonly Mock<IUnitOfWork> _uow;
         private readonly Mock<IUsuarioRepository> _repository;
         private readonly Mock<IUsuarioService> _service;
-        private readonly Mock<IDomainNotificationHandler<DomainNotification>> _notifications;
+        private readonly DomainNotificationHandler _notifications;
         
         public ExcluirUsuarioCommandHandlerTest()
         {
@@ -33,8 +33,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             _repository = new Mock<IUsuarioRepository>();
             _uow = new Mock<IUnitOfWork>();
             _service = new Mock<IUsuarioService>();
-            _notifications = new Mock<IDomainNotificationHandler<DomainNotification>>();
-            _handler = new ExcluirUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications.Object);
+            _notifications = new DomainNotificationHandler();
+            _handler = new ExcluirUsuarioCommandHandler(_mediator.Object, _uow.Object, _repository.Object, _service.Object, _notifications);
 
             _uow.Setup(uow => uow.Commit()).ReturnsAsync(CommandResponse.Ok);
 
@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar false se usuário não existir.")]
@@ -65,7 +65,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar true e marcar usuario como deletado.")]
@@ -75,7 +75,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             //arrange
             var command = UsuarioBuilder.ObterCommandFakeExcluir();
             var usuarioFake = UsuarioBuilder.UsuarioFake();
-            _repository.Setup(u => u.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(usuarioFake);
+            _repository.Setup(u => u.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(usuarioFake);
             _service.Setup(u => u.DeletarUsuarioAsync(It.IsAny<Guid>())).ReturnsAsync(() => 
             {
                 usuarioFake.Deletar();
@@ -85,7 +85,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
             usuarioFake.DeletadoEm.HasValue.Should().BeTrue();
             _mediator.Verify(p => p.Publish(It.IsAny<UsuarioDeletadoEvent>(), 
                 new System.Threading.CancellationToken()), Times.Once());

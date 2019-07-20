@@ -26,12 +26,12 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var sexo = SexoBuilder.ObterSexoValido();
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
-            var celular = CelularBuilder.ObterCelularValido();
-            var telefone = TelefoneBuilder.ObterTelefoneValido();
+            var numContato = CelularBuilder.ObterCelularValido();
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
-            return UsuarioFactory.CriarUsuario(null, nome, sexo, email, cpf, dataDeNascimento,celular,
-                telefone, endereco);
+            return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
+                cpf.Digitos, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
+                endereco, Guid.NewGuid());
         }
     }
 }

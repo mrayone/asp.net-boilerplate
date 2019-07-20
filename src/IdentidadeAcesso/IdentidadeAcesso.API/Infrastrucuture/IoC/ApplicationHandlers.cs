@@ -1,5 +1,11 @@
-﻿using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
+﻿using IdentidadeAcesso.API.Application.Behaviors;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
+using IdentidadeAcesso.Domain.SeedOfWork;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -14,7 +20,23 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddApplicationHandlers(this IServiceCollection services)
         {
-            services.TryAddScoped<IRequestHandler<CriarPermissaoCommand, bool>, CriarPermissaoCommandHandler>();
+            //Permissão Handlers
+            services.TryAddScoped<IRequestHandler<CriarPermissaoCommand, CommandResponse>, CriarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarPermissaoCommand, CommandResponse>, AtualizarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirPermissaoCommand, CommandResponse>, ExcluirPermissaoCommandHandler>();
+
+
+            //Perfil Handlers
+            services.TryAddScoped<IRequestHandler<AssinarPermissaoCommand, CommandResponse>, AssinarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<CancelarPermissaoCommand, CommandResponse>, CancelarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<CriarPerfilCommand, CommandResponse>, CriarPerfilCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarPerfilCommand, CommandResponse>, AtualizarPerfilCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirPerfilCommand, CommandResponse>, ExcluirPerfilCommandHandler>();
+
+            //Usuario Handlers
+            services.TryAddScoped<IRequestHandler<NovoUsuarioCommand, CommandResponse>, NovoUsuarioCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarUsuarioCommand, CommandResponse>, AtualizarUsuarioCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirUsuarioCommand, CommandResponse>, ExcluirUsuarioCommandHandler>();
 
             return services;
         }
