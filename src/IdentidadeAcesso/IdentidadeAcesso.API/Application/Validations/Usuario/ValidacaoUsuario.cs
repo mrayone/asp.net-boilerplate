@@ -35,7 +35,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                 .WithMessage("O usuário deve ter 16 anos ou mais.");
 
             RuleFor(c => c.Sexo)
-                .Must(v => !v.Equals("M") || !v.Equals("F"))
+                .Must(v => v.Equals("M") || v.Equals("F"))
                 .WithMessage("O sexo deve ser definido como 'M' masculino ou 'F' feminino.");
 
             RuleFor(c => c.Email).NotNull()

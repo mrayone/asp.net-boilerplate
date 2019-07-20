@@ -3,6 +3,8 @@ using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands;
+using IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,11 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
             services.TryAddScoped<IRequestHandler<CriarPerfilCommand, CommandResponse>, CriarPerfilCommandHandler>();
             services.TryAddScoped<IRequestHandler<AtualizarPerfilCommand, CommandResponse>, AtualizarPerfilCommandHandler>();
             services.TryAddScoped<IRequestHandler<ExcluirPerfilCommand, CommandResponse>, ExcluirPerfilCommandHandler>();
+
+            //Usuario Handlers
+            services.TryAddScoped<IRequestHandler<NovoUsuarioCommand, CommandResponse>, NovoUsuarioCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtualizarUsuarioCommand, CommandResponse>, AtualizarUsuarioCommandHandler>();
+            services.TryAddScoped<IRequestHandler<ExcluirUsuarioCommand, CommandResponse>, ExcluirUsuarioCommandHandler>();
 
             return services;
         }
