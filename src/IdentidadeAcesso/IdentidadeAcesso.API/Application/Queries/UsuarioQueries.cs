@@ -25,7 +25,27 @@ namespace IdentidadeAcesso.API.Application.Queries
 
         public async Task<UsuarioViewModel> ObterPorIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT
+                               [Id]
+                              ,[PrimeiroNome]
+                              ,[Sobrenome]
+                              ,[Sexo]
+                              ,[Email]
+                              ,[CPF_Digitos] AS CPF
+                              ,[DataDeNascimento_Data] as DataDeNascimento
+                              ,[Celular]
+                              ,[Telefone]
+                              ,[Status]
+                              ,[DeletadoEm]
+                              ,[PerfilId]
+                          FROM [usuarios] WHERE [Id] = @uid";
+
+                var query = await connection.QuerySingleOrDefaultAsync<UsuarioViewModel>(sql, new { uid = id});
+
+                return query;
+            }
         }
 
         public async Task<IEnumerable<UsuarioViewModel>> ObterTodosAsync()
@@ -41,6 +61,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[CPF_Digitos] AS CPF
                               ,[DataDeNascimento_Data] as DataDeNascimento
                               ,[Celular]
+                              ,[Telefone]
                               ,[Status]
                               ,[DeletadoEm]
                               ,[PerfilId]

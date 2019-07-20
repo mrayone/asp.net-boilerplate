@@ -44,9 +44,10 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 d.Property(p => p.Data).IsRequired();
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Celular, c => 
+            usuarioConfiguration.OwnsOne(u => u.NumerosContato, c => 
             {
                 c.Property(p => p.NumeroCel).HasColumnName("Celular").IsRequired(false);
+                c.Property(p => p.NumeroTelefone).HasColumnName("Telefone").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Endereco, e => 

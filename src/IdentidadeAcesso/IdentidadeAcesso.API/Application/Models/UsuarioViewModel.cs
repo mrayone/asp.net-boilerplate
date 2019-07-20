@@ -25,6 +25,7 @@ namespace IdentidadeAcesso.API.Application.Models
         public Guid PerfilId { get; set; }
         [Required(ErrorMessage = "Um número de celular deve ser fornecido.")]
         public string Celular { get; set; }
+        public string Telefone { get; set; }
         public bool Status { get; set; }
         public string Logradouro { get; set; }
         public string Numero { get; set; }

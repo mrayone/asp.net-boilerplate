@@ -36,5 +36,21 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.StatusCode.Should().Be(HttpStatusCode.OK);
             usuarios.Should().NotBeEmpty();
         }
+
+
+        [Fact(DisplayName = "Deve retornar o usuário com id 50d4a981-48d3-42e6-9c6e-9602184afca7.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Retornar_Usario_Por_Id_Async()
+        {
+            //arrange
+
+            //act
+            var result = await _client.GetAsync("api/v1/usuarios/50d4a981-48d3-42e6-9c6e-9602184afca7");
+            var usuarios = JsonConvert.DeserializeObject<UsuarioViewModel>(await result.Content.ReadAsStringAsync());
+            //assert
+            result.EnsureSuccessStatusCode();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            usuarios.Should().NotBeNull();
+        }
     }
 }

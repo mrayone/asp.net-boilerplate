@@ -40,7 +40,7 @@ namespace IdentidadeAcesso.API.Controllers
 
             return Ok(list);
         }
-        [HttpGet]
+        [HttpGet("{id:Guid}")]
         [ProducesResponseType(typeof(UsuarioViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuarioAsync(Guid id)
         {

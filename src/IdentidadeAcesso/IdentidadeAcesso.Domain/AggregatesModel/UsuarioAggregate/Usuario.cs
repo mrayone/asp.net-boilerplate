@@ -13,7 +13,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Email Email { get; private set; }
         public CPF CPF { get; private set; }
         public DataDeNascimento DataDeNascimento { get; private set; }
-        public Celular Celular { get; private set; }
+        public NumerosContato NumerosContato { get; private set; }
         public bool Status { get; private set; }
         public Endereco Endereco { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
@@ -40,9 +40,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Endereco = endereco ?? throw new ArgumentNullException("Não é possível atribuir um endereço nulo.");
         }
 
-        public void AdicionarCelular(Celular celular)
+        public void AdicionarCelular(NumerosContato numeros)
         {
-            Celular = celular ?? throw new ArgumentNullException("Não é possível atribuir um celular nulo.");
+            NumerosContato = numeros ?? throw new ArgumentNullException("Não é possível atribuir numeros de contato nulo.");
         }
 
         public void Deletar()
@@ -68,7 +68,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
-                string cpf, DateTime dataDeNascimento, string celular, Endereco endereco, Guid PerfilId)
+                string cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
             {
                 var usuario = new Usuario
                 {
@@ -81,7 +81,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     PerfilId = PerfilId
                 };
 
-                usuario.AdicionarCelular(new Celular(celular));
+                usuario.AdicionarCelular(new NumerosContato(celular, telefone));
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
 

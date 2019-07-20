@@ -14,8 +14,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         [Fact(DisplayName = "Deve garantir que dois celulares com o mesmo digito sejam o mesmo objeto")]
         public void deve_garantir_que_dois_telefones_com_mesmo_digito_sejam_o_mesmo_objeto()
         {
-            var cel = new Celular("+5518981928663");
-            var cel2 = new Celular("+5518981928663");
+            var cel = new NumerosContato("+5518981928663", "");
+            var cel2 = new NumerosContato("+5518981928663", "");
 
             cel.Should().Be(cel2);
         }
