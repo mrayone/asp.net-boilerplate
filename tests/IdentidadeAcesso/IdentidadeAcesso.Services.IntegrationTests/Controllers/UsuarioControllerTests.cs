@@ -145,6 +145,23 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.Should().BeEmpty();
         }
 
+        [Fact(DisplayName = "Deve excluir o usuário com sucesso.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Excluir_UsuarioComSucesso()
+        {
+            //arrange
+
+            //act
+            var delete = await _client.DeleteAsync($"{API}/50d4a981-48d3-42e6-9c6e-9602184afca7");
+            var response = await delete.Content.ReadAsStringAsync();
+
+            //assert
+            delete.EnsureSuccessStatusCode();
+            delete.StatusCode.Should().Be(HttpStatusCode.OK);
+            response.Should().BeEmpty();
+
+        }
+
         private StringContent GerarContent(object objeto)
         {
             var content = new StringContent(JsonConvert.SerializeObject(objeto));

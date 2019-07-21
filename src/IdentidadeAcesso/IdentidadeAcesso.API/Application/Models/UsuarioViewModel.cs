@@ -22,6 +22,7 @@ namespace IdentidadeAcesso.API.Application.Models
         [Required(ErrorMessage = "A data de nascimento deve ser informada.")]
         public DateTime DateDeNascimento { get; set; }
         [Required]
+
         public Guid PerfilId { get; set; }
         [Required(ErrorMessage = "Um número de celular deve ser fornecido.")]
         public string Celular { get; set; }
