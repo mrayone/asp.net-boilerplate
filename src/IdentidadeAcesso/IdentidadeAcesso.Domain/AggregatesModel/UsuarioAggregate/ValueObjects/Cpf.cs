@@ -11,7 +11,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public CPF(string digitos)
         {
-            Digitos = digitos;
+            Digitos = LimparFormatacaoCPF(digitos);
         }
 
         public static string LimparFormatacaoCPF(string cpf)
@@ -36,16 +36,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
                 cpfStr.Substring(3, 3), cpfStr.Substring(6, 3), cpfStr.Substring(9, 2));
 
             return new CPF(cpfFormatado);
-        }
-
-        public static CPF ObterCPFSemFormatacao(string cpf)
-        {
-            if (cpf == null) return new CPF(null);
-            if (cpf == String.Empty) return new CPF("");
-
-            var cpfLimpo = CPF.LimparFormatacaoCPF(cpf);
-
-            return new CPF(cpfLimpo);
         }
 
         protected override bool EqualsCore(CPF other)

@@ -73,10 +73,13 @@ namespace IdentidadeAcesso.Domain.Sevices
 
         public async Task<bool> DisponivelEmailECpfAsync(string email, string cpf, Guid? usuarioId)
         {
-            IEnumerable<Usuario> usuarioBusca = await _repository.Buscar(u => u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf));
+            IEnumerable<Usuario> usuarioBusca;
             if(usuarioId.HasValue)
             {
-                usuarioBusca = await _repository.Buscar(u => u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf) && u.Id != usuarioId.Value);
+                usuarioBusca = await _repository.Buscar(u => (u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf)) && u.Id != usuarioId.Value);
+            } else
+            {
+                usuarioBusca = await _repository.Buscar(u => u.Email.Endereco.Equals(email) || u.CPF.Digitos.Equals(cpf));
             }
 
             if (usuarioBusca.Any()) return false;

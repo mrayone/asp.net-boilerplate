@@ -21,7 +21,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //arrage
             var cpfStr = "017.942.000-37";
             //act
-            var cpfLimpo = CPF.ObterCPFSemFormatacao(cpfStr);
+            var cpfLimpo = CPF.LimparFormatacaoCPF(cpfStr);
 
             //assert
             cpfLimpo.Digitos.Should().Be("01794200037");

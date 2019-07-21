@@ -112,6 +112,39 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.Should().BeEmpty();
         }
 
+        [Fact(DisplayName = "Deve atualizar o usuário de ID 50d4a981-48d3-42e6-9c6e-9602184afca7.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Atualizar_UsuarioComSucesso()
+        {
+            //arrange
+            var usuario = new
+            {
+                Id = "50d4a981-48d3-42e6-9c6e-9602184afca7",
+                Nome = "Aegon I",
+                Sobrenome = "Targaryen",
+                Sexo = "M",
+                DateDeNascimento = DateTime.Now.AddYears(-16),
+                CPF = "44015650026",
+                Email = "fakedoi_2@gmail.com",
+                PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                Celular = "+5518996113325",
+                Logradouro = "Rua Winterfall",
+                Numero = "VW97X",
+                Bairro = "Game of Thrones",
+                CEP = "19778500",
+                Cidade = "North",
+                Estado = "HBO"
+            };
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PutAsync($"{API}", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.EnsureSuccessStatusCode();
+            post.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEmpty();
+        }
+
         private StringContent GerarContent(object objeto)
         {
             var content = new StringContent(JsonConvert.SerializeObject(objeto));

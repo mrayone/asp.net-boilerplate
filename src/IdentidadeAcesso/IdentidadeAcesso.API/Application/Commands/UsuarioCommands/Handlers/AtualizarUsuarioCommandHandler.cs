@@ -55,7 +55,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 return await Task.FromResult(false);
             }
 
-            var DisponivelEmailECpf = await _service.DisponivelEmailECpfAsync(request.Email, request.CPF, request.PerfilId);
+            var DisponivelEmailECpf = await _service.DisponivelEmailECpfAsync(request.Email, request.CPF, request.Id);
             if (!DisponivelEmailECpf)
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Usuário já cadastrado, verifique 'E-mail' e/ou 'CPF'"));
