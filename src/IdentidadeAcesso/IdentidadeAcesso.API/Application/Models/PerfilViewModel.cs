@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace IdentidadeAcesso.API.Application.Models
 {
-    public class PerfilViewModel
+    public class PerfilViewModel : IQueryModel
     {
         public PerfilViewModel()
         {

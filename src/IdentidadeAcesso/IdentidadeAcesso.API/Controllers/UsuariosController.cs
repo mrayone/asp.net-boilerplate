@@ -19,14 +19,12 @@ namespace IdentidadeAcesso.API.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly IUsuarioQueries _usuarioQuereis;
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public UsuariosController(IUsuarioQueries usuarioQuereis, IMediator mediator,
+        public UsuariosController(IMediator mediator,
             INotificationHandler<DomainNotification> notification)
         {
-            _usuarioQuereis = usuarioQuereis;
             _mediator = mediator;
             _notifications = notification;
         }
@@ -36,7 +34,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<UsuarioViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuariosAsync()
         {
-            var list = await _usuarioQuereis.ObterTodosAsync();
+            var list = await _mediator.Send(new BuscarTodos<IEnumerable<UsuarioViewModel>>());
 
             return Ok(list);
         }
@@ -46,7 +44,7 @@ namespace IdentidadeAcesso.API.Controllers
         {
             try
             {
-                var usuario = await _usuarioQuereis.ObterPorIdAsync(id);
+                var usuario = await _mediator.Send(new BuscarPorId<UsuarioViewModel>(id));
                 return Ok(usuario);
             }
             catch (Exception)

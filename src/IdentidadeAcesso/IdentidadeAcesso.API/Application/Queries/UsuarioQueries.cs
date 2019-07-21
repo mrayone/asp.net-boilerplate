@@ -1,16 +1,19 @@
 ﻿using Dapper;
 using IdentidadeAcesso.API.Application.Models;
 using Knowledge.IO.Infra.Data.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public class UsuarioQueries : IUsuarioQueries
+    public class UsuarioQueries : IRequestHandler<BuscarPorId<UsuarioViewModel>, UsuarioViewModel>,
+        IRequestHandler<BuscarTodos<IEnumerable<UsuarioViewModel>>, IEnumerable<UsuarioViewModel>>, IDisposable
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -23,7 +26,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             _context.Dispose();
         }
 
-        public async Task<UsuarioViewModel> ObterPorIdAsync(Guid id)
+        public async Task<UsuarioViewModel> Handle(BuscarPorId<UsuarioViewModel> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {
@@ -49,13 +52,13 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Estado]
                           FROM [usuarios] LEFT JOIN [usuario_endereco] ON [usuario_endereco].[UsuarioId] = [Id] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
 
-                var query = await connection.QuerySingleOrDefaultAsync<UsuarioViewModel>(sql, new { uid = id});
+                var query = await connection.QuerySingleOrDefaultAsync<UsuarioViewModel>(sql, new { uid = request.Id });
 
                 return query;
             }
         }
 
-        public async Task<IEnumerable<UsuarioViewModel>> ObterTodosAsync()
+        public async Task<IEnumerable<UsuarioViewModel>> Handle(BuscarTodos<IEnumerable<UsuarioViewModel>> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {

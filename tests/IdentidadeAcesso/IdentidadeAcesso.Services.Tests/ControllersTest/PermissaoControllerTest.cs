@@ -2,7 +2,7 @@
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.Models;
-using IdentidadeAcesso.API.Application.Queries;
+using IdentidadeAcesso.API.Application.Queries.Interfaces;
 using IdentidadeAcesso.API.Controllers;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;

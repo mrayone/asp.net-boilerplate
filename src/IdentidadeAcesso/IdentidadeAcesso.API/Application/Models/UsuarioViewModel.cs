@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IdentidadeAcesso.API.Application.Models
 {
-    public class UsuarioViewModel
+    public class UsuarioViewModel : IQueryModel
     {
         [BindNever]
         public Guid Id { get; set; }
