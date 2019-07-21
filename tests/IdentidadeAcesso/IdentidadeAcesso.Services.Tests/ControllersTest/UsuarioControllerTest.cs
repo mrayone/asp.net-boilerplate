@@ -21,16 +21,14 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     public class UsuarioControllerTest
     {
         private readonly Mock<IMediator> _mediator;
-        private readonly Mock<IUsuarioQueries> _usuarioQueries;
         private readonly DomainNotificationHandler _notifications;
         private readonly UsuariosController _controller;
         public UsuarioControllerTest()
         {
             _mediator = new Mock<IMediator>();
-            _usuarioQueries = new Mock<IUsuarioQueries>();
             _notifications = new DomainNotificationHandler();
 
-            _controller = new UsuariosController(_usuarioQueries.Object, _mediator.Object,
+            _controller = new UsuariosController(_mediator.Object,
                 _notifications);
         }
 
@@ -45,8 +43,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                 ViewModelBuilder.UsuarioFake(),
                 ViewModelBuilder.UsuarioFake(),
             };
-            _usuarioQueries.Setup(q => q.ObterTodosAsync())
-                .ReturnsAsync(list);
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<IEnumerable<UsuarioViewModel>>>(), new System.Threading.CancellationToken()))
+                .ReturnsAsync(list).Verifiable();
             //act
             var result = await _controller.GetUsuariosAsync();
 
@@ -55,6 +53,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             var vr = result as OkObjectResult;
             vr.Value.Should().Be(list);
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
+            _mediator.Verify();
         }
 
         [Trait("Controller", "UsuariosController")]
@@ -63,7 +62,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var usuarioFake = ViewModelBuilder.UsuarioFake();
-            _usuarioQueries.Setup(q => q.ObterPorIdAsync(It.IsAny<Guid>()))
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<UsuarioViewModel>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(usuarioFake);
             //act
             var result = await _controller.GetUsuarioAsync(Guid.NewGuid());
@@ -81,8 +80,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             //arrange
             var usuarioFake = ViewModelBuilder.UsuarioFake();
-            _usuarioQueries.Setup(q => q.ObterPorIdAsync(It.IsAny<Guid>()))
-                .Throws(new KeyNotFoundException());
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<UsuarioViewModel>>(), new System.Threading.CancellationToken()))
+                .Throws<KeyNotFoundException>();
             //act
             var result = await _controller.GetUsuarioAsync(Guid.NewGuid());
 

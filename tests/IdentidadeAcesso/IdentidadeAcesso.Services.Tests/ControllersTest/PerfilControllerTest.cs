@@ -1,12 +1,8 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
-using IdentidadeAcesso.API.Application.Models;
-using IdentidadeAcesso.API.Application.Queries.Interfaces;
 using IdentidadeAcesso.API.Controllers;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
-using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,18 +17,15 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     public class PerfilControllerTest
     {
         private readonly PerfisController _controller;
-        private readonly Mock<IPerfilQueries> _perfilQueries;
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
 
         public PerfilControllerTest()
         {
             _mediator = new Mock<IMediator>();
-            _perfilQueries = new Mock<IPerfilQueries>();
             _notifications = new DomainNotificationHandler();
 
-            _controller = new PerfisController(_perfilQueries.Object,
-                _mediator.Object, _notifications);
+            _controller = new PerfisController(_mediator.Object, _notifications);
         }
 
         [Fact(DisplayName = "Deve cancelar permissões assinadas e retornar Ok.")]
