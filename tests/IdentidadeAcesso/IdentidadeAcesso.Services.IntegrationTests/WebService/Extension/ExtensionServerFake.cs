@@ -28,7 +28,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService.Extension
                             .GetRequiredService<ILogger<WebApplicationFactory<TStartup>>>();
 
                         // Ensure the database is created.
-                        db.Database.EnsureDeleted();
                         db.Database.EnsureCreated();
 
                         try

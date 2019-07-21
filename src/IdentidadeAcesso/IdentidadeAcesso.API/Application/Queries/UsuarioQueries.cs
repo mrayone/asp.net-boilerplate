@@ -47,7 +47,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Cep] AS CEP
                               ,[Cidade]
                               ,[Estado]
-                          FROM [usuarios] LEFT JOIN [usuario_endereco] ON [usuario_endereco].[UsuarioId] = [Id] WHERE [Id] = @uid";
+                          FROM [usuarios] LEFT JOIN [usuario_endereco] ON [usuario_endereco].[UsuarioId] = [Id] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
 
                 var query = await connection.QuerySingleOrDefaultAsync<UsuarioViewModel>(sql, new { uid = id});
 
@@ -72,7 +72,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Status]
                               ,[DeletadoEm]
                               ,[PerfilId]
-                          FROM [usuarios]";
+                          FROM [usuarios] WHERE [DeletadoEm] IS NULL";
 
                 var query = await connection.QueryAsync<UsuarioViewModel>(sql);
 

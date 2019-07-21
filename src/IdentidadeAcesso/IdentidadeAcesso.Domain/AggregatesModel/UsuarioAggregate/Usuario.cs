@@ -68,7 +68,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
-                string cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
+                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
             {
                 var usuario = new Usuario
                 {
@@ -76,7 +76,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     Sexo = sexo.Equals("F") ? Sexo.Feminino : Sexo.Masculino,
                     DataDeNascimento = new DataDeNascimento(dataDeNascimento),
                     Email = new Email(email),
-                    CPF = new CPF(cpf),
+                    CPF = cpf,
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
                     PerfilId = PerfilId
                 };

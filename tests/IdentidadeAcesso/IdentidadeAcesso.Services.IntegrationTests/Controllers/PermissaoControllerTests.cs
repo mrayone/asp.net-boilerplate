@@ -158,7 +158,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        //TODO: validar se permissão está em uso.
+        //TODO: Validar erro caso tente excluir permissão em uso.
         //[Fact(DisplayName = "Deve gerar erro ao excluir permissão em uso.")]
         //[Trait("Testes de Integração", "PermissaoControllerTests")]
         //public async Task Deve_Gerar_Erro_Ao_Excluir_Permissao_Em_Uso()

@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
             return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
-                cpf.Digitos, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
+                cpf, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
                 endereco, Guid.NewGuid());
         }
     }

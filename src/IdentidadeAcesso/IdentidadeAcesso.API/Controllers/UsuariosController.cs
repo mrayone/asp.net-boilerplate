@@ -74,7 +74,7 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:Guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirUsuarioAsync(Guid id)
         {

@@ -24,10 +24,10 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                  .MinimumLength(3);
 
             RuleFor(c => c.CPF).NotNull()
-                 .Must(CPFValido).WithMessage("O CPF informado é inválido.")
                  .NotEmpty()
                  .MaximumLength(14)
-                 .MinimumLength(11);
+                 .MinimumLength(11)
+                 .Must(CPFValido).WithMessage("O CPF informado é inválido.");
 
             RuleFor(c => c.DateDeNascimento)
                 .NotEmpty()
@@ -104,8 +104,10 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 
         private bool CPFValido(string arg)
         {
+            if (string.IsNullOrEmpty(arg)) return false;
+
             var MaxDigitos = 11;
-            var cpf = CPF.LimparFormatacaoCPF(arg);
+            var cpf = CPF.ObterCPFLimpo(arg).Digitos;
 
             if (cpf.Length > MaxDigitos)
                 return false;
