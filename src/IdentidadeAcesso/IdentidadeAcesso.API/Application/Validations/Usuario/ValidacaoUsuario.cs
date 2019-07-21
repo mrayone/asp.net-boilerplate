@@ -105,7 +105,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         private bool CPFValido(string arg)
         {
             var MaxDigitos = 11;
-            var cpf = CPF.LimparFormatacaoCPF(arg);
+            var cpf = CPF.ObterCPFLimpo(arg).Digitos;
 
             if (cpf.Length > MaxDigitos)
                 return false;

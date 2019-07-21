@@ -11,12 +11,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public CPF(string digitos)
         {
-            Digitos = LimparFormatacaoCPF(digitos);
+            Digitos = digitos;
         }
 
-        public static string LimparFormatacaoCPF(string cpf)
+        public static CPF ObterCPFLimpo(string cpf)
         {
-            if (string.IsNullOrEmpty(cpf)) return "";
+            if (string.IsNullOrEmpty(cpf)) throw new ArgumentNullException("CPF Nulo.");
             if (cpf.Length < 11)
                 cpf = "0" + cpf;
 
@@ -24,12 +24,12 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
             var cpfLimpo = Regex.Replace(cpf, pattern, "");
 
-            return cpfLimpo;
+            return new CPF(cpfLimpo);
         }
 
         public static CPF ObterCPFComFormatacao(string cpfStr)
         {
-            cpfStr = CPF.LimparFormatacaoCPF(cpfStr);
+            cpfStr = CPF.ObterCPFLimpo(cpfStr).Digitos;
             if (string.IsNullOrEmpty(cpfStr)) return new CPF(cpfStr);
 
             var cpfFormatado = String.Format("{0}.{1}.{2}-{3}", cpfStr.Substring(0,3), 
