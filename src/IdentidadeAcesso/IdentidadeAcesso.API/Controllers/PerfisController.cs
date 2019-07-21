@@ -17,14 +17,11 @@ namespace IdentidadeAcesso.API.Controllers
     [ApiController]
     public class PerfisController : ControllerBase
     {
-        private readonly IPerfilQueries _perfilQueris;
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PerfisController( IPerfilQueries perfilQueries, 
-            IMediator mediator, INotificationHandler<DomainNotification> notifications )
+        public PerfisController( IMediator mediator, INotificationHandler<DomainNotification> notifications )
         {
-            _perfilQueris = perfilQueries;
             _mediator = mediator;
             _notifications = notifications;
         }
@@ -33,7 +30,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
         {
-            var list = await _perfilQueris.ObterTodasAsync();
+            var list = await _mediator.Send(new BuscarTodos<IEnumerable<PerfilViewModel>>());
 
             return Ok(list);
         }
@@ -45,7 +42,7 @@ namespace IdentidadeAcesso.API.Controllers
         {
             try
             {
-                var model = await _perfilQueris.ObterPorIdAsync(id);
+                var model = await _mediator.Send(new BuscarPorId<PerfilViewModel>(id));
                 return Ok(model);
             }
             catch (Exception e)

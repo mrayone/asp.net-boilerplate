@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Behaviors
 {
     public class ValidatorBahavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse> where TResponse : CommandResponse
+        where TRequest : IRequest<TResponse> where TResponse : class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

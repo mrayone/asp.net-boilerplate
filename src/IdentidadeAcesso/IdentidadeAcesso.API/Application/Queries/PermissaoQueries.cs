@@ -1,18 +1,17 @@
 ﻿using Dapper;
 using IdentidadeAcesso.API.Application.Models;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
-using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects;
 using Knowledge.IO.Infra.Data.Context;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public class PermissaoQueries : IPermissaoQueries
+    public class PermissaoQueries : IRequestHandler<BuscarPorId<PermissaoViewModel>, PermissaoViewModel>,
+        IRequestHandler<BuscarTodos<IEnumerable<PermissaoViewModel>>, IEnumerable<PermissaoViewModel>>, IDisposable
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -26,7 +25,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             _context.Dispose();
         }
 
-        public async Task<PermissaoViewModel> ObterPorIdAsync(Guid id)
+        public async Task<PermissaoViewModel> Handle(BuscarPorId<PermissaoViewModel> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {
@@ -34,13 +33,13 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Atribuicao_Valor] as Valor
                               ,[Atribuicao_Tipo] as Tipo
                 FROM [permissoes] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
-                var result = await connection.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = id });
+                var result = await connection.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = request.Id });
 
                 return result;
             }
         }
 
-        public async Task<IEnumerable<PermissaoViewModel>> ObterTodasAsync()
+        public async Task<IEnumerable<PermissaoViewModel>> Handle(BuscarTodos<IEnumerable<PermissaoViewModel>> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {

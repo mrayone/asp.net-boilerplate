@@ -2,14 +2,12 @@
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Controllers
@@ -19,14 +17,12 @@ namespace IdentidadeAcesso.API.Controllers
     [ApiController]
     public class PermissoesController : ControllerBase
     {
-        private readonly IPermissaoQueries _permissaoQueries;
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PermissoesController( IPermissaoQueries permissoQueries, IMediator mediator,
+        public PermissoesController( IMediator mediator,
             INotificationHandler<DomainNotification> notification )
         {
-            _permissaoQueries = permissoQueries;
             _mediator = mediator;
             _notifications = notification;
         }
@@ -35,7 +31,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
         {
-            var list = await _permissaoQueries.ObterTodasAsync();
+            var list = await _mediator.Send(new BuscarTodos<IEnumerable<PermissaoViewModel>>());
 
             return Ok(list);
         }
@@ -47,7 +43,7 @@ namespace IdentidadeAcesso.API.Controllers
         {
             try
             {
-                var model = await _permissaoQueries.ObterPorIdAsync(id);
+                var model = await _mediator.Send(new BuscarPorId<PermissaoViewModel>(id));
                 return Ok(model);
             }
             catch

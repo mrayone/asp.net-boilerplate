@@ -5,15 +5,12 @@ using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
-using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -22,18 +19,18 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
     public class PermissaoControllerTest
     {
         private readonly PermissoesController _controller;
-        private readonly Mock<IPermissaoQueries> _permissaoQueries;
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
         private readonly IList<PermissaoViewModel> _list;
+        private readonly BuscarPorId<PermissaoViewModel> _command;
+        private readonly BuscarTodos<IEnumerable<PermissaoViewModel>> _commandTodos;
         public PermissaoControllerTest()
         {
             _mediator = new Mock<IMediator>();
-            _permissaoQueries = new Mock<IPermissaoQueries>();
             _notifications = new DomainNotificationHandler();
-
-            _controller = new PermissoesController(_permissaoQueries.Object,
-                _mediator.Object, _notifications);
+            _command = new BuscarPorId<PermissaoViewModel>(It.IsAny<Guid>());
+            _commandTodos = new BuscarTodos<IEnumerable<PermissaoViewModel>>();
+            _controller = new PermissoesController(_mediator.Object, _notifications);
             _list = new List<PermissaoViewModel>()
             {
                 ViewModelBuilder.PermissaoViewFake(),
@@ -48,7 +45,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         public async Task Deve_Retornar_Lista_De_Permissoes()
         {
             // arrange
-            _permissaoQueries.Setup(s => s.ObterTodasAsync())
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<IEnumerable<PermissaoViewModel>>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(_list);
 
             //act
@@ -66,7 +63,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             // arrange
             var permissaoViewModel = ViewModelBuilder.PermissaoViewFake();
-            _permissaoQueries.Setup(s => s.ObterPorIdAsync(It.IsAny<Guid>()))
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<PermissaoViewModel>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(permissaoViewModel);
 
             //act
@@ -84,9 +81,8 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         {
             // arrange
             var permissaoViewModel = ViewModelBuilder.PermissaoViewFake();
-            _permissaoQueries.Setup(s => s.ObterPorIdAsync(It.IsAny<Guid>()))
-                .ThrowsAsync(new KeyNotFoundException());
-
+            _mediator.Setup(s => s.Send(It.IsAny<IRequest<PermissaoViewModel>>(), new System.Threading.CancellationToken()))
+                .Throws<KeyNotFoundException>();
             //act
             var result = await _controller.GetPermissaoAsync(Guid.NewGuid());
             var vr = result as NotFoundResult;

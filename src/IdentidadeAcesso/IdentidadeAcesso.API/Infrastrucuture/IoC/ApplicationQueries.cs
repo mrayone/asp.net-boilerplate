@@ -1,10 +1,9 @@
-﻿using IdentidadeAcesso.API.Application.Queries;
+﻿using IdentidadeAcesso.API.Application.Models;
+using IdentidadeAcesso.API.Application.Queries;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 {
@@ -12,9 +11,14 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
     {
         public static IServiceCollection AddApplicationQueries(this IServiceCollection services)
         {
-            services.TryAddScoped<IPermissaoQueries, PermissaoQueries>();
-            services.TryAddScoped<IPerfilQueries, PerfilQueries>();
-            services.TryAddScoped<IUsuarioQueries, UsuarioQueries>();
+            services.TryAddScoped<IRequestHandler<BuscarPorId<PermissaoViewModel>, PermissaoViewModel>, PermissaoQueries>();
+            services.TryAddScoped<IRequestHandler<BuscarTodos<IEnumerable<PermissaoViewModel>>, IEnumerable<PermissaoViewModel>>, PermissaoQueries>();
+
+            services.TryAddScoped<IRequestHandler<BuscarPorId<PerfilViewModel>, PerfilViewModel>, PerfilQueries>();
+            services.TryAddScoped<IRequestHandler<BuscarTodos<IEnumerable<PerfilViewModel>>, IEnumerable<PerfilViewModel>>, PerfilQueries>();
+
+            services.TryAddScoped<IRequestHandler<BuscarPorId<UsuarioViewModel>, UsuarioViewModel>, UsuarioQueries>();
+            services.TryAddScoped<IRequestHandler<BuscarTodos<IEnumerable<UsuarioViewModel>>, IEnumerable<UsuarioViewModel>>, UsuarioQueries>();
 
             return services;
         }
