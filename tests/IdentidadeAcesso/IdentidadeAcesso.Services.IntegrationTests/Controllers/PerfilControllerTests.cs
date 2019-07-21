@@ -201,6 +201,16 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        //TODO: Validar se gera erro ao excluir perfil em uso.
+        [Fact(DisplayName = "Deve retornar bad request se excluir perfil em uso.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_Retornar_BadRequest_Se_Excluir_PerfilEmUso()
+        {
+            //act
+            var delete = await _client.DeleteAsync("api/v1/perfis/8cd6c8ca-7db7-4551-b6c5-f7a724286709");
+            var response = await delete.Content.ReadAsStringAsync();
+            //assert
+            delete.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.Should().NotBeEmpty();
+        }
     }
 }
