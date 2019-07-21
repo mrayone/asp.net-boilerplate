@@ -5,6 +5,7 @@ using IdentidadeAcesso.Services.IntegrationTests.WebService;
 using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -162,7 +163,62 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         }
 
-        //TODO:[Usuario] Testar commands inválidos e cadastro de cpf/email existente.
+        [Theory(DisplayName = "Deve retornar erro em commands inválidos.")]
+        [ClassData(typeof(CommandsFails))]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Retornar_Erro_CommandInvalidos(string nome, string sobrenome, string sexo,
+            string email, string cpf, DateTime dateDeNascimento, string celular)
+        {
+            //arrange
+            var usuario = new
+            {
+                Nome = nome,
+                Sobrenome = sobrenome,
+                Sexo = sexo,
+                DateDeNascimento = dateDeNascimento,
+                CPF = cpf,
+                Email = email,
+                PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                Celular = celular
+            };
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PostAsync($"{API}", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result.Should().NotBeEmpty();
+        }
+
+        public class CommandsFails : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    "",
+                    "",
+                    "" ,
+                    "",
+                    "",
+                    DateTime.Now,
+                    ""
+                };
+                yield return new object[]
+                {
+                    "Maae", //nome
+                    "a", //sobrenome
+                    "g",// sexo
+                    "mkisdi2gmaicl.com", // email
+                    "45577899852266", // cpf
+                    DateTime.Now, // data de nascimento
+                    "329989878877487" // celular
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         private StringContent GerarContent(object objeto)
         {
             var content = new StringContent(JsonConvert.SerializeObject(objeto));
