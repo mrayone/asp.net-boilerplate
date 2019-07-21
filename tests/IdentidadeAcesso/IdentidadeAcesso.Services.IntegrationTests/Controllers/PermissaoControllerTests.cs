@@ -158,11 +158,32 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        //TODO: Validar erro caso tente excluir permissão em uso.
-        //[Fact(DisplayName = "Deve gerar erro ao excluir permissão em uso.")]
-        //[Trait("Testes de Integração", "PermissaoControllerTests")]
-        //public async Task Deve_Gerar_Erro_Ao_Excluir_Permissao_Em_Uso()
-        //{
-        //}
+        
+        [Fact(DisplayName = "Deve retornar bad request e erro ao excluir permissão em uso.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_RetornarBadRequest_E_Erro_Ao_Excluir_Permissao_Em_Uso()
+        {
+            //arrange
+            var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
+            var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
+            var assinatura = new
+            {
+                PerfilId = perfilId,
+                Assinaturas = new object[]
+                {
+                   new { PermissaoId = permissaoId }
+                }
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(assinatura));
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            //act
+            var assinar = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
+            //act
+            var delete = await _client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var result = await delete.Content.ReadAsStringAsync();
+            //assert
+            delete.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            result.Should().NotBeEmpty();
+        }
     }
 }

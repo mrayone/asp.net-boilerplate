@@ -83,9 +83,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
 
-        [Fact(DisplayName = "O Handle deve retornar false se perfil em uso e disparar notificacao.")]
+        [Fact(DisplayName = "O Handle deve retornar false ao exlcuir perfil em uso.")]
         [Trait("Handler - Perfil", "ExcluirPerfil")]
-        public async Task Handle_deve_retornar_false_se_perfil_em_uso_e_disparar_notificacao()
+        public async Task Deve_Retornar_False_Ao_ExcluirPerfil_Em_Uso()
         {
             //arrange
             var command = new ExcluirPerfilCommand(Guid.NewGuid());
@@ -97,7 +97,6 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             //assert
             result.Success.Should().BeFalse();
-            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
         }
 
         [Fact(DisplayName = "O Handle deve retornar true se excluir o perfil com sucesso.")]
