@@ -162,6 +162,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         }
 
+        //TODO:[Usuario] Testar commands inválidos e cadastro de cpf/email existente.
         private StringContent GerarContent(object objeto)
         {
             var content = new StringContent(JsonConvert.SerializeObject(objeto));

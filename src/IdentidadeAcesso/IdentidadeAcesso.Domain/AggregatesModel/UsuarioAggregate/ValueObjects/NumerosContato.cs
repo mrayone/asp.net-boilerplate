@@ -4,7 +4,6 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
-    //TODO: Refatorar Classe para obter telefone e celular, sendo obrigatório apenas o celular.
     public class NumerosContato : ValueObject<NumerosContato>
     {
         private const int MaxCelNumeros = 14;
