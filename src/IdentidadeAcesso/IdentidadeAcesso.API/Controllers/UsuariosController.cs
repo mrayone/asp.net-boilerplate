@@ -34,7 +34,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<UsuarioViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuariosAsync()
         {
-            var list = await _mediator.Send(new BuscarTodos<IEnumerable<UsuarioViewModel>>());
+            var list = await _mediator.Send(new BuscarTodos<UsuarioViewModel>());
 
             return Ok(list);
         }

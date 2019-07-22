@@ -23,13 +23,13 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         private readonly Mock<IMediator> _mediator;
         private readonly IList<PermissaoViewModel> _list;
         private readonly BuscarPorId<PermissaoViewModel> _command;
-        private readonly BuscarTodos<IEnumerable<PermissaoViewModel>> _commandTodos;
+        private readonly BuscarTodos<PermissaoViewModel> _commandTodos;
         public PermissaoControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _notifications = new DomainNotificationHandler();
             _command = new BuscarPorId<PermissaoViewModel>(It.IsAny<Guid>());
-            _commandTodos = new BuscarTodos<IEnumerable<PermissaoViewModel>>();
+            _commandTodos = new BuscarTodos<PermissaoViewModel>();
             _controller = new PermissoesController(_mediator.Object, _notifications);
             _list = new List<PermissaoViewModel>()
             {

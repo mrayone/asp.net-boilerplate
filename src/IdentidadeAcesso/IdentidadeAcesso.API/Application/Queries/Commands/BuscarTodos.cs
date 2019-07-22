@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public class BuscarTodos<TResponse> : IRequest<TResponse>
-        where TResponse : IEnumerable<IQueryModel> 
+    public class BuscarTodos<TResponse> : IRequest<IEnumerable<TResponse>> 
+        where TResponse : IQueryModel
     {
         public BuscarTodos()
         {

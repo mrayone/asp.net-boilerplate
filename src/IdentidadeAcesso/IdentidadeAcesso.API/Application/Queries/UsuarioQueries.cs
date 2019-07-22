@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Queries
 {
     public class UsuarioQueries : IRequestHandler<BuscarPorId<UsuarioViewModel>, UsuarioViewModel>,
-        IRequestHandler<BuscarTodos<IEnumerable<UsuarioViewModel>>, IEnumerable<UsuarioViewModel>>, IDisposable
+        IRequestHandler<BuscarTodos<UsuarioViewModel>, IEnumerable<UsuarioViewModel>>, IDisposable
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             }
         }
 
-        public async Task<IEnumerable<UsuarioViewModel>> Handle(BuscarTodos<IEnumerable<UsuarioViewModel>> request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UsuarioViewModel>> Handle(BuscarTodos<UsuarioViewModel> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {

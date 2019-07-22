@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
         {
-            var list = await _mediator.Send(new BuscarTodos<IEnumerable<PerfilViewModel>>());
+            var list = await _mediator.Send(new BuscarTodos<PerfilViewModel>());
 
             return Ok(list);
         }

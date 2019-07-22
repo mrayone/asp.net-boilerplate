@@ -15,7 +15,7 @@ namespace IdentidadeAcesso.API.Application.Queries
 {
     public class PerfilQueries : 
         IRequestHandler<BuscarPorId<PerfilViewModel>, PerfilViewModel>,
-        IRequestHandler<BuscarTodos<IEnumerable<PerfilViewModel>>, IEnumerable<PerfilViewModel>>, IDisposable  
+        IRequestHandler<BuscarTodos<PerfilViewModel>, IEnumerable<PerfilViewModel>>, IDisposable  
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -80,7 +80,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             }
         }
 
-        public async Task<IEnumerable<PerfilViewModel>> Handle(BuscarTodos<IEnumerable<PerfilViewModel>> request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PerfilViewModel>> Handle(BuscarTodos<PerfilViewModel> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {

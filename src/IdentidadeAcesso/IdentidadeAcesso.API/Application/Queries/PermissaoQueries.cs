@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace IdentidadeAcesso.API.Application.Queries
 {
     public class PermissaoQueries : IRequestHandler<BuscarPorId<PermissaoViewModel>, PermissaoViewModel>,
-        IRequestHandler<BuscarTodos<IEnumerable<PermissaoViewModel>>, IEnumerable<PermissaoViewModel>>, IDisposable
+        IRequestHandler<BuscarTodos<PermissaoViewModel>, IEnumerable<PermissaoViewModel>>, IDisposable
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -39,7 +39,7 @@ namespace IdentidadeAcesso.API.Application.Queries
             }
         }
 
-        public async Task<IEnumerable<PermissaoViewModel>> Handle(BuscarTodos<IEnumerable<PermissaoViewModel>> request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<PermissaoViewModel>> Handle(BuscarTodos<PermissaoViewModel> request, CancellationToken cancellationToken)
         {
             using (var connection = _context.Database.GetDbConnection())
             {

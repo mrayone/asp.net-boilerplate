@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
         {
-            var list = await _mediator.Send(new BuscarTodos<IEnumerable<PermissaoViewModel>>());
+            var list = await _mediator.Send(new BuscarTodos<PermissaoViewModel>());
 
             return Ok(list);
         }
