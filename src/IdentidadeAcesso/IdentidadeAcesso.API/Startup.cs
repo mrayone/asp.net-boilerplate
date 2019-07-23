@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 
 namespace IdentidadeAcesso.API
 {
@@ -29,7 +30,8 @@ namespace IdentidadeAcesso.API
                 .AddDataDependencies()
                 .AddDomainNotifications()
                 .AddApplicationQueries()
-                .AddApplicationHandlers();
+                .AddApplicationHandlers()
+                .AddIdentityConfig();
 
             services.AddApiVersioning(options =>
             {
@@ -86,6 +88,8 @@ namespace IdentidadeAcesso.API
             });
 
            // app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseIdentityServer();
             app.UseMvc();
         }
     }
