@@ -1,7 +1,9 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
@@ -12,7 +14,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
         {
             return new List<ApiResource>()
             {
-                new ApiResource("api", "Nossa API")
+                new ApiResource("api", "Api Knowledge Identidade e Acesso.")
             };
         }
 
@@ -22,18 +24,23 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             {
                 new Client
                 {
-                    ClientId = "password.client",
+                    ClientId = "spa.client",
+                    ClientName = "Meu SPA",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api" }
+                    AllowedScopes = { "api",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    AllowOfflineAccess =  true
                 }
             };
         }
 
-        public static List<TestUser> GetTestUsers ()
+        public static List<TestUser> GetTestUsers()
         {
             return new List<TestUser>
             {
@@ -41,7 +48,12 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                 {
                     SubjectId = "1",
                     Username = "maycon",
-                    Password = "123456"
+                    Password = "123456",
+                    Claims = new []
+                    {
+                        new Claim("name", "Maycon"),
+                        new Claim("website", "https://mayconrayone.com")
+                    }
                 },
                 new TestUser
                 {
