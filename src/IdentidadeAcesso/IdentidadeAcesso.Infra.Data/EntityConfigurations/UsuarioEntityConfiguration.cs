@@ -34,9 +34,14 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 e.Property(p => p.Endereco).HasColumnName("Email").IsRequired();
             });
 
+            usuarioConfiguration.OwnsOne(u => u.Senha, s => 
+            {
+                s.Property(p => p.Caracteres).HasColumnName("Senha").IsRequired();
+            });
+
             usuarioConfiguration.OwnsOne(u => u.CPF, c => 
             {
-                c.Property(p => p.Digitos).IsRequired();
+                c.Property(p => p.Digitos).HasColumnName("CPF").IsRequired();
             });
 
             usuarioConfiguration.OwnsOne(u => u.DataDeNascimento, d => 

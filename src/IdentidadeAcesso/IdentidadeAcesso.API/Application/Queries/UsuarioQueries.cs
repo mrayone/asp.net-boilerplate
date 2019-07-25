@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Sobrenome]
                               ,[Sexo]
                               ,[Email]
-                              ,[CPF_Digitos] AS CPF
+                              ,[CPF]
                               ,[DataDeNascimento_Data] AS DataDeNascimento
                               ,[Celular]
                               ,[Status]
@@ -68,7 +68,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Sobrenome]
                               ,[Sexo]
                               ,[Email]
-                              ,[CPF_Digitos] AS CPF
+                              ,[CPF]
                               ,[DataDeNascimento_Data] as DataDeNascimento
                               ,[Celular]
                               ,[Telefone]

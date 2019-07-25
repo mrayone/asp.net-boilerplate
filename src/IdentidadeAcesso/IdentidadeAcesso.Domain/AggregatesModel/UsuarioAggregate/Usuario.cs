@@ -16,6 +16,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public NumerosContato NumerosContato { get; private set; }
         public bool Status { get; private set; }
         public Endereco Endereco { get; private set; }
+        public Senha Senha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
         protected Usuario()
@@ -33,6 +34,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Email = email;
             CPF = cpf;
             DataDeNascimento = dataDeNascimento;
+        }
+
+        public void DefinirSenha(Senha senha)
+        {
+            Senha = senha;
         }
 
         public void AdicionarEndereco(Endereco endereco)
@@ -85,6 +91,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
 
+                usuario.DefinirSenha(new Senha(cpf.Digitos));
                 return usuario;
             }
         }
