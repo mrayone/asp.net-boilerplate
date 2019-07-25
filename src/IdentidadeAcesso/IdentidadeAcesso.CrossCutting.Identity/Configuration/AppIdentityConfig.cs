@@ -1,6 +1,7 @@
 ﻿using IdentidadeAcesso.CrossCutting.Identity.CredentialsValidator;
 using IdentidadeAcesso.CrossCutting.Identity.Policy;
 using IdentidadeAcesso.CrossCutting.Identity.Policy.Handler;
+using IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -28,15 +29,9 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     options.ApiName = "api";
                 });
 
-            services.AddAuthorization(options => 
-            {
-                options.AddPolicy("PerfilPolicy", policy => 
-                {
-                    policy.Requirements.Add(new PerfilPolicy("Perfil", "Visualizar Perfis"));
-                });
-            });
+            services.AddScoped<IAuthorizationHandler, PermissaoPolicyHandler>();
 
-            services.AddScoped<IAuthorizationHandler, PerfilPolicyHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();
 
             return services;

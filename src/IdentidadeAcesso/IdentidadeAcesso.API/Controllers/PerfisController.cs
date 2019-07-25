@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.CrossCutting.Identity.CustomAuthorizeAttribute;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +28,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notifications;
         }
 
-        [Authorize(Policy = "PerfilPolicy")]
+        [PermissaoAuthorize(valor: "Visualizar Perfis")]
         [HttpGet("obter-todos")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
