@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
+using System.IO;
 
 namespace IdentidadeAcesso.API
 {
@@ -61,6 +62,9 @@ namespace IdentidadeAcesso.API
                         Url = "http://eventos.io/license"
                     }
                 });
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "IdentidadeAcesso.API.xml");
+                s.IncludeXmlComments(filePath);
             });
         }
 

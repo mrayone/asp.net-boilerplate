@@ -27,7 +27,10 @@ namespace IdentidadeAcesso.API.Controllers
             _mediator = mediator;
             _notifications = notifications;
         }
-
+        /// <summary>
+        /// Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
+        /// </summary>
+        ///
         [PermissaoAuthorize(valor: "Visualizar Perfis")]
         [HttpGet("obter-todos")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]

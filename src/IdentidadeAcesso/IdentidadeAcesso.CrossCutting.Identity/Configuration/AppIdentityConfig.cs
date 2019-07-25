@@ -2,6 +2,8 @@
 using IdentidadeAcesso.CrossCutting.Identity.Policy;
 using IdentidadeAcesso.CrossCutting.Identity.Policy.Handler;
 using IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement;
+using IdentidadeAcesso.CrossCutting.Identity.Services;
+using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,9 +29,11 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     options.Authority = "http://localhost:5001";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "api";
+                    
                 });
 
             services.AddScoped<IAuthorizationHandler, PermissaoPolicyHandler>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();

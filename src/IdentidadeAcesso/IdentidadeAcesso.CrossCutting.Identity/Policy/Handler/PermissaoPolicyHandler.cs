@@ -5,6 +5,7 @@ using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +26,11 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Policy.Handler
         {
             //TODO: validar se usuário contém perfil com permissão.
 
-            var usuario = context.User;
+            if (!context.User.HasClaim(c => c.Type.Equals("permissions") && c.Value.Equals(requirement.ValorPermitido)))
+            {
+
+                return Task.CompletedTask;
+            }
 
             context.Succeed(requirement);
 

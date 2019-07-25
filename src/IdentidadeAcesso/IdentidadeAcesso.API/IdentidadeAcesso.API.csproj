@@ -6,6 +6,10 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Documents\Trabalho\Projeto\Projeto\asp.net core\Knowledge.IO\src\IdentidadeAcesso\IdentidadeAcesso.API\IdentidadeAcesso.API.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Extensions\**" />
     <Content Remove="Extensions\**" />
