@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         }
 
         [Theory(DisplayName = "Deve retornar erro ao cadastrar permissão que já exista.")]
-        [InlineData("Usuário", "Cadastrar")]
+        [InlineData("Perfil", "Visualizar Perfis")]
         [InlineData("Usuário", "Remover")]
         [InlineData("Usuário", "Visualizar Cadastro")]
         [Trait("Testes de Integração", "PermissaoControllerTests")]

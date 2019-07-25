@@ -6,13 +6,29 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Senha : ValueObject<Senha>
     {
-
-        public Senha(string caracteres)
+        private readonly PasswordHasher hasher;
+        public string Caracteres { get; private set; }
+        protected Senha(string caracteres) : this ()
         {
-            Caracteres = new PasswordHasher().HashPassword(caracteres) ??  throw new ArgumentNullException("A Senha não pode ser nula.");
+            Caracteres = caracteres ?? throw new ArgumentNullException("A Senha não pode ser nula.");
         }
 
-        public string Caracteres { get; private set; }
+        public Senha()
+        {
+            hasher = new PasswordHasher();
+        }
+
+        public static Senha GerarSenha(string senha)
+        {
+            var hasher = new PasswordHasher();
+            return new Senha(hasher.HashPassword(senha));
+        }
+
+        public bool ValidarSenha(string senha)
+        {
+            var senhaHash = hasher.VerifyHashedPassword(Caracteres, senha);
+            return senhaHash == PasswordVerificationResult.Success;
+        }
 
         protected override bool EqualsCore(Senha other)
         {

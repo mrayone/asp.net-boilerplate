@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notifications;
         }
 
-        [Authorize]
+        [Authorize(Policy = "PerfilPolicy")]
         [HttpGet("obter-todos")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()

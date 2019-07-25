@@ -91,7 +91,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
 
-                usuario.DefinirSenha(new Senha(cpf.Digitos));
+                usuario.DefinirSenha(Senha.GerarSenha(cpf.Digitos)); //TODO: Modificar para quando for atualizar usuário.
                 return usuario;
             }
         }
