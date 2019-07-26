@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IdentidadeAcesso.Infra.Data.Migrations
 {
     [DbContext(typeof(IdentidadeAcessoDbContext))]
-    [Migration("20190719004527_init")]
+    [Migration("20190726152216_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,7 +156,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.Property<Guid>("UsuarioId");
 
                             b1.Property<string>("Digitos")
-                                .IsRequired();
+                                .IsRequired()
+                                .HasColumnName("CPF");
 
                             b1.HasKey("UsuarioId");
 
@@ -165,23 +166,6 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("CPF")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.CPF", "UsuarioId")
-                                .OnDelete(DeleteBehavior.Cascade);
-                        });
-
-                    b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Celular", "Celular", b1 =>
-                        {
-                            b1.Property<Guid>("UsuarioId");
-
-                            b1.Property<string>("NumeroCel")
-                                .HasColumnName("Celular");
-
-                            b1.HasKey("UsuarioId");
-
-                            b1.ToTable("usuarios","dbo");
-
-                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
-                                .WithOne("Celular")
-                                .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Celular", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
 
@@ -266,6 +250,44 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
                                 .WithOne("Nome")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NomeCompleto", "UsuarioId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NumerosContato", "NumerosContato", b1 =>
+                        {
+                            b1.Property<Guid>("UsuarioId");
+
+                            b1.Property<string>("NumeroCel")
+                                .HasColumnName("Celular");
+
+                            b1.Property<string>("NumeroTelefone")
+                                .HasColumnName("Telefone");
+
+                            b1.HasKey("UsuarioId");
+
+                            b1.ToTable("usuarios","dbo");
+
+                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
+                                .WithOne("NumerosContato")
+                                .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NumerosContato", "UsuarioId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Senha", "Senha", b1 =>
+                        {
+                            b1.Property<Guid>("UsuarioId");
+
+                            b1.Property<string>("Caracteres")
+                                .IsRequired()
+                                .HasColumnName("Senha");
+
+                            b1.HasKey("UsuarioId");
+
+                            b1.ToTable("usuarios","dbo");
+
+                            b1.HasOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario")
+                                .WithOne("Senha")
+                                .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Senha", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
                         });
 

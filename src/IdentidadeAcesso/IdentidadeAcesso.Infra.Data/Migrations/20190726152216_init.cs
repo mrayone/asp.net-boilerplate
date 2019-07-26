@@ -50,10 +50,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     Sobrenome = table.Column<string>(nullable: false),
                     Sexo = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    CPF_Digitos = table.Column<string>(nullable: false),
+                    CPF = table.Column<string>(nullable: false),
                     DataDeNascimento_Data = table.Column<DateTime>(nullable: false),
                     Celular = table.Column<string>(nullable: true),
+                    Telefone = table.Column<string>(nullable: true),
                     Status = table.Column<bool>(nullable: false),
+                    Senha = table.Column<string>(nullable: false),
                     DeletadoEm = table.Column<DateTime>(nullable: true),
                     PerfilId = table.Column<Guid>(nullable: false)
                 },

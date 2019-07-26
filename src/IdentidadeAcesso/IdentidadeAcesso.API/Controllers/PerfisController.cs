@@ -31,7 +31,6 @@ namespace IdentidadeAcesso.API.Controllers
         /// Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
         /// </summary>
         ///
-        [PermissaoAuthorize(valor: "Visualizar Perfis")]
         [HttpGet("obter-todos")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()

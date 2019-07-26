@@ -71,7 +71,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                 Celular = "+5518996113325",
                 Senha = "12457@Ef",
-                ConfirmacaoSenha = "12457@Ef"
             };
             var content = GerarContent(usuario);
             //act
@@ -105,7 +104,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Cidade = "North",
                 Estado = "HBO",
                 Senha = "12457@Ef",
-                ConfirmacaoSenha = "12457@Ef"
             };
             var content = GerarContent(usuario);
             //act
@@ -209,7 +207,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "",
                     DateTime.Now,
                     "",
-                    "",
                     ""
                 };
                 yield return new object[]
@@ -221,8 +218,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "45577899852266", // cpf
                     DateTime.Now, // data de nascimento
                     "329989878877487", // celular
-                    "12545487",
-                    "548748787"
+                    "12545487"
                 };
             }
 
