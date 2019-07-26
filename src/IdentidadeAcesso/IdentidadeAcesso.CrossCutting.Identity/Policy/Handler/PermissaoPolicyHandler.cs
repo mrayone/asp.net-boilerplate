@@ -24,19 +24,13 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Policy.Handler
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissaoPolicyRequeriment requirement)
         {
-            //TODO: validar se usuário contém perfil com permissão.
-
             if (!context.User.HasClaim(c => c.Type.Equals("permissions") && c.Value.Equals(requirement.ValorPermitido)))
             {
-
                 return Task.CompletedTask;
             }
 
             context.Succeed(requirement);
 
-            //TODO: Use the following if targeting a version of
-            //.NET Framework older than 4.6:
-            //      return Task.FromResult(0);
             return Task.CompletedTask;
         }
     }

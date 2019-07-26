@@ -35,7 +35,8 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     },
-                    AllowOfflineAccess =  true
+                    AllowOfflineAccess =  true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
         }

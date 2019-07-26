@@ -5,9 +5,9 @@
     </assembly>
     <members>
         <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfisAsync">
-             <remarks>
+             <summary>
              Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
-             </remarks>
+             </summary>
             
         </member>
     </members>

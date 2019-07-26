@@ -74,7 +74,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
-                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
+                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId, string senha)
             {
                 var usuario = new Usuario
                 {
@@ -84,6 +84,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     Email = new Email(email),
                     CPF = cpf,
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
+                    Senha = Senha.GerarSenha(senha),
                     PerfilId = PerfilId
                 };
 
@@ -91,7 +92,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
 
-                usuario.DefinirSenha(Senha.GerarSenha(cpf.Digitos)); //TODO: Modificar para quando for atualizar usuário.
                 return usuario;
             }
         }
