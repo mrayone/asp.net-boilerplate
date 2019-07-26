@@ -126,6 +126,30 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "perfis",
+                columns: new[] { "Id", "DeletadoEm", "Descricao", "Nome" },
+                values: new object[] { new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), null, "Perfil administrativo", "Administrativo" });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "permissoes",
+                columns: new[] { "Id", "DeletadoEm", "Atribuicao_Tipo", "Atribuicao_Valor" },
+                values: new object[] { new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), null, "Perfil", "Visualizar Perfis" });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "permissoes_assinadas",
+                columns: new[] { "Id", "PerfilId", "PermissaoId", "Ativo" },
+                values: new object[] { new Guid("713ef553-e426-40e3-a81f-3ba0f10ee4d8"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), true });
+
+            migrationBuilder.InsertData(
+                schema: "dbo",
+                table: "usuarios",
+                columns: new[] { "Id", "DeletadoEm", "PerfilId", "Status", "CPF", "DataDeNascimento_Data", "Email", "PrimeiroNome", "Sobrenome", "Celular", "Telefone", "Senha", "Sexo" },
+                values: new object[] { new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"), null, new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), true, "28999953084", new DateTime(1993, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "maycon.rayone@gmail.com", "Maycon Rayone", "Rodrigues Xavier", null, null, "ANBvyxKEBm85krUwGWyCdeRaE0IYJxEzUoec8QKBfg+Gy1Eu60Ht+cxxPrn6jf7SWA==", "Masculino" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_permissoes_assinadas_PerfilId",
                 schema: "dbo",

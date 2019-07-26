@@ -29,6 +29,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("perfis","dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709")
+                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.PermissaoAssinada", b =>
@@ -50,6 +56,15 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasIndex("PermissaoId");
 
                     b.ToTable("permissoes_assinadas","dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("713ef553-e426-40e3-a81f-3ba0f10ee4d8"),
+                            PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                            PermissaoId = new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"),
+                            Status = true
+                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Permissao", b =>
@@ -62,6 +77,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("permissoes","dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453")
+                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Usuario", b =>
@@ -80,6 +101,14 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasIndex("PerfilId");
 
                     b.ToTable("usuarios","dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                            PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                            Status = true
+                        });
                 });
 
             modelBuilder.Entity("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Perfil", b =>
@@ -104,6 +133,14 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Identifacao")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.ValueObjects.Identificacao", "PerfilId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                                    Descricao = "Perfil administrativo",
+                                    Nome = "Administrativo"
+                                });
                         });
                 });
 
@@ -139,6 +176,14 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Atribuicao")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.ValueObjects.Atribuicao", "PermissaoId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    PermissaoId = new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"),
+                                    Tipo = "Perfil",
+                                    Valor = "Visualizar Perfis"
+                                });
                         });
                 });
 
@@ -165,6 +210,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("CPF")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.CPF", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    Digitos = "28999953084"
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.DataDeNascimento", "DataDeNascimento", b1 =>
@@ -181,6 +233,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("DataDeNascimento")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.DataDeNascimento", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    Data = new DateTime(1993, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Email", "Email", b1 =>
@@ -199,6 +258,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Email")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Email", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    Endereco = "maycon.rayone@gmail.com"
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Endereco", "Endereco", b1 =>
@@ -249,6 +315,14 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Nome")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NomeCompleto", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    PrimeiroNome = "Maycon Rayone",
+                                    Sobrenome = "Rodrigues Xavier"
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NumerosContato", "NumerosContato", b1 =>
@@ -269,6 +343,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("NumerosContato")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.NumerosContato", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13")
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Senha", "Senha", b1 =>
@@ -287,6 +367,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Senha")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Senha", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    Caracteres = "ANBvyxKEBm85krUwGWyCdeRaE0IYJxEzUoec8QKBfg+Gy1Eu60Ht+cxxPrn6jf7SWA=="
+                                });
                         });
 
                     b.OwnsOne("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Sexo", "Sexo", b1 =>
@@ -305,6 +392,13 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                                 .WithOne("Sexo")
                                 .HasForeignKey("IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects.Sexo", "UsuarioId")
                                 .OnDelete(DeleteBehavior.Cascade);
+
+                            b1.HasData(
+                                new
+                                {
+                                    UsuarioId = new Guid("fd2800a1-a5be-4935-94e9-60af47ebdc13"),
+                                    Tipo = "Masculino"
+                                });
                         });
                 });
 #pragma warning restore 612, 618

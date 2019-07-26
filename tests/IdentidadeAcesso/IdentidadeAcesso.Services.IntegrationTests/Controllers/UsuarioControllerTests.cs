@@ -169,7 +169,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
         public async Task Deve_Retornar_Erro_CommandInvalidos(string nome, string sobrenome, string sexo,
-            string email, string cpf, DateTime dateDeNascimento, string celular, string senha, string confirmacaoSenha)
+            string email, string cpf, DateTime dateDeNascimento, string celular, string senha)
         {
             //arrange
             var usuario = new
@@ -183,7 +183,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                 Celular = celular,
                 Senha = senha,
-                ConfirmacaoSenha = confirmacaoSenha,
             };
             var content = GerarContent(usuario);
             //act

@@ -44,8 +44,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(c => c.Celular)
                 .Must(ValidarCelular)
                 .WithMessage("O celular deve obedecer o padrão Ex: +5518999928663")
-                .Length(11, 15)
-                .NotEmpty().NotNull();
+                .Length(11, 15);
 
             RuleFor(c => c.Telefone)
                 .Must(ValidarTelefone)

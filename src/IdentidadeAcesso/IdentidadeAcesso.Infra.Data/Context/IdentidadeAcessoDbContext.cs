@@ -1,6 +1,7 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Infra.Data.Context.Seed;
 using Knowledge.IO.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -24,10 +25,13 @@ namespace Knowledge.IO.Infra.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.ApplyConfiguration(new PerfilEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PermissaoAssinadaEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PermissaoEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
+
+            //modelBuilder.Seed();
         }
     }
 
