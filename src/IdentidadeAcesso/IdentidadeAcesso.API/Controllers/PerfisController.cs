@@ -32,6 +32,7 @@ namespace IdentidadeAcesso.API.Controllers
         /// </summary>
         ///
         [HttpGet("obter-todos")]
+        [PermissaoAuthorize("Visualizar Perfis")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPerfisAsync()
         {

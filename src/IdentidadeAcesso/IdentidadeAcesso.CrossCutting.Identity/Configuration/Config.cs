@@ -27,16 +27,13 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     ClientId = "spa.client",
                     ClientName = "Meu SPA",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    RequireClientSecret =  false,
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api",
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    },
-                    AllowOfflineAccess =  true,
-                    RefreshTokenUsage = TokenUsage.ReUse
+                    AllowedScopes = { "api", IdentityServerConstants.StandardScopes.OfflineAccess },
+                    AllowOfflineAccess =  true
                 }
             };
         }
