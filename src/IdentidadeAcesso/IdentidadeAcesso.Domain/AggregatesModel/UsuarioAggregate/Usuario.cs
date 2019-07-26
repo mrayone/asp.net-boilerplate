@@ -84,13 +84,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     Email = new Email(email),
                     CPF = cpf,
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
-                    Senha = Senha.GerarSenha(senha),
                     PerfilId = PerfilId
                 };
 
                 usuario.AdicionarCelular(new NumerosContato(celular, telefone));
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
+                if (!string.IsNullOrEmpty(senha)) usuario.DefinirSenha(Senha.GerarSenha(senha));
 
                 return usuario;
             }

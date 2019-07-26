@@ -29,6 +29,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Estado = estado;
             PerfilId = perfilId;
             Id = id;
+            Senha = null;
         }
     }
 }
