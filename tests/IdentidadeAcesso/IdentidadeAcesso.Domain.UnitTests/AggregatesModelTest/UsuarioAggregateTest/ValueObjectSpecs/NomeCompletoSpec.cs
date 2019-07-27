@@ -14,9 +14,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public NomeCompletoSpec()
         { }
 
-        [Fact(DisplayName = "A concatenação de primeiro nome e sobrenome devem formar o nome completo")]
+        [Fact(DisplayName = "Deve retornar a concatenação do primeiro nome e sobrenome.")]
         [Trait("Value Object", "Nome")]
-        public void deve_retornar_o_nome_completo()
+        public void Deve_Retornar_a_Concatenacao_do_PrimeiroNome_e_Sobrenome()
         {
             //arrange
             var nome = new NomeCompleto(NOME, SOBRENOME);
@@ -26,19 +26,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
             //assert
             nomeCompleto.Should().Be(NOME + " " + SOBRENOME);
-        }
-
-        [Fact(DisplayName = "O estado do nome deve ser valido")]
-        [Trait("Value Object", "Nome")]
-        public void o_estado_do_nome_deve_ser_valido()
-        {
-            //arrange
-            var nome = new NomeCompleto(NOME, SOBRENOME);
-            //act
-
-            //assert
-            nome.ValidationResult.Erros.Should().HaveCount(0);
-            nome.ValidationResult.IsValid.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Objetos de valores devem ser iguais quando possuem os mesmos dados")]

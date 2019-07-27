@@ -1,12 +1,8 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.Extensions;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 {
@@ -17,75 +13,42 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Email Email { get; private set; }
         public CPF CPF { get; private set; }
         public DataDeNascimento DataDeNascimento { get; private set; }
-        public Telefone Telefone { get; private set; }
-        public Celular Celular { get; private set; }
-        public Status Status { get; private set; }
+        public NumerosContato NumerosContato { get; private set; }
+        public bool Status { get; private set; }
         public Endereco Endereco { get; private set; }
+        public Senha Senha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public Guid PerfilId { get; private set; }
-
-
         protected Usuario()
         {
+            Id = Guid.NewGuid();
+            Status = true;
         }
 
         public Usuario(NomeCompleto nome, Sexo sexo, Email email, CPF cpf,
-            DataDeNascimento dataDeNascimento, Guid perfilId)
+            DataDeNascimento dataDeNascimento)
             : this()
         {
-
-            Id = Guid.NewGuid();
-            Status = Status.Ativo;
-
             Nome = nome;
             Sexo = sexo;
             Email = email;
             CPF = cpf;
             DataDeNascimento = dataDeNascimento;
-            PerfilId = perfilId;
         }
 
-        public override bool EhValido()
+        public void DefinirSenha(Senha senha)
         {
-            _erros.AddRangeIfNotEmpty(Nome.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Sexo.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(Email.ValidationResult.Erros);
-            _erros.AddRangeIfNotEmpty(CPF.ValidationResult.Erros);
-
-            return base.EhValido();
+            Senha = senha;
         }
 
         public void AdicionarEndereco(Endereco endereco)
         {
-            if (!endereco.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(endereco.ValidationResult.Erros);
-                return;
-            }
-
-            Endereco = endereco;
+            Endereco = endereco ?? throw new ArgumentNullException("Não é possível atribuir um endereço nulo.");
         }
 
-        public void AdicionarTelefone(Telefone telefone)
+        public void AdicionarCelular(NumerosContato numeros)
         {
-            if (!telefone.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(telefone.ValidationResult.Erros);
-                return;
-            }
-
-            Telefone = telefone;
-        }
-
-        public void AdicionarCelular(Celular celular)
-        {
-            if (!celular.EhValido())
-            {
-                _erros.AddRangeIfNotEmpty(celular.ValidationResult.Erros);
-                return;
-            }
-
-            Celular = celular;
+            NumerosContato = numeros ?? throw new ArgumentNullException("Não é possível atribuir numeros de contato nulo.");
         }
 
         public void Deletar()
@@ -95,25 +58,39 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public void DesativarUsuario ()
         {
-             Status = Status.Inativo;
+            Status = false;
         }
 
         public void AtivarUsuario()
         {
-            Status = Status.Ativo;
+            Status = false;
+        }
+
+        internal void SetarPerfil(Guid? perfilId)
+        {
+            PerfilId = perfilId.HasValue ? perfilId.Value : throw new ArgumentNullException("Não é possível setar um perfil nulo.");
         }
 
         public static class UsuarioFactory
         {
-            public static Usuario CriarUsuario(NomeCompleto nome, Sexo sexo, Email email,
-                CPF cpf, DataDeNascimento dataDeNascimento,
-                Guid perfilId, Celular celular, Telefone telefone, Endereco endereco)
+            public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
+                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId, string senha)
             {
-                var usuario = new Usuario(nome, sexo, email, cpf, dataDeNascimento, perfilId);
+                var usuario = new Usuario
+                {
+                    Nome = new NomeCompleto(nome, sobrenome),
+                    Sexo = sexo.Equals("F") ? Sexo.Feminino : Sexo.Masculino,
+                    DataDeNascimento = new DataDeNascimento(dataDeNascimento),
+                    Email = new Email(email),
+                    CPF = cpf,
+                    Id = id.HasValue ? id.Value : Guid.NewGuid(),
+                    PerfilId = PerfilId
+                };
 
-                usuario.AdicionarTelefone(telefone);
-                usuario.AdicionarCelular(celular);
-                usuario.AdicionarEndereco(endereco);
+                usuario.AdicionarCelular(new NumerosContato(celular, telefone));
+
+                if(endereco != null) usuario.AdicionarEndereco(endereco);
+                if (!string.IsNullOrEmpty(senha)) usuario.DefinirSenha(Senha.GerarSenha(senha));
 
                 return usuario;
             }

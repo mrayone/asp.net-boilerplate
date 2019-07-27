@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
+namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
 {
     public interface IAggregateRoot
     { }

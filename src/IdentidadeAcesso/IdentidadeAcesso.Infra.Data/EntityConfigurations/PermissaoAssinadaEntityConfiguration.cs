@@ -13,15 +13,11 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<PermissaoAssinada> builder)
         {
-            builder.ToTable("permissoes_assinadas", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            builder.ToTable("permissoes_assinadas", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(p => p.Id);
-            builder.Ignore(p => p.Erros);
 
-            builder.OwnsOne(p => p.Status, st => 
-            {
-                st.Ignore(s => s.ValidationResult);
-            });
+            builder.Property(p => p.Status).HasColumnName("Ativo");
 
             builder.HasOne<Permissao>()
                 .WithMany()

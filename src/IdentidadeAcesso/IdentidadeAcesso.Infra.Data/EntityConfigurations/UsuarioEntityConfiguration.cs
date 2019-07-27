@@ -13,68 +13,51 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Usuario> usuarioConfiguration)
         {
-            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoContext.DEFAULT_SCHEMA);
+            usuarioConfiguration.ToTable("usuarios", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
             usuarioConfiguration.HasKey(u => u.Id);
-            usuarioConfiguration.Ignore(u => u.Erros);
 
             usuarioConfiguration.OwnsOne(u => u.Nome, n =>
             {
                 n.Property(p => p.PrimeiroNome).HasColumnName("PrimeiroNome").IsRequired();
                 n.Property(p => p.Sobrenome).HasColumnName("Sobrenome").IsRequired();
-                n.Ignore(p => p.ValidationResult);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Sexo, s =>
             {
                 s.Property(p => p.Tipo).HasColumnName("Sexo").IsRequired();
-                s.Ignore(p => p.ValidationResult);
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Status, st =>
-            {
-                st.Ignore(p => p.ValidationResult);
-            });
+            usuarioConfiguration.Property(u => u.Status);
 
             usuarioConfiguration.OwnsOne(u => u.Email, e => 
             {
                 e.Property(p => p.Endereco).HasColumnName("Email").IsRequired();
-                e.Ignore(p => p.ValidationResult);
+            });
 
+            usuarioConfiguration.OwnsOne(u => u.Senha, s => 
+            {
+                s.Property(p => p.Caracteres).HasColumnName("Senha").IsRequired();
             });
 
             usuarioConfiguration.OwnsOne(u => u.CPF, c => 
             {
-                c.Property(p => p.Digitos).IsRequired();
-                c.Ignore(p => p.ValidationResult);
-
+                c.Property(p => p.Digitos).HasColumnName("CPF").IsRequired();
             });
 
             usuarioConfiguration.OwnsOne(u => u.DataDeNascimento, d => 
             {
                 d.Property(p => p.Data).IsRequired();
-                d.Ignore(p => p.ValidationResult);
-
             });
 
-            usuarioConfiguration.OwnsOne(u => u.Celular, c => 
+            usuarioConfiguration.OwnsOne(u => u.NumerosContato, c => 
             {
-                c.Property(p => p.Numero).IsRequired(false);
-                c.Ignore(p => p.ValidationResult);
-
-            });
-
-            usuarioConfiguration.OwnsOne(u => u.Telefone, t =>
-            {
-                t.Property(p => p.Numero).IsRequired(false);
-                t.Ignore(p => p.ValidationResult);
-
+                c.Property(p => p.NumeroCel).HasColumnName("Celular").IsRequired(false);
+                c.Property(p => p.NumeroTelefone).HasColumnName("Telefone").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.Endereco, e => 
             {
                 e.ToTable("usuario_endereco");
-                e.Ignore(p => p.ValidationResult);
-
             });
 
             usuarioConfiguration.Property(u => u.DeletadoEm)
@@ -82,8 +65,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.HasOne<Perfil>()
                 .WithMany()
-                .HasForeignKey("PerfilId")
-                .IsRequired();
+                .HasForeignKey("PerfilId");
         }
     }
 }

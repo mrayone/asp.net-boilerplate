@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
@@ -18,6 +19,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IUsuarioRepository> _userRepo;
+        private readonly Mock<IPerfilRepository> _perfilRepo;
         private readonly Usuario _usuario;
         private readonly UsuarioService _service;
 
@@ -25,10 +27,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         {
             _mediator = new Mock<IMediator>();
             _userRepo = new Mock<IUsuarioRepository>();
+            _perfilRepo = new Mock<IPerfilRepository>();
             _usuario = UsuarioBuilder.ObterUsuarioCompletoValido();
-            _service = new UsuarioService(_userRepo.Object, _mediator.Object);
-            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
-                .ReturnsAsync(_usuario);
+            _service = new UsuarioService(_userRepo.Object, _perfilRepo.Object, _mediator.Object);
         }
 
         [Fact(DisplayName = "Deve desativar o usuário e retornar o mesmo.")]
@@ -36,6 +37,8 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Desativar_O_Usuario_e_Retornar_O_Mesmo()
         {
             //arrange
+            _userRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
+                    .ReturnsAsync(_usuario);
             var userId = Guid.NewGuid();
 
             //act
@@ -43,16 +46,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
 
             //assert
 
-            result.Status.Valor.Should().BeFalse();
+            result.Status.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve retornar null caso não encontrar usuário pelo id.")]
         [Trait("Services", "Usuario - Desativar")]
         public async Task Deve_retornar_null_caso_nao_encontrar_usuario()
         {
-            //arrange
-            _userRepo.Setup(r => r.ObterPorId(It.IsAny<Guid>()))
-                .ReturnsAsync((Usuario)null);
             //act
             var result = await _service.DesativarUsuarioAsync(Guid.Empty);
 
@@ -60,6 +60,23 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
 
             result.Should().BeNull();
             _mediator.Verify(n => n.Publish(It.IsAny<DomainNotification>(), 
+                new System.Threading.CancellationToken()));
+        }
+
+        [Fact(DisplayName = "Deve retoranr false se não vincular o perfil ao Usuário.")]
+        [Trait("Services", "Usuario - Desativar")]
+        public async Task Deve_Retornar_False_Se_Nao_Vincular_Perfil_Ao_Usuario()
+        {
+            //arrange
+            var usuario = UsuarioBuilder.ObterUsuarioValido();
+
+            //act
+            var result = await _service.VincularAoPerfilAsync(Guid.Empty, usuario);
+
+            //assert
+
+            result.Should().BeFalse();
+            _mediator.Verify(n => n.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()));
         }
     }

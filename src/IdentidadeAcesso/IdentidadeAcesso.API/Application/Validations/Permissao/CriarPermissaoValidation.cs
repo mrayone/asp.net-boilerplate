@@ -8,6 +8,9 @@ namespace IdentidadeAcesso.API.Application.Validations.Permissao
 {
     public class CriarPermissaoValidation : ValidacaoPermissao<CriarPermissaoCommand>
     {
+        public CriarPermissaoValidation() : base()
+        {
 
+        }
     }
 }

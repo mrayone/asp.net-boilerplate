@@ -4,11 +4,10 @@ using System.Text;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace IdentidadeAcesso.Domain.SeedOfWork.interfaces
+namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
 {
     public interface ICommand
     {
-        ValidationResult ValidationResult { get; set; }
         bool isValid();
     }
 }

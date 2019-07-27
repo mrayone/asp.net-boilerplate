@@ -8,22 +8,12 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class AtualizarPerfilCommand : BasePerfilCommand<AtualizarPerfilCommand>, IRequest<bool>
+    public class AtualizarPerfilCommand : BasePerfilCommand<AtualizarPerfilCommand>
     {
-        public AtualizarPerfilCommand(Guid id, string nome, string descricao, bool status, 
-            IList<PermissaoAssinadaDTO> permissoesAssinadas)
+        public AtualizarPerfilCommand(Guid id, string nome, string descricao)
         {
             Id = id;
             Nome = nome;
-            Descricao = descricao;
-            Status = status;
-            PermissoesAssinadas = permissoesAssinadas;
-        }
-
-        public override bool isValid()
-        {
-            ValidationResult = new AtualizarPerfilCommandValidation().Validate(this);
-            return ValidationResult.IsValid;
-        }
+            Descricao = descricao;        }
     }
 }

@@ -7,17 +7,8 @@ namespace IdentidadeAcesso.Domain.SeedOfWork
 {
     public abstract class ValueObject<T> where T : ValueObject<T>
     {
-
-        public ValidationDomainResult ValidationResult { get; protected set; }
-
         public ValueObject()
         {
-            ValidationResult = new ValidationDomainResult();
-        }
-
-        public bool EhValido()
-        {
-            return ValidationResult.IsValid;
         }
 
         public override bool Equals(object obj)

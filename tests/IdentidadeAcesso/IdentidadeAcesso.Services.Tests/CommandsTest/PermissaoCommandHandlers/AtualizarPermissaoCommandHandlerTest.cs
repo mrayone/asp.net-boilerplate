@@ -1,11 +1,12 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands;
 using IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.Events.PermissaoEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandlers.Builder;
 using MediatR;
@@ -24,30 +25,16 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPermissaoRepository> _permissaoRepository;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<DomainNotificationHandler> _notifications;
-
+        private readonly DomainNotificationHandler _notifications;
+        private readonly AtualizarPermissaoCommandHandler _handler;
         public AtualizarPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _permissaoRepository = new Mock<IPermissaoRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<DomainNotificationHandler>();
-
-            _permissaoRepository.Setup(p => p.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
-        }
-
-        [Fact(DisplayName = "O handle deve retornar false para comando inválido.")]
-        [Trait("Handler - Permissão", "AtualizarPermissão")]
-        public async Task Handle_deve_retornar_false_para_comando_invalido()
-        {
-            //arrange
-            var commandFake = new AtualizarPermissaoCommand(Guid.Empty,"", "C");
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
-            //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
-            //assert
-            result.Should().BeFalse();
-            commandFake.ValidationResult.Errors.Should().NotBeEmpty();
+            _notifications = new DomainNotificationHandler();
+            _handler = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications, _permissaoRepository.Object);
+            _permissaoRepository.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(PermissaoBuilder.CriarPermissaoFake());
         }
 
         [Fact(DisplayName = "O handle deve retornar false e disparar notificação se permissão com mesmo valor já existir.")]
@@ -61,27 +48,24 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PermissaoCommandHandl
                 PermissaoBuilder.CriarPermissaoFake()
             };
             _permissaoRepository.Setup(r => r.Buscar(It.IsAny<Expression<Func<Permissao, bool>>>())).ReturnsAsync(listMock);
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
+            
             //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeFalse();
-            _mediator.Verify(p=> p.Publish(It.IsAny<DomainNotification>(), 
-                new System.Threading.CancellationToken()));
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O Handle deve atualizar com sucesso a permissão.")]
-        [Trait("Handler - Permissão", "NovaPermissão")]
+        [Trait("Handler - Permissão", "AtualizarPermissão")]
         public async Task Handle_deve_cadastrar_com_sucesso()
         {
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
-            var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Criar");
-            var handle = new AtualizarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications.Object, _permissaoRepository.Object);
+            var commandFake = new AtualizarPermissaoCommand(Guid.NewGuid(),"Usuário", "Editar");
             //act
-            var result = await handle.Handle(commandFake, new System.Threading.CancellationToken());
+            var result = await _handler.Handle(commandFake, new System.Threading.CancellationToken());
             //assert
-            result.Should().BeTrue();
-            commandFake.ValidationResult.Errors.Should().BeEmpty();
+            result.Success.Should().BeTrue();
+
             _mediator.Verify(m => m.Publish(It.IsAny<PermissaoAtualizadaEvent>(), default), Times.Once());
         }
     }

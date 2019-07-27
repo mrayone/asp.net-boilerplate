@@ -20,9 +20,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.SeedOfWorkTest.ValueObjectSpecs
 
             inativo.Should().Be(Status.Inativo);
             ativo.Should().Be(Status.Ativo);
-
-            ativo.ValidationResult.IsValid.Should().BeTrue();
-            inativo.ValidationResult.IsValid.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Deve validar se valores são diferentes")]
