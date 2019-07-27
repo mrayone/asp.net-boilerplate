@@ -23,31 +23,20 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients());
 
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication( options => 
-                {
-                    options.Authority = "http://localhost:5001";
-                    options.RequireHttpsMetadata = false;
-                    options.ApiName = "api";
-                    
-                });
-
-            services.AddCors(options =>
-            {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins("http://localhost:5001")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
-
             services.AddScoped<IAuthorizationHandler, PermissaoPolicyHandler>();
             services.AddScoped<IProfileService, ProfileService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();
+
+            //TODO: Comentar para Testes de Integração.
+            //services.AddAuthentication("Bearer")
+            //       .AddIdentityServerAuthentication(options =>
+            //       {
+            //           options.Authority = "http://localhost:5001";
+            //           options.RequireHttpsMetadata = false;
+            //           options.ApiName = "api";
+            //       });
 
             return services;
         }

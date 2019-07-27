@@ -13,13 +13,9 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Policy.Handler
 {
     public class PermissaoPolicyHandler : AuthorizationHandler<PermissaoPolicyRequeriment>
     {
-        private readonly IPermissaoRepository permissaoRepository;
-        private readonly IPerfilRepository perfilRepository;
 
-        public PermissaoPolicyHandler(IPermissaoRepository permissaoRepository, IPerfilRepository perfilRepository)
+        public PermissaoPolicyHandler()
         {
-            this.permissaoRepository = permissaoRepository;
-            this.perfilRepository = perfilRepository;
         }
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissaoPolicyRequeriment requirement)

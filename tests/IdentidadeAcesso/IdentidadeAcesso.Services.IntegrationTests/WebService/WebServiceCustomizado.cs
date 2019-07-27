@@ -1,9 +1,11 @@
 ﻿using Dapper;
+using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using Knowledge.IO.Infra.Data.Context;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
@@ -89,11 +91,11 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
             var list = new List<Perfil>()
             {
                 Perfil.PerfilFactory
-                .NovoPerfil(new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), "Administração", "Perfil que possui os maiores níveis de acesso"),
+                .NovoPerfilComAssinatura(new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), "Administração", "Perfil que possui os maiores níveis de acesso", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")),
                 Perfil.PerfilFactory
-                .NovoPerfil(new Guid("c5ecd8a8-f086-4058-b205-a561603415f9"), "Recursos Humanos 1", "Perfil que possui alguns níveis de RH."),
+                .NovoPerfilComAssinatura(new Guid("c5ecd8a8-f086-4058-b205-a561603415f9"), "Recursos Humanos 1", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")),
                 Perfil.PerfilFactory
-                .NovoPerfil(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.")
+                .NovoPerfilComAssinatura(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"))
             };
             return list;
         }

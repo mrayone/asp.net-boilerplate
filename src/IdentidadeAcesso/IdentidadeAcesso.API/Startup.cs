@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using System.IO;
+using Microsoft.IdentityModel.Logging;
 
 namespace IdentidadeAcesso.API
 {
@@ -33,6 +34,18 @@ namespace IdentidadeAcesso.API
                 .AddApplicationQueries()
                 .AddApplicationHandlers()
                 .AddIdentityConfig();
+
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5001")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             services.AddApiVersioning(options =>
             {
@@ -71,6 +84,8 @@ namespace IdentidadeAcesso.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            IdentityModelEventSource.ShowPII = true; //Add this line
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

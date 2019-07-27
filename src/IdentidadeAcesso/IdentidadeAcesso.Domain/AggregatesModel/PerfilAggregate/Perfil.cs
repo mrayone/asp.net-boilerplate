@@ -72,6 +72,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
                     Identifacao = new Identificacao(nome, descricao)
                 };
             }
+
+            public static Perfil NovoPerfilComAssinatura(Guid? id, string nome, string descricao, Guid permissaoId)
+            {
+                var perfil = new Perfil()
+                {
+                    Id = id.HasValue ? id.Value : Guid.NewGuid(),
+                    Identifacao = new Identificacao(nome, descricao)
+                };
+
+                perfil.AssinarPermissao(permissaoId);
+
+                return perfil;
+            }
         }
     }
 }

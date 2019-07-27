@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
-using IdentidadeAcesso.API;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
 using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
-using Knowledge.IO.Infra.Data.Context;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,23 +19,49 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         public PerfilControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            _client = factory.ComNovoDb().CreateClient();
+            
+            var clientOptions = new WebApplicationFactoryClientOptions();
+            clientOptions.AllowAutoRedirect = false;
+            clientOptions.BaseAddress = new Uri("http://localhost");
+            _client = factory.ComNovoDb().CreateClient(clientOptions);
         }
 
         [Fact(DisplayName = "Deve retornar todos os perfis cadastrados.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Retornar_Todos_Os_Perfis_Cadastrados()
         {
-
             //arrange 
+            var access = await AuthorizeCall();
+            var token = (string)access.access_token;
             //act
+            _client.SetToken("Bearer", token);
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var value = await response.Content.ReadAsStringAsync();
             var perfis = JsonConvert.DeserializeObject<IList<PerfilViewModel>>(value);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             perfis.Should().NotBeEmpty();
+        }
+
+        private async Task<dynamic> AuthorizeCall()
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("password", "123456"),
+                new KeyValuePair<string, string>("username", "fakedoi_2@gmail.com"),
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("scope", "api"),
+                new KeyValuePair<string, string>("client_id", "spa.client"),
+                // ...
+            });
+            content.Headers.Clear();
+            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            var response = await _client.PostAsync("connect/token", content);
+
+            var token = await response.Content.ReadAsStringAsync();
+            var accessToken = JsonConvert.DeserializeObject(token);
+            return accessToken;
         }
 
         [Fact(DisplayName = "Deve retornar perfil por Id.")]
