@@ -32,7 +32,7 @@ namespace Knowledge.IO.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
 
             //TODO: Comente esta linha para executar testes do xUnit
-            modelBuilder.Seed(); 
+            //modelBuilder.Seed(); 
         }
     }
 
