@@ -42,34 +42,13 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             perfis.Should().NotBeEmpty();
         }
 
-        private async Task AuthorizeCall()
-        {
-            var content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("password", "123456"),
-                new KeyValuePair<string, string>("username", "fakedoi_2@gmail.com"),
-                new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("scope", "api"),
-                new KeyValuePair<string, string>("client_id", "spa.client"),
-                // ...
-            });
-            content.Headers.Clear();
-            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-            var response = await _client.PostAsync("connect/token", content);
-
-            var token = await response.Content.ReadAsStringAsync();
-            var accessToken = JsonConvert.DeserializeObject(token);
-
-            _client.SetBearerToken(token);
-        }
-
         [Fact(DisplayName = "Deve retornar perfil por Id.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Retornar_Perfil_Por_Id()
         {
             //arrange 
             var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
-
+            await AuthorizeCall();
             //act 
             var response = await _client.GetAsync($"api/v1/perfis/{id}");
             var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -85,7 +64,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_Permissao_E_Retornar_Ok()
         {
             //arrange
-
+            await AuthorizeCall();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -111,7 +90,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
         {
             //arrange 
-
+            await AuthorizeCall();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var permissao2 = "4cf679e7-ef92-49e4-b677-2ec8d4e91453";
@@ -138,6 +117,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
         {
             //arrange 
+            await AuthorizeCall();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
             var assinatura = new
@@ -165,7 +145,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Cadastrar_Perfil_E_Retornar_Ok()
         {
             //arrange 
-            
+            await AuthorizeCall();
 
             var perfil = new
             {
@@ -190,6 +170,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Atualizar_Perfil_E_Retornar_Ok()
         {
             //arrange 
+            await AuthorizeCall();
             var perfil = new
             {
                 Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
@@ -214,6 +195,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Excluir_Perfil_E_Retornar_Ok()
         {
             //arrange 
+            await AuthorizeCall();
             //act
             var result = await _client.DeleteAsync("api/v1/perfis/c5ecd8a8-f086-4058-b205-a561603415f9");
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
@@ -228,12 +210,35 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [Trait("Testes de Integração", "PerfilControllerTests")]
         public async Task Deve_Retornar_BadRequest_Se_Excluir_PerfilEmUso()
         {
+            await AuthorizeCall();
             //act
             var delete = await _client.DeleteAsync("api/v1/perfis/8cd6c8ca-7db7-4551-b6c5-f7a724286709");
             var response = await delete.Content.ReadAsStringAsync();
             //assert
             delete.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             response.Should().NotBeEmpty();
+        }
+
+
+        private async Task AuthorizeCall()
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("password", "123456"),
+                new KeyValuePair<string, string>("username", "fakedoi_2@gmail.com"),
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("scope", "api"),
+                new KeyValuePair<string, string>("client_id", "spa.client"),
+                // ...
+            });
+            content.Headers.Clear();
+            content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            var response = await _client.PostAsync("connect/token", content);
+
+            var token = await response.Content.ReadAsStringAsync();
+            var accessToken = JsonConvert.DeserializeObject(token);
+
+            _client.SetBearerToken(token);
         }
     }
 }

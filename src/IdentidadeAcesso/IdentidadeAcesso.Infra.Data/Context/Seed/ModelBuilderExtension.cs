@@ -38,6 +38,22 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 new
                 {
                     Id = new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee")
+                },
+                new
+                {
+                    Id = new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe")
+                },
+                new
+                {
+                    Id = new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0")
+                },
+                new
+                {
+                    Id = new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c")
+                },
+                new
+                {
+                    Id = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a")
                 }
                 );
                 p.OwnsOne(prop => prop.Atribuicao)
@@ -77,6 +93,30 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                         PermissaoId = new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"),
                         Tipo = "Perfil",
                         Valor = "Excluir Perfil"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe"),
+                        Tipo = "Permissão",
+                        Valor = "Criar Permissão"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0"),
+                        Tipo = "Permissão",
+                        Valor = "Editar Permissão"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c"),
+                        Tipo = "Permissão",
+                        Valor = "Visualizar Permissões"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"),
+                        Tipo = "Permissão",
+                        Valor = "Excluir Permissão"
                     });
             });
 
@@ -133,6 +173,30 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                     Id = Guid.NewGuid(),
                     PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                     PermissaoId = new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"),
                     Status =  true,
                 });
             });

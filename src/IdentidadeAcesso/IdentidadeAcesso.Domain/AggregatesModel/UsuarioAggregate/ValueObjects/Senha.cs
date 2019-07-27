@@ -1,6 +1,8 @@
 ﻿using IdentidadeAcesso.Domain.SeedOfWork;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using System;
+using PasswordVerificationResult = Microsoft.AspNet.Identity.PasswordVerificationResult;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {

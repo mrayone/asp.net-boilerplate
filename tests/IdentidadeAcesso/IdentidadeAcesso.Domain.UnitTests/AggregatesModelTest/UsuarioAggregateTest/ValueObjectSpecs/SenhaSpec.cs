@@ -10,11 +10,9 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 {
     public class SenhaSpec
     {
-        private PasswordHasher _hasher;
 
         public SenhaSpec()
         {
-            _hasher = new PasswordHasher();
         }
 
         [Fact( DisplayName = "Deve gerar hash para senha fornecida.")]
@@ -28,7 +26,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             var senhaHash =  Senha.GerarSenha("123456");
 
             //assert
-            _hasher.VerifyHashedPassword(senhaHash.Caracteres, senha).Should().Be(PasswordVerificationResult.Success);
+            senhaHash.ValidarSenha(senha).Should().BeTrue();
         }
     }
 }
