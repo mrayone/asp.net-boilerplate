@@ -48,7 +48,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         }
 
         [Theory(DisplayName = "Deve retornar erro ao cadastrar permissão que já exista.")]
-        [InlineData("Usuário", "Cadastrar")]
+        [InlineData("Perfil", "Visualizar Perfis")]
         [InlineData("Usuário", "Remover")]
         [InlineData("Usuário", "Visualizar Cadastro")]
         [Trait("Testes de Integração", "PermissaoControllerTests")]
@@ -152,8 +152,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
 
             //act
-            var response = await _client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
+            var response = await _client.DeleteAsync("api/v1/permissoes/4cf679e7-ef92-49e4-b677-2ec8d4e91453");
             //assert
+            var resp = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }

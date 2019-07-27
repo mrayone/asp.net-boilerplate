@@ -27,7 +27,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
         }
         public async Task<CommandResponse> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
-
             var podeAtualizar = await ValidarOperacao(request);
 
             if (!podeAtualizar) return await Task.FromResult(CommandResponse.Fail);
@@ -60,7 +59,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Usuário já cadastrado, verifique 'E-mail' e/ou 'CPF'"));
                 return await Task.FromResult(DisponivelEmailECpf);
-            };
+            }
 
             return await Task.FromResult(true);
         }

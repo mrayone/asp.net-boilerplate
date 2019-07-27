@@ -69,7 +69,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 CPF = "440.156.500-26",
                 Email = "dany.targ@gmail.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
-                Celular = "+5518996113325"
+                Celular = "+5518996113325",
+                Senha = "12457@Ef",
             };
             var content = GerarContent(usuario);
             //act
@@ -101,7 +102,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Bairro = "Game of Thrones",
                 CEP = "19778500",
                 Cidade = "North",
-                Estado = "HBO"
+                Estado = "HBO",
+                Senha = "12457@Ef",
             };
             var content = GerarContent(usuario);
             //act
@@ -167,7 +169,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
         public async Task Deve_Retornar_Erro_CommandInvalidos(string nome, string sobrenome, string sexo,
-            string email, string cpf, DateTime dateDeNascimento, string celular)
+            string email, string cpf, DateTime dateDeNascimento, string celular, string senha)
         {
             //arrange
             var usuario = new
@@ -179,7 +181,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 CPF = cpf,
                 Email = email,
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
-                Celular = celular
+                Celular = celular,
+                Senha = senha,
             };
             var content = GerarContent(usuario);
             //act
@@ -202,6 +205,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "",
                     "",
                     DateTime.Now,
+                    "",
                     ""
                 };
                 yield return new object[]
@@ -212,7 +216,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "mkisdi2gmaicl.com", // email
                     "45577899852266", // cpf
                     DateTime.Now, // data de nascimento
-                    "329989878877487" // celular
+                    "329989878877487", // celular
+                    "12545487"
                 };
             }
 

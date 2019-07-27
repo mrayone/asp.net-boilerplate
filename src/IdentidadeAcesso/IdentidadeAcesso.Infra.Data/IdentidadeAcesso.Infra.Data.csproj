@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20190716234740_criando_relacionamento _de_permissoes_assinadas.Designer.cs" />
     <Compile Remove="Migrations\20190716235309_removendo-alteracoes.cs" />
     <Compile Remove="Migrations\20190716235309_removendo-alteracoes.Designer.cs" />
+    <Compile Remove="Migrations\20190727173547_init.cs" />
+    <Compile Remove="Migrations\20190727173547_init.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

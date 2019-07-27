@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Queries
 {
-    public class PerfilQueries : 
+    public class PerfilQueries :
         IRequestHandler<BuscarPorId<PerfilViewModel>, PerfilViewModel>,
-        IRequestHandler<BuscarTodos<PerfilViewModel>, IEnumerable<PerfilViewModel>>, IDisposable  
+        IRequestHandler<BuscarTodos<PerfilViewModel>, IEnumerable<PerfilViewModel>>, IDisposable
     {
         private readonly IdentidadeAcessoDbContext _context;
 
@@ -26,21 +26,17 @@ namespace IdentidadeAcesso.API.Application.Queries
 
         private PerfilViewModel MapResult(List<PerfilViewModel> result)
         {
-            using (var connection = _context.Database.GetDbConnection())
+            var response = result.FirstOrDefault();
+            if (result.Count() > 1)
             {
-                var response = result.FirstOrDefault();
-
-                if (result.Count() > 1)
+                result.RemoveAt(0);
+                foreach (var item in result)
                 {
-                    result.RemoveAt(0);
-                    foreach (var item in result)
-                    {
-                        response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
-                    }
+                    response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
                 }
-
-                return response;
             }
+
+            return response;
         }
 
 

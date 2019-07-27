@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdentidadeAcesso.API</name>
+    </assembly>
+    <members>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfisAsync">
+             <summary>
+             Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
+             </summary>
+            
+        </member>
+    </members>
+</doc>

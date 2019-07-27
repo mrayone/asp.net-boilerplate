@@ -6,6 +6,10 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Documents\Trabalho\Projeto\Projeto\asp.net core\Knowledge.IO\src\IdentidadeAcesso\IdentidadeAcesso.API\IdentidadeAcesso.API.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="Extensions\**" />
     <Content Remove="Extensions\**" />
@@ -26,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IdentidadeAcesso.CrossCutting.Identity\IdentidadeAcesso.CrossCutting.Identity.csproj" />
     <ProjectReference Include="..\IdentidadeAcesso.Domain\IdentidadeAcesso.Domain.csproj" />
     <ProjectReference Include="..\IdentidadeAcesso.Infra.Data\IdentidadeAcesso.Infra.Data.csproj" />
   </ItemGroup>
