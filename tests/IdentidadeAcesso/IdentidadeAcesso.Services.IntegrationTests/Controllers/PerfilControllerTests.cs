@@ -31,10 +31,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         public async Task Deve_Retornar_Todos_Os_Perfis_Cadastrados()
         {
             //arrange 
-            var access = await AuthorizeCall();
-            var token = (string)access.access_token;
+            await AuthorizeCall();
             //act
-            _client.SetToken("Bearer", token);
             var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
             var value = await response.Content.ReadAsStringAsync();
             var perfis = JsonConvert.DeserializeObject<IList<PerfilViewModel>>(value);
@@ -44,7 +42,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             perfis.Should().NotBeEmpty();
         }
 
-        private async Task<dynamic> AuthorizeCall()
+        private async Task AuthorizeCall()
         {
             var content = new FormUrlEncodedContent(new[]
             {
@@ -61,7 +59,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
             var token = await response.Content.ReadAsStringAsync();
             var accessToken = JsonConvert.DeserializeObject(token);
-            return accessToken;
+
+            _client.SetBearerToken(token);
         }
 
         [Fact(DisplayName = "Deve retornar perfil por Id.")]
