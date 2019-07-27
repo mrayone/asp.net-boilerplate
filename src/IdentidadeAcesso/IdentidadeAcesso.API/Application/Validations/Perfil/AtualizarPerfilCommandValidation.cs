@@ -12,6 +12,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
         public AtualizarPerfilCommandValidation() : base()
         {
             RuleFor(command => command.Id).NotEqual(Guid.Empty);
+            RuleFor(command => command.Descricao).NotNull();
         }
     }
 }

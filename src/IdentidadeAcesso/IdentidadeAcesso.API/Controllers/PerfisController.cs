@@ -42,6 +42,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpGet("{id:Guid}")]
+        [PermissaoAuthorize("Visualizar Perfis")]
         [ProducesResponseType(typeof(PerfilViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPerfilAsync(Guid id)
@@ -58,6 +59,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpPut("cancelar-permissao")]
+        [PermissaoAuthorize("Desativar Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CancelarPermissoesAsync([FromBody] CancelarPermissaoCommand command)
         {
@@ -67,6 +69,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpPut("assinar-permissao")]
+        [PermissaoAuthorize("Atribuir Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinarPermissaoCommand command)
         {
@@ -76,6 +79,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpPost]
+        [PermissaoAuthorize("Criar Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CriarPerfilAsync([FromBody] CriarPerfilCommand command)
         {
@@ -85,6 +89,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpPut]
+        [PermissaoAuthorize("Editar Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarPerfilAsync([FromBody] AtualizarPerfilCommand command)
         {
@@ -94,6 +99,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         [HttpDelete("{id:Guid}")]
+        [PermissaoAuthorize("Excluir Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPerfilAsync(Guid id)
         {
