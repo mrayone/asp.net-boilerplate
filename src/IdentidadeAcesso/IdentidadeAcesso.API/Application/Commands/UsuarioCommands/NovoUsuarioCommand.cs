@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
     public class NovoUsuarioCommand : BaseUsuarioCommand<NovoUsuarioCommand>
     {
         public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular, 
-            string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId, string senha)
+            string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId)
         {
             Nome = nome;
             Sobrenome = sobrenome;
@@ -27,7 +27,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Cidade = cidade;
             Estado = estado;
             PerfilId = perfilId;
-            Senha = senha;
         }
     }
 }

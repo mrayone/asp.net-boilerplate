@@ -29,6 +29,5 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string CEP { get; protected set; }
         public string Cidade { get; protected set; }
         public string Estado { get; protected set; }
-        public string Senha { get; protected set; }
     }
 }

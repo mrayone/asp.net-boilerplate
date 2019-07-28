@@ -36,12 +36,12 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.OwnsOne(u => u.Senha, s => 
             {
-                s.Property(p => p.Caracteres).HasColumnName("Senha").IsRequired();
+                s.Property(p => p.Caracteres).HasColumnName("Senha").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.CPF, c => 
             {
-                c.Property(p => p.Digitos).HasColumnName("CPF").IsRequired();
+                c.Property(p => p.Digitos).HasColumnName("CPF").IsRequired(false);
             });
 
             usuarioConfiguration.OwnsOne(u => u.DataDeNascimento, d => 

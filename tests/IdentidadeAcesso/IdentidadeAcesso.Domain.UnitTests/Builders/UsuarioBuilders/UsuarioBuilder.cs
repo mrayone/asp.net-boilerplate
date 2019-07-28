@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 
             return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
                 cpf, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
-                endereco, Guid.NewGuid(), "123456");
+                endereco, Guid.NewGuid());
         }
     }
 }
