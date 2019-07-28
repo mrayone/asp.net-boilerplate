@@ -12,22 +12,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
     {
         public NovoUsuarioValidation() : base()
         {
-            //TODO: vou utilizar no command de RegistrarUsuário que poderá ser utilizado para visitantes.
-            //RuleFor(c => c.Senha).NotNull()
-            //            .Must(SenhaPattern).WithMessage("A senha deve ter no mínimo 6 caracteres, no máximo 10 caracteres, " +
-            //            "e deve incluir pelo menos uma letra maiúscula, uma letra minúscula e um dígito numérico.")
-            //            .MinimumLength(6)
-            //            .MaximumLength(10);
 
-            //RuleFor(c => c.ConfirmacaoSenha).Equal(c => c.Senha)
-            //    .WithMessage("A confirmação de senha não é igual a senha fornecida.");
         }
-
-
-        private bool SenhaPattern(string arg)
-        {
-            return Regex.IsMatch(arg, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}$");
-        }
-
     }
 }

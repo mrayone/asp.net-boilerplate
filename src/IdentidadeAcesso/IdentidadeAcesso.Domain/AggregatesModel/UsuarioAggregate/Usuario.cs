@@ -94,6 +94,21 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
                 return usuario;
             }
+
+            public static Usuario RegistroRapidoDeUsuario(string nome, string sobrenome, DateTime dataDeNascimento, string email, string sexo,
+            string senha)
+            {
+                var usuario = new Usuario
+                {
+                    Nome = new NomeCompleto(nome, sobrenome),
+                    DataDeNascimento =  new DataDeNascimento(dataDeNascimento),
+                    Email =  new Email(email),
+                    Sexo = sexo.Equals("M") ? Sexo.Masculino : Sexo.Feminino,
+                    Senha = Senha.GerarSenha(senha)
+                };
+
+                return usuario;
+            }
         }
     }
 }

@@ -158,7 +158,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             return true;
         }
 
-        private bool IdadeMinima(DateTime arg)
+        public static bool IdadeMinima(DateTime arg)
         {
             return arg <= DateTime.Now.AddYears(-16);
         }

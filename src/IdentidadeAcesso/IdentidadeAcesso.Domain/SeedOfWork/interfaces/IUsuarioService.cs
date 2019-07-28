@@ -11,6 +11,7 @@ namespace IdentidadeAcesso.Domain.SeedOfWork.Interfaces
         Task<Usuario> DesativarUsuarioAsync(Guid usuarioId);
         Task<Usuario> DeletarUsuarioAsync(Guid usuarioId);
         Task<bool> VincularAoPerfilAsync(Guid perfilId, Usuario usuario);
+        Task<bool> VincularPerfilDeVisitante(Usuario usuario);
         Task<bool> DisponivelEmailECpfAsync(string email, string cpf, Guid? usuarioId = null);
     }
 }
