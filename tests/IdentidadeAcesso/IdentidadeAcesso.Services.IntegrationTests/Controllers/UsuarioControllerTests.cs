@@ -70,7 +70,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Email = "dany.targ@gmail.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                 Celular = "+5518996113325",
-                Senha = "12457@Ef",
             };
             var content = GerarContent(usuario);
             //act
@@ -103,7 +102,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 CEP = "19778500",
                 Cidade = "North",
                 Estado = "HBO",
-                Senha = "12457@Ef",
             };
             var content = GerarContent(usuario);
             //act
@@ -169,7 +167,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
         public async Task Deve_Retornar_Erro_CommandInvalidos(string nome, string sobrenome, string sexo,
-            string email, string cpf, DateTime dateDeNascimento, string celular, string senha)
+            string email, string cpf, DateTime dateDeNascimento, string celular)
         {
             //arrange
             var usuario = new
@@ -181,9 +179,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 CPF = cpf,
                 Email = email,
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
-                Celular = celular,
-                Senha = senha,
+                Celular = celular
             };
+
             var content = GerarContent(usuario);
             //act
             var post = await _client.PostAsync($"{API}", content);
@@ -191,6 +189,30 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //assert
             post.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             result.Should().NotBeEmpty();
+        }
+
+        [Fact(DisplayName = "Deve registrar usuário visitante com sucesso.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_RegistrarNovoUsuarioVisitante_ComSucesso()
+        {
+            var usuario = new
+            {
+                nome = "Fake",
+                sobrenome = "Silva Mendez",
+                dataDeNascimento = "2000-07-29",
+                email = "fakemail@outlook.com" ,
+                sexo = "M",
+                senha = "124578Mak",
+                confirmacaoSenha = "124578Mak" ,
+            };
+
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PostAsync($"{API}/registrar-se", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEmpty();
         }
 
         public class CommandsFails : IEnumerable<object[]>
@@ -205,7 +227,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "",
                     "",
                     DateTime.Now,
-                    "",
                     ""
                 };
                 yield return new object[]
@@ -217,7 +238,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                     "45577899852266", // cpf
                     DateTime.Now, // data de nascimento
                     "329989878877487", // celular
-                    "12545487"
                 };
             }
 

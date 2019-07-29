@@ -44,7 +44,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         internal static NovoUsuarioCommand UsuarioCommand()
         {
             return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "332.447.920-73", new DateTime(2002, 7, 22),
-                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid(), "123456");
+                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
 
         internal static AtualizarUsuarioCommand AtualizarUsuarioCommand()

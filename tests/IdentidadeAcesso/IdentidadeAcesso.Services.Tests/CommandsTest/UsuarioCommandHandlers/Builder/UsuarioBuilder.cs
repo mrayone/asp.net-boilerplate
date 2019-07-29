@@ -12,13 +12,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
         public static NovoUsuarioCommand ObterCommandFake()
         {
             return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fake@gmail.com", "332.447.920-73", new DateTime(2002,7,22),
-                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid(), "123456");
+                null, "+5518981928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
 
         public static NovoUsuarioCommand ObterCommandInvalidoFake()
         {
             return new NovoUsuarioCommand("Fake", "Sobrenome Fake", "F", "fakegmail.com", "354.447.920-73", new DateTime(2002, 7, 22),
-                null, "+55181928663", null, null, null, null, null, null, null, Guid.NewGuid(), null);
+                null, "+55181928663", null, null, null, null, null, null, null, Guid.NewGuid());
         }
 
 

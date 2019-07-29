@@ -86,5 +86,20 @@ namespace IdentidadeAcesso.Domain.Sevices
 
             return true;
         }
+
+        public async Task<bool> VincularPerfilDeVisitante(Usuario usuario)
+        {
+            var perfis = await _perfilRepository.Buscar(p => p.Identifacao.Nome.Equals("Visitante"));
+
+            if (perfis.Any())
+            {
+                var perfil = perfis.SingleOrDefault();
+                usuario.SetarPerfil(perfil.Id);
+                return true;
+            }
+            await _mediator.Publish(new DomainNotification(GetType().Name, "O Perfil de visitante não foi encontrado."));
+
+            return false;
+        }
     }
 }

@@ -80,7 +80,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Usuario.UsuarioFactory.CriarUsuario(new Guid("50d4a981-48d3-42e6-9c6e-9602184afca7"), "Fake", "Fake L", "M", "fakedoi_2@gmail.com", new CPF("28999953084"),
                 new DateTime(1993,7,22), "+5518981928363", "+551832815597",
                 new Endereco("R Tal", "19ew", "Centro", "18971000", "Seilandia",
-                "Seilão"), Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), "123456"),
+                "Seilão"), Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709")),
             };
 
             return list;
@@ -95,7 +95,9 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Perfil.PerfilFactory
                 .NovoPerfilComAssinatura(new Guid("c5ecd8a8-f086-4058-b205-a561603415f9"), "Recursos Humanos 1", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")),
                 Perfil.PerfilFactory
-                .NovoPerfilComAssinatura(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4"))
+                .NovoPerfilComAssinatura(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")),
+                Perfil.PerfilFactory
+                .NovoPerfil(null, "Visitante", "Perfil para usuário visitante."),
             };
             return list;
         }
