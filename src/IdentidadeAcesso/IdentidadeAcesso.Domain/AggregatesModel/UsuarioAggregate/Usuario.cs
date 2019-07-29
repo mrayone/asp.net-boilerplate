@@ -104,7 +104,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     DataDeNascimento =  new DataDeNascimento(dataDeNascimento),
                     Email =  new Email(email),
                     Sexo = sexo.Equals("M") ? Sexo.Masculino : Sexo.Feminino,
-                    Senha = Senha.GerarSenha(senha)
+                    Senha = Senha.GerarSenha(senha),
+                    CPF = new CPF(null),
+                    NumerosContato = new NumerosContato(null,null)
                 };
 
                 return usuario;

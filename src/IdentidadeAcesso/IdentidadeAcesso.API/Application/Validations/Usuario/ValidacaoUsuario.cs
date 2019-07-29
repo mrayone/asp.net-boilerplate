@@ -27,11 +27,11 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                  .NotEmpty()
                  .MaximumLength(14)
                  .MinimumLength(11)
-                 .Must(CPFValido).WithMessage("O CPF informado é inválido.");
+                 .Must(MetodosDeValidacao.CPFValido).WithMessage("O CPF informado é inválido.");
 
-            RuleFor(c => c.DateDeNascimento)
+            RuleFor(c => c.DataDeNascimento)
                 .NotEmpty()
-                .Must(IdadeMinima)
+                .Must(MetodosDeValidacao.IdadeMinima)
                 .WithMessage("O usuário deve ter 16 anos ou mais.");
 
             RuleFor(c => c.Sexo)
@@ -100,8 +100,16 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 
             return true;
         }
+    }
 
-        private bool CPFValido(string arg)
+    public static class MetodosDeValidacao
+    {
+        public static bool IdadeMinima(DateTime arg)
+        {
+            return arg <= DateTime.Now.AddYears(-16);
+        }
+
+        public static bool CPFValido(string arg)
         {
             if (string.IsNullOrEmpty(arg)) return false;
 
@@ -156,11 +164,6 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                 return false;
 
             return true;
-        }
-
-        public static bool IdadeMinima(DateTime arg)
-        {
-            return arg <= DateTime.Now.AddYears(-16);
         }
     }
 }

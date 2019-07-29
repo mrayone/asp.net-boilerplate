@@ -16,7 +16,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Sexo = sexo;
             Email = email;
             CPF = cpf;
-            DateDeNascimento = dateDeNascimento;
+            DataDeNascimento = dateDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Logradouro = logradouro;

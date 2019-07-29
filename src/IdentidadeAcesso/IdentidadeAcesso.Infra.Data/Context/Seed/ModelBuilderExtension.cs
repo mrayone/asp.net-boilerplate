@@ -132,8 +132,22 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                         new
                         {
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
-                            Nome = "Super",
+                            Nome = "Administrador",
                             Descricao = "Perfil de super usuário"
+                        });
+
+                p.HasData(new
+                {
+                    Id = new Guid("21dae14c-632b-4768-bfab-722bd291c785")
+                });
+
+                p.OwnsOne(prop => prop.Identifacao)
+                .HasData(
+                        new
+                        {
+                            PerfilId = new Guid("21dae14c-632b-4768-bfab-722bd291c785"),
+                            Nome = "Visitante",
+                            Descricao = "Perfil para usuários visitantes no sistema."
                         });
             });
             modelBuilder.Entity<PermissaoAssinada>(p => 
