@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class CancelarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<CancelarPermissaoCommand, CommandResponse>
+    public class RevogarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<RevogarPermissaoCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
-        public CancelarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public RevogarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications, IPerfilService domainService, 
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<CommandResponse> Handle(CancelarPermissaoCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(RevogarPermissaoCommand request, CancellationToken cancellationToken)
         {
             var perfil = await this.BuscarPerfilComPermissoes(request.PerfilId, _perfilRepository);
             if (perfil == null)
@@ -37,9 +37,9 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(CommandResponse.Fail);
             }
 
-            foreach (var item in request.Assinaturas)
+            foreach (var item in request.Atribuicoes)
             {
-                perfil = await _perfilService.CancelarPermissaoAsync(perfil, item.PermissaoId);
+                perfil = await _perfilService.RevogarPermissaoAsync(perfil, item.PermissaoId);
             }
 
             if (await Commit())

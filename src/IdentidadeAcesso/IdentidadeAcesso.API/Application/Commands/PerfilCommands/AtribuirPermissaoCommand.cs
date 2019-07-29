@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class AssinarPermissaoCommand : BasePermissaoPerfil<AssinarPermissaoCommand>
+    public class AtribuirPermissaoCommand : BasePermissaoPerfil<AtribuirPermissaoCommand>
     {
-        public AssinarPermissaoCommand(Guid perfilId, IList<AssinaturaDTO> assinaturas)
+        public AtribuirPermissaoCommand(Guid perfilId, IList<AtribuicaoDTO> atribuicoes)
         {
-            Assinaturas = assinaturas;
+            Atribuicoes = atribuicoes;
             PerfilId = perfilId;
         }
 
     }
 
-    public class AssinaturaDTO
+    public class AtribuicaoDTO
     {
-        public Guid AssinaturaId { get; set; }
+        public Guid AtribuicaoId { get; set; }
         public Guid PermissaoId { get; set; }
     }
 }

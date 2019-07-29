@@ -30,13 +30,13 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();
 
             //TODO: Comentar para Testes de Integração.
-            //services.AddAuthentication("Bearer")
-            //       .AddIdentityServerAuthentication(options =>
-            //       {
-            //           options.Authority = "http://localhost:5001";
-            //           options.RequireHttpsMetadata = false;
-            //           options.ApiName = "api";
-            //       });
+            services.AddAuthentication("Bearer")
+                   .AddIdentityServerAuthentication(options =>
+                   {
+                       options.Authority = "http://localhost:5001";
+                       options.RequireHttpsMetadata = false;
+                       options.ApiName = "api";
+                   });
 
             return services;
         }

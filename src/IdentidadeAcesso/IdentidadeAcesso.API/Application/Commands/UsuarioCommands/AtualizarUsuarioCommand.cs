@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Sexo = sexo;
             Email = email;
             CPF = cpf;
-            DateDeNascimento = dateDeNascimento;
+            DataDeNascimento = dateDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Logradouro = logradouro;
@@ -29,7 +29,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Estado = estado;
             PerfilId = perfilId;
             Id = id;
-            Senha = null;
         }
     }
 }

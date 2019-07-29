@@ -5,8 +5,108 @@
     </assembly>
     <members>
         <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfisAsync">
+            <summary>
+            Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
+            </summary>
+            <remarks>
+            Retorna uma lista de objetos PerfilViewModel.
+            </remarks>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfilAsync(System.Guid)">
+            <summary>
+            Obtém um perfil por Id. Este método requer permissão para "Visualizar Perfis".
+            </summary>
+            <remarks>
+            Retorna um objeto PerfilViewModel caso o mesmo exista na base de dados com o Id fornecido.
+            </remarks>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.RevogarPermissoesAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.RevogarPermissaoCommand)">
+            <summary>
+            Revoga permissões atribuidas a um perfil. Este método requer permissão para "Revogar Permissões".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.AtribuirPermissoesAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.AtribuirPermissaoCommand)">
+            <summary>
+            Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.CriarPerfilAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.CriarPerfilCommand)">
+            <summary>
+            Cria um novo perfil. Este método requer permissão para "Criar Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.AtualizarPerfilAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.AtualizarPerfilCommand)">
+            <summary>
+            Edita um perfil do app. Este método requer permissão para "Editar Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.ExcluirPerfilAsync(System.Guid)">
+            <summary>
+            Exclui um perfil do app. Este método requer permissão para "Excluir Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.GetPermissoesAsync">
              <summary>
-             Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
+             Lista todos as permissões. Este método requer permissão para "Visualizar Permissões".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.GetPermissaoAsync(System.Guid)">
+             <summary>
+             Obtém um permissão por Id. Este método requer permissão para "Visualizar Permissões".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.CriarPermissaoAsync(IdentidadeAcesso.API.Application.Commands.PermissaoCommands.CriarPermissaoCommand)">
+             <summary>
+             Cria uma permissão no sistema. Este método requer permissão para "Criar Permissão".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.AtualizarPermissaoAsync(IdentidadeAcesso.API.Application.Commands.PermissaoCommands.AtualizarPermissaoCommand)">
+             <summary>
+             Atualiza uma permissão do sistema. Este método requer permissão para "Atualizar Permissão".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.ExcluirPermissaoAsync(System.Guid)">
+            <summary>
+            Exclui uma permissão do sistema. Este método requer permissão para "Excluir Permissão".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetUsuariosAsync">
+             <summary>
+             Lista todos os usuários. Este método requer permissão para "Visualizar Usuários".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetUsuarioAsync(System.Guid)">
+             <summary>
+             Obtém um usuário por Id. Este método requer permissão para "Visualizar Usuários".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.CriarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.NovoUsuarioCommand)">
+             <summary>
+             Cria um novo usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Criar Usuário".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.RegistrarNovoUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.RegistrarUsuarioCommand)">
+             <summary>
+             Este método é fornecido para usuários visitantes se registrarem no app.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.AtualizarUsuarioCommand)">
+             <summary>
+             Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.ExcluirUsuarioAsync(System.Guid)">
+             <summary>
+             Exclui um usuário do sistema. Este método requer permissão para "Excluir Usuário".
              </summary>
             
         </member>

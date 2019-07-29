@@ -19,17 +19,17 @@ using Xunit;
 
 namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 {
-    public class CancelarPermissoesPefilCommandHandlerTest
+    public class RevogarPermissaoCommandHandlerTest
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
-        private readonly CancelarPermissaoCommandHandler _handler;
-        private readonly List<AssinaturaDTO> _list;
+        private readonly RevogarPermissaoCommandHandler _handler;
+        private readonly List<AtribuicaoDTO> _list;
 
-        public CancelarPermissoesPefilCommandHandlerTest()
+        public RevogarPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
@@ -37,16 +37,16 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _notifications = new DomainNotificationHandler();
             _service = new Mock<IPerfilService>();
 
-            _handler = new CancelarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications,
+            _handler = new RevogarPermissaoCommandHandler(_mediator.Object, _uow.Object, _notifications,
                 _service.Object, _perfilRepositoryMock.Object);
 
-            _list = new List<AssinaturaDTO>()
+            _list = new List<AtribuicaoDTO>()
             {
-                new AssinaturaDTO()
+                new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
                 },
-                new AssinaturaDTO()
+                new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
                 }
@@ -60,7 +60,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             //arrange
             var perfilId = Guid.NewGuid();
 
-            var command = new CancelarPermissaoCommand(perfilId, _list);
+            var command = new RevogarPermissaoCommand(perfilId, _list);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
@@ -79,11 +79,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             
             var perfil = TestBuilder.PerfilFalso();
             _perfilRepositoryMock.Setup(p => p.ObterComPermissoesAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
-            _service.Setup(s => s.CancelarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.RevogarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
-            var command = new CancelarPermissaoCommand(perfil.Id, _list);
+            var command = new RevogarPermissaoCommand(perfil.Id, _list);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act

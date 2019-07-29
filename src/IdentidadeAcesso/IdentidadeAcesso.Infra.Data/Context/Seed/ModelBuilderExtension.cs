@@ -54,6 +54,22 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 new
                 {
                     Id = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a")
+                },
+                new
+                {
+                    Id = new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49")
+                },
+                new
+                {
+                    Id = new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27")
+                },
+                new
+                {
+                    Id = new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1")
+                },
+                new
+                {
+                    Id = new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0")
                 }
                 );
                 p.OwnsOne(prop => prop.Atribuicao)
@@ -68,7 +84,7 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                     {
                         PermissaoId = new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"),
                         Tipo = "Perfil",
-                        Valor = "Desativar Permissões"
+                        Valor = "Revogar Permissões"
                     },
                     new
                     {
@@ -117,6 +133,30 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                         PermissaoId = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"),
                         Tipo = "Permissão",
                         Valor = "Excluir Permissão"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49"),
+                        Tipo = "Usuário",
+                        Valor = "Visualizar Usuários"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27"),
+                        Tipo = "Usuário",
+                        Valor = "Criar Usuário"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1"),
+                        Tipo = "Usuário",
+                        Valor = "Atualizar Usuário"
+                    },
+                    new
+                    {
+                        PermissaoId = new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0"),
+                        Tipo = "Usuário",
+                        Valor = "Excluir Usuário"
                     });
             });
 
@@ -132,11 +172,25 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                         new
                         {
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
-                            Nome = "Super",
+                            Nome = "Administrador",
                             Descricao = "Perfil de super usuário"
                         });
+
+                p.HasData(new
+                {
+                    Id = new Guid("21dae14c-632b-4768-bfab-722bd291c785")
+                });
+
+                p.OwnsOne(prop => prop.Identifacao)
+                .HasData(
+                        new
+                        {
+                            PerfilId = new Guid("21dae14c-632b-4768-bfab-722bd291c785"),
+                            Nome = "Visitante",
+                            Descricao = "Perfil para usuários visitantes no sistema."
+                        });
             });
-            modelBuilder.Entity<PermissaoAssinada>(p => 
+            modelBuilder.Entity<AtribuicaoPerfil>(p => 
             {
                 p.HasData(new
                 {
@@ -198,6 +252,30 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                     PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                     PermissaoId = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"),
                     Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1"),
+                    Status =  true,
+                },new
+                {
+                    Id = Guid.NewGuid(),
+                    PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
+                    PermissaoId = new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0"),
+                    Status =  true,
                 });
             });
             modelBuilder.Entity<Usuario>(u => 
@@ -231,7 +309,7 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 u.OwnsOne(p => p.Email).HasData(new
                 {
                     UsuarioId = uId,
-                    Endereco = "maycon.rayone@gmail.com"
+                    Endereco = "adminfake@mozej.com"
                 });
 
                 u.OwnsOne(p => p.Nome).HasData(new
@@ -244,7 +322,7 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 u.OwnsOne(p => p.Senha).HasData(new
                 {
                     UsuarioId = uId,
-                    Caracteres = Senha.GerarSenha("28999953084").Caracteres.ToString()
+                    Caracteres = Senha.GerarSenha("123456@IO").Caracteres.ToString()
                 });
 
                 u.OwnsOne(p => p.NumerosContato).HasData(new { UsuarioId = uId });

@@ -30,7 +30,9 @@ namespace IdentidadeAcesso.API.Controllers
         /// <summary>
         /// Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
         /// </summary>
-        ///
+        /// <remarks>
+        /// Retorna uma lista de objetos PerfilViewModel.
+        /// </remarks>
         [HttpGet("obter-todos")]
         [PermissaoAuthorize("Visualizar Perfis")]
         [ProducesResponseType(typeof(IEnumerable<PerfilViewModel>), StatusCodes.Status200OK)]
@@ -41,6 +43,12 @@ namespace IdentidadeAcesso.API.Controllers
             return Ok(list);
         }
 
+        /// <summary>
+        /// Obtém um perfil por Id. Este método requer permissão para "Visualizar Perfis".
+        /// </summary>
+        /// <remarks>
+        /// Retorna um objeto PerfilViewModel caso o mesmo exista na base de dados com o Id fornecido.
+        /// </remarks>
         [HttpGet("{id:Guid}")]
         [PermissaoAuthorize("Visualizar Perfis")]
         [ProducesResponseType(typeof(PerfilViewModel), StatusCodes.Status200OK)]
@@ -58,26 +66,35 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
-        [HttpPut("cancelar-permissao")]
-        [PermissaoAuthorize("Desativar Permissões")]
+        /// <summary>
+        /// Revoga permissões atribuidas a um perfil. Este método requer permissão para "Revogar Permissões".
+        /// </summary>
+        [HttpPut("revogar-permissoes")]
+        [PermissaoAuthorize("Revogar Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] CancelarPermissaoCommand command)
+        public async Task<IActionResult> RevogarPermissoesAsync([FromBody] RevogarPermissaoCommand command)
         {
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
         }
 
-        [HttpPut("assinar-permissao")]
+        /// <summary>
+        /// Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".
+        /// </summary>
+        [HttpPut("atribuir-permissoes")]
         [PermissaoAuthorize("Atribuir Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinarPermissaoCommand command)
+        public async Task<IActionResult> AtribuirPermissoesAsync([FromBody] AtribuirPermissaoCommand command)
         {
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Cria um novo perfil. Este método requer permissão para "Criar Perfil".
+        /// </summary>
         [HttpPost]
         [PermissaoAuthorize("Criar Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -88,6 +105,9 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Edita um perfil do app. Este método requer permissão para "Editar Perfil".
+        /// </summary>
         [HttpPut]
         [PermissaoAuthorize("Editar Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -98,6 +118,9 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Exclui um perfil do app. Este método requer permissão para "Excluir Perfil".
+        /// </summary>
         [HttpDelete("{id:Guid}")]
         [PermissaoAuthorize("Excluir Perfil")]
         [ProducesResponseType(StatusCodes.Status200OK)]

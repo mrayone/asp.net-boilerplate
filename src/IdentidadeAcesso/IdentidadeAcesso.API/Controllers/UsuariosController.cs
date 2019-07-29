@@ -2,9 +2,11 @@
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.CrossCutting.Identity.CustomAuthorizeAttribute;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -29,7 +31,12 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notification;
         }
 
+        /// <summary>
+        /// Lista todos os usuários. Este método requer permissão para "Visualizar Usuários".
+        /// </summary>
+        ///
         [Route("obter-todos")]
+        [PermissaoAuthorize("Visualizar Usuários")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UsuarioViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuariosAsync()
@@ -38,7 +45,13 @@ namespace IdentidadeAcesso.API.Controllers
 
             return Ok(list);
         }
+
+        /// <summary>
+        /// Obtém um usuário por Id. Este método requer permissão para "Visualizar Usuários".
+        /// </summary>
+        ///
         [HttpGet("{id:Guid}")]
+        [PermissaoAuthorize("Visualizar Usuários")]
         [ProducesResponseType(typeof(UsuarioViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuarioAsync(Guid id)
         {
@@ -53,7 +66,12 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Cria um novo usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Criar Usuário".
+        /// </summary>
+        ///
         [HttpPost]
+        [PermissaoAuthorize("Criar Usuário")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CriarUsuarioAsync([FromBody] NovoUsuarioCommand usuario)
         {
@@ -62,7 +80,26 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Este método é fornecido para usuários visitantes se registrarem no app.
+        /// </summary>
+        ///
+        [HttpPost("registrar-se")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> RegistrarNovoUsuarioAsync([FromBody] RegistrarUsuarioCommand usuario)
+        {
+            var result = await _mediator.Send(usuario);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
+        /// Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+        /// </summary>
+        ///
         [HttpPut]
+        [PermissaoAuthorize("Atualizar Usuário")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] AtualizarUsuarioCommand usuario)
         {
@@ -72,7 +109,12 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Exclui um usuário do sistema. Este método requer permissão para "Excluir Usuário".
+        /// </summary>
+        ///
         [HttpDelete("{id:Guid}")]
+        [PermissaoAuthorize("Excluir Usuário")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirUsuarioAsync(Guid id)
         {

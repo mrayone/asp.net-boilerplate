@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string Sexo { get; protected set; }
         public string Email { get; protected set; }
         public string CPF { get; protected set; }
-        public DateTime DateDeNascimento { get; protected set; }
+        public DateTime DataDeNascimento { get; protected set; }
         public Guid PerfilId { get; protected set; }
         public string Telefone { get; protected set; }
         public string Celular { get; protected set; }
@@ -29,6 +29,5 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
         public string CEP { get; protected set; }
         public string Cidade { get; protected set; }
         public string Estado { get; protected set; }
-        public string Senha { get; protected set; }
     }
 }

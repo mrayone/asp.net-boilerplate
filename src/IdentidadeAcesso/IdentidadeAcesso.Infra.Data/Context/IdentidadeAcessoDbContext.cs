@@ -27,12 +27,12 @@ namespace Knowledge.IO.Infra.Data.Context
         {
 
             modelBuilder.ApplyConfiguration(new PerfilEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PermissaoAssinadaEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AtribuicoesPerfilEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PermissaoEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
 
             //TODO: Comente esta linha para executar testes do xUnit
-            //modelBuilder.Seed(); 
+            modelBuilder.Seed(); 
         }
     }
 

@@ -9,15 +9,15 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
     public class Perfil : Entity, IAggregateRoot
     {
-        private List<PermissaoAssinada> _permissoesAssinadas;
+        private List<AtribuicaoPerfil> _atribuicoes;
         public Identificacao Identifacao { get; private set; }
-        public IReadOnlyCollection<PermissaoAssinada> PermissoesAssinadas => _permissoesAssinadas;
+        public IReadOnlyCollection<AtribuicaoPerfil> Atribuicoes => _atribuicoes;
         public DateTime? DeletadoEm { get; private set; }
 
         protected Perfil()
         {
             Id = Guid.NewGuid();
-            _permissoesAssinadas = new List<PermissaoAssinada>();
+            _atribuicoes = new List<AtribuicaoPerfil>();
         }
 
         public Perfil(Identificacao identificacao) : this()
@@ -34,8 +34,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             }
             else
             {
-                var permissaoAssinada = new PermissaoAssinada(permissaoId);
-                _permissoesAssinadas.Add(permissaoAssinada);
+                var permissaoAssinada = new AtribuicaoPerfil(permissaoId);
+                _atribuicoes.Add(permissaoAssinada);
             }
         }
 
@@ -54,9 +54,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             DeletadoEm = DateTime.Now;
         }
 
-        private PermissaoAssinada EncontrarPermissao(Guid permissaoId)
+        private AtribuicaoPerfil EncontrarPermissao(Guid permissaoId)
         {
-            var permissaoEncontrada = _permissoesAssinadas.Where(p => p.PermissaoId == permissaoId).FirstOrDefault();
+            var permissaoEncontrada = _atribuicoes.Where(p => p.PermissaoId == permissaoId).FirstOrDefault();
 
             return permissaoEncontrada;
         }

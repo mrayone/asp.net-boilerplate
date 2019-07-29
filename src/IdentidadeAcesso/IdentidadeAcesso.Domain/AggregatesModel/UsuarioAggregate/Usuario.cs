@@ -74,7 +74,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
-                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId, string senha)
+                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
             {
                 var usuario = new Usuario
                 {
@@ -90,7 +90,24 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                 usuario.AdicionarCelular(new NumerosContato(celular, telefone));
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
-                if (!string.IsNullOrEmpty(senha)) usuario.DefinirSenha(Senha.GerarSenha(senha));
+                usuario.DefinirSenha(Senha.GerarSenha(CPF.ObterCPFLimpo(cpf.Digitos).Digitos));
+
+                return usuario;
+            }
+
+            public static Usuario RegistroRapidoDeUsuario(string nome, string sobrenome, DateTime dataDeNascimento, string email, string sexo,
+            string senha)
+            {
+                var usuario = new Usuario
+                {
+                    Nome = new NomeCompleto(nome, sobrenome),
+                    DataDeNascimento =  new DataDeNascimento(dataDeNascimento),
+                    Email =  new Email(email),
+                    Sexo = sexo.Equals("M") ? Sexo.Masculino : Sexo.Feminino,
+                    Senha = Senha.GerarSenha(senha),
+                    CPF = new CPF(null),
+                    NumerosContato = new NumerosContato(null,null)
+                };
 
                 return usuario;
             }

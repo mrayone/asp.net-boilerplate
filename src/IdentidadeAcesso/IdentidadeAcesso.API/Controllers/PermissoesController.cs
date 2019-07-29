@@ -2,6 +2,7 @@
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.API.Application.Queries;
 using IdentidadeAcesso.API.Controllers.Extensions;
+using IdentidadeAcesso.CrossCutting.Identity.CustomAuthorizeAttribute;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,12 @@ namespace IdentidadeAcesso.API.Controllers
             _notifications = notification;
         }
 
+        /// <summary>
+        /// Lista todos as permissões. Este método requer permissão para "Visualizar Permissões".
+        /// </summary>
+        ///
         [HttpGet("obter-todas")]
+        [PermissaoAuthorize("Visualizar Permissões")]
         [ProducesResponseType(typeof(IEnumerable<PermissaoViewModel>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPermissoesAsync()
         {
@@ -36,7 +42,12 @@ namespace IdentidadeAcesso.API.Controllers
             return Ok(list);
         }
 
+        /// <summary>
+        /// Obtém um permissão por Id. Este método requer permissão para "Visualizar Permissões".
+        /// </summary>
+        ///
         [HttpGet("{id:Guid}")]
+        [PermissaoAuthorize("Visualizar Permissões")]
         [ProducesResponseType(typeof(PermissaoViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPermissaoAsync(Guid id)
@@ -52,7 +63,12 @@ namespace IdentidadeAcesso.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Cria uma permissão no sistema. Este método requer permissão para "Criar Permissão".
+        /// </summary>
+        ///
         [HttpPost]
+        [PermissaoAuthorize("Criar Permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CriarPermissaoAsync([FromBody] CriarPermissaoCommand criarPermissao)
         {
@@ -61,7 +77,12 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Atualiza uma permissão do sistema. Este método requer permissão para "Atualizar Permissão".
+        /// </summary>
+        ///
         [HttpPut]
+        [PermissaoAuthorize("Atualizar Permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand atualizarPermissao)
         {
@@ -70,7 +91,12 @@ namespace IdentidadeAcesso.API.Controllers
             return this.VerificarErros(_notifications, result);
         }
 
+        /// <summary>
+        /// Exclui uma permissão do sistema. Este método requer permissão para "Excluir Permissão".
+        /// </summary>
+        //
         [HttpDelete("{id:Guid}")]
+        [PermissaoAuthorize("Excluir Permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ExcluirPermissaoAsync( Guid id )
         {

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public class CancelarPermissaoCommand : BasePermissaoPerfil<CancelarPermissaoCommand>
+    public class RevogarPermissaoCommand : BasePermissaoPerfil<RevogarPermissaoCommand>
     {
-        public CancelarPermissaoCommand(Guid perfilId, IList<AssinaturaDTO> assinaturas)
+        public RevogarPermissaoCommand(Guid perfilId, IList<AtribuicaoDTO> atribuicoes)
         {
             PerfilId = perfilId;
-            Assinaturas = assinaturas;
+            Atribuicoes = atribuicoes;
         }
     }
 }
