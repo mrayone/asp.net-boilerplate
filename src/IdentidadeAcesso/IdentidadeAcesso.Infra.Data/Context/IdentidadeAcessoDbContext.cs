@@ -27,7 +27,7 @@ namespace Knowledge.IO.Infra.Data.Context
         {
 
             modelBuilder.ApplyConfiguration(new PerfilEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new PermissaoAssinadaEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AtribuicoesPerfilEntityConfiguration());
             modelBuilder.ApplyConfiguration(new PermissaoEntityConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioEntityConfiguration());
 

@@ -29,7 +29,7 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> AssinarPermissaoAsync(Perfil perfil, Guid permissaoId)
+        public async Task<Perfil> AtribuirPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
@@ -47,11 +47,11 @@ namespace IdentidadeAcesso.Domain.Sevices
             return await Task.FromResult(perfil);
         }
 
-        public async Task<Perfil> CancelarPermissaoAsync(Perfil perfil, Guid permissaoId)
+        public async Task<Perfil> RevogarPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
-            var containsPermissao = perfil.PermissoesAssinadas.Where(p => p.PermissaoId == permissaoId);
+            var containsPermissao = perfil.Atribuicoes.Where(p => p.PermissaoId == permissaoId);
             if (!containsPermissao.Any())
             {
                 await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));

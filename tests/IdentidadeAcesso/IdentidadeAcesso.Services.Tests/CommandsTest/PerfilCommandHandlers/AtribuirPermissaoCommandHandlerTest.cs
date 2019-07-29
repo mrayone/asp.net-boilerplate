@@ -18,17 +18,17 @@ using Xunit;
 
 namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 {
-    public class AssinarPermissaoCommandHandlerTest
+    public class AtribuirPermissaoCommandHandlerTest
     {
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IPerfilService> _service;
-        private readonly AssinarPermissaoCommandHandler _handler;
-        private readonly List<AssinaturaDTO> _list;
+        private readonly AtribuirPermissaoCommandHandler _handler;
+        private readonly List<AtribuicaoDTO> _list;
 
-        public AssinarPermissaoCommandHandlerTest()
+        public AtribuirPermissaoCommandHandlerTest()
         {
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
@@ -36,7 +36,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _notifications = new DomainNotificationHandler();
 
             _service = new Mock<IPerfilService>();
-            _handler = new AssinarPermissaoCommandHandler(_mediator.Object, _uow.Object, 
+            _handler = new AtribuirPermissaoCommandHandler(_mediator.Object, _uow.Object, 
                 _notifications, _service.Object, _perfilRepositoryMock.Object);
 
             _perfilRepositoryMock.Setup(r => r.ObterComPermissoesAsync(It.IsAny<Guid>()))
@@ -44,13 +44,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
 
-            _list = new List<AssinaturaDTO>()
+            _list = new List<AtribuicaoDTO>()
             {
-                new AssinaturaDTO()
+                new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
                 },
-                new AssinaturaDTO()
+                new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
                 }
@@ -58,19 +58,19 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         }
 
         [Fact(DisplayName = "Deve assinar permissão e retornar true .")]
-        [Trait("Handler - Perfil", "AssinarPermissaoCommand")]
+        [Trait("Handler - Perfil", "AtribuirPermissaoCommand")]
         public async Task Deve_AssinarPermissao_e_Retornar_True()
         {
             //arrange
             var perfil = TestBuilder.PerfilFalso();
-            _service.Setup(s => s.AssinarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
+            _service.Setup(s => s.AtribuirPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
                 .ReturnsAsync(perfil);
-            var command = new AssinarPermissaoCommand(perfil.Id, _list);
+            var command = new AtribuirPermissaoCommand(perfil.Id, _list);
             //act
             var result = await _handler.Handle(command, new System.Threading.CancellationToken());
             //assert
             result.Success.Should().BeTrue();
-            _service.Verify(s => s.AssinarPermissaoAsync(perfil, It.IsAny<Guid>()), Times.Once);
+            _service.Verify(s => s.AtribuirPermissaoAsync(perfil, It.IsAny<Guid>()), Times.Once);
             _uow.Verify(u => u.Commit(), Times.Once);
         }
     }

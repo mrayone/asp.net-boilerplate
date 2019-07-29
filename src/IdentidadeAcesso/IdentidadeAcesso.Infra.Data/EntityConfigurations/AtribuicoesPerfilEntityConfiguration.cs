@@ -9,11 +9,11 @@ using System.Text;
 
 namespace Knowledge.IO.Infra.Data.EntityConfigurations
 {
-    class PermissaoAssinadaEntityConfiguration : IEntityTypeConfiguration<PermissaoAssinada>
+    class AtribuicoesPerfilEntityConfiguration : IEntityTypeConfiguration<AtribuicaoPerfil>
     {
-        public void Configure(EntityTypeBuilder<PermissaoAssinada> builder)
+        public void Configure(EntityTypeBuilder<AtribuicaoPerfil> builder)
         {
-            builder.ToTable("permissoes_assinadas", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
+            builder.ToTable("atribuicoes_perfil", IdentidadeAcessoDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(p => p.Id);
 

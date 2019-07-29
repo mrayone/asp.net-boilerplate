@@ -190,7 +190,7 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                             Descricao = "Perfil para usuários visitantes no sistema."
                         });
             });
-            modelBuilder.Entity<PermissaoAssinada>(p => 
+            modelBuilder.Entity<AtribuicaoPerfil>(p => 
             {
                 p.HasData(new
                 {

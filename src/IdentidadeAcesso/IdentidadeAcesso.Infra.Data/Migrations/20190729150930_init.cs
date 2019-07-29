@@ -50,12 +50,12 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     Sobrenome = table.Column<string>(nullable: false),
                     Sexo = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
-                    CPF = table.Column<string>(nullable: false),
+                    CPF = table.Column<string>(nullable: true),
                     DataDeNascimento_Data = table.Column<DateTime>(nullable: false),
                     Celular = table.Column<string>(nullable: true),
                     Telefone = table.Column<string>(nullable: true),
                     Status = table.Column<bool>(nullable: false),
-                    Senha = table.Column<string>(nullable: false),
+                    Senha = table.Column<string>(nullable: true),
                     DeletadoEm = table.Column<DateTime>(nullable: true),
                     PerfilId = table.Column<Guid>(nullable: false)
                 },
@@ -72,7 +72,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "permissoes_assinadas",
+                name: "atribuicoes_perfil",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -83,16 +83,16 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_permissoes_assinadas", x => x.Id);
+                    table.PrimaryKey("PK_atribuicoes_perfil", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_permissoes_assinadas_perfis_PerfilId",
+                        name: "FK_atribuicoes_perfil_perfis_PerfilId",
                         column: x => x.PerfilId,
                         principalSchema: "dbo",
                         principalTable: "perfis",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_permissoes_assinadas_permissoes_PermissaoId",
+                        name: "FK_atribuicoes_perfil_permissoes_PermissaoId",
                         column: x => x.PermissaoId,
                         principalSchema: "dbo",
                         principalTable: "permissoes",
@@ -130,7 +130,11 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 schema: "dbo",
                 table: "perfis",
                 columns: new[] { "Id", "DeletadoEm", "Descricao", "Nome" },
-                values: new object[] { new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), null, "Perfil de super usuário", "Super" });
+                values: new object[,]
+                {
+                    { new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), null, "Perfil de super usuário", "Administrador" },
+                    { new Guid("21dae14c-632b-4768-bfab-722bd291c785"), null, "Perfil para usuários visitantes no sistema.", "Visitante" }
+                });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
@@ -139,43 +143,59 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                 values: new object[,]
                 {
                     { new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), null, "Perfil", "Visualizar Perfis" },
-                    { new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"), null, "Perfil", "Desativar Permissões" },
+                    { new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"), null, "Perfil", "Revogar Permissões" },
                     { new Guid("20f04a05-7732-428c-a5f2-1a5765256808"), null, "Perfil", "Atribuir Permissões" },
                     { new Guid("f40ed114-8191-4621-8836-21aaf60eecf4"), null, "Perfil", "Criar Perfil" },
                     { new Guid("0440c348-12c2-435a-a027-f81636e71faa"), null, "Perfil", "Editar Perfil" },
-                    { new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"), null, "Perfil", "Excluir Perfil" }
+                    { new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"), null, "Perfil", "Excluir Perfil" },
+                    { new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe"), null, "Permissão", "Criar Permissão" },
+                    { new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0"), null, "Permissão", "Editar Permissão" },
+                    { new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c"), null, "Permissão", "Visualizar Permissões" },
+                    { new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"), null, "Permissão", "Excluir Permissão" },
+                    { new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49"), null, "Usuário", "Visualizar Usuários" },
+                    { new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27"), null, "Usuário", "Criar Usuário" },
+                    { new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1"), null, "Usuário", "Atualizar Usuário" },
+                    { new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0"), null, "Usuário", "Excluir Usuário" }
                 });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
-                table: "permissoes_assinadas",
+                table: "atribuicoes_perfil",
                 columns: new[] { "Id", "PerfilId", "PermissaoId", "Ativo" },
                 values: new object[,]
                 {
-                    { new Guid("4d3aa835-5d08-4b97-a5d5-bf9289415aa5"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), true },
-                    { new Guid("5139cd24-20aa-4152-a17d-ed3190cf71e3"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"), true },
-                    { new Guid("28d5207f-73f0-4ce2-b9c2-aef5765c5e22"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("20f04a05-7732-428c-a5f2-1a5765256808"), true },
-                    { new Guid("eabaee72-91bf-411e-a9a8-1b6eb9bed8e2"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("f40ed114-8191-4621-8836-21aaf60eecf4"), true },
-                    { new Guid("df5b8c50-5a61-4f98-8093-0735715a90bc"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("0440c348-12c2-435a-a027-f81636e71faa"), true },
-                    { new Guid("ace904c7-3505-443a-91a4-c275e06743ae"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"), true }
+                    { new Guid("f28d0c97-c858-44b9-94dd-70aa924a493a"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"), true },
+                    { new Guid("47436253-e502-44e4-b840-630874332520"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"), true },
+                    { new Guid("fbafbdab-3dfa-4993-a5d8-72550600bd29"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("20f04a05-7732-428c-a5f2-1a5765256808"), true },
+                    { new Guid("6a9f5e86-a294-4cc7-a32b-8512c0e0032f"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("f40ed114-8191-4621-8836-21aaf60eecf4"), true },
+                    { new Guid("0a4a6f9a-6074-485b-83e7-c59add9bcde6"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("0440c348-12c2-435a-a027-f81636e71faa"), true },
+                    { new Guid("5bad22b2-5ea7-430a-a40d-37c093c14b4a"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"), true },
+                    { new Guid("9398bed2-7f37-40ae-8adc-932b9967a02a"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe"), true },
+                    { new Guid("735bff70-6cd7-4b47-817c-256c1d85488e"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0"), true },
+                    { new Guid("a2fbe481-4203-4857-a25f-1cf84f1fb8ac"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c"), true },
+                    { new Guid("faccdb14-5d50-4e29-850e-f0c6d39ac8f0"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"), true },
+                    { new Guid("35ec79ad-90d5-4146-9014-999689cad662"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49"), true },
+                    { new Guid("3f161ec6-fd5c-4a96-ad91-50984d03e695"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27"), true },
+                    { new Guid("1266424b-80dd-40b6-aec2-a1b00efb2fd6"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1"), true },
+                    { new Guid("d8a8a224-01f4-405d-b528-4da6fa7b14ff"), new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0"), true }
                 });
 
             migrationBuilder.InsertData(
                 schema: "dbo",
                 table: "usuarios",
                 columns: new[] { "Id", "DeletadoEm", "PerfilId", "Status", "CPF", "DataDeNascimento_Data", "Email", "PrimeiroNome", "Sobrenome", "Celular", "Telefone", "Senha", "Sexo" },
-                values: new object[] { new Guid("a3a83720-7f9a-4d40-bbde-22ef942866c3"), null, new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), true, "28999953084", new DateTime(1993, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "maycon.rayone@gmail.com", "Maycon Rayone", "Rodrigues Xavier", null, null, "AJmy4eDGyEjBZHZvp+VhjduGCW8V8KI9N8ei6bRpTC+bUluL1rmnlYAoI8IQDTrKUA==", "Masculino" });
+                values: new object[] { new Guid("c83d1b3b-f00e-49eb-a820-34229d2bd69c"), null, new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), true, "28999953084", new DateTime(1993, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "adminfake@mozej.com", "Maycon Rayone", "Rodrigues Xavier", null, null, "ABYDrL0yZrfv0QOGRR6llhOukuHsw+c1Y0uFXca1pBK7bB/AwUiRIzJm+rVbr0ErIQ==", "Masculino" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_permissoes_assinadas_PerfilId",
+                name: "IX_atribuicoes_perfil_PerfilId",
                 schema: "dbo",
-                table: "permissoes_assinadas",
+                table: "atribuicoes_perfil",
                 column: "PerfilId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_permissoes_assinadas_PermissaoId",
+                name: "IX_atribuicoes_perfil_PermissaoId",
                 schema: "dbo",
-                table: "permissoes_assinadas",
+                table: "atribuicoes_perfil",
                 column: "PermissaoId");
 
             migrationBuilder.CreateIndex(
@@ -188,7 +208,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "permissoes_assinadas",
+                name: "atribuicoes_perfil",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

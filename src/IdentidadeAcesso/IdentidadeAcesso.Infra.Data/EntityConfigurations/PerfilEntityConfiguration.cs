@@ -25,7 +25,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
             perfilConfiguration.Property(p => p.DeletadoEm)
                 .IsRequired(false);
 
-            var navigation = perfilConfiguration.Metadata.FindNavigation(nameof(Perfil.PermissoesAssinadas));
+            var navigation = perfilConfiguration.Metadata.FindNavigation(nameof(Perfil.Atribuicoes));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }

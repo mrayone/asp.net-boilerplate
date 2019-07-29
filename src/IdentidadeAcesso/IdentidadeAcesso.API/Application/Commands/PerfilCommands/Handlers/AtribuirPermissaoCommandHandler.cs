@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 {
-    public class AssinarPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<AssinarPermissaoCommand, CommandResponse>
+    public class AtribuirPermissaoCommandHandler : BaseCommandHandler, IRequestHandler<AtribuirPermissaoCommand, CommandResponse>
     {
         private readonly IMediator _mediator;
         private readonly IPerfilService _perfilService;
         private readonly IPerfilRepository _perfilRepository;
 
-        public AssinarPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
+        public AtribuirPermissaoCommandHandler(IMediator mediator, IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications, IPerfilService domainService,
             IPerfilRepository perfilRespository) : base(mediator, unitOfWork, notifications)
         {
@@ -29,7 +29,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
             _perfilRepository = perfilRespository;
         }
 
-        public async Task<CommandResponse> Handle(AssinarPermissaoCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse> Handle(AtribuirPermissaoCommand request, CancellationToken cancellationToken)
         {
             var perfil = await this.BuscarPerfilComPermissoes(request.PerfilId, _perfilRepository);
             if (perfil == null)
@@ -38,9 +38,9 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
                 return await Task.FromResult(CommandResponse.Fail);
             }
 
-            foreach (var item in request.Assinaturas)
+            foreach (var item in request.Atribuicoes)
             {
-                perfil = await _perfilService.AssinarPermissaoAsync(perfil, item.PermissaoId);
+                perfil = await _perfilService.AtribuirPermissaoAsync(perfil, item.PermissaoId);
             }
 
             if (await Commit())

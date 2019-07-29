@@ -69,10 +69,10 @@ namespace IdentidadeAcesso.API.Controllers
         /// <summary>
         /// Revoga permissões atribuidas a um perfil. Este método requer permissão para "Revogar Permissões".
         /// </summary>
-        [HttpPut("cancelar-permissao")]
+        [HttpPut("revogar-permissoes")]
         [PermissaoAuthorize("Revogar Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> CancelarPermissoesAsync([FromBody] CancelarPermissaoCommand command)
+        public async Task<IActionResult> RevogarPermissoesAsync([FromBody] RevogarPermissaoCommand command)
         {
             var result = await _mediator.Send(command);
 
@@ -82,10 +82,10 @@ namespace IdentidadeAcesso.API.Controllers
         /// <summary>
         /// Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".
         /// </summary>
-        [HttpPut("assinar-permissao")]
+        [HttpPut("atribuir-permissoes")]
         [PermissaoAuthorize("Atribuir Permissões")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AssinarPermissaoAsync([FromBody] AssinarPermissaoCommand command)
+        public async Task<IActionResult> AtribuirPermissoesAsync([FromBody] AtribuirPermissaoCommand command)
         {
             var result = await _mediator.Send(command);
 

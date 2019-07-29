@@ -45,25 +45,25 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _perfilRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(_perfil);
         }
 
-        [Fact(DisplayName = "Deve assinar permissão e retornar perfil modificado.")]
+        [Fact(DisplayName = "Deve atribuir permissão e retornar perfil modificado.")]
         [Trait("Services", "Perfil")]
-        public async Task Deve_Assinar_Permissao_E_Retornar_Perfil()
+        public async Task Deve_Atribuir_Permissao_E_Retornar_Perfil()
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
             _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
-            var act = await _perfilService.AssinarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
-            var permissaoAssinada = act.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
+            var act = await _perfilService.AtribuirPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
+            var permissaoAssinada = act.Atribuicoes.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
             permissaoAssinada.Status.Should().BeTrue();
         }
 
 
-        [Fact(DisplayName = "Deve cancelar permissão e retornar perfil modificado.")]
+        [Fact(DisplayName = "Deve revogar permissão e retornar perfil modificado.")]
         [Trait("Services", "Perfil")]
-        public async Task Deve_Cancelar_Permissao_E_Retornar_Perfil()
+        public async Task Deve_Revogar_Permissao_E_Retornar_Perfil()
         {
             //arrange
             var perfil = PerfilBuilder.ObterPerfil();
@@ -71,37 +71,37 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _permRepo.Setup(r => r.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(permissao);
             //act
-            var assinada = await _perfilService.AssinarPermissaoAsync(perfil, permissao.Id);
-            var cancelada = await _perfilService.CancelarPermissaoAsync(perfil, permissao.Id);
-            var permissaoAssinada = cancelada.PermissoesAssinadas.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
+            var assinada = await _perfilService.AtribuirPermissaoAsync(perfil, permissao.Id);
+            var cancelada = await _perfilService.RevogarPermissaoAsync(perfil, permissao.Id);
+            var permissaoAssinada = cancelada.Atribuicoes.Where(p => p.PermissaoId == permissao.Id).SingleOrDefault();
             //assert
             permissaoAssinada.Status.Should().BeFalse();
         }
 
-        [Fact(DisplayName = "Deve notificar quando tentar cancelar permissão não assinada.")]
+        [Fact(DisplayName = "Deve notificar quando tentar revogar permissão não atribuida.")]
         [Trait("Services", "Perfil")]
-        public async Task Deve_notificar_quando_permissao_nao_assinada()
+        public async Task Deve_Notificar_Quando_Tentar_Revogar_Permissao_Nao_atribuida()
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
             _permRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(permissao);
             //act
-            var act = await _perfilService.CancelarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
+            var act = await _perfilService.RevogarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
                 new System.Threading.CancellationToken()), Times.Once());
         }
 
 
-        [Fact(DisplayName = "Deve notificar quando tentar cancelar permissão que não exista.")]
+        [Fact(DisplayName = "Deve notificar quando tentar revogar permissão que não exista.")]
         [Trait("Services", "Perfil")]
-        public async Task Deve_notificar_quando_tentar_cancelar_uma_permissao_que_nao_exista()
+        public async Task Deve_Notificar_Quando_Tentar_Revogar_Uma_Permissao_Que_Nao_Exista()
         {
             //arrange
             var permissao = PermissaoBuilder.ObterPermissaoFake();
 
             //act
-            var act = await _perfilService.CancelarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
+            var act = await _perfilService.RevogarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),

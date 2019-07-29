@@ -35,7 +35,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services
 
             if(perfil != null)
             {
-                foreach (var item in perfil.PermissoesAssinadas)
+                foreach (var item in perfil.Atribuicoes)
                 {
                     var permissao = await _permissaoRepository.ObterPorIdAsync(item.PermissaoId);
                     context.IssuedClaims.Add(new Claim("permissions", permissao.Atribuicao.Valor));
@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services
         //{
         //    var array = new List<object>();
 
-        //    foreach (var item in perfil.PermissoesAssinadas)
+        //    foreach (var item in perfil.Atribuicoes)
         //    {
         //        var permissao = await _permissaoRepository.ObterPorIdAsync(item.PermissaoId);
         //        array.Add(new { permissao.Atribuicao.Tipo, permissao.Atribuicao.Valor });

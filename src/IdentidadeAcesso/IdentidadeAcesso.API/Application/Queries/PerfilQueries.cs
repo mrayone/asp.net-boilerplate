@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                 result.RemoveAt(0);
                 foreach (var item in result)
                 {
-                    response.PermissoesAssinadas.Add(item.PermissoesAssinadas.FirstOrDefault());
+                    response.Atribuicoes.Add(item.Atribuicoes.FirstOrDefault());
                 }
             }
 
@@ -53,23 +53,23 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Nome]
                               ,[Descricao]
                               ,[DeletadoEm]
-                              ,[permissoes_assinadas].[Id] as AssinaturaId
-                              ,[permissoes_assinadas].[Ativo]
-                              ,[permissoes_assinadas].[PermissaoId]
-                          FROM [perfis] LEFT JOIN [permissoes_assinadas] ON [permissoes_assinadas].[PerfilId] = [perfis].[Id] 
-                          AND [permissoes_assinadas].[Ativo] = 1
+                              ,[atribuicoes_perfil].[Id] as AtribuicaoId
+                              ,[atribuicoes_perfil].[Ativo]
+                              ,[atribuicoes_perfil].[PermissaoId]
+                          FROM [perfis] LEFT JOIN [atribuicoes_perfil] ON [atribuicoes_perfil].[PerfilId] = [perfis].[Id] 
+                          AND [atribuicoes_perfil].[Ativo] = 1
                           WHERE [perfis].[Id] = @uid AND [DeletadoEm] IS NULL";
 
-                var result = await connection.QueryAsync<PerfilViewModel, AssinaturaDTO,
+                var result = await connection.QueryAsync<PerfilViewModel, AtribuicaoDTO,
                     PerfilViewModel>(sql, (p, a) =>
                     {
                         if (a != null)
                         {
-                            p.PermissoesAssinadas.Add(a);
+                            p.Atribuicoes.Add(a);
                         }
 
                         return p;
-                    }, new { uid = request.Id }, splitOn: "AssinaturaId");
+                    }, new { uid = request.Id }, splitOn: "AtribuicaoId");
 
 
                 return MapResult(result.ToList());

@@ -14,7 +14,7 @@ namespace IdentidadeAcesso.API.Application.Models
     {
         public PerfilViewModel()
         {
-            PermissoesAssinadas = new List<AssinaturaDTO>();
+            Atribuicoes = new List<AtribuicaoDTO>();
         }
 
         public Guid Id { get; set; }
@@ -24,12 +24,12 @@ namespace IdentidadeAcesso.API.Application.Models
         public string Descricao { get; set; }
 
         [BindNever]
-        public IList<AssinaturaDTO> PermissoesAssinadas { get; set; }
+        public IList<AtribuicaoDTO> Atribuicoes { get; set; }
     }
 
-    public class AssinaturaViewModel
+    public class NivelDeAcessoViewModel
     {
         public Guid PerfilId { get; set; }
-        public IList<AssinaturaDTO> Assinaturas { get; set; }
+        public IList<AtribuicaoDTO> Atribuicoes { get; set; }
     }
 }

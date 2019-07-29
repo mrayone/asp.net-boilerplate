@@ -27,8 +27,8 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 
 
             //Perfil Handlers
-            services.TryAddScoped<IRequestHandler<AssinarPermissaoCommand, CommandResponse>, AssinarPermissaoCommandHandler>();
-            services.TryAddScoped<IRequestHandler<CancelarPermissaoCommand, CommandResponse>, CancelarPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<AtribuirPermissaoCommand, CommandResponse>, AtribuirPermissaoCommandHandler>();
+            services.TryAddScoped<IRequestHandler<RevogarPermissaoCommand, CommandResponse>, RevogarPermissaoCommandHandler>();
             services.TryAddScoped<IRequestHandler<CriarPerfilCommand, CommandResponse>, CriarPerfilCommandHandler>();
             services.TryAddScoped<IRequestHandler<AtualizarPerfilCommand, CommandResponse>, AtualizarPerfilCommandHandler>();
             services.TryAddScoped<IRequestHandler<ExcluirPerfilCommand, CommandResponse>, ExcluirPerfilCommandHandler>();

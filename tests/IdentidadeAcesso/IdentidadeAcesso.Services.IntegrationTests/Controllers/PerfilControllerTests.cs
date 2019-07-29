@@ -59,35 +59,35 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             perfil.Id.Should().Be("8cd6c8ca-7db7-4551-b6c5-f7a724286709");
         }
 
-        [Fact(DisplayName = "Deve assinar permissão e retornar ok.")]
+        [Fact(DisplayName = "Deve atribuir permissão e retornar ok.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
-        public async Task Deve_Assinar_Permissao_E_Retornar_Ok()
+        public async Task Deve_Atribuir_Permissao_E_Retornar_Ok()
         {
             //arrange
             await AuthorizeCall();
             var perfilId = "8cd6c8ca-7db7-4551-b6c5-f7a724286709";
             var permissaoId = "7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4";
-            var assinatura = new
+            var atribuicao = new
             {
                 PerfilId = perfilId,
-                Assinaturas = new object[] 
+                Atribuicoes = new object[] 
                 {
                    new { PermissaoId = permissaoId, Status =  true }
                 }
             };
-            var content = new StringContent(JsonConvert.SerializeObject(assinatura));
+            var content = new StringContent(JsonConvert.SerializeObject(atribuicao));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
+            var response = await _client.PutAsync("api/v1/perfis/atribuir-permissoes", content);
 
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Fact(DisplayName = "Deve assinar muitas permissões e retornar ok.")]
+        [Fact(DisplayName = "Deve atribuir muitas permissões e retornar ok.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
-        public async Task Deve_Assinar_MuitasPermissoes_E_Retornar_Ok()
+        public async Task Deve_Atribuir_MuitasPermissoes_E_Retornar_Ok()
         {
             //arrange 
             await AuthorizeCall();
@@ -97,7 +97,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var assinatura = new
             {
                 PerfilId = perfilId,
-                Assinaturas = new object[]
+                Atribuicoes = new object[]
                 {
                    new { PermissaoId = permissaoId },
                    new { PermissaoId = permissao2 }
@@ -106,15 +106,15 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(assinatura));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var response = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
+            var response = await _client.PutAsync("api/v1/perfis/atribuir-permissoes", content);
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Fact(DisplayName = "Deve cancelar permissões e retornar ok.")]
+        [Fact(DisplayName = "Deve revogar permissões e retornar ok.")]
         [Trait("Testes de Integração", "PerfilControllerTests")]
-        public async Task Deve_Cancelar_Permissoes_e_Retornar_Ok()
+        public async Task Deve_Revogar_Permissoes_e_Retornar_Ok()
         {
             //arrange 
             await AuthorizeCall();
@@ -123,7 +123,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var assinatura = new
             {
                 PerfilId = perfilId,
-                Assinaturas = new object[]
+                Atribuicoes = new object[]
                 {
                    new { PermissaoId = permissaoId }
                 }
@@ -133,7 +133,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             //act
-            var response = await _client.PutAsync("api/v1/perfis/cancelar-permissao", content);
+            var response = await _client.PutAsync("api/v1/perfis/revogar-permissoes", content);
+            var vr = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);

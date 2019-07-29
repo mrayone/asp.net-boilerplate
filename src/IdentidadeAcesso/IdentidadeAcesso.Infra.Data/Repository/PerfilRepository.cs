@@ -22,7 +22,7 @@ namespace Knowledge.IO.Infra.Data.Repository
             if (perfil != null)
             {
                 await _context.Entry(perfil)
-                    .Collection(p => p.PermissoesAssinadas).LoadAsync();
+                    .Collection(p => p.Atribuicoes).LoadAsync();
             }
 
             return perfil;

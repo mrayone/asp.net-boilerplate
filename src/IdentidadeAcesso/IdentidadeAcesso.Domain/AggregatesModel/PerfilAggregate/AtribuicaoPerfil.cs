@@ -4,17 +4,17 @@ using System;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 {
-    public class PermissaoAssinada : Entity
+    public class AtribuicaoPerfil : Entity
     {
         public bool Status { get; private set; }
         public Guid PermissaoId { get; private set; }
 
-        protected PermissaoAssinada()
+        protected AtribuicaoPerfil()
         {
             Id = Guid.NewGuid();
         }
 
-        public PermissaoAssinada(Guid permissaoId) : this()
+        public AtribuicaoPerfil(Guid permissaoId) : this()
         {
             Status = true;
             PermissaoId = permissaoId;
@@ -32,9 +32,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
 
         public static class PermissaoAssinadaFactory
         {
-            public static PermissaoAssinada GerarPermissaoAssinada(Guid? id, Guid permissaoId)
+            public static AtribuicaoPerfil GerarAtribuicaoAtiva(Guid? id, Guid permissaoId)
             {
-                return new PermissaoAssinada()
+                return new AtribuicaoPerfil()
                 {
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
                     PermissaoId = permissaoId,

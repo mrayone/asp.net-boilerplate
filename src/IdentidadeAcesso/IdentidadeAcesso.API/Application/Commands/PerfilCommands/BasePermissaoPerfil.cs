@@ -16,7 +16,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         public Guid PerfilId { get; protected set; }
 
         [DataMember]
-        public IList<AssinaturaDTO> Assinaturas { get; protected set; }
+        public IList<AtribuicaoDTO> Atribuicoes { get; protected set; }
 
     }
 }
