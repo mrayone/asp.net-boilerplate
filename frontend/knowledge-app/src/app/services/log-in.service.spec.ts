@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { LogInService } from './log-in.service';
+import { LogInService, GrantAcessModel } from './log-in.service';
 import {HttpClientModule} from '@angular/common/http';
 describe('LogInService', () => {
   let logIn: LogInService;
@@ -21,7 +21,7 @@ describe('LogInService', () => {
   });
 
   it('#getTokenAcesso deve retornar um observable com o token', (done: DoneFn) => {
-      logIn.getTokenAcesso().subscribe(value => {
+      logIn.getTokenAcesso(new GrantAcessModel('adminfake@mozej.com', '123456@IO')).subscribe(value => {
           expect(value).not.toBeNull();
           expect(value).not.toBeUndefined();
           expect(value.access_token).toString();

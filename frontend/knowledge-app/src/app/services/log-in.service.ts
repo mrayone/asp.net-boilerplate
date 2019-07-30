@@ -14,14 +14,13 @@ const httpOptions = {
 export class LogInService {
 
   private url = "http://localhost:5001";
-  private body: MyTokenModelTest;
 
   constructor(private http: HttpClient) {
-    this.body = new MyTokenModelTest();
+
   }
 
-  getTokenAcesso(): Observable<TokenModel> {
-      return this.http.post(`${this.url}/connect/token`, this.body , httpOptions)
+  getTokenAcesso( grantAcess: GrantAcessModel): Observable<TokenModel> {
+      return this.http.post(`${this.url}/connect/token`, grantAcess , httpOptions)
       .pipe(
         catchError(this.handleError<any>('obterToken'))
       );
@@ -36,7 +35,6 @@ export class LogInService {
   }
 }
 
-
 export class TokenModel {
   access_token: string;
   expires_in: number;
@@ -45,15 +43,16 @@ export class TokenModel {
   scope: string;
 }
 
-class MyTokenModelTest extends HttpParams {
-  constructor() {
+export class GrantAcessModel extends HttpParams {
+  constructor( username: string,
+              password: string, grant_type: string = 'password', client_id: string = 'spa.client', scope: string = 'api offline_access' ) {
     super({
       fromObject: {
-        grant_type: 'password',
-        username: 'adminfake@mozej.com',
-        password: '123456@IO',
-        client_id: 'spa.client',
-        scope: 'api offline_access',
+        grant_type,
+        username,
+        password,
+        client_id,
+        scope,
       }
     });
   }
