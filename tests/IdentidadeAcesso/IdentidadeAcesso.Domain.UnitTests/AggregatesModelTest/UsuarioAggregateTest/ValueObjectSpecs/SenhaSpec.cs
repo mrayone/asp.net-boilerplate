@@ -1,9 +1,5 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest.ValueObjectSpecs
@@ -27,6 +23,22 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
 
             //assert
             senhaHash.ValidarSenha(senha).Should().BeTrue();
+        }
+
+        [Fact(DisplayName = "Deve gerar senhas diferentes e retornar false.")]
+        [Trait("Value Objects", " Senha")]
+        public void Deve_Comparar_Senhas_Diferentes_E_RetornarFalse()
+        {
+            //arrange
+            var senha = "12345";
+
+            //act
+            var senhaHash = Senha.GerarSenha("123456");
+            var senhaHash2 = Senha.GerarSenha("123456");
+
+            //assert
+            senhaHash.ValidarSenha(senha).Should().BeFalse();
+            senhaHash2.Should().NotBe(senhaHash);
         }
     }
 }
