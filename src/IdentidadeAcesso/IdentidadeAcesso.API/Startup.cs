@@ -36,17 +36,6 @@ namespace IdentidadeAcesso.API
                 .AddIdentityConfig();
 
 
-            services.AddCors(options =>
-            {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.WithOrigins("http://localhost:5001")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
-
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -107,7 +96,10 @@ namespace IdentidadeAcesso.API
             });
 
             // app.UseHttpsRedirection();
-            app.UseCors("default");
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseMvc();
