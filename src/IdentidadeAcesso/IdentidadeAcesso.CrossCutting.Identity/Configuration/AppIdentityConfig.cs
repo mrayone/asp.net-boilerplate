@@ -29,7 +29,6 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();
 
-            //TODO: Comentar para Testes de Integração.
             services.AddAuthentication("Bearer")
                    .AddIdentityServerAuthentication(options =>
                    {
