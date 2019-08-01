@@ -1,3 +1,18 @@
 .main-panel {
   display: flex;
+  flex-flow:  row;
+  background-color: #f4f3ef;
+}
+
+.header {
+  margin-bottom: 10px;
+}
+
+.content {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+}
+.container-fluid {
+  padding: 0 30px 30px;
 }

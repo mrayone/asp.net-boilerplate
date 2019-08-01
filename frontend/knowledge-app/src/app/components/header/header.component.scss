@@ -1,0 +1,16 @@
+
+.navbar.navbar-transparent {
+  box-shadow: none;
+  border-bottom: 2px solid #ddd;
+  min-height: 80px;
+  width: 100%;
+}
+
+a.navbar-brand:not(.btn) {
+  color: #66615b;
+}
+a.navbar-brand:hover {
+  color: #66615b;
+}
+
+
