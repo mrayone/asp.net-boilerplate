@@ -9,13 +9,15 @@ import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashBoardComponent,
     MenuComponent,
-    PerfilComponent
+    PerfilComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
