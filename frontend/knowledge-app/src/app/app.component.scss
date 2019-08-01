@@ -1,6 +1,7 @@
 .main-panel {
-  display: flex;
-  flex-flow:  row;
+  position: relative;
+  float: right;
+  width: calc(100% - 260px);
   background-color: #f4f3ef;
 }
 
@@ -9,9 +10,8 @@
 }
 
 .content {
-  margin-right: auto;
-  margin-left: auto;
-  width: 100%;
+  padding: 0 30px 30px;
+  min-height: calc(100vh - 123px);
 }
 .container-fluid {
   padding: 0 30px 30px;

@@ -3,27 +3,39 @@
   border-radius: 12px;
 }
 
-.card {
-  margin-bottom: 20px;
+.card-footer {
+  background-color: #fff;
 }
 
-.card .image {
+.card {
+  margin-bottom: 20px;
+  border: 0;
+}
+
+.card-user .image {
+  border-radius: 12px 12px 0 0;
   height: 130px;
   overflow: hidden;
+  position: relative;
 }
 
 .image img {
-  border-radius: 12px;
   max-width: 100%;
 }
 
 .user {
   margin-top: -75px;
+  position: relative;
 }
 
 .user .avatar {
   max-width: 130px;
   margin-bottom: 20px;
+}
+
+.user-title {
+  font-size: 2rem;
+  color: #17a2b8;
 }
 
 .btn-rounded {
