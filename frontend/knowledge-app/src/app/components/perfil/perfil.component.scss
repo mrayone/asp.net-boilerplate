@@ -1,0 +1,34 @@
+
+.card-rounded {
+  border-radius: 12px;
+}
+
+.card {
+  margin-bottom: 20px;
+}
+
+.card .image {
+  height: 130px;
+  overflow: hidden;
+}
+
+.image img {
+  border-radius: 12px;
+  max-width: 100%;
+}
+
+.user {
+  margin-top: -75px;
+}
+
+.user .avatar {
+  max-width: 130px;
+  margin-bottom: 20px;
+}
+
+.btn-rounded {
+  border-width: 1px;
+  border-radius: 30px;
+  padding-right: 23px;
+  padding-left: 23px;
+}
