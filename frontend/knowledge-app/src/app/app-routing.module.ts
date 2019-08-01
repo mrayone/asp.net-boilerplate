@@ -4,8 +4,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path: 'perfil', component: PerfilComponent },
-  { path: 'dashboard', component: DashBoardComponent },
+  { path: 'perfil', component: PerfilComponent, data: { title: 'Perfil do Usuário' } },
+  { path: 'dashboard', component: DashBoardComponent, data: { title: 'Dashboard' } },
 ];
 
 @NgModule({
