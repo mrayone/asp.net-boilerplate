@@ -81,20 +81,6 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// Este método é fornecido para usuários visitantes se registrarem no app.
-        /// </summary>
-        ///
-        [HttpPost("registrar-se")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> RegistrarNovoUsuarioAsync([FromBody] RegistrarUsuarioCommand usuario)
-        {
-            var result = await _mediator.Send(usuario);
-
-            return this.VerificarErros(_notifications, result);
-        }
-
-        /// <summary>
         /// Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
         /// </summary>
         ///

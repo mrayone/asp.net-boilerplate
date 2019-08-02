@@ -191,30 +191,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.Should().NotBeEmpty();
         }
 
-        [Fact(DisplayName = "Deve registrar usuário visitante com sucesso.")]
-        [Trait("Testes de Integração", "UsuarioControllerTests")]
-        public async Task Deve_RegistrarNovoUsuarioVisitante_ComSucesso()
-        {
-            var usuario = new
-            {
-                nome = "Fake",
-                sobrenome = "Silva Mendez",
-                dataDeNascimento = "2000-07-29",
-                email = "fakemail@outlook.com" ,
-                sexo = "M",
-                senha = "124578Mak",
-                confirmacaoSenha = "124578Mak" ,
-            };
-
-            var content = GerarContent(usuario);
-            //act
-            var post = await _client.PostAsync($"{API}/registrar-se", content);
-            var result = await post.Content.ReadAsStringAsync();
-            //assert
-            post.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeEmpty();
-        }
-
         public class CommandsFails : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
