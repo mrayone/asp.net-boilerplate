@@ -92,12 +92,6 @@
              </summary>
             
         </member>
-        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.RegistrarNovoUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.RegistrarUsuarioCommand)">
-             <summary>
-             Este método é fornecido para usuários visitantes se registrarem no app.
-             </summary>
-            
-        </member>
         <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.AtualizarUsuarioCommand)">
              <summary>
              Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".

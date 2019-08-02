@@ -35,7 +35,6 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 
             //Usuario Handlers
             services.TryAddScoped<IRequestHandler<NovoUsuarioCommand, CommandResponse>, NovoUsuarioCommandHandler>();
-            services.TryAddScoped<IRequestHandler<RegistrarUsuarioCommand, CommandResponse>, RegistrarUsuarioCommandHandler>();
             services.TryAddScoped<IRequestHandler<AtualizarUsuarioCommand, CommandResponse>, AtualizarUsuarioCommandHandler>();
             services.TryAddScoped<IRequestHandler<ExcluirUsuarioCommand, CommandResponse>, ExcluirUsuarioCommandHandler>();
 
