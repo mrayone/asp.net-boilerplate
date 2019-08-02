@@ -6,6 +6,7 @@ import { DashBoardComponent } from './components/dashboard/dashboard.component';
 const routes: Routes = [
   { path: 'perfil', component: PerfilComponent, data: { title: 'Perfil do Usuário' } },
   { path: 'dashboard', component: DashBoardComponent, data: { title: 'Dashboard' } },
+  { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({
