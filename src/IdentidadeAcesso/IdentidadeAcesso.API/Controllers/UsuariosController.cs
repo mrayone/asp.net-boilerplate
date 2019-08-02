@@ -81,13 +81,28 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+        /// Atualiza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
         /// </summary>
         ///
         [HttpPut]
         [PermissaoAuthorize("Atualizar Usuário")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarUsuarioAsync([FromBody] AtualizarUsuarioCommand usuario)
+        {
+
+            var result = await _mediator.Send(usuario);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
+        /// Atualiza um usuário logado no sistema e com tipo de perfil específicado. Este método requer estar logado.
+        /// </summary>
+        ///
+        [HttpPut("atualizar-perfil")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AtualizarPerfilUsuarioAsync([FromBody] AtualizarPerfilUsuarioCommand usuario)
         {
 
             var result = await _mediator.Send(usuario);
