@@ -1,7 +1,4 @@
-$side-bar-cor: #212120;
-$side-bar-cor-interna: #ddd;
-$nav-item-active: #dd0330;
-
+@import '../../../assets/sass/variables.scss';
 .sidebar {
     color: $side-bar-cor-interna;
     position: fixed;
@@ -73,7 +70,7 @@ $nav-item-active: #dd0330;
 
 .sidebar-wrapper .nav > li.active a::before{
     content: " ";
-    border-right: 17px solid #ddd;
+    border-right: 17px solid $bg-color;
     border-top: 17px solid transparent;
     border-bottom: 17px solid transparent;
     top: 8px;
@@ -84,7 +81,7 @@ $nav-item-active: #dd0330;
 
 .sidebar-wrapper .nav > li.active a::after{
     content: " ";
-    border-right: 17px solid #f4f3ef;
+    border-right: 17px solid $bg-color;
     border-top: 17px solid transparent;
     border-bottom: 17px solid transparent;
     top: 8px;
@@ -92,3 +89,18 @@ $nav-item-active: #dd0330;
     display: inline;
     position: absolute;
 }
+
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+ }

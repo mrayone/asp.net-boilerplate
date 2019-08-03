@@ -1,3 +1,4 @@
+@import '../../../assets/sass/variables.scss';
 
 .navbar.navbar-transparent {
   box-shadow: none;
@@ -8,10 +9,10 @@
 }
 
 a.navbar-brand:not(.btn) {
-  color: #66615b;
+  color: $color-default;
 }
 a.navbar-brand:hover {
-  color: #66615b;
+  color: $color-default;
 }
 
 

@@ -1,0 +1,44 @@
+@import '../../../assets/sass/_variables.scss';
+
+.dashboard-content {
+  height: 100vh;
+}
+
+a.widget {
+  color: $color-default;
+  border-radius: 12px;
+  display: block;
+  padding: 20px;
+}
+
+a.widget:hover {
+  text-decoration: none;
+}
+
+.widget a {
+  color: $color-default;
+}
+
+.widget p {
+  font-size: 2.5rem;
+  text-align: center;
+  padding: 20px 10px;
+}
+
+a.widget.widget-lunada {
+  background: #5433FF;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #A5FECB, #20BDFF, #5433FF);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #A5FECB, #20BDFF, #5433FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+a.widget.widget-combi {
+  background: #00416A;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFE000, #799F0C, #00416A);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFE000, #799F0C, #00416A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+a.widget.widget-shine {
+  background: #12c2e9;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

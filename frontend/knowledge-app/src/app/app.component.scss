@@ -1,11 +1,12 @@
+@import '../assets/sass/variables.scss';
 .main-panel {
   position: relative;
   float: right;
   width: calc(100% - 260px);
-  background-color: #f4f3ef;
+  background-color: $bg-color;
 }
 
-.navbar {
+.menu-superior {
   margin-bottom: 10px;
 }
 
@@ -16,3 +17,17 @@
 .container-fluid {
   padding: 0 30px 30px;
 }
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .main-panel {
+    width: 100%;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  .main-panel {
+    width: 100%;
+  }
+ }
