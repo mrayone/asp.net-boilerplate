@@ -9,7 +9,7 @@ import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from './components/header/header.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { HeaderComponent } from './components/header/header.component';
     DashBoardComponent,
     MenuComponent,
     PerfilComponent,
-    HeaderComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

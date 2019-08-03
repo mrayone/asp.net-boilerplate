@@ -3,12 +3,12 @@ import { Router, ActivationStart, ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  public title =  'bla';
+export class NavbarComponent implements OnInit {
+  public title =  'Knowledg.IO';
   constructor(private router: Router) {
    }
 
