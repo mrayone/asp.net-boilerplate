@@ -10,9 +10,11 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 {
     public class NovoUsuarioValidation : ValidacaoUsuario<NovoUsuarioCommand>
     {
-        public NovoUsuarioValidation() : base()
+        public NovoUsuarioValidation()
         {
-
+            RuleFor(c => c.PerfilId)
+                .NotEqual(Guid.Empty)
+                .WithMessage("O ID do perfil tem que ser fornecido.");
         }
     }
 }

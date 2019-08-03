@@ -312,6 +312,8 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 });
 
                 u.OwnsOne(p => p.NumerosContato).HasData(new { UsuarioId = uId });
+
+                u.OwnsOne(p => p.Endereco).HasData(new { UsuarioId = uId });
             });
         }
     }

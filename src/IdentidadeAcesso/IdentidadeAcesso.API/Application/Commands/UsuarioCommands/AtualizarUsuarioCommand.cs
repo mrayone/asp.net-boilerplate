@@ -9,7 +9,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
     public class AtualizarUsuarioCommand : BaseUsuarioCommand<AtualizarUsuarioCommand>
     {
-        public AtualizarUsuarioCommand(Guid id, string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular,
+        public AtualizarUsuarioCommand(Guid id, string nome, string sobrenome, string sexo, string email, string cpf, DateTime dataDeNascimento, string telefone, string celular,
                 string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId)
         {
             Nome = nome;
@@ -17,7 +17,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Sexo = sexo;
             Email = email;
             CPF = cpf;
-            DataDeNascimento = dateDeNascimento;
+            DataDeNascimento = dataDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Logradouro = logradouro;

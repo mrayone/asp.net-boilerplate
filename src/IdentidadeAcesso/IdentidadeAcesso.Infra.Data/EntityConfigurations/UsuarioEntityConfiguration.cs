@@ -65,7 +65,8 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             usuarioConfiguration.HasOne<Perfil>()
                 .WithMany()
-                .HasForeignKey("PerfilId");
+                .HasForeignKey("PerfilId")
+                .IsRequired(false);
         }
     }
 }

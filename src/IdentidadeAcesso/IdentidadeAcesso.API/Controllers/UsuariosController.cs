@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,14 @@ namespace IdentidadeAcesso.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
+        private readonly IHttpContextAccessor _httpAcessor;
 
         public UsuariosController(IMediator mediator,
-            INotificationHandler<DomainNotification> notification)
+            INotificationHandler<DomainNotification> notification, IHttpContextAccessor httpAcessor)
         {
             _mediator = mediator;
             _notifications = notification;
+            _httpAcessor = httpAcessor;
         }
 
         /// <summary>
@@ -81,7 +84,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+        /// Atualiza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
         /// </summary>
         ///
         [HttpPut]
@@ -91,6 +94,25 @@ namespace IdentidadeAcesso.API.Controllers
         {
 
             var result = await _mediator.Send(usuario);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
+        /// Atualiza os dados do usuário logado. Este método requer estar logado.
+        /// </summary>
+        ///
+        [HttpPut("atualizar-perfil")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> AtualizarPerfilUsuarioAsync([FromBody] AtualizarPerfilUsuarioViewModel usuario)
+        {
+            var claimValue = _httpAcessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+
+            var command = new AtualizarPerfilUsuarioCommand(new Guid(claimValue.Value), usuario.Nome, usuario.Sobrenome, usuario.Sexo, usuario.Email, usuario.CPF, usuario.DataDeNascimento,
+                usuario.Telefone, usuario.Celular, usuario.Logradouro, usuario.Numero, usuario.Complemento, usuario.Bairro, usuario.CEP, usuario.Cidade, usuario.Estado);
+
+            var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);
         }
