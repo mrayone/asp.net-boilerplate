@@ -8,7 +8,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
     public class NovoUsuarioCommand : BaseUsuarioCommand<NovoUsuarioCommand>
     {
-        public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular, 
+        public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cpf, DateTime dataDeNascimento, string telefone, string celular, 
             string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId)
         {
             Nome = nome;
@@ -16,7 +16,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             Sexo = sexo;
             Email = email;
             CPF = cpf;
-            DataDeNascimento = dateDeNascimento;
+            DataDeNascimento = dataDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Logradouro = logradouro;

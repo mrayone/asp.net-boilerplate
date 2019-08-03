@@ -23,10 +23,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.CredentialsValidator
             if (usuariosBusca.Any())
             {
                 var usuario = usuariosBusca.SingleOrDefault();
-                var subject = JsonConvert.SerializeObject(new
-                {
-                    UsuarioId = usuario.Id.ToString()
-                });
+                var subject = usuario.Id.ToString();
 
                 var claims = new List<Claim>()
                 {

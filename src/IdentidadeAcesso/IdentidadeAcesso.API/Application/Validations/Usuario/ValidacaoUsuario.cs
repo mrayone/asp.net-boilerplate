@@ -108,6 +108,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         public static bool CPFValido(string arg)
         {
             if (string.IsNullOrEmpty(arg)) return false;
+            if (!CPF.ValidarCPFPatterns(arg)) return false;
 
             var MaxDigitos = 11;
             var cpf = CPF.ObterCPFLimpo(arg).Digitos;

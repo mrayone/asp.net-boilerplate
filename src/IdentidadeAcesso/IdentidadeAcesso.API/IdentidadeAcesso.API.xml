@@ -98,9 +98,9 @@
              </summary>
             
         </member>
-        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarPerfilUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.AtualizarPerfilUsuarioCommand)">
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarPerfilUsuarioAsync(IdentidadeAcesso.API.Application.Models.AtualizarPerfilUsuarioViewModel)">
              <summary>
-             Atualiza um usuário logado no sistema e com tipo de perfil específicado. Este método requer estar logado.
+             Atualiza os dados do usuário logado. Este método requer estar logado.
              </summary>
             
         </member>

@@ -1,6 +1,8 @@
 ﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
 using IdentidadeAcesso.API.Application.Extensions;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
@@ -42,9 +44,9 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
             if (!podeAtualizar) return await Task.FromResult(CommandResponse.Fail);
 
-            var usuario = this.DefinirUsuario(request);
-            var vinculouPerfil = await _service.VincularAoPerfilAsync(usuarioEncontrado.PerfilId.Value, usuario);
-            if (!vinculouPerfil) return await Task.FromResult(CommandResponse.Fail);
+            var endereco = new Endereco(request.Logradouro, request.Numero, request.Bairro, request.CEP, request.Cidade, request.Estado, request.Complemento);
+            var usuario = Usuario.UsuarioFactory.CriarUsuario(request.Id, request.Nome, request.Sobrenome, request.Sexo, request.Email, CPF.ObterCPFLimpo(request.CPF),
+                request.DataDeNascimento, request.Celular, request.Telefone, endereco, usuarioEncontrado.PerfilId, usuarioEncontrado.Senha);
 
             _usuarioRepository.Atualizar(usuario);
 

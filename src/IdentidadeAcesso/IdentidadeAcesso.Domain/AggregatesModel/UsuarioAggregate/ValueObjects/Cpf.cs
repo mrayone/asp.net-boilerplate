@@ -27,6 +27,14 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             return new CPF(cpfLimpo);
         }
 
+        public static bool ValidarCPFPatterns(string cpf)
+        {
+            if (Regex.IsMatch(cpf, @"\d{3}\.\d{3}\.\d{3}-\d{2}")) return true;
+            else if (Regex.IsMatch(cpf, @"\d{10,11}")) return true;
+
+            return false;
+        }
+
         public static CPF ObterCPFComFormatacao(string cpfStr)
         {
             cpfStr = CPF.ObterCPFLimpo(cpfStr).Digitos;
