@@ -29,7 +29,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             _notifications = new DomainNotificationHandler();
 
             _controller = new UsuariosController(_mediator.Object,
-                _notifications);
+                _notifications, new Mock<IHttpContextAccessor>().Object);
         }
 
         [Trait("Controller","UsuariosController")]

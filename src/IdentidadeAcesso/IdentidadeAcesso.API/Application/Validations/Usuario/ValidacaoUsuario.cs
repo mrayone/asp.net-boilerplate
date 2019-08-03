@@ -72,10 +72,6 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 
             RuleFor(c => c.Complemento)
                .Length(2, 150).WithMessage("O bairro deve conter entre 2 e 150 caracteres");
-
-            RuleFor(c => c.PerfilId)
-                .NotEqual(Guid.Empty)
-                .WithMessage("O ID do perfil tem que ser fornecido.");
         }
 
         private bool ValidarCEP(string arg)
@@ -112,6 +108,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         public static bool CPFValido(string arg)
         {
             if (string.IsNullOrEmpty(arg)) return false;
+            if (!CPF.ValidarCPFPatterns(arg)) return false;
 
             var MaxDigitos = 11;
             var cpf = CPF.ObterCPFLimpo(arg).Digitos;

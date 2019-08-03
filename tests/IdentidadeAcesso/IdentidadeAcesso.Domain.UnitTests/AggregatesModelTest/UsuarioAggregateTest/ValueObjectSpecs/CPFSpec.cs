@@ -43,6 +43,34 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             cpfComMascara2.Digitos.Should().Be("017.942.000-37");
         }
 
+        [Fact(DisplayName = "Deve retornar false para cpf no formato invalido")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornarFalse_paraCpfNoFormatoInvalido()
+        {
+            //arrage
+            var cpfStr = "string";
+            var cpfStr2 = "1700037";
+            //act
+            var cpf = CPF.ValidarCPFPatterns(cpfStr);
+            var cpf2 = CPF.ValidarCPFPatterns(cpfStr2);
+            //assert
+            cpf.Should().BeFalse();
+            cpf.Should().BeFalse();
+        }
+
+        [Theory(DisplayName = "Deve retornar true para cpf no formato valido")]
+        [InlineData("034.379.470-52")]
+        [InlineData("03437947052")]
+        [InlineData("3437947052")]
+        [Trait("Value Object", "CPF")]
+        public void deve_retornarTrue_paraCpfNoFormatoValido(string cpfStr)
+        {
+            //act
+            var cpf = CPF.ValidarCPFPatterns(cpfStr);
+            //assert
+            cpf.Should().BeTrue();
+        }
+
         [Fact(DisplayName = "Deve garantir que dois cpfs com os mesmos digitos sejam o mesmo objeto")]
         [Trait("Value Object", "CPF")]
         public void deve_garantir_que_dois_cpfs_com_os_mesmos_digitos_sejam_o_mesmo_objeto()

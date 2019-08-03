@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,7 +32,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 
             return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
                 cpf, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
-                endereco, Guid.NewGuid());
+                endereco, Guid.NewGuid(), Senha.GerarSenha("asdsad"));
         }
     }
 }

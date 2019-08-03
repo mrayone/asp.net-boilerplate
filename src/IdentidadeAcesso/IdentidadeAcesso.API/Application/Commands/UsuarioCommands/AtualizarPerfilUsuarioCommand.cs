@@ -1,22 +1,21 @@
-﻿using IdentidadeAcesso.API.Application.Validations.Usuario;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
 {
-    public class NovoUsuarioCommand : BaseUsuarioCommand<NovoUsuarioCommand>
+    public class AtualizarPerfilUsuarioCommand : BaseUsuarioCommand<AtualizarPerfilUsuarioCommand>
     {
-        public NovoUsuarioCommand(string nome, string sobrenome, string sexo, string email, string cpf, DateTime dataDeNascimento, string telefone, string celular, 
-            string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado, Guid perfilId)
+        public AtualizarPerfilUsuarioCommand(Guid id, string nome, string sobrenome, string sexo, string email, string cpf, DateTime dateDeNascimento, string telefone, string celular,
+                string logradouro, string numero, string complemento, string bairro, string cep, string cidade, string estado)
         {
             Nome = nome;
             Sobrenome = sobrenome;
             Sexo = sexo;
             Email = email;
             CPF = cpf;
-            DataDeNascimento = dataDeNascimento;
+            DataDeNascimento = dateDeNascimento;
             Telefone = telefone;
             Celular = celular;
             Logradouro = logradouro;
@@ -26,7 +25,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands
             CEP = cep;
             Cidade = cidade;
             Estado = estado;
-            PerfilId = perfilId;
+            Id = id;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public Endereco Endereco { get; private set; }
         public Senha Senha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
-        public Guid PerfilId { get; private set; }
+        public Guid? PerfilId { get; private set; }
         protected Usuario()
         {
             Id = Guid.NewGuid();
@@ -68,13 +68,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         internal void SetarPerfil(Guid? perfilId)
         {
-            PerfilId = perfilId.HasValue ? perfilId.Value : throw new ArgumentNullException("Não é possível setar um perfil nulo.");
+            PerfilId = perfilId;
         }
 
         public static class UsuarioFactory
         {
             public static Usuario CriarUsuario(Guid? id, string nome, string sobrenome, string sexo, string email,
-                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid PerfilId)
+                CPF cpf, DateTime dataDeNascimento, string celular, string telefone, Endereco endereco, Guid? perfilId, Senha senha)
             {
                 var usuario = new Usuario
                 {
@@ -84,30 +84,13 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
                     Email = new Email(email),
                     CPF = cpf,
                     Id = id.HasValue ? id.Value : Guid.NewGuid(),
-                    PerfilId = PerfilId
+                    PerfilId = perfilId.Value
                 };
 
                 usuario.AdicionarCelular(new NumerosContato(celular, telefone));
+                usuario.DefinirSenha(senha);
 
                 if(endereco != null) usuario.AdicionarEndereco(endereco);
-                usuario.DefinirSenha(Senha.GerarSenha(CPF.ObterCPFLimpo(cpf.Digitos).Digitos));
-
-                return usuario;
-            }
-
-            public static Usuario RegistroRapidoDeUsuario(string nome, string sobrenome, DateTime dataDeNascimento, string email, string sexo,
-            string senha)
-            {
-                var usuario = new Usuario
-                {
-                    Nome = new NomeCompleto(nome, sobrenome),
-                    DataDeNascimento =  new DataDeNascimento(dataDeNascimento),
-                    Email =  new Email(email),
-                    Sexo = sexo.Equals("M") ? Sexo.Masculino : Sexo.Feminino,
-                    Senha = Senha.GerarSenha(senha),
-                    CPF = new CPF(null),
-                    NumerosContato = new NumerosContato(null,null)
-                };
 
                 return usuario;
             }

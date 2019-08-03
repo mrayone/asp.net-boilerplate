@@ -94,7 +94,13 @@
         </member>
         <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.AtualizarUsuarioCommand)">
              <summary>
-             Autaliza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+             Atualiza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarPerfilUsuarioAsync(IdentidadeAcesso.API.Application.Models.AtualizarPerfilUsuarioViewModel)">
+             <summary>
+             Atualiza os dados do usuário logado. Este método requer estar logado.
              </summary>
             
         </member>

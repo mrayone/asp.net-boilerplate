@@ -55,7 +55,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             usuario.Should().NotBeNull();
         }
 
-        [Fact(DisplayName = "Deve retornar o usuário com sucesso.")]
+        [Fact(DisplayName = "Deve Cadastrar o usuário com sucesso.")]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
         public async Task Deve_Cadastrar_Usuario_ComSucesso()
         {
@@ -65,7 +65,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Nome = "Daenerys",
                 Sobrenome = "Targaryen",
                 Sexo = "F",
-                DateDeNascimento = DateTime.Now.AddYears(-18),
+                DataDeNascimento = DateTime.Now.AddYears(-18),
                 CPF = "440.156.500-26",
                 Email = "dany.targ@gmail.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
@@ -91,7 +91,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Nome = "Daenerys",
                 Sobrenome = "Targaryen",
                 Sexo = "F",
-                DateDeNascimento = DateTime.Now.AddYears(-16),
+                DataDeNascimento = DateTime.Now.AddYears(-16),
                 CPF = "440.156.500-26",
                 Email = "dany.targ@gmail.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
@@ -124,7 +124,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Nome = "Aegon I",
                 Sobrenome = "Targaryen",
                 Sexo = "M",
-                DateDeNascimento = DateTime.Now.AddYears(-16),
+                DataDeNascimento = DateTime.Now.AddYears(-16),
                 CPF = "44015650026",
                 Email = "fakedoi_2@gmail.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
