@@ -8,7 +8,10 @@ import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 export class CardRoundedComponent implements OnInit {
 
   @Input() titulo: string;
+  @Input() nomeUsuario: string;
+  @Input() avatarUsuario: string;
   @Input() bodyTemplate: any[];
+  @Input() footerTemplate: any[];
   constructor() { }
 
   ngOnInit() {
