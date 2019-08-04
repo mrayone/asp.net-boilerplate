@@ -1,17 +1,19 @@
-<div class="card card-rounded" [ngClass]="{'pb-5 shadow-sm bg-white card-user': nomeUsuario.length > 0 }">
-    <div class="card-body">
-      <h5 class="card-title">
-        {{titulo}}
-      </h5>
-      <div class="image" *ngIf="nomeUsuario.length > 0">
+<div class="card card-rounded" [ngClass]="{'pb-5 shadow-sm bg-white card-user': nomeUsuario}">
+        <div class="image" *ngIf="nomeUsuario">
           <img src="https://cdn.pixabay.com/photo/2013/06/12/22/20/zion-park-139012_1280.jpg" alt="background usuário">
       </div>
-      <div class="user text-center" *ngIf="nomeUsuario.length > 0">
+    <div class="card-body">
+      <h5 class="card-title" *ngIf="titulo">
+        {{titulo}}
+      </h5>
+      <div class="user text-center" *ngIf="nomeUsuario">
           <img [src]="avatarUsuario" class="rounded-circle avatar" alt="Avatar">
           <h5 class="user-title">{{nomeUsuario}}</h5>
         </div>
       <ng-container *ngTemplateOutlet="bodyTemplate"></ng-container>
+    </div>
 
+    <div class="card-footer">
       <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
     </div>
 </div>

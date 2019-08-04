@@ -1,22 +1,16 @@
 <div class="row">
   <div class="col-md-4">
-      <div class="card pb-5 shadow-sm bg-white card-rounded card-user">
-        <div class="image">
-          <img src="https://cdn.pixabay.com/photo/2013/06/12/22/20/zion-park-139012_1280.jpg" alt="">
-        </div>
-          <div class="card-body">
-            <div class="user text-center">
-              <img src="../../../assets/avatar/talin.JPG" class="rounded-circle avatar" alt="Avatar">
-              <h5 class="user-title">Fake User</h5>
-            </div>
+      <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="'Fake User'" >
+        <ng-template #dados>
             <p class="card-text font-weight-light font-italic">"Percebemos, cada vez mais, que a complexidade dos estudos efetuados cumpre um papel essencial na formulação dos índices pretendidos."</p>
-          </div>
-          <div class="card-footer">
-              <span class="badge badge-primary">Know</span>
-              <span class="badge badge-secondary">ledge</span>
-              <span class="badge badge-success">I.O</span>
-          </div>
-      </div>
+        </ng-template>
+        <ng-template #footer>
+            <span class="badge badge-primary">Know</span>
+            <span class="badge badge-secondary">ledge</span>
+            <span class="badge badge-success">I.O</span>
+        </ng-template>
+
+      </app-card-rounded>
   </div>
 
   <div class="col-md-8">

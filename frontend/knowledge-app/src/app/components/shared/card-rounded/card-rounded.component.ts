@@ -9,7 +9,7 @@ export class CardRoundedComponent implements OnInit {
 
   @Input() titulo: string;
   @Input() nomeUsuario: string;
-  @Input() avatarUsuario: string;
+  @Input() avatarUsuario = '../../../assets/avatar/talin.JPG';
   @Input() bodyTemplate: any[];
   @Input() footerTemplate: any[];
   constructor() { }
