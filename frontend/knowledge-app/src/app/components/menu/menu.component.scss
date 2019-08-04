@@ -1,0 +1,106 @@
+@import '../../../assets/sass/variables.scss';
+.sidebar {
+    color: $side-bar-cor-interna;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $side-bar-cor;
+    height: 100vh;
+    display: block;
+}
+
+.sidebar .logo {
+    margin: 20px;
+    max-height: 60px;
+    padding-bottom: 10px;
+}
+
+.sidebar .logo img {
+  width: 100%;
+}
+.sidebar .logo {
+    border-bottom: 2px solid hsla(0,0%,100%,.3);
+}
+
+.sidebar-wrapper {
+    position: relative;
+    max-height: 100%;
+    min-height: none;
+    width: 260px;
+    overflow: hidden;
+    // box-shadow: inset -1px 0 0 0 #ddd;
+}
+
+.sidebar-wrapper .nav {
+    padding: 18px 0;
+}
+
+.sidebar-wrapper .nav a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar-wrapper .nav a {
+    display: block;
+    color: $side-bar-cor-interna;
+    position: relative;
+    padding: 0 20px;
+}
+
+.sidebar-wrapper .nav p {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 30px;
+    font-family: Muli, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+.sidebar-wrapper .nav i {
+    font-size: 24px;
+    float: left;
+    margin-right: 15px;
+    line-height: 30px;
+    width: 30px;
+}
+
+.sidebar-wrapper .nav > li.active a {
+    color: $nav-item-active;
+}
+
+.sidebar-wrapper .nav > li.active a::before{
+    content: " ";
+    border-right: 17px solid $bg-color;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    top: 8px;
+    right: -1px;
+    display: inline-block;
+    position: absolute;
+}
+
+.sidebar-wrapper .nav > li.active a::after{
+    content: " ";
+    border-right: 17px solid $bg-color;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    top: 8px;
+    right: -1px;
+    display: inline;
+    position: absolute;
+}
+
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+ }

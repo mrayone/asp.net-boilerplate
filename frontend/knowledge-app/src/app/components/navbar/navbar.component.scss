@@ -1,0 +1,26 @@
+@import '../../../assets/sass/variables.scss';
+
+.navbar.navbar-transparent {
+  box-shadow: none;
+  border-bottom: 2px solid #ddd;
+  height: 80px;
+  width: 100%;
+  padding-bottom: 10px;
+}
+.input-group > .form-control, .input-group > .form-control-plaintext, .input-group > .custom-select, .input-group > .custom-file {
+  border-color: transparent;
+  background: #2f3640;
+}
+
+.input-group-text {
+  background-color: #2f3640;
+  border: 1px solid transparent;
+}
+a.navbar-brand:not(.btn) {
+  color: $color-default;
+}
+a.navbar-brand:hover {
+  color: $color-default;
+}
+
+

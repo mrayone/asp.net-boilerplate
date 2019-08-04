@@ -53,19 +53,5 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services
         {
             return Task.FromResult(context.IsActive);
         }
-
-        //private async Task<object[]> GerarPermissoes(Guid id)
-        //{
-        //    var array = new List<object>();
-
-        //    foreach (var item in perfil.Atribuicoes)
-        //    {
-        //        var permissao = await _permissaoRepository.ObterPorIdAsync(item.PermissaoId);
-        //        array.Add(new { permissao.Atribuicao.Tipo, permissao.Atribuicao.Valor });
-        //        array.Add(new { permissao.Atribuicao.Tipo, permissao.Atribuicao.Valor });
-        //    }
-
-        //    return array.ToArray();
-        //}
     }
 }
