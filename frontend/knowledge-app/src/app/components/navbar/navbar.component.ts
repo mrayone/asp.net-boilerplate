@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivationStart, ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
+import { TituloService } from 'src/app/services/titulo.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,16 +9,12 @@ import { map, filter } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public title =  'Knowledg.IO';
-  constructor(private router: Router) {
+  public titulo =  'Knowledg.IO';
+  constructor(private router: Router, private tituloService: TituloService) {
    }
 
   ngOnInit() {
-    this.router.events.pipe( filter(event => event instanceof ActivationStart) )
-    .subscribe(event => {
-      const { snapshot } = event as ActivatedRoute;
-      this.title =  snapshot.data.title;
-     });
+    this.titulo = this.tituloService.titulo;
   }
 
 }
