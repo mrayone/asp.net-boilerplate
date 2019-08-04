@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/themify-icons/themify-icons.css";
-
+@import "./assets/sass/variables";
 
 body {
     font-size: 14px;
+    background: $bg-color;
 }

@@ -10,6 +10,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { UsuarioDetalhesComponent } from './components/usuario/usuario-detalhes/usuario-detalhes.component';
+import { UsuarioListaComponent } from './components/usuario/usuario-lista/usuario-lista.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     DashBoardComponent,
     MenuComponent,
     PerfilComponent,
-    NavbarComponent
+    NavbarComponent,
+    UsuarioDetalhesComponent,
+    UsuarioListaComponent
   ],
   imports: [
     BrowserModule,
