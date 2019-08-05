@@ -10,8 +10,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { UsuarioDetalhesComponent } from './components/usuario/usuario-detalhes/usuario-detalhes.component';
-import { UsuarioListaComponent } from './components/usuario/usuario-lista/usuario-lista.component';
+import { SharedModule } from './components/shared/shared.module';
+import { UsuarioModule } from './components/usuario/usuario.module';
 
 @NgModule({
   declarations: [
@@ -19,14 +19,14 @@ import { UsuarioListaComponent } from './components/usuario/usuario-lista/usuari
     DashBoardComponent,
     MenuComponent,
     PerfilComponent,
-    NavbarComponent,
-    UsuarioDetalhesComponent,
-    UsuarioListaComponent
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule,
+    UsuarioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

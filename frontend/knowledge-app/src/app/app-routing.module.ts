@@ -7,7 +7,7 @@ import { UsuarioListaComponent } from './components/usuario/usuario-lista/usuari
 const routes: Routes = [
   { path: 'perfil', component: PerfilComponent, data: { title: 'Perfil do Usuário' } },
   { path: 'dashboard', component: DashBoardComponent, data: { title: 'Dashboard' } },
-  { path: 'usuarios', component: UsuarioListaComponent, data: { title: 'Usuários Registrados' } },
+  { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule' },
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

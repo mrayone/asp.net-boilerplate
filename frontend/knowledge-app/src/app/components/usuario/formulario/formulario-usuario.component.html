@@ -1,0 +1,202 @@
+<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="usuarioForm" autocomplete="off">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="control-label" for="nome">Primeiro Nome</label>
+            <input type="text" id="nome" formControlName="nome" placeholder="Nome é requerido" required
+                class="form-control">
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros.nome"></p>
+                </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="control-label" for="sobrenome">Sobrenome</label>
+            <input type="text" id="sobrenome" placeholder="Sobrenome é requerido" formControlName="sobrenome" required
+                class="form-control">
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros?.sobrenome"></p>
+                </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="control-label" for="cpf">CPF</label>
+            <input type="text" id="cpf" formControlName="cpf" mask="000.000.000-00" placeholder="CPF é requerido" required
+                class="form-control">
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros.cpf"></p>
+                </div>
+          </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md">
+            <label for="control-label" for="sexo">Sexo</label>
+            <select class="form-control" id="sexo" name="sexo" formControlName="sexo" placeholder="selecione...">
+              <option value="" selected="selected" disabled="disabled">--Selecione--</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+            <div class="invalid-feedback">
+              <p [innerHTML]="erros.sexo"></p>
+          </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="control-label" for="dataDeNascimento">Data De Nascimento </label>
+            <input type="text" id="dataDeNascimento" (focus)="dataDeNascimento.toggle()"
+            (keypress)="$event.preventDefault()"
+             ngbDatepicker #dataDeNascimento="ngbDatepicker"
+            formControlName="dataDeNascimento" placeholder="Data de Nascimento é requerido" required
+                class="form-control">
+            <div class="invalid-feedback">
+                <p [innerHtml]="erros.dataDeNascimento"></p>
+            </div>
+        </div>
+
+        <div class="form-group col-md">
+            <label for="control-label" for="email">E-mail</label>
+            <input type="text" id="email" formControlName="email" placeholder="Email requerido"
+             required class="form-control">
+            <div class="invalid-feedback">
+                <p [innerHtml]="erros.email"></p>
+            </div>
+        </div>
+        <div class="form-group col-md" *ngIf="adminInput">
+          <label for="control-label" for="perfilId">Perfil</label>
+          <select class="form-control" id="perfilId" formControlName="perfilId">
+            <option value="a">aa</option>
+          </select>
+          <div class="invalid-feedback">
+              <p [innerHtml]="erros.perfilId"></p>
+          </div>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-4">
+            <div class="form-group">
+              <label class="control-label" for="logradouro">Logradouro</label>
+              <input class="form-control" id="logradouro" formControlName="logradouro" type="text" placeholder="Logradouro"  />
+              <div class="invalid-feedback">
+                <p [innerHtml]="erros.logradouro"></p>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="numero">Número</label>
+            <input class="form-control" id="numero" formControlName="numero" type="text" placeholder="Numero" />
+            <div class="invalid-feedback">
+              <p [innerHtml]="erros.numero"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="complemento">Complemento</label>
+            <input class="form-control" id="complemento" formControlName="complemento" type="text" placeholder="Complemento" />
+          </div>
+          <div class="invalid-feedback">
+            <p [innerHtml]="erros.complemento"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label" for="bairro">Bairro</label>
+            <input class="form-control" id="bairro" formControlName="bairro" type="text" placeholder="Bairro" />
+            <div class="invalid-feedback">
+              <p [innerHtml]="erros.Bairro"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label class="control-label" for="cep">CEP</label>
+            <input class="form-control" id="cep" mask="00000-000" formControlName="cep" type="text" placeholder="CEP" />
+            <div class="invalid-feedback">
+              <p [innerHtml]="erros.cep"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="cidade">Cidade</label>
+            <input class="form-control" id="cidade" type="text" formControlName="cidade" placeholder="Cidade" />
+            <div class="invalid-feedback">
+              <p [innerHtml]="erros.cidade"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label class="control-label" for="estado">Estado</label>
+            <select class="form-control" id="estado" formControlName="estado">
+              <option value="" disabled="disabled">Estado</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
+            <div class="invalid-feedback">
+              <p [innerHtml]="erros.estado"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4">
+            <div class="form-group">
+              <label class="control-label" for="celular">Celular</label>
+              <input class="form-control" id="celular" mask="00000000000" formControlName="celular" prefix="+55" type="text" placeholder="Celular" />
+              <div class="invalid-feedback">
+                <p [innerHtml]="erros.celular"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+              <div class="form-group">
+                <label class="control-label" for="telefone">Telefone</label>
+                <input class="form-control" id="telefone" mask="0000000000" formControlName="telefone" prefix="+55" type="text" placeholder="telefone" />
+              </div>
+              <div class="invalid-feedback">
+                <p [innerHtml]="erros.telefone"></p>
+              </div>
+            </div>
+      </div>
+
+      <div class="form-row center">
+          <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
+          [disabled]="usuarioForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+      </div>
+</form>

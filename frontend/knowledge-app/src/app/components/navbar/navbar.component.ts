@@ -8,7 +8,7 @@ import { map, filter } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public title =  'Knowledg.IO';
+  public titulo =  'Knowledg.IO';
   constructor(private router: Router) {
    }
 
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
     this.router.events.pipe( filter(event => event instanceof ActivationStart) )
     .subscribe(event => {
       const { snapshot } = event as ActivatedRoute;
-      this.title =  snapshot.data.title;
+      this.titulo =  snapshot.data.title;
      });
   }
 
