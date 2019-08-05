@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { NgbDatepickerI18n, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { CustomDatepickerI18n, I18n } from './customDatePicker/custom-datepicker-i18n';
@@ -6,6 +6,8 @@ import { NgbDatePTParserFormatter } from './dateFormatter/ngb-date-ptparser-form
 import { merge, Observable, fromEvent } from 'rxjs';
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
+import { Usuario } from '../models/usuario';
+import { FormType } from '../models/form-type.enum';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -17,6 +19,10 @@ import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
   ]
 })
 export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
+  @Input() usuario: Usuario;
+  @Input() formType: FormType =  FormType.Post;
+  @Input() adminInput: boolean;
+  @Output() command = new EventEmitter<boolean>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   usuarioForm: FormGroup;
@@ -27,78 +33,92 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
    }
 
   ngOnInit() {
+    this.gerarFormulario();
+  }
+
+  sendCommand() {
+    this.command.emit();
+  }
+
+  gerarFormulario(): void {
+    this.usuario = !this.usuario ? new Usuario() : this.usuario;
     this.usuarioForm = new FormGroup({
-      nome: new FormControl('', [
+      nome: new FormControl(this.usuario.nome, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      sobrenome: new FormControl('', [
+      sobrenome: new FormControl(this.usuario.sobrenome, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      sexo: new FormControl('M', [
+      sexo: new FormControl(this.usuario.sexo, [
         Validators.required,
         Validators.pattern(/[F-M]/)
       ]),
-      email: new FormControl('', [
+      email: new FormControl(this.usuario.email, [
         Validators.required,
         Validators.email
       ]),
-      cpf: new FormControl('', [
+      cpf: new FormControl(this.usuario.cpf, [
         Validators.required,
         Validators.maxLength(14),
         Validators.minLength(11)
       ]),
-      dataDeNascimento: new FormControl('', [
+      dataDeNascimento: new FormControl(this.usuario.dateDeNascimento, [
         Validators.required
       ]),
-      telefone: new FormControl('',
+      telefone: new FormControl(this.usuario.telefone,
       [
         Validators.maxLength(13),
         Validators.minLength(11)
       ]),
-      celular: new FormControl('',
+      celular: new FormControl(this.usuario.celular,
       [
         Validators.maxLength(15),
         Validators.minLength(11)
       ]),
-      logradouro: new FormControl('',
+      logradouro: new FormControl(this.usuario.logradouro,
       [
         Validators.minLength(2),
         Validators.maxLength(150)
       ]),
-      numero: new FormControl('', [
+      numero: new FormControl(this.usuario.numero, [
         Validators.minLength(2),
         Validators.maxLength(10)
       ]),
-      complemento: new FormControl('', [
+      complemento: new FormControl(this.usuario.complemento, [
         Validators.minLength(3),
         Validators.maxLength(50)
       ]),
-      bairro: new FormControl('',
+      bairro: new FormControl(this.usuario.bairro,
       [
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      cep: new FormControl('',
+      cep: new FormControl(this.usuario.cep,
+      [
+        Validators.minLength(8),
+        Validators.maxLength(9)
+      ]),
+      cidade: new FormControl(this.usuario.cidade,
       [
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      cidade: new FormControl('',
-      [
-        Validators.minLength(3),
-        Validators.maxLength(150)
-      ]),
-      estado: new FormControl('', [
+      estado: new FormControl(this.usuario.estado, [
         Validators.minLength(2),
         Validators.maxLength(2)
-      ]),
-      perfilId: new FormControl(),
-      });
+      ])
+    });
 
+    if ( this.adminInput ) {
+      this.usuarioForm.addControl('perfilId', new FormControl('', [
+          Validators.required
+        ])
+      );
+    }
   }
 
   ngAfterViewInit(): void {

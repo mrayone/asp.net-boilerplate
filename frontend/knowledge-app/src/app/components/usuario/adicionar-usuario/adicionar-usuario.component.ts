@@ -10,4 +10,9 @@ export class AdicionarUsuarioComponent implements OnInit {
 
   ngOnInit() { }
 
+
+  onPostCommand() {
+    console.log('Post');
+  }
+
 }
