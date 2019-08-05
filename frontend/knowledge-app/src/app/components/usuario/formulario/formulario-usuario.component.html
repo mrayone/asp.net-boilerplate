@@ -1,4 +1,4 @@
-<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="usuarioForm">
+<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="usuarioForm" autocomplete="off">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="control-label" for="nome">Primeiro Nome</label>
@@ -116,7 +116,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label class="control-label" for="cep">CEP</label>
-            <input class="form-control" id="cep" mask="0000-000" formControlName="cep" type="text" placeholder="CEP" />
+            <input class="form-control" id="cep" mask="00000-000" formControlName="cep" type="text" placeholder="CEP" />
             <div class="invalid-feedback">
               <p [innerHtml]="erros.cep"></p>
             </div>

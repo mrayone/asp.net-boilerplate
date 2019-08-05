@@ -18,7 +18,6 @@ export class AdicionarUsuarioComponent implements OnInit {
       const usuario: Usuario = Object.assign({ }, new Usuario(), form.value);
       usuario.dataDeNascimento =
       `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
-
     }
   }
 
