@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../models/usuario';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-adicionar-usuario',
@@ -11,8 +13,10 @@ export class AdicionarUsuarioComponent implements OnInit {
   ngOnInit() { }
 
 
-  onPostCommand() {
-    console.log('Post');
+  onPostCommand(formValue: FormGroup) {
+    const usuario: Usuario = Object.assign({ }, new Usuario(), formValue.value);
+    usuario.dataDeNascimento =
+    `${formValue.value.dataDeNascimento.year}-${formValue.value.dataDeNascimento.month}-${formValue.value.dataDeNascimento.day}`;
   }
 
 }

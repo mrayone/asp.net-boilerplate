@@ -20,10 +20,10 @@ import { FormType } from './formType/form-type.enum';
   ]
 })
 export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
-  @Input() usuario: Usuario;
+  @Input() model: Usuario;
   @Input() formType: FormType =  FormType.Post;
   @Input() adminInput: boolean;
-  @Output() command = new EventEmitter<boolean>();
+  @Output() command = new EventEmitter<FormGroup>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   usuarioForm: FormGroup;
@@ -38,84 +38,84 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   }
 
   sendCommand() {
-    this.command.emit();
+    this.command.emit(this.usuarioForm);
   }
 
   gerarFormulario(): void {
-    this.usuario = !this.usuario ? new Usuario() : this.usuario;
+    this.model = !this.model ? new Usuario() : this.model;
     this.usuarioForm = new FormGroup({
-      nome: new FormControl(this.usuario.nome, [
+      nome: new FormControl(this.model.nome, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      sobrenome: new FormControl(this.usuario.sobrenome, [
+      sobrenome: new FormControl(this.model.sobrenome, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      sexo: new FormControl(this.usuario.sexo, [
+      sexo: new FormControl(this.model.sexo, [
         Validators.required,
         Validators.pattern(/[F-M]/)
       ]),
-      email: new FormControl(this.usuario.email, [
+      email: new FormControl(this.model.email, [
         Validators.required,
         Validators.email
       ]),
-      cpf: new FormControl(this.usuario.cpf, [
+      cpf: new FormControl(this.model.cpf, [
         Validators.required,
         Validators.maxLength(14),
         Validators.minLength(11)
       ]),
-      dataDeNascimento: new FormControl(this.usuario.dateDeNascimento, [
+      dataDeNascimento: new FormControl(this.model.dataDeNascimento, [
         Validators.required
       ]),
-      telefone: new FormControl(this.usuario.telefone,
+      telefone: new FormControl(this.model.telefone,
       [
         Validators.maxLength(13),
         Validators.minLength(11)
       ]),
-      celular: new FormControl(this.usuario.celular,
+      celular: new FormControl(this.model.celular,
       [
         Validators.maxLength(15),
         Validators.minLength(11)
       ]),
-      logradouro: new FormControl(this.usuario.logradouro,
+      logradouro: new FormControl(this.model.logradouro,
       [
         Validators.minLength(2),
         Validators.maxLength(150)
       ]),
-      numero: new FormControl(this.usuario.numero, [
+      numero: new FormControl(this.model.numero, [
         Validators.minLength(2),
         Validators.maxLength(10)
       ]),
-      complemento: new FormControl(this.usuario.complemento, [
+      complemento: new FormControl(this.model.complemento, [
         Validators.minLength(3),
         Validators.maxLength(50)
       ]),
-      bairro: new FormControl(this.usuario.bairro,
+      bairro: new FormControl(this.model.bairro,
       [
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      cep: new FormControl(this.usuario.cep,
+      cep: new FormControl(this.model.cep,
       [
         Validators.minLength(8),
         Validators.maxLength(9)
       ]),
-      cidade: new FormControl(this.usuario.cidade,
+      cidade: new FormControl(this.model.cidade,
       [
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      estado: new FormControl(this.usuario.estado, [
+      estado: new FormControl(this.model.estado, [
         Validators.minLength(2),
         Validators.maxLength(2)
       ])
     });
 
     if ( this.adminInput ) {
-      this.usuarioForm.addControl('perfilId', new FormControl('', [
+      this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
           Validators.required
         ])
       );

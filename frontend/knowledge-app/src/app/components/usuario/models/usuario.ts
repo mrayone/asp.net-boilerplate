@@ -5,11 +5,10 @@ export class Usuario {
   public sexo: string;
   public email: string;
   public cpf: string;
-  public dateDeNascimento: string;
+  public dataDeNascimento: string;
   public perfilId: string;
   public celular: string;
   public telefone: string;
-  public status: boolean;
   public logradouro: string;
   public numero: string;
   public complemento: string;
@@ -25,11 +24,10 @@ export class Usuario {
     this.sexo = '';
     this.email = '';
     this.cpf = '';
-    this.dateDeNascimento = '';
+    this.dataDeNascimento = '';
     this.perfilId = '';
     this.celular = '';
     this.telefone = '';
-    this.status = true;
     this.logradouro = '';
     this.numero = '';
     this.complemento = '';
