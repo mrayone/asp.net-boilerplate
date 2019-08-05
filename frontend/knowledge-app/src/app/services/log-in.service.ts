@@ -36,11 +36,17 @@ export class LogInService {
 }
 
 export class TokenModel {
+  // tslint:disable-next-line: variable-name
   access_token: string;
+  // tslint:disable-next-line: variable-name
   expires_in: number;
+  // tslint:disable-next-line: variable-name
   token_type: string;
+  // tslint:disable-next-line: variable-name
   refresh_token: string;
   scope: string;
+
+  constructor() {}
 }
 
 export class GrantAcessModel extends HttpParams {
