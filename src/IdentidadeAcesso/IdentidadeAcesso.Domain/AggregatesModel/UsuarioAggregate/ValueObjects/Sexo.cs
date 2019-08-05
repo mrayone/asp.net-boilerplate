@@ -5,8 +5,8 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class Sexo : ValueObject<Sexo>
     {
-        public static Sexo Masculino = new Sexo(nameof(Masculino));
-        public static Sexo Feminino = new Sexo(nameof(Feminino));
+        public static Sexo Masculino = new Sexo("M");
+        public static Sexo Feminino = new Sexo("F");
         public string Tipo { get; private set; }
 
         private Sexo(string tipo)
