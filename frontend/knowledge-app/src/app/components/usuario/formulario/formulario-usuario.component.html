@@ -30,7 +30,7 @@
     <div class="form-row">
         <div class="form-group col-md">
             <label for="control-label" for="sexo">Sexo</label>
-            <select class="form-control" id="sexo" name="sexo" formControlName="sexo" placeholder="selecione..." required>
+            <select class="form-control" id="sexo" name="sexo" formControlName="sexo" placeholder="selecione...">
               <option value="" selected="selected">--Selecione--</option>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
@@ -55,8 +55,7 @@
         <div class="form-group col-md">
             <label for="control-label" for="email">E-mail</label>
             <input type="text" id="email" formControlName="email" placeholder="Email requerido"
-             required
-                class="form-control">
+             required class="form-control">
             <div class="invalid-feedback">
                 <p [innerHtml]="erros.email"></p>
             </div>
@@ -64,7 +63,7 @@
         <div class="form-group col-md" *ngIf="adminInput">
           <label for="control-label" for="perfilId">Perfil</label>
           <select class="form-control" id="perfilId" formControlName="perfilId">
-            <option value=""></option>
+            <option value="a">aa</option>
           </select>
           <div class="invalid-feedback">
               <p [innerHtml]="erros.perfilId"></p>
@@ -75,7 +74,7 @@
         <div class="col-md-4">
             <div class="form-group">
               <label class="control-label" for="logradouro">Logradouro</label>
-              <input class="form-control" id="logradouro" type="text" placeholder="Logradouro"  />
+              <input class="form-control" id="logradouro" formControlName="logradouro" type="text" placeholder="Logradouro"  />
               <div class="invalid-feedback">
                 <p [innerHtml]="erros.logradouro"></p>
               </div>
@@ -85,7 +84,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="numero">Número</label>
-            <input class="form-control" id="numero" type="text" placeholder="Numero" />
+            <input class="form-control" id="numero" formControlName="numero" type="text" placeholder="Numero" />
             <div class="invalid-feedback">
               <p [innerHtml]="erros.numero"></p>
             </div>
@@ -95,7 +94,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="complemento">Complemento</label>
-            <input class="form-control" id="complemento" type="text" placeholder="Complemento" />
+            <input class="form-control" id="complemento" formControlName="complemento" type="text" placeholder="Complemento" />
           </div>
           <div class="invalid-feedback">
             <p [innerHtml]="erros.complemento"></p>
@@ -107,7 +106,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label class="control-label" for="bairro">Bairro</label>
-            <input class="form-control" id="bairro" type="text" placeholder="Bairro" />
+            <input class="form-control" id="bairro" formControlName="bairro" type="text" placeholder="Bairro" />
             <div class="invalid-feedback">
               <p [innerHtml]="erros.Bairro"></p>
             </div>
@@ -117,7 +116,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label class="control-label" for="cep">CEP</label>
-            <input class="form-control" id="cep" mask="0000-000" type="text" placeholder="CEP" />
+            <input class="form-control" id="cep" mask="0000-000" formControlName="cep" type="text" placeholder="CEP" />
             <div class="invalid-feedback">
               <p [innerHtml]="erros.cep"></p>
             </div>
@@ -127,7 +126,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="cidade">Cidade</label>
-            <input class="form-control" id="cidade" type="text" placeholder="Cidade" />
+            <input class="form-control" id="cidade" type="text" formControlName="cidade" placeholder="Cidade" />
             <div class="invalid-feedback">
               <p [innerHtml]="erros.cidade"></p>
             </div>
@@ -137,7 +136,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="estado">Estado</label>
-            <select class="form-control" id="estado" formControlName="estado">
+            <select class="form-control" id="estado" formControlName="estado" formControlName="estado">
               <option value="">Estado</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
@@ -178,7 +177,7 @@
         <div class="col-md-4">
             <div class="form-group">
               <label class="control-label" for="celular">Celular</label>
-              <input class="form-control" id="celular" type="text" placeholder="Celular" />
+              <input class="form-control" id="celular" mask="00000000000" formControlName="celular" prefix="+55" type="text" placeholder="Celular" />
               <div class="invalid-feedback">
                 <p [innerHtml]="erros.celular"></p>
               </div>
@@ -188,7 +187,7 @@
           <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label" for="telefone">Telefone</label>
-                <input class="form-control" id="telefone" type="text" placeholder="telefone" />
+                <input class="form-control" id="telefone" mask="0000000000" formControlName="telefone" prefix="+55" type="text" placeholder="telefone" />
               </div>
               <div class="invalid-feedback">
                 <p [innerHtml]="erros.telefone"></p>
@@ -197,7 +196,7 @@
       </div>
 
       <div class="form-row center">
-          <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }" 
+          <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
           [disabled]="usuarioForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
       </div>
 </form>

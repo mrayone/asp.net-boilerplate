@@ -13,10 +13,13 @@ export class AdicionarUsuarioComponent implements OnInit {
   ngOnInit() { }
 
 
-  onPostCommand(formValue: FormGroup) {
-    const usuario: Usuario = Object.assign({ }, new Usuario(), formValue.value);
-    usuario.dataDeNascimento =
-    `${formValue.value.dataDeNascimento.year}-${formValue.value.dataDeNascimento.month}-${formValue.value.dataDeNascimento.day}`;
+  onPostCommand(form: FormGroup) {
+    if (form.dirty && form.valid) {
+      const usuario: Usuario = Object.assign({ }, new Usuario(), form.value);
+      usuario.dataDeNascimento =
+      `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
+
+    }
   }
 
 }

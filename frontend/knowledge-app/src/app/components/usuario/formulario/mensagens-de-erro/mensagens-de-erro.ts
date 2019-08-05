@@ -60,5 +60,8 @@ export const mensagensDeErro = {
   estado: {
     minlength: 'O estado precisa ter no mínimo 2 caracteres',
     maxlength: 'O estado precisa ter no máximo 2 caracteres'
+  },
+  perfilId: {
+    required: 'O perfil é requerido.'
   }
 };
