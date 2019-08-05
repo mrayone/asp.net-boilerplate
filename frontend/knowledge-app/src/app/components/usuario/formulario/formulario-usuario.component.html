@@ -31,7 +31,7 @@
         <div class="form-group col-md">
             <label for="control-label" for="sexo">Sexo</label>
             <select class="form-control" id="sexo" name="sexo" formControlName="sexo" placeholder="selecione...">
-              <option value="" selected="selected">--Selecione--</option>
+              <option value="" selected="selected" disabled="disabled">--Selecione--</option>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
             </select>
@@ -136,8 +136,8 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="estado">Estado</label>
-            <select class="form-control" id="estado" formControlName="estado" formControlName="estado">
-              <option value="">Estado</option>
+            <select class="form-control" id="estado" formControlName="estado">
+              <option value="" disabled="disabled">Estado</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
               <option value="AP">Amapá</option>
