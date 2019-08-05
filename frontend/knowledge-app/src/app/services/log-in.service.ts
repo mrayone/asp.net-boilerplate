@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class LogInService {
 
-  private url = "http://localhost:5001";
+  private url = 'http://localhost:5001';
 
   constructor(private http: HttpClient) {
 
@@ -36,13 +36,9 @@ export class LogInService {
 }
 
 export class TokenModel {
-  // tslint:disable-next-line: variable-name
   access_token: string;
-  // tslint:disable-next-line: variable-name
   expires_in: number;
-  // tslint:disable-next-line: variable-name
   token_type: string;
-  // tslint:disable-next-line: variable-name
   refresh_token: string;
   scope: string;
 
@@ -50,8 +46,8 @@ export class TokenModel {
 }
 
 export class GrantAcessModel extends HttpParams {
-  constructor( username: string,
-              password: string, grant_type: string = 'password', client_id: string = 'spa.client', scope: string = 'api offline_access' ) {
+  constructor( username: string, password: string, grant_type: string = 'password',
+               client_id: string = 'spa.client', scope: string = 'api offline_access' ) {
     super({
       fromObject: {
         grant_type,
