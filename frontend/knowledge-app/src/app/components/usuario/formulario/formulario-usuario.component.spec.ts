@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormularioUsuarioComponent } from './formulario-usuario.component';
 
-describe('FormularioComponent', () => {
+describe('FormularioUsuarioComponent', () => {
   let component: FormularioUsuarioComponent;
   let fixture: ComponentFixture<FormularioUsuarioComponent>;
 

@@ -1,43 +1,57 @@
-<form action="">
+<form action="" [formGroup]="usuarioForm">
     <div class="form-row">
         <div class="form-group col-md-4">
-            <label for="control-label" for="nome">Nome</label>
-            <input type="text" id="nome" placeholder="Nome requerido" required
+            <label for="control-label" for="nome">Primeiro Nome</label>
+            <input type="text" id="nome" formControlName="nome" placeholder="Nome requerido" required
                 class="form-control">
-            <!-- <div class="invalid-feedback">
-                <p [innerHtml]="displayMessage.nome"></p>
-            </div> -->
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros.nome"></p>
+                </div>
         </div>
 
         <div class="form-group col-md-4">
             <label for="control-label" for="sobrenome">Sobrenome</label>
             <input type="text" id="sobrenome" placeholder="Sobrenome requerido" formControlName="sobrenome" required
                 class="form-control">
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros?.sobrenome"></p>
+                </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="control-label" for="cpf">CPF</label>
+            <input type="text" id="cpf" formControlName="cpf" placeholder="CPF é requerido" required
+                class="form-control">
+                <div class="invalid-feedback">
+                    <p [innerHTML]="erros.cpf"></p>
+                </div>
+          </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="control-label" for="sexo">Sexo</label>
+            <select class="form-control" id="sexo" name="sexo" formControlName="sexo" placeholder="selecione..." required>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="control-label" for="dataDeNascimento">Data De Nascimento </label>
+            <input type="text" id="dataDeNascimento" (focus)="dataDeNascimento.toggle()"
+            (keypress)="$event.preventDefault()"
+             ngbDatepicker #dataDeNascimento="ngbDatepicker"
+            formControlName="dataDeNascimento" placeholder="dataDeNascimento requerido" required
+                class="form-control">
             <!-- <div class="invalid-feedback">
                 <p [innerHtml]="displayMessage.nome"></p>
             </div> -->
         </div>
 
         <div class="form-group col-md-4">
-            <label for="control-label" for="cpf">CPF</label>
-            <input type="text" id="cpf" placeholder="CPF é requerido" required
-                class="form-control">
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
             <label for="control-label" for="email">E-mail</label>
-            <input type="text" id="email" placeholder="Email requerido"
+            <input type="text" id="email" formControlName="email" placeholder="Email requerido"
              required
-                class="form-control">
-            <!-- <div class="invalid-feedback">
-                <p [innerHtml]="displayMessage.nome"></p>
-            </div> -->
-        </div>
-
-        <div class="form-group col-md-6">
-            <label for="control-label" for="dataDeNascimento">Data De Nascimento </label>
-            <input type="text" id="dataDeNascimento" placeholder="dataDeNascimento requerido" required
                 class="form-control">
             <!-- <div class="invalid-feedback">
                 <p [innerHtml]="displayMessage.nome"></p>
@@ -143,6 +157,6 @@
       </div>
 
       <div class="form-row center">
-          <button class="btn ml-auto mr-auto btn-lg btn-success btn-rounded">Cadastrar</button>
+          <button class="btn ml-auto mr-auto btn-lg btn-success btn-rounded" [disabled]="usuarioForm.invalid">Cadastrar</button>
       </div>
 </form>
