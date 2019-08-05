@@ -197,7 +197,7 @@
       </div>
 
       <div class="form-row center">
-          <button class="btn ml-auto mr-auto btn-lg btn-success btn-rounded"
-          [disabled]="usuarioForm.invalid">Cadastrar</button>
+          <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }" 
+          [disabled]="usuarioForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
       </div>
 </form>

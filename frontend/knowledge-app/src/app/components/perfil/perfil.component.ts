@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormType } from '../usuario/formulario/formType/form-type.enum';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit {
 
+  formType: FormType = FormType.Put;
   constructor() { }
 
   ngOnInit() {

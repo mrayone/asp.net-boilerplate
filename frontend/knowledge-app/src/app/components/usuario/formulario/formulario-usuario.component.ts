@@ -7,7 +7,8 @@ import { merge, Observable, fromEvent } from 'rxjs';
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
 import { Usuario } from '../models/usuario';
-import { FormType } from '../models/form-type.enum';
+import { FormType } from './formType/form-type.enum';
+
 
 @Component({
   selector: 'app-formulario-usuario',
