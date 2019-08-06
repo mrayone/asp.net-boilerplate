@@ -4,6 +4,7 @@ import { AppState } from './state-manager/reducers';
 import { TokenModel } from './services/log-in.service';
 import { ObterTokenModel } from './state-manager/selectors/token.selector';
 import { Observable } from 'rxjs';
+import { ReaverToken } from './state-manager/actions/autorizacao/autorizacao.actions';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,9 @@ import { Observable } from 'rxjs';
 export class AppComponent implements OnInit {
   autenticado: boolean;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+    this.store.dispatch(new ReaverToken());
+  }
 
   ngOnInit(): void {
     this.store.pipe(select(ObterTokenModel))

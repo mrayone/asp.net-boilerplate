@@ -3,12 +3,13 @@ import { FormGroup, FormControlName, Validators, FormControl } from '@angular/fo
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { merge, Observable, fromEvent } from 'rxjs';
 import { LogInService, GrantAcessModel, TokenModel } from 'src/app/services/log-in.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
 import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
 import { Router } from '@angular/router';
+import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector';
 
 @Component({
   selector: 'app-login',
@@ -45,6 +46,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', Validators.required)
+    });
+
+    this.stateService.pipe(select(ObterTokenModel))
+    .subscribe(token => {
+      if (token) {
+        this.router.navigate(['/dashboard']);
+      }
     });
   }
 
