@@ -6,6 +6,7 @@ export enum AutorizacaoTypes {
   Login = '[Autorização Component] Login',
   RefreshToken = '[Autorização Component] Refresh Token',
   Logout = '[Autorização Component] Logout',
+  ReaverToken = '[Autorização Component] ReaverToken'
 }
 
 export class Autorizacao implements Action {
@@ -24,4 +25,10 @@ export class Logout implements Action {
   constructor() { }
 }
 
-export type AutorizacaoActions = Autorizacao | RefreshToken | Logout;
+export class ReaverToken implements Action {
+  readonly type = AutorizacaoTypes.ReaverToken;
+
+  constructor() { }
+}
+
+export type AutorizacaoActions = Autorizacao | RefreshToken | Logout | ReaverToken;

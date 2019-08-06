@@ -8,6 +8,8 @@ import { AppState } from 'src/app/state-manager/reducers';
 import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   erros?: { [key: string]: string } = {};
 
-  constructor(private loginService: LogInService, private stateService: Store<AppState>) {
+  constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
@@ -36,6 +38,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   loginComplete(response: TokenModel) {
       this.stateService.dispatch(new Autorizacao(response));
+      this.router.navigate(['dashboard']);
   }
 
   ngOnInit() {
