@@ -45,14 +45,20 @@ export class LogInService {
 
    validarToken() {
     // tslint:disable-next-line: no-shadowed-variable
-    this.introspectToken().subscribe(value => {
-      if ( !value.active ) {
-        this.refreshToken();
-      }
-    });
+    const { exp } = jwtParser(this.tokenModel.access_token) as any;
+    const dateExpire = new Date( exp * 1000 );
+    const tokenExpirou = dateExpire < new Date();
+    if ( tokenExpirou ) {
+      this.introspectToken().subscribe(value => {
+        if ( !value.active ) {
+          this.refreshToken();
+        }
+      });
+    }
   }
 
   private introspectToken(): Observable<IntrospectModel> {
+    // tslint:disable-next-line: no-shadowed-variable
     const httpOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded',
