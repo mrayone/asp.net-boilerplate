@@ -10,7 +10,7 @@ import { CardRoundedComponent } from './card-rounded/card-rounded.component';
     CommonModule
   ],
   exports: [
-    CardRoundedComponent
+    CardRoundedComponent,
   ]
 })
 export class SharedModule { }

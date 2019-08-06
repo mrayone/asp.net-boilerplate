@@ -11,13 +11,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // components
-import { MenuComponent } from './components/menu/menu.component';
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
-
 
 @NgModule({
   declarations: [
