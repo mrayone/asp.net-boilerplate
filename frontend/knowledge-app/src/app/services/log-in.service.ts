@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { logging } from 'protractor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { url } from './config/config';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
@@ -13,14 +14,12 @@ const httpOptions = {
 })
 export class LogInService {
 
-  private url = 'http://localhost:5001';
-
   constructor(private http: HttpClient) {
 
   }
 
   getTokenAcesso( grantAcess: GrantAcessModel): Observable<TokenModel> {
-      return this.http.post(`${this.url}/connect/token`, grantAcess , httpOptions)
+      return this.http.post(`${url}/connect/token`, grantAcess , httpOptions)
       .pipe(
         catchError(this.handleError<any>('obterToken'))
       );
