@@ -24,3 +24,7 @@ a.navbar-brand:hover {
 }
 
 
+.dropdown-toggle::after {
+  display: none;
+}
+

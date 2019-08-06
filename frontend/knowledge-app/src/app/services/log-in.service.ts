@@ -51,7 +51,14 @@ export class LogInService {
     if ( tokenExpirou ) {
       this.introspectToken().subscribe(value => {
         if ( !value.active ) {
-          this.refreshToken();
+          this.refreshToken().subscribe(response => {
+            const tokenModel = response as TokenModel;
+            if (tokenModel) {
+              this.stateManager.dispatch(new RefreshToken(tokenModel));
+            } else {
+              this.stateManager.dispatch(new Logout());
+            }
+        });
         }
       });
     }
@@ -84,12 +91,7 @@ export class LogInService {
     return this.http.post(`${url}/connect/token`, postModel , httpOptions)
       .pipe(
         catchError(this.handleError<any>('validarToken'))
-        ).subscribe(value => {
-            const tokenModel = value as TokenModel;
-            if (tokenModel) {
-              this.stateManager.dispatch(new RefreshToken(tokenModel));
-            }
-        });
+        );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -9,7 +9,7 @@ import { UsuarioModule } from './components/usuario/usuario.module';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -34,6 +34,7 @@ import { CanActivateUser } from './guards/can-activate-user';
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
+    NgbModule,
     UsuarioModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : []

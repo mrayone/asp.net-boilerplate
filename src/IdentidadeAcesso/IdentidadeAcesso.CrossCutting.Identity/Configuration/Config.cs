@@ -44,6 +44,8 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     },
                     AllowedScopes = { "api", IdentityServerConstants.StandardScopes.OfflineAccess },
                     AllowOfflineAccess =  true,
+                    RefreshTokenExpiration = TokenExpiration.Sliding,
+                    RefreshTokenUsage = TokenUsage.ReUse,
 
                 }
             };
