@@ -7,7 +7,7 @@
         {{titulo}}
       </h5>
       <div class="user text-center" *ngIf="nomeUsuario">
-          <img [src]="avatarUsuario" class="rounded-circle avatar" alt="Avatar">
+          <img [src]="avatar" class="rounded-circle avatar" alt="Avatar">
           <h5 class="user-title">{{nomeUsuario}}</h5>
         </div>
       <ng-container *ngTemplateOutlet="bodyTemplate"></ng-container>

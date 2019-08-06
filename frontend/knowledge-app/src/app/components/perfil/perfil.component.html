@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4">
-      <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="'Fake User'" >
+      <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="usuario.nome" [email]="usuario.email">
         <ng-template #dados>
             <p class="card-text font-weight-light font-italic">"Percebemos, cada vez mais, que a complexidade dos estudos efetuados cumpre um papel essencial na formulação dos índices pretendidos."</p>
         </ng-template>
