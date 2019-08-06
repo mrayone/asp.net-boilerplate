@@ -8,7 +8,7 @@ import { AppState } from '../state-manager/reducers';
 import { Store, select } from '@ngrx/store';
 import { ObterTokenModel } from '../state-manager/selectors/token.selector';
 import { jwtParser } from '../Utils/jwtParser';
-import { Logout } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout, RefreshToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
 import { TokenModel, GrantAcessModel } from './config/models/models';
 import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
 
@@ -44,10 +44,19 @@ export class LogInService {
   }
 
    validarToken() {
+    // tslint:disable-next-line: no-shadowed-variable
+    this.introspectToken().subscribe(value => {
+      if ( !value.active ) {
+        this.refreshToken();
+      }
+    });
+  }
+
+  private introspectToken(): Observable<IntrospectModel> {
     const httpOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${btoa('api:hello')}`
+          Authorization: `Basic ${btoa('api:hello')}`
       })
     };
     const token = this.tokenModel.access_token;
@@ -56,12 +65,7 @@ export class LogInService {
     return this.http.post(`${url}/connect/introspect`, postModel , httpOptions)
       .pipe(
         catchError(this.handleError<any>('validarToken'))
-        ).subscribe(value => {
-            if (!value['active']) {
-              this.refreshToken();
-            }
-            return value;
-        });
+        );
   }
 
   refreshToken() {
@@ -75,7 +79,10 @@ export class LogInService {
       .pipe(
         catchError(this.handleError<any>('validarToken'))
         ).subscribe(value => {
-            console.log(value);
+            const tokenModel = value as TokenModel;
+            if (tokenModel) {
+              this.stateManager.dispatch(new RefreshToken(tokenModel));
+            }
         });
   }
 
@@ -88,3 +95,7 @@ export class LogInService {
   }
 }
 
+
+export class IntrospectModel {
+  active = false;
+}

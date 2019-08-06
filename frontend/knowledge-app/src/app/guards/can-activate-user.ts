@@ -19,7 +19,6 @@ export class CanActivateUser implements CanActivate {
         this.router.navigate(['/login']);
         return false;
       } else  {
-
         this.loginService.validarToken();
         return true;
       }
