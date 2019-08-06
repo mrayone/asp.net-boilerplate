@@ -18,10 +18,16 @@ export class UsuarioLogadoService {
 
 export class UsuarioViewModel {
   nome: string;
+  sobrenome: string;
   email: string;
+  sub: string;
+  permissions: [];
 
   constructor() {
     this.nome = '';
     this.email = '';
+    this.permissions = [];
+    this.sub = '';
+    this.sobrenome = '';
   }
 }

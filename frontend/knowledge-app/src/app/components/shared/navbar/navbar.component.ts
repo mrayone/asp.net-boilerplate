@@ -4,6 +4,8 @@ import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
 import { Logout } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
+import { UsuarioViewModel, UsuarioLogadoService } from 'src/app/services/usuario-logado.service';
+import { jwtParser } from 'src/app/Utils/jwtParser';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +14,8 @@ import { Logout } from 'src/app/state-manager/actions/autorizacao/autorizacao.ac
 })
 export class NavbarComponent implements OnInit {
   public titulo =  'Knowledg.IO';
-  constructor(private router: Router, private store: Store<AppState>) {
+  usuario: UsuarioViewModel;
+  constructor(private router: Router, private store: Store<AppState>, private usuarioService: UsuarioLogadoService) {
    }
 
   ngOnInit() {
@@ -22,7 +25,10 @@ export class NavbarComponent implements OnInit {
       this.titulo =  snapshot.data.title;
      });
 
-    }
+    this.usuarioService.tokenModel$.subscribe(model => {
+      this.usuario = jwtParser(model.access_token) as UsuarioViewModel;
+    });
+  }
     onLogout() {
       this.store.dispatch(new Logout());
       this.router.navigate(['/login']);
