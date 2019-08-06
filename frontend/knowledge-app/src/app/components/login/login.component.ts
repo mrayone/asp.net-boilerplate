@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@ang
 import { FormGroup, FormControlName, Validators, FormControl } from '@angular/forms';
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { merge, Observable, fromEvent } from 'rxjs';
-import { LogInService, GrantAcessModel, TokenModel } from 'src/app/services/log-in.service';
+import { LogInService } from 'src/app/services/log-in.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
 import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
@@ -10,6 +10,7 @@ import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
 import { Router } from '@angular/router';
 import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector';
+import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
 
 @Component({
   selector: 'app-login',

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './state-manager/reducers';
-import { TokenModel } from './services/log-in.service';
 import { ObterTokenModel } from './state-manager/selectors/token.selector';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { ReaverToken } from './state-manager/actions/autorizacao/autorizacao.actions';
 
 @Component({
@@ -20,6 +19,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.validarToken();
+  }
+
+  validarToken(): void {
     this.store.pipe(select(ObterTokenModel))
     .subscribe(token => {
       this.autenticado = !!token;

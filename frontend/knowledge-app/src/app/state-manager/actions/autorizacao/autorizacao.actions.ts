@@ -1,5 +1,5 @@
 import { createAction, Action } from '@ngrx/store';
-import { TokenModel } from 'src/app/services/log-in.service';
+import { TokenModel } from 'src/app/services/config/models/models';
 
 
 export enum AutorizacaoTypes {

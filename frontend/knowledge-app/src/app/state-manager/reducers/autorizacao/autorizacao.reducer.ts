@@ -1,6 +1,6 @@
 import { createReducer, on, State } from '@ngrx/store';
 import { AutorizacaoActions, AutorizacaoTypes, ReaverToken } from '../../actions/autorizacao/autorizacao.actions';
-import { TokenModel } from 'src/app/services/log-in.service';
+import { TokenModel } from 'src/app/services/config/models/models';
 
 const LOGIN_KEY = 'USUARIO_TOKEN';
 

@@ -42,7 +42,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api", "validate_token", IdentityServerConstants.StandardScopes.OfflineAccess },
+                    AllowedScopes = { "api", IdentityServerConstants.StandardScopes.OfflineAccess },
                     AllowOfflineAccess =  true,
 
                 }

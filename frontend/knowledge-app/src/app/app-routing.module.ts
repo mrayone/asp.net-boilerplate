@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
-import { UsuarioListaComponent } from './components/usuario/usuario-lista/usuario-lista.component';
 import { LoginComponent } from './components/login/login.component';
 import { CanActivateUser } from './guards/can-activate-user';
 

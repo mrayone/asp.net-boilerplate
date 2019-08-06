@@ -3,7 +3,7 @@ import {
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
 import * as fromUser from './autorizacao/autorizacao.reducer';
-import { TokenModel } from 'src/app/services/log-in.service';
+import { TokenModel } from 'src/app/services/config/models/models';
 
 export interface AppState {
   autorizacaoState: TokenModel;
