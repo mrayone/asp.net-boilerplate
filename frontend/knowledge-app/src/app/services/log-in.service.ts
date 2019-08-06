@@ -8,8 +8,9 @@ import { AppState } from '../state-manager/reducers';
 import { Store, select } from '@ngrx/store';
 import { ObterTokenModel } from '../state-manager/selectors/token.selector';
 import { jwtParser } from '../Utils/jwtParser';
-import { ReaverToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout } from '../state-manager/actions/autorizacao/autorizacao.actions';
 import { TokenModel, GrantAcessModel } from './config/models/models';
+import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
@@ -33,12 +34,11 @@ export class LogInService {
   }
 
   hasToken(): boolean {
-    let hasToken = false;
-    this.stateManager.dispatch(new ReaverToken());
-    this.stateManager.pipe(select(ObterTokenModel))
-    .subscribe(token => {
-      hasToken = !!token;
-    });
+    const hasToken = !!localStorage.getItem(LOGIN_KEY);
+
+    if (!hasToken) {
+      this.stateManager.dispatch(new Logout());
+    }
 
     return hasToken;
   }

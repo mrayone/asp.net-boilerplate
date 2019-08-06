@@ -2,7 +2,7 @@ import { createReducer, on, State } from '@ngrx/store';
 import { AutorizacaoActions, AutorizacaoTypes, ReaverToken } from '../../actions/autorizacao/autorizacao.actions';
 import { TokenModel } from 'src/app/services/config/models/models';
 
-const LOGIN_KEY = 'USUARIO_TOKEN';
+export const LOGIN_KEY = 'USUARIO_TOKEN';
 
 export const initialState: TokenModel = new TokenModel();
 
@@ -25,8 +25,7 @@ function setLoginState(state =  initialState) {
 
 function removeLoginState(state =  initialState) {
   localStorage.removeItem(LOGIN_KEY);
-  state =  new TokenModel();
-  return state;
+  return null;
 }
 
 function reaverToken(state = initialState) {
@@ -34,7 +33,6 @@ function reaverToken(state = initialState) {
   try {
     state = JSON.parse(stringTokenModel) as TokenModel;
   } catch {
-    return initialState;
   }
   return state;
 }
