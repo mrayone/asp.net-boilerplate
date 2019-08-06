@@ -9,7 +9,7 @@ export const initialState: TokenModel = new TokenModel();
 export function reducer(state =  initialState, action: AutorizacaoActions) {
     switch (action.type) {
       case AutorizacaoTypes.Login:
-        return setLoginState(state);
+        return setLoginState(action.payload);
       case AutorizacaoTypes.Logout:
         return removeLoginState(state);
     }
