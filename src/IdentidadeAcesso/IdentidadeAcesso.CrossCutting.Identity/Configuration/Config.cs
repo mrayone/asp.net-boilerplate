@@ -15,6 +15,16 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             return new List<ApiResource>()
             {
                 new ApiResource("api", "Api Knowledge Identidade e Acesso.")
+                {
+                    ApiSecrets = new List<Secret>
+                    {
+                        new Secret("hello".Sha256())
+                    },
+                    Scopes=
+                    {
+                        new Scope("validate_token")
+                    }
+                },
             };
         }
 
@@ -32,8 +42,9 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api", IdentityServerConstants.StandardScopes.OfflineAccess },
-                    AllowOfflineAccess =  true
+                    AllowedScopes = { "api", "validate_token", IdentityServerConstants.StandardScopes.OfflineAccess },
+                    AllowOfflineAccess =  true,
+
                 }
             };
         }

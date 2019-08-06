@@ -18,6 +18,7 @@ import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector'
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
+  inRequest = false;
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   genericValidator: GenericValidator;
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginForm.dirty && this.loginForm.valid) {
       const model = new GrantAcessModel(this.loginForm.value.username,
          this.loginForm.value.password);
-
+      this.inRequest = true;
       this.loginService.getTokenAcesso(model).subscribe(response => {
           this.loginComplete(response);
       });
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginComplete(response: TokenModel) {
       this.stateService.dispatch(new Autorizacao(response));
       this.router.navigate(['dashboard']);
+      this.inRequest = false;
   }
 
   ngOnInit() {
