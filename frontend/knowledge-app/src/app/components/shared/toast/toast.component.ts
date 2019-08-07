@@ -1,32 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ErrosService } from 'src/app/services/erros.service';
 import { Observable, observable } from 'rxjs';
-
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss']
 })
 export class ToastComponent implements OnInit {
+  @Input() mostrarToast: boolean;
+  esconderToast = false;
+  @Input() tipoToast = '';
+  @Input() toastBody: any[];
+  // tslint:disable-next-line: no-output-native
+  @Output() close = new EventEmitter<boolean>();
 
-  erros: string[];
-  show = true;
-  constructor(public erroService: ErrosService) {
-    this.erros = [];
+  constructor(public erroService: ErrosService) { }
+
+  fecharToast() {
+    this.esconderToast = false;
+    this.close.emit(true);
   }
 
   ngOnInit() {
-    this.subscribeErros();
   }
+}
 
-  close() {
-    this.erroService.limparErros();
-  }
-
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.erros = erros;
-    });
-  }
-
+export enum ToastType {
+  Success = 1,
+  Error = 2,
+  Notify = 3
 }

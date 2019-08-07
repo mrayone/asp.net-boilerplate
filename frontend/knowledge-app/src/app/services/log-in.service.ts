@@ -101,7 +101,7 @@ export class LogInService {
         this.stateManager.dispatch(new Logout());
       }
       if (operation === 'obterToken') {
-        this.erros.adicionarErro(error.error.error_description);
+        this.erros.adicionarErro(error['error'].error_description);
       }
       console.error(error);
       return of(result as T);
