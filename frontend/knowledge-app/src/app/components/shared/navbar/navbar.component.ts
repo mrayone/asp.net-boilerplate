@@ -4,7 +4,7 @@ import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
 import { Logout } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
-import { UsuarioViewModel, UsuarioLogadoService } from 'src/app/services/usuario-logado.service';
+import { UsuarioViewModel, UsuarioAutenticadoService } from 'src/app/services/usuario-autenticado.service';
 import { jwtParser } from 'src/app/Utils/jwtParser';
 
 @Component({
@@ -15,7 +15,7 @@ import { jwtParser } from 'src/app/Utils/jwtParser';
 export class NavbarComponent implements OnInit {
   public titulo =  'Knowledg.IO';
   usuario: UsuarioViewModel;
-  constructor(private router: Router, private store: Store<AppState>, private usuarioService: UsuarioLogadoService) {
+  constructor(private router: Router, private store: Store<AppState>, private usuarioService: UsuarioAutenticadoService) {
    }
 
   ngOnInit() {

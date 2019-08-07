@@ -6,13 +6,13 @@ import { AppState } from '../state-manager/reducers';
 import { Store, select } from '@ngrx/store';
 import { ReaverToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
 import { LogInService } from '../services/log-in.service';
-import { UsuarioLogadoService, UsuarioViewModel } from '../services/usuario-logado.service';
+import { UsuarioAutenticadoService, UsuarioViewModel } from '../services/usuario-autenticado.service';
 import { jwtParser } from '../Utils/jwtParser';
 @Injectable()
 export class CanActivateUser implements CanActivate {
 
   constructor(private store: Store<AppState>, private router: Router, private loginService: LogInService,
-    private usuaroLogadoService: UsuarioLogadoService) { }
+    private usuarioAutenticado: UsuarioAutenticadoService) { }
 
    canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -36,7 +36,7 @@ export class CanActivateUser implements CanActivate {
     let contemClaim = true;
     let usuarioModel: UsuarioViewModel;
 
-    this.usuaroLogadoService.tokenModel$.subscribe(tkModel => {
+    this.usuarioAutenticado.tokenModel$.subscribe(tkModel => {
       usuarioModel = jwtParser(tkModel.access_token) as UsuarioViewModel;
 
       const claim = usuarioModel.permissions.find((val, i) => {

@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
+import { httpInterceptorProviders } from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LoginComponent } from './components/login/login.component';
   ],
   providers: [
     CanActivateUser,
-    ErrosService
+    ErrosService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

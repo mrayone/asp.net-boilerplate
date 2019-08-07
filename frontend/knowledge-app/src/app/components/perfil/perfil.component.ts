@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormType } from '../usuario/formulario/formType/form-type.enum';
-import { UsuarioLogadoService, UsuarioViewModel } from 'src/app/services/usuario-logado.service';
+import { UsuarioAutenticadoService, UsuarioViewModel } from 'src/app/services/usuario-autenticado.service';
 import { jwtParser } from 'src/app/Utils/jwtParser';
 
 @Component({
@@ -12,10 +12,10 @@ export class PerfilComponent implements OnInit {
 
   formType: FormType = FormType.Put;
   usuario: UsuarioViewModel;
-  constructor( private usuarioLogado: UsuarioLogadoService ) { }
+  constructor( private usuarioAutenticado: UsuarioAutenticadoService ) { }
 
   ngOnInit() {
-    this.usuarioLogado.tokenModel$.subscribe(model => {
+    this.usuarioAutenticado.tokenModel$.subscribe(model => {
       this.usuario = jwtParser(model.access_token) as UsuarioViewModel;
     });
   }
