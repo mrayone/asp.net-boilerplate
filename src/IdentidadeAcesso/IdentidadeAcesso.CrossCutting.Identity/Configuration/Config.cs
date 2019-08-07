@@ -15,6 +15,16 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             return new List<ApiResource>()
             {
                 new ApiResource("api", "Api Knowledge Identidade e Acesso.")
+                {
+                    ApiSecrets = new List<Secret>
+                    {
+                        new Secret("hello".Sha256())
+                    },
+                    Scopes=
+                    {
+                        new Scope("validate_token")
+                    }
+                },
             };
         }
 

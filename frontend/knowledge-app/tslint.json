@@ -3,6 +3,9 @@
   "rules": {
     "array-type": false,
     "arrow-parens": false,
+    "variable-name": [
+      false
+    ],
     "deprecation": {
       "severity": "warning"
     },

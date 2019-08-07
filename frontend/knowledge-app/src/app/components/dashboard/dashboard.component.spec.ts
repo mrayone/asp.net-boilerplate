@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashBoardComponent } from './dashboard.component';
-import { MenuComponent } from '../menu/menu.component';
+import { MenuComponent } from '../shared/menu/menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DashBoardComponent', () => {

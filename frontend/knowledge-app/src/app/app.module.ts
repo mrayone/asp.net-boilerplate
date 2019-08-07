@@ -1,17 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './state-manager/reducers';
+import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from './components/shared/shared.module';
+import { UsuarioModule } from './components/usuario/usuario.module';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CanActivateUser } from './guards/can-activate-user';
 
 // components
-import { MenuComponent } from './components/menu/menu.component';
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SharedModule } from './components/shared/shared.module';
-import { UsuarioModule } from './components/usuario/usuario.module';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { MenuComponent } from './components/shared/menu/menu.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,16 +26,23 @@ import { UsuarioModule } from './components/usuario/usuario.module';
     DashBoardComponent,
     MenuComponent,
     PerfilComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    UsuarioModule
+    ReactiveFormsModule,
+    NgbModule,
+    UsuarioModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  providers: [],
+  providers: [
+    CanActivateUser
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

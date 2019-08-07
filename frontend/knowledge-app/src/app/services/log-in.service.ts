@@ -3,6 +3,14 @@ import { Observable, of } from 'rxjs';
 import { logging } from 'protractor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { url } from './config/config';
+import { AppState } from '../state-manager/reducers';
+import { Store, select } from '@ngrx/store';
+import { ObterTokenModel } from '../state-manager/selectors/token.selector';
+import { jwtParser } from '../Utils/jwtParser';
+import { Logout, RefreshToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { TokenModel, GrantAcessModel } from './config/models/models';
+import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
@@ -13,48 +21,90 @@ const httpOptions = {
 })
 export class LogInService {
 
-  private url = "http://localhost:5001";
-
-  constructor(private http: HttpClient) {
-
+  private tokenModel: TokenModel;
+  constructor(private http: HttpClient, private stateManager: Store<AppState>) {
+    stateManager.pipe(select(ObterTokenModel)).subscribe(model => this.tokenModel = model);
   }
 
   getTokenAcesso( grantAcess: GrantAcessModel): Observable<TokenModel> {
-      return this.http.post(`${this.url}/connect/token`, grantAcess , httpOptions)
+      return this.http.post(`${url}/connect/token`, grantAcess , httpOptions)
       .pipe(
         catchError(this.handleError<any>('obterToken'))
       );
   }
 
+  hasToken(): boolean {
+    const hasToken = !!localStorage.getItem(LOGIN_KEY);
+
+    if (!hasToken) {
+      this.stateManager.dispatch(new Logout());
+    }
+
+    return hasToken;
+  }
+
+   async validarToken() {
+    // tslint:disable-next-line: no-shadowed-variable
+    const { exp } = jwtParser(this.tokenModel.access_token) as any;
+    const dateExpire = new Date( exp * 1000 );
+    const tokenExpirou = dateExpire < new Date();
+    if ( tokenExpirou ) {
+      this.introspectToken().subscribe(value => {
+        if ( !value.active ) {
+          this.refreshToken().subscribe( model => {
+            if (model) {
+              this.stateManager.dispatch(new RefreshToken(model));
+            } else {
+              this.stateManager.dispatch(new Logout());
+            }
+          });
+        }
+      });
+    }
+  }
+
+  private introspectToken(): Observable<IntrospectModel> {
+    // tslint:disable-next-line: no-shadowed-variable
+    const httpOptions = {
+      headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Basic ${btoa('api:hello')}`
+      })
+    };
+    const token = this.tokenModel.access_token;
+    const postModel = new HttpParams({fromObject: { token }});
+
+    return this.http.post(`${url}/connect/introspect`, postModel , httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('validarToken'))
+        );
+  }
+
+   refreshToken(): Observable<TokenModel> {
+    const refresh_token = this.tokenModel.refresh_token;
+    const postModel = new HttpParams({fromObject: {
+      grant_type: 'refresh_token',
+      client_id : 'spa.client',
+      refresh_token
+    }});
+    return this.http.post(`${url}/connect/token`, postModel , httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('refreshToken'))
+        );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: {}): Observable<T> => {
       // Let the app keep running by returning an empty result.
+      if (operation === 'refreshToken') {
+        this.stateManager.dispatch(new Logout());
+      }
       console.error(error);
       return of(result as T);
     };
   }
 }
 
-export class TokenModel {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-  refresh_token: string;
-  scope: string;
+export class IntrospectModel {
+  active = false;
 }
-
-export class GrantAcessModel extends HttpParams {
-  constructor( username: string,
-              password: string, grant_type: string = 'password', client_id: string = 'spa.client', scope: string = 'api offline_access' ) {
-    super({
-      fromObject: {
-        grant_type,
-        username,
-        password,
-        client_id,
-        scope,
-      }
-    });
-  }
-}
-

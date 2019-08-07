@@ -1,4 +1,4 @@
-@import '../../../assets/sass/variables.scss';
+@import '../../../../assets/sass/variables.scss';
 
 .navbar.navbar-transparent {
   box-shadow: none;
@@ -23,4 +23,8 @@ a.navbar-brand:hover {
   color: $color-default;
 }
 
+
+.dropdown-toggle::after {
+  display: none;
+}
 
