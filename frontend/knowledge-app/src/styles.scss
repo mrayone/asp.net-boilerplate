@@ -3,6 +3,9 @@
 @import "./assets/themify-icons/themify-icons.css";
 @import "./assets/sass/variables";
 
+.toast {
+  opacity: 100%;
+}
 body {
     font-size: 14px;
     background: $bg-color;

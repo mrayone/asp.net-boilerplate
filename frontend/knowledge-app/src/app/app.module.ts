@@ -11,6 +11,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CanActivateUser } from './guards/can-activate-user';
+import { ErrosService } from './services/erros.service';
+
 
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
@@ -41,7 +43,8 @@ import { LoginComponent } from './components/login/login.component';
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
-    CanActivateUser
+    CanActivateUser,
+    ErrosService
   ],
   bootstrap: [AppComponent]
 })

@@ -11,6 +11,7 @@ import { jwtParser } from '../Utils/jwtParser';
 import { Logout, RefreshToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
 import { TokenModel, GrantAcessModel } from './config/models/models';
 import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
+import { ErrosService } from './erros.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
@@ -22,7 +23,7 @@ const httpOptions = {
 export class LogInService {
 
   private tokenModel: TokenModel;
-  constructor(private http: HttpClient, private stateManager: Store<AppState>) {
+  constructor(private http: HttpClient, private stateManager: Store<AppState>, private erros: ErrosService) {
     stateManager.pipe(select(ObterTokenModel)).subscribe(model => this.tokenModel = model);
   }
 
@@ -43,7 +44,7 @@ export class LogInService {
     return hasToken;
   }
 
-   async validarToken() {
+   async validateToken() {
     // tslint:disable-next-line: no-shadowed-variable
     const { exp } = jwtParser(this.tokenModel.access_token) as any;
     const dateExpire = new Date( exp * 1000 );
@@ -98,6 +99,9 @@ export class LogInService {
       // Let the app keep running by returning an empty result.
       if (operation === 'refreshToken') {
         this.stateManager.dispatch(new Logout());
+      }
+      if (operation === 'obterToken') {
+        this.erros.adicionarErro(error['error'].error_description);
       }
       console.error(error);
       return of(result as T);

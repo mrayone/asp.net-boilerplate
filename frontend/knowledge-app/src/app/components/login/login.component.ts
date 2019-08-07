@@ -11,6 +11,7 @@ import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 import { Router } from '@angular/router';
 import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector';
 import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
+import { ErrosService } from 'src/app/services/erros.service';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +21,16 @@ import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/mode
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   inRequest = false;
+  errosDeRequest: string[];
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   genericValidator: GenericValidator;
   erros?: { [key: string]: string } = {};
 
-  constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router) {
+  constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router,
+     private erroService: ErrosService) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
+    this.errosDeRequest = [];
   }
 
   autenticarUsuario(): void {
@@ -59,6 +63,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/dashboard']);
       }
     });
+
+    this.subscribeErros();
+  }
+
+  private subscribeErros() {
+    this.erroService.getErros().subscribe(erros => {
+      this.errosDeRequest = erros;
+    });
+  }
+
+  close() {
+    this.erroService.limparErros();
   }
 
   ngAfterViewInit(): void {
