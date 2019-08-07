@@ -35,14 +35,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
          this.loginForm.value.password);
       this.inRequest = true;
       this.loginService.getTokenAcesso(model).subscribe(response => {
-          this.loginComplete(response);
+          if(response){
+            this.loginComplete(response);
+          }
+          this.inRequest = false;
       });
     }
   }
   loginComplete(response: TokenModel) {
       this.stateService.dispatch(new Autorizacao(response));
       this.router.navigate(['dashboard']);
-      this.inRequest = false;
   }
 
   ngOnInit() {

@@ -1,5 +1,9 @@
-export function jwtParser(token: string): object {
-    const base64 = token.split('.')[1];
+import * as jwt_decode from 'jwt-decode';
 
-    return JSON.parse(window.atob(base64));
+export function jwtParser(token: string): object {
+      try {
+          return jwt_decode(token);
+      } catch (Error) {
+          return null;
+      }
 }
