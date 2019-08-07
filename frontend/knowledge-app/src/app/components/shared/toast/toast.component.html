@@ -1,0 +1,8 @@
+  <ngb-toast *ngIf="show" class="toast-position"  header="Click my close icon →" [autohide]="false"
+    (hide)="close()">
+    <ul class="list-group error-list">
+      <li class="list-group-item" *ngFor="let erro of erros">
+        {{erro}}
+      </li>
+    </ul>
+  </ngb-toast>

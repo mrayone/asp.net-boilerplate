@@ -1,25 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrosService {
 
-  errosMessage$: Observable<string[]>;
-  constructor() { }
-
+  private errosMessage$: Observable<string[]>;
+  private erros: string[];
+  constructor() {
+    this.erros =  [];
+    this.errosMessage$ = new Observable((observer) => observer.next(this.erros));
+  }
 
   adicionarErro(mensagem: string) {
-    this.errosMessage$.subscribe(erros => {
-      erros.push(this.traduzirMensagem(mensagem));
-    });
+    this.errosMessage$.subscribe(erros => erros.push(this.traduzirMensagem(mensagem)));
+  }
+
+  getErros(): Observable<string[]> {
+    return this.errosMessage$;
   }
 
   limparErros() {
-    this.errosMessage$.subscribe(erros => {
-      erros = [];
-    });
+    this.errosMessage$.subscribe(erros => erros.length = 0);
   }
 
   private traduzirMensagem(mensagem: string): string {
