@@ -23,7 +23,7 @@ export class CanActivateUser implements CanActivate {
         return false;
       }
 
-      this.loginService.validarToken();
+      this.loginService.validateToken();
       return true;
 
       // if (!this.checarClaims()) {

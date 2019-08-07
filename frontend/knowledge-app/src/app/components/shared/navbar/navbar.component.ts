@@ -26,12 +26,13 @@ export class NavbarComponent implements OnInit {
      });
 
     this.usuarioService.tokenModel$.subscribe(model => {
-      this.usuario = jwtParser(model.access_token) as UsuarioViewModel;
+      if (model) {
+        this.usuario = jwtParser(model.access_token) as UsuarioViewModel;
+      }
     });
   }
-    onLogout() {
-      this.store.dispatch(new Logout());
-      this.router.navigate(['/login']);
-    }
-
+  onLogout() {
+    this.store.dispatch(new Logout());
+    this.router.navigate(['/login']);
+  }
 }
