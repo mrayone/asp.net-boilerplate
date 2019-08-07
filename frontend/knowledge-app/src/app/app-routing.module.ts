@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashBoardComponent, data: { title: 'Dashboard' }, canActivate: [CanActivateUser]   },
   { path: 'login', component: LoginComponent },
   { path: 'nao-autorizado', component: UnauthorizedComponent },
-  { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule', canActivate: [CanActivateUser] },
+  { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule' },
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

@@ -24,12 +24,12 @@ export class CanActivateUser implements CanActivate {
       }
 
       this.loginService.validarToken();
+      return true;
 
       // if (!this.checarClaims()) {
       //     this.router.navigate(['/nao-autorizado']);
       //     return false;
       // }
-      return true;
   }
 
   checarClaims(): boolean {

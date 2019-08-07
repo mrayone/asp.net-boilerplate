@@ -31,9 +31,6 @@ function removeLoginState(state =  initialState) {
 
 function reaverToken(state = initialState) {
   const stringTokenModel = localStorage.getItem(LOGIN_KEY);
-  try {
-    state = JSON.parse(stringTokenModel) as TokenModel;
-  } catch {
-  }
+  state = JSON.parse(stringTokenModel) as TokenModel;
   return state;
 }
