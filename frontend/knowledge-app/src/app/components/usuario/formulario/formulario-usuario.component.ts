@@ -9,7 +9,7 @@ import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
 import { Usuario } from '../models/usuario';
 import { FormType } from './formType/form-type.enum';
 import { Perfil } from '../../perfil/models/perfil';
-
+import { CustomValidators } from 'ng2-validation';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -62,7 +62,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
       ]),
       email: new FormControl(this.model.email, [
         Validators.required,
-        Validators.email
+        CustomValidators.email
       ]),
       cpf: new FormControl(this.model.cpf, [
         Validators.required,
@@ -110,7 +110,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      estado: new FormControl(this.model.estado ? this.model.estado : '', [
+      estado: new FormControl(this.model.estado, [
         Validators.minLength(2),
         Validators.maxLength(2)
       ])

@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule , IConfig} from 'ngx-mask';
 import { httpInterceptorProviders } from 'src/app/http-interceptors';
-
 // const
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 

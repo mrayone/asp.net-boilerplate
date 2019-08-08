@@ -7,6 +7,7 @@ import { PerfilService } from 'src/app/services/perfil.service';
 import { ErrosService } from 'src/app/services/erros.service';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adicionar-usuario',
@@ -15,7 +16,7 @@ import { take } from 'rxjs/operators';
 })
 export class AdicionarUsuarioComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private perfilService: PerfilService,
-    private erroService: ErrosService, private toastService: ToastrService) { }
+    private erroService: ErrosService, private toastService: ToastrService, private router: Router) { }
 
   perfis: Perfil[];
   errosDeRequest: string[];
@@ -35,11 +36,12 @@ export class AdicionarUsuarioComponent implements OnInit {
 
       this.usuarioService.post(usuario).subscribe(response => {
          //TODO: exibir toast de sucesso.
-         if (response) {
-            this.toastService.success('Operação realizca com sucesso!');
-            return;
+         if (this.errosDeRequest.length === 0) {
+            this.toastService.success('Operação realizca com sucesso!')
+                .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
+         } else {
+           this.checarErrosDeRequest();
          }
-         this.checarErrosDeRequest();
       });
 
     }
