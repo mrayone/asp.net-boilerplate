@@ -86,6 +86,12 @@
              </summary>
             
         </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetInfoUsuarioAsync">
+             <summary>
+             Retorna as informações do usuário autenticado.
+             </summary>
+            
+        </member>
         <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.CriarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.NovoUsuarioCommand)">
              <summary>
              Cria um novo usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Criar Usuário".

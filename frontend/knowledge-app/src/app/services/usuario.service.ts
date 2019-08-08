@@ -29,9 +29,12 @@ export class UsuarioService {
     );
   }
 
-  // getPerfis(): Observable<Perfil> {
-
-  // }
+   getUsuarioInfo(): Observable<Usuario> {
+      return this.http.get(`${url}/api/v1/usuarios/info`, httpOptions )
+      .pipe(
+        catchError(this.handleError<any>('getAllUsuarios'))
+      );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: {}): Observable<T> => {
