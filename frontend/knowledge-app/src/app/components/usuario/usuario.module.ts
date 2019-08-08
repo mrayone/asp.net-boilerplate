@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule , IConfig} from 'ngx-mask';
 import { httpInterceptorProviders } from 'src/app/http-interceptors';
+import { FormsModule } from '@angular/forms';
 // const
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -28,6 +29,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
     UsuarioRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
     NgbModule,
     NgxMaskModule.forRoot(options)
   ],

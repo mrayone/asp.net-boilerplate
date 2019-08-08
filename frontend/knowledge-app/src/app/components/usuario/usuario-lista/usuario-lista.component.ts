@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from '../models/usuario';
 
 @Component({
   selector: 'app-usuario-lista',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuarioListaComponent implements OnInit {
 
-  constructor() { }
+  private usuariosServe: Usuario[] = [];
+  page = 1;
+  pageSize = 4;
+  collectionSize = this.usuariosServe.length;
+  constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
+
+  }
+
+  get usuarios(): Usuario[] {
+    this.usuarioService.getAll().subscribe(usuarios =>  {
+      this.usuariosServe =  usuarios;
+      this.collectionSize = this.usuariosServe.length;
+    });
+
+    return this.usuariosServe
+      .map((usuario, i) => ({id: i + 1, ...usuario}))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
 }

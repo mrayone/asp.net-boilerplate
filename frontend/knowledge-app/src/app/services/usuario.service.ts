@@ -22,6 +22,13 @@ export class UsuarioService {
     );
   }
 
+  getAll(): Observable<Usuario[]> {
+    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions )
+    .pipe(
+      catchError(this.handleError<any>('getAllUsuarios'))
+    );
+  }
+
   // getPerfis(): Observable<Perfil> {
 
   // }
