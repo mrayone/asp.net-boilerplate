@@ -42,7 +42,6 @@ export class AdicionarUsuarioComponent implements OnInit {
            this.checarErrosDeRequest();
          }
       });
-
     }
   }
 
