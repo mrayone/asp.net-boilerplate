@@ -28,3 +28,12 @@ body {
   color: #dc3545;
 }
 
+
+.toast ul.list-group, .alert ul.list-group  {
+  list-style-type: none;
+}
+
+.toast .list-group li.list-group-item, .alert .list-group li.list-group-item {
+  background-color: transparent;
+  border: none;
+}

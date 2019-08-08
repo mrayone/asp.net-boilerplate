@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { FormGroup } from '@angular/forms';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Perfil } from '../../perfil/models/perfil';
+import { PerfilService } from 'src/app/services/perfil.service';
+import { ErrosService } from 'src/app/services/erros.service';
 
 @Component({
   selector: 'app-adicionar-usuario',
@@ -9,10 +12,17 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./adicionar-usuario.component.scss']
 })
 export class AdicionarUsuarioComponent implements OnInit {
-  constructor(private usuarioService: UsuarioService) { }
+  constructor(private usuarioService: UsuarioService, private perfilService: PerfilService, private erroService: ErrosService) { }
 
-  ngOnInit() { }
+  perfis: Perfil[];
+  errosDeRequest: string[];
+  ngOnInit() {
+    this.perfilService.getPerfis().subscribe(perfis => {
+        this.perfis = perfis;
+    });
 
+    this.subscribeErros();
+  }
 
   onPostCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
@@ -25,6 +35,16 @@ export class AdicionarUsuarioComponent implements OnInit {
       });
 
     }
+  }
+
+  private subscribeErros() {
+    this.erroService.getErros().subscribe(erros => {
+      this.errosDeRequest = erros;
+    });
+  }
+
+  close() {
+    this.erroService.limparErros();
   }
 
 }

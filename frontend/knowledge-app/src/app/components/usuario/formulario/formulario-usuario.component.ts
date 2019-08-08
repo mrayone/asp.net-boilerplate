@@ -8,6 +8,7 @@ import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
 import { Usuario } from '../models/usuario';
 import { FormType } from './formType/form-type.enum';
+import { Perfil } from '../../perfil/models/perfil';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @Input() model: Usuario;
   @Input() formType: FormType =  FormType.Post;
   @Input() adminInput: boolean;
+  @Input() perfis: Perfil[];
   @Output() command = new EventEmitter<FormGroup>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
@@ -115,7 +117,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
     });
 
     if ( this.adminInput ) {
-      this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
+      this.usuarioForm.addControl('perfilId', new FormControl('', [
           Validators.required
         ])
       );

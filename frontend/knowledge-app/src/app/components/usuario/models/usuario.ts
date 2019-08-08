@@ -18,22 +18,11 @@ export class Usuario {
   public estado: string;
 
   constructor() {
-    this.id = '';
     this.nome = '';
     this.sobrenome = '';
     this.sexo = '';
     this.email = '';
     this.cpf = '';
     this.dataDeNascimento = '';
-    this.perfilId = '';
-    this.celular = '';
-    this.telefone = '';
-    this.logradouro = '';
-    this.numero = '';
-    this.complemento = '';
-    this.bairro = '';
-    this.cep = '';
-    this.cidade = '';
-    this.estado = '';
   }
 }

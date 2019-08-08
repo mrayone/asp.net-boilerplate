@@ -1,7 +1,7 @@
 <div class="toast toast-position-bottom" [ngClass]="{'fade': mostrarToast, 'fade-out': esconderToast,
 'toast-danger': tipoToast === 'error',  'toast-info': tipoToast === 'info', 'toast-info': tipoToast === 'info'}">
     <div class="toast-body">
-          <ng-container *ngTemplateOutlet="toastBody">
+          <ng-container *ngTemplateOutlet="toastBody" [ngClass]="'template-container'">
 
           </ng-container>
           <button type="button" class="ml-2 mb-1 close" aria-label="Close" (click)="fecharToast()">

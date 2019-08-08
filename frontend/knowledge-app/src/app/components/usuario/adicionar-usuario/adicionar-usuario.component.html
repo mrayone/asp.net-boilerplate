@@ -2,7 +2,14 @@
   <div class="col-md-12">
       <app-card-rounded titulo="Novo Usuário" [bodyTemplate]="bodyTemplate" >
         <ng-template #bodyTemplate>
-          <app-formulario-usuario (command)="onPostCommand($event)" [adminInput]="true"></app-formulario-usuario>
+            <ngb-alert class="alert alert-danger" *ngIf="errosDeRequest.length > 0" (close)="close()">
+                  <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let erro of errosDeRequest">
+                        {{erro}}
+                      </li>
+                  </ul>
+            </ngb-alert>
+          <app-formulario-usuario (command)="onPostCommand($event)" [perfis]= "perfis" [adminInput]="true"></app-formulario-usuario>
         </ng-template>
       </app-card-rounded>
   </div>

@@ -63,7 +63,8 @@
         <div class="form-group col-md" *ngIf="adminInput">
           <label for="control-label" for="perfilId">Perfil</label>
           <select class="form-control" id="perfilId" formControlName="perfilId">
-            <option value="a">aa</option>
+            <option value="" selected="selected">--Selecione--</option>
+            <option [value]="perfil.id" *ngFor="let perfil of perfis">{{perfil.nome}}</option>
           </select>
           <div class="invalid-feedback">
               <p [innerHtml]="erros.perfilId"></p>

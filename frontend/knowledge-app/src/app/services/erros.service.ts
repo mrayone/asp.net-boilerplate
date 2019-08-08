@@ -17,6 +17,12 @@ export class ErrosService {
     this.errosMessage$.subscribe(erros => erros.push(this.traduzirMensagem(mensagem)));
   }
 
+  adicionarRange(array: []) {
+    this.errosMessage$.subscribe(erros => {
+        erros.push(...array);
+    });
+  }
+
   getErros(): Observable<string[]> {
     return this.errosMessage$;
   }
