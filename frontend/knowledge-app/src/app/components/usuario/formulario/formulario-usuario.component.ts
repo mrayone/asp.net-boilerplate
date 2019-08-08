@@ -44,7 +44,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   }
 
   gerarFormulario(): void {
-    this.model = !this.model ? new Usuario() : this.model;
+    this.model = !this.model ? new Usuario() : this.filtraModel(this.model);
     this.usuarioForm = new FormGroup({
       nome: new FormControl(this.model.nome, [
         Validators.required,
@@ -122,6 +122,16 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         ])
       );
     }
+  }
+
+
+  filtraModel(usuario: Usuario) {
+    const data = new Date(usuario.dataDeNascimento);
+    const year = data.getUTCFullYear();
+    const month = data.getMonth() + 1;
+    const day = data.getDate();
+    usuario.dataDeNascimento = { year, month, day};
+    return usuario;
   }
 
   ngAfterViewInit(): void {

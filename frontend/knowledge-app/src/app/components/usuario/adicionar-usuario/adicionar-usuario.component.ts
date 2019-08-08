@@ -36,7 +36,7 @@ export class AdicionarUsuarioComponent implements OnInit {
 
       this.usuarioService.post(usuario).subscribe(response => {
          if (this.errosDeRequest.length === 0) {
-            this.toastService.success('Operação realizca com sucesso!')
+            this.toastService.success('Operação realiza com sucesso!')
                 .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
          } else {
            this.checarErrosDeRequest();

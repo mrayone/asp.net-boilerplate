@@ -16,7 +16,7 @@
   <div class="col-md-8">
     <app-card-rounded titulo="Editar Perfil" [bodyTemplate]="campos">
       <ng-template #campos>
-        <app-formulario-usuario [formType]="formType" [model]="usuario"></app-formulario-usuario>
+        <app-formulario-usuario [formType]="formType" (command)="putUsuarioPerfil($event)" [model]="usuario"></app-formulario-usuario>
       </ng-template>
     </app-card-rounded>
   </div>

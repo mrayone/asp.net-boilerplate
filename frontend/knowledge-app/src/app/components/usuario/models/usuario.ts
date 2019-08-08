@@ -5,7 +5,7 @@ export class Usuario {
   public sexo: string;
   public email: string;
   public cpf: string;
-  public dataDeNascimento: string;
+  public dataDeNascimento: any;
   public perfilId: string;
   public celular: string;
   public telefone: string;

@@ -22,6 +22,13 @@ export class UsuarioService {
     );
   }
 
+  putUsuarioPerfil(usuario: Usuario): Observable<HttpResponse<any>> {
+    return this.http.put(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions )
+    .pipe(
+      catchError(this.handleError<any>('putAtualizarPerfil'))
+    );
+  }
+
   getAll(): Observable<Usuario[]> {
     return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions )
     .pipe(
@@ -32,7 +39,7 @@ export class UsuarioService {
    getUsuarioInfo(): Observable<Usuario> {
       return this.http.get(`${url}/api/v1/usuarios/info`, httpOptions )
       .pipe(
-        catchError(this.handleError<any>('getAllUsuarios'))
+        catchError(this.handleError<any>('getUsuarioInfo'))
       );
   }
 
