@@ -13,14 +13,16 @@ export class UsuarioAutenticadoService {
   tokenModel$: Observable<TokenModel>;
   constructor(private store: Store<AppState>) {
     this.tokenModel$ = store.pipe(select(ObterTokenModel));
-   }
+  }
 
-   getAuthorizationToken(): string {
-      let token = '';
-      this.tokenModel$.subscribe(model => token = model.access_token);
+  getAuthorizationToken(): string {
+    let token = '';
+    this.tokenModel$.subscribe(model => {
+      if (model) { token = model.access_token; }
+    });
 
-      return token;
-   }
+    return token;
+  }
 }
 
 export class UsuarioViewModel {
