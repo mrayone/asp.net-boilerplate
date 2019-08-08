@@ -17,7 +17,6 @@ export class CanActivateUser implements CanActivate {
    canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      // TODO: implementar aqui
       if (!this.loginService.hasToken()) {
         this.router.navigate(['/login']);
         return false;

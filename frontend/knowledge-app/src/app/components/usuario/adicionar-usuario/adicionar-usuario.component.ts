@@ -35,7 +35,6 @@ export class AdicionarUsuarioComponent implements OnInit {
       `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.post(usuario).subscribe(response => {
-         //TODO: exibir toast de sucesso.
          if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realizca com sucesso!')
                 .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
