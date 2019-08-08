@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { url, httpOptions } from './config/config';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
@@ -16,28 +16,36 @@ export class UsuarioService {
 
 
   post(usuario: Usuario): Observable<HttpResponse<any>> {
-    return this.http.post(`${url}/api/v1/usuarios`, usuario, httpOptions )
-    .pipe(
-      catchError(this.handleError<any>('postUsuario'))
-    );
+    return this.http.post(`${url}/api/v1/usuarios`, usuario, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('postUsuario'))
+      );
   }
 
   putUsuarioPerfil(usuario: Usuario): Observable<HttpResponse<any>> {
-    return this.http.put(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions )
-    .pipe(
-      catchError(this.handleError<any>('putAtualizarPerfil'))
-    );
+    return this.http.put(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('putAtualizarPerfil'))
+      );
   }
 
-  getAll(): Observable<Usuario[]> {
-    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions )
-    .pipe(
-      catchError(this.handleError<any>('getAllUsuarios'))
-    );
+  getTodos(): Observable<Usuario[]> {
+    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('getTodosUsuarios'))
+      );
   }
 
-   getUsuarioInfo(): Observable<Usuario> {
-      return this.http.get(`${url}/api/v1/usuarios/info`, httpOptions )
+  getPorId(id: string): Observable<Usuario[]> {
+    httpOptions.params = new HttpParams().append('id', id);
+    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('getAllUsuarios'))
+      );
+  }
+
+  getUsuarioInfo(): Observable<Usuario> {
+    return this.http.get(`${url}/api/v1/usuarios/info`, httpOptions)
       .pipe(
         catchError(this.handleError<any>('getUsuarioInfo'))
       );

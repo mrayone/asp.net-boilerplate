@@ -16,11 +16,13 @@ import { SharedModule } from '../shared/shared.module';
 import { FormularioUsuarioComponent } from './formulario/formulario-usuario.component';
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.component';
 
 @NgModule({
   declarations: [
     AdicionarUsuarioComponent,
     UsuarioListaComponent,
+    UsuarioDetalhesComponent,
     FormularioUsuarioComponent,
     PerfilUsuarioComponent
   ],
