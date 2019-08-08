@@ -12,15 +12,30 @@
                 </a>
             </li>
 
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/usuarios">
+            <li class="nav-item">
+                <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapseUsuario"
+                    (click)="isCollapseUsuario = !isCollapseUsuario" aria-controls="subMenuUsuario">
                         <i class="ti-user"></i>
-                        <p>Usuarios</p>
+                        <p>Usuarios <i [ngClass]="{'ti-angle-up': !isCollapseUsuario, 'ti-angle-down': isCollapseUsuario }"></i></p>
                 </a>
+                <div href="javascript:void(0)" class="collapse" id="subMenuUsuario" [ngbCollapse]="!isCollapseUsuario">
+                    <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <a [routerLink]="['/usuarios']">
+                          <i class="ti-list-ol"></i>
+                          <p>Usuarios</p>
+                        </a>
+                    </li>
+                    <li class="nav-sub-item" routerLinkActive="active">
+                      <a [routerLink]="['/usuarios/adicionar']">
+                        <i class="ti-plus"></i>
+                        <p>Adicionar</p>
+                      </a>
+                    </li>
+                </div>
             </li>
 
             <li class="nav-item" routerLinkActive="active">
-                <a  routerLink="/perfil" >
+                <a  routerLink="/usuarios/perfil">
                         <i class="ti-id-badge"></i>
                         <p>Perfil do Usuário</p>
                 </a>

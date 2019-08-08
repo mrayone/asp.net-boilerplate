@@ -16,7 +16,7 @@ import { ErrosService } from './services/erros.service';
 
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+// tslint:disable-next-line: max-line-length
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
@@ -28,7 +28,6 @@ import { httpInterceptorProviders } from './http-interceptors';
     AppComponent,
     DashBoardComponent,
     MenuComponent,
-    PerfilComponent,
     NavbarComponent,
     LoginComponent
   ],
