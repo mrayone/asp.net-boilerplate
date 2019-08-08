@@ -31,7 +31,7 @@ export class AdicionarUsuarioComponent implements OnInit {
       `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.post(usuario).subscribe(response => {
-         console.log(response);
+         //TODO: exibir toast de sucesso.
       });
 
     }
