@@ -38,8 +38,8 @@ export class UsuarioService {
 
   getPorId(id: string): Observable<Usuario[]> {
     const options = {
-       headers: new HttpHeaders({'Content-Type': 'application/json'}),
-       params: new HttpParams().set('id', id)
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: new HttpParams().set('id', id)
     };
     return this.http.get(`${url}/api/v1/usuarios/obter-todos`, options)
       .pipe(
