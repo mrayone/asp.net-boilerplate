@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   autenticarUsuario(): void {
-    if (this.loginForm.dirty && this.loginForm.valid) {
+    if ( this.loginForm.valid ) {
       const model = new GrantAcessModel(this.loginForm.value.username,
          this.loginForm.value.password);
       this.inRequest = true;

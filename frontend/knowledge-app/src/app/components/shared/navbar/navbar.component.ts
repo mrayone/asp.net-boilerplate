@@ -25,11 +25,8 @@ export class NavbarComponent implements OnInit {
       this.titulo =  snapshot.data.title;
      });
 
-    this.usuarioService.tokenModel$.subscribe(model => {
-      if (model) {
-        this.usuario = jwtParser(model.access_token) as UsuarioViewModel;
-      }
-    });
+    const tokenModel = this.usuarioService.getAuthorizationToken();
+    this.usuario = jwtParser(tokenModel.access_token) as UsuarioViewModel;
   }
   onLogout() {
     this.store.dispatch(new Logout());

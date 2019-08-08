@@ -10,15 +10,16 @@ import { jwtParser } from '../Utils/jwtParser';
   providedIn: 'root'
 })
 export class UsuarioAutenticadoService {
-  tokenModel$: Observable<TokenModel>;
+
+  private tokenModel$: Observable<TokenModel>;
   constructor(private store: Store<AppState>) {
     this.tokenModel$ = store.pipe(select(ObterTokenModel));
   }
 
-  getAuthorizationToken(): string {
-    let token = '';
+  getAuthorizationToken(): TokenModel {
+    let token: TokenModel;
     this.tokenModel$.subscribe(model => {
-      if (model) { token = model.access_token; }
+      if (model) { token = model; }
     });
 
     return token;
