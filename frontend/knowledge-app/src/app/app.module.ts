@@ -12,7 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CanActivateUser } from './guards/can-activate-user';
 import { ErrosService } from './services/erros.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
@@ -33,6 +35,9 @@ import { httpInterceptorProviders } from './http-interceptors';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-center' }),
+    ToastContainerModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,

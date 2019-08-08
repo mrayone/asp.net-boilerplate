@@ -25,13 +25,4 @@
       </form>
     </div>
   </div>
-  <app-toast [tipoToast]="'error'" [toastBody]="bodyToast" [mostrarToast]="errosDeRequest.length > 0" (close)="close($event)">
-    <ng-template #bodyToast>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let erro of errosDeRequest">
-            {{erro}}
-          </li>
-        </ul>
-    </ng-template>
-  </app-toast>
 

@@ -75,7 +75,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
       telefone: new FormControl(this.model.telefone,
       [
         Validators.maxLength(13),
-        Validators.minLength(11)
+        Validators.minLength(10)
       ]),
       celular: new FormControl(this.model.celular,
       [
@@ -110,7 +110,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         Validators.minLength(3),
         Validators.maxLength(150)
       ]),
-      estado: new FormControl(this.model.estado, [
+      estado: new FormControl(this.model.estado ? this.model.estado : '', [
         Validators.minLength(2),
         Validators.maxLength(2)
       ])
