@@ -6,9 +6,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 {
     public class NumerosContato : ValueObject<NumerosContato>
     {
-        private const int MaxCelNumeros = 14;
-        private const int MaxTelefone = 13;
-        private const string Pattern = @"(\+\d{2})+(\d{11})";
         public string NumeroCel { get; private set; }
         public string NumeroTelefone { get; private set; }
 

@@ -84,7 +84,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         private bool ValidarTelefone(string arg)
         {
             if (arg != null)
-                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{10})");
+                return Regex.IsMatch(arg, @"(\d{10})");
 
             return true;
         }
@@ -92,7 +92,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         private bool ValidarCelular(string arg)
         {
             if (arg != null)
-                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{11})");
+                return Regex.IsMatch(arg, @"(\d{11})");
 
             return true;
         }
