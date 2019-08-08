@@ -9,25 +9,23 @@ import { Usuario } from '../models/usuario';
 })
 export class UsuarioListaComponent implements OnInit {
 
-  private usuariosServe: Usuario[] = [];
+  private getUsuarios: Usuario[];
   page = 1;
   pageSize = 4;
-  collectionSize = this.usuariosServe.length;
+  collectionSize = 0;
   constructor(private usuarioService: UsuarioService) {
-    this.usuarioService.getTodos().subscribe(usuarios => {
-      this.usuariosServe = usuarios;
-      this.collectionSize = this.usuariosServe.length;
-    });
+    this.getUsuarios = new Array<Usuario>();
   }
 
   ngOnInit() {
-
+    this.usuarioService.getTodos().subscribe(usuarios => {
+      this.getUsuarios = usuarios;
+      this.collectionSize = this.getUsuarios.length;
+    });
   }
-
   get usuarios(): Usuario[] {
-    return this.usuariosServe
-      .map((usuario, i) => ({ id: i + 1, ...usuario }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-  }
 
+    return this.getUsuarios.map((usuario, i) => ({ id: i + 1, ...usuario }))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize)
+  }
 }

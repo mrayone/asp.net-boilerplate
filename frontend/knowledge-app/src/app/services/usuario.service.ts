@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { url, httpOptions } from './config/config';
-import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
@@ -37,8 +37,11 @@ export class UsuarioService {
   }
 
   getPorId(id: string): Observable<Usuario[]> {
-    httpOptions.params = new HttpParams().append('id', id);
-    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions)
+    const options = {
+       headers: new HttpHeaders({'Content-Type': 'application/json'}),
+       params: new HttpParams().set('id', id)
+    };
+    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, options)
       .pipe(
         catchError(this.handleError<any>('getAllUsuarios'))
       );
