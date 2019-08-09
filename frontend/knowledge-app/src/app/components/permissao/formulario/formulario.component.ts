@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Permissao } from '../Models/permissao';
 import { FormType } from 'src/app/Utils/formType/form-type.enum';
@@ -20,6 +20,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   erros: { [key: string]: string } = {};
   genericValidator: any;
 
+  @Output() command = new EventEmitter<FormGroup>();
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   constructor() {
     this.genericValidator = new GenericValidator(mensagensDeErroPermissaoForm);
@@ -52,6 +53,10 @@ export class FormularioComponent implements OnInit, AfterViewInit {
     merge(...controlBlurs).subscribe(value => {
       this.erros = this.genericValidator.processMessages(this.permissaoForm);
     });
+  }
+
+  sendCommand() {
+    this.command.emit(this.permissaoForm);
   }
 
 }

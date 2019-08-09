@@ -1,26 +1,27 @@
-<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="usuarioForm" autocomplete="off">
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label for="control-label" for="nome">Primeiro Nome</label>
-            <input type="text" id="nome" formControlName="nome" placeholder="Nome é requerido" required
-                class="form-control">
-                <div class="invalid-feedback">
-                    <p [innerHTML]="erros.tipo"></p>
-                </div>
-              <input *ngIf="adminInput" type="hidden" id="id" name="id" formControlName="id">
-        </div>
-
-        <div class="form-group col-md-4">
-            <label for="control-label" for="sobrenome">Sobrenome</label>
-            <input type="text" id="sobrenome" placeholder="Sobrenome é requerido" formControlName="sobrenome" required
-                class="form-control">
-                <div class="invalid-feedback">
-                    <p [innerHTML]="erros?.valor"></p>
-                </div>
-        </div>
-
-      <div class="form-row center">
-          <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
-          [disabled]="usuarioForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="permissaoForm" autocomplete="off">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <label for="control-label" for="tipo">Primeiro Nome</label>
+      <input type="text" id="tipo" formControlName="nomtipoe" placeholder="Tipo é querido" required class="form-control">
+      <div class="invalid-feedback">
+        <p [innerHTML]="erros.tipo"></p>
       </div>
+      <input *ngIf="adminInput" type="hidden" id="id" name="id" formControlName="id">
+    </div>
+
+    <div class="form-group col-md-4">
+      <label for="control-label" for="valor">Valor</label>
+      <input type="text" id="valor" placeholder="valor é requerido" formControlName="valor" required
+        class="form-control">
+      <div class="invalid-feedback">
+        <p [innerHTML]="erros.valor"></p>
+      </div>
+    </div>
+
+    <div class="form-row center">
+      <button class="btn ml-auto mr-auto btn-lg btn-rounded"
+        [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
+        [disabled]="permissaoForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+    </div>
+  </div>
 </form>
