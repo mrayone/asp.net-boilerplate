@@ -36,14 +36,10 @@ export class UsuarioService {
       );
   }
 
-  getPorId(id: string): Observable<Usuario[]> {
-    const options = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      params: new HttpParams().set('id', id)
-    };
-    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, options)
+  getPorId(id: string): Observable<Usuario> {
+    return this.http.get(`${url}/api/v1/usuarios/${id}`, httpOptions)
       .pipe(
-        catchError(this.handleError<any>('getAllUsuarios'))
+        catchError(this.handleError<any>('getUsuarioPorId'))
       );
   }
 

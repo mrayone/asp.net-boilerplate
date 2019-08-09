@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule , IConfig} from 'ngx-mask';
 import { httpInterceptorProviders } from 'src/app/http-interceptors';
 import { FormsModule } from '@angular/forms';
+import { NullFieldPipe } from '../../utils/pipes/null-field.pipe';
 // const
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -24,7 +25,8 @@ import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.co
     UsuarioListaComponent,
     UsuarioDetalhesComponent,
     FormularioUsuarioComponent,
-    PerfilUsuarioComponent
+    PerfilUsuarioComponent,
+    NullFieldPipe
   ],
   imports: [
     CommonModule,

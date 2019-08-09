@@ -1,1 +1,57 @@
-<p>usuario-detalhes works!</p>
+<div class="row justify-content-center" *ngIf="usuario">
+  <div class="col-md-6">
+    <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="usuario.nome" [email]="usuario.email">
+      <ng-template #dados>
+        <div class="row">
+          <div class="col-md-4">
+            <dl>
+              <dt>E-mail</dt>
+              <dd>{{usuario.email}}</dd>
+              <dt>Data de Nascimento</dt>
+              <dd>{{usuario.dataDeNascimento | date:"dd-MM-yy"}}</dd>
+              <dt>Sexo</dt>
+              <dd>{{usuario.sexo}}</dd>
+            </dl>
+          </div>
+
+          <div class="col-md-4">
+            <dl>
+              <dt>Endereço</dt>
+              <dd>{{usuario.logradouro | nullField}} {{usuario.numero | nullField}}</dd>
+              <dt>CEP</dt>
+              <dd>{{usuario.cep | nullField}}</dd>
+              <dt>Cidade</dt>
+              <dd>{{usuario.cidade | nullField}} - {{usuario.estado | nullField}}</dd>
+            </dl>
+          </div>
+
+          <div class="col-md-4">
+              <dl>
+                <dt>Celular</dt>
+                <dd>{{usuario.celular | nullField }}</dd>
+                <dt>Telefone</dt>
+                <dd>{{ usuario.telefone | nullField }}</dd>
+              </dl>
+            </div>
+        </div>
+      </ng-template>
+      <ng-template #footer>
+          <div class="row">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-primary"> <i class="ti-pencil"></i>Editar</button>
+                  <button type="button" class="btn btn-secondary">/</button>
+                  <button type="button" class="btn btn-danger"><i class="ti-trash"></i>Excluir</button>
+                </div>
+          </div>
+
+          <div class="row mt-4">
+              <span class="badge badge-primary">Know</span>
+              <span class="badge badge-secondary">ledge</span>
+              <span class="badge badge-success">I.O</span>
+          </div>
+      </ng-template>
+
+    </app-card-rounded>
+
+  </div>
+</div>
