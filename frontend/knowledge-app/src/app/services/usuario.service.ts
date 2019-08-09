@@ -30,7 +30,7 @@ export class UsuarioService {
   }
 
   delete(uid: string) {
-    return this.http.put(`${url}/api/v1/usuarios/${uid}`, httpOptions)
+    return this.http.delete(`${url}/api/v1/usuarios/${uid}`, httpOptions)
       .pipe(
         catchError(this.handleError<any>('deleteUsuario'))
       );

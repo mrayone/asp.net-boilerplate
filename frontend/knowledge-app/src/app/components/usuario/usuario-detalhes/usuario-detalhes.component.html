@@ -42,7 +42,7 @@
               <div class="btn-group" role="group" aria-label="Basic example">
                   <a [routerLink]="['/editar', usuario.id]" class="btn btn-primary"> <i class="ti-pencil"></i>Editar</a>
                   <button type="button" class="btn btn-secondary">/</button>
-                  <button type="button" class="btn btn-danger"><i class="ti-trash"></i>Excluir</button>
+                  <button type="button" class="btn btn-danger" (click)="open(content)"><i class="ti-trash"></i>Excluir</button>
                 </div>
           </div>
 
@@ -54,6 +54,24 @@
       </ng-template>
 
     </app-card-rounded>
-
   </div>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Exclusão</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Você tem certeza que deseja excluir o usuário <span class="text-primary">"{{usuario.nome}} {{usuario.sobrenome}}"</span>?</strong></p>
+        <p>Todos as alterações realizadas por este usuário ainda permanecerão no sistema.
+        <span class="text-danger">Esta operação não podera ser desfeita.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-outline-primary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
