@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.API.Application.Models
         [Required(ErrorMessage = "O CPF deve ser informado.")]
         public string CPF { get; set; }
         [Required(ErrorMessage = "A data de nascimento deve ser informada.")]
-        public DateTime DateDeNascimento { get; set; }
+        public DateTime DataDeNascimento { get; set; }
         [Required]
 
         public Guid PerfilId { get; set; }

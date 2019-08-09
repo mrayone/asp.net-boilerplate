@@ -70,6 +70,28 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
+        /// Retorna as informações do usuário autenticado.
+        /// </summary>
+        ///
+        [HttpGet("info")]
+        [Authorize]
+        [ProducesResponseType(typeof(UsuarioViewModel), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetInfoUsuarioAsync()
+        {
+            try
+            {
+                var claimValue = _httpAcessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+                var usuario = await _mediator.Send(new BuscarPorId<UsuarioViewModel>(new Guid(claimValue.Value)));
+                return Ok(usuario);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+
+        /// <summary>
         /// Cria um novo usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Criar Usuário".
         /// </summary>
         ///

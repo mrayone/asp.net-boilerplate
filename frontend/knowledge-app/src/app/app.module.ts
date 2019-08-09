@@ -12,27 +12,33 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CanActivateUser } from './guards/can-activate-user';
 import { ErrosService } from './services/erros.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+// tslint:disable-next-line: max-line-length
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
+import { httpInterceptorProviders } from './http-interceptors';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     DashBoardComponent,
     MenuComponent,
-    PerfilComponent,
     NavbarComponent,
     LoginComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-center' }),
+    ToastContainerModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
@@ -44,7 +50,8 @@ import { LoginComponent } from './components/login/login.component';
   ],
   providers: [
     CanActivateUser,
-    ErrosService
+    ErrosService,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })

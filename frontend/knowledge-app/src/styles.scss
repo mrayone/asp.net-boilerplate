@@ -1,7 +1,15 @@
+
+// if you'd like to use it without importing all of bootstrap it requires
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr-bs4-alert';
+
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./assets/themify-icons/themify-icons.css";
 @import "./assets/sass/variables";
+
 
 .toast {
   opacity: 100%;
@@ -28,3 +36,12 @@ body {
   color: #dc3545;
 }
 
+
+.toast ul.list-group, .alert ul.list-group  {
+  list-style-type: none;
+}
+
+.toast .list-group li.list-group-item, .alert .list-group li.list-group-item {
+  background-color: transparent;
+  border: none;
+}

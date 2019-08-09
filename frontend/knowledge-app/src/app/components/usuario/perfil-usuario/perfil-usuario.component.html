@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="usuario">
   <div class="col-md-4">
       <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="usuario.nome" [email]="usuario.email">
         <ng-template #dados>
@@ -16,7 +16,7 @@
   <div class="col-md-8">
     <app-card-rounded titulo="Editar Perfil" [bodyTemplate]="campos">
       <ng-template #campos>
-        <app-formulario-usuario [formType]="formType"></app-formulario-usuario>
+        <app-formulario-usuario [formType]="formType" (command)="putUsuarioPerfil($event)" [model]="usuario"></app-formulario-usuario>
       </ng-template>
     </app-card-rounded>
   </div>

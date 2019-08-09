@@ -8,7 +8,8 @@ import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
 import { Usuario } from '../models/usuario';
 import { FormType } from './formType/form-type.enum';
-
+import { Perfil } from '../../perfil/models/perfil';
+import { CustomValidators } from 'ng2-validation';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -23,6 +24,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @Input() model: Usuario;
   @Input() formType: FormType =  FormType.Post;
   @Input() adminInput: boolean;
+  @Input() perfis: Perfil[];
   @Output() command = new EventEmitter<FormGroup>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
@@ -42,7 +44,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   }
 
   gerarFormulario(): void {
-    this.model = !this.model ? new Usuario() : this.model;
+    this.model = !this.model ? new Usuario() : this.filtraModel(this.model);
     this.usuarioForm = new FormGroup({
       nome: new FormControl(this.model.nome, [
         Validators.required,
@@ -60,7 +62,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
       ]),
       email: new FormControl(this.model.email, [
         Validators.required,
-        Validators.email
+        CustomValidators.email
       ]),
       cpf: new FormControl(this.model.cpf, [
         Validators.required,
@@ -73,7 +75,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
       telefone: new FormControl(this.model.telefone,
       [
         Validators.maxLength(13),
-        Validators.minLength(11)
+        Validators.minLength(10)
       ]),
       celular: new FormControl(this.model.celular,
       [
@@ -115,11 +117,21 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
     });
 
     if ( this.adminInput ) {
-      this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
+      this.usuarioForm.addControl('perfilId', new FormControl('', [
           Validators.required
         ])
       );
     }
+  }
+
+
+  filtraModel(usuario: Usuario) {
+    const data = new Date(usuario.dataDeNascimento);
+    const year = data.getUTCFullYear();
+    const month = data.getMonth() + 1;
+    const day = data.getDate();
+    usuario.dataDeNascimento = { year, month, day};
+    return usuario;
   }
 
   ngAfterViewInit(): void {

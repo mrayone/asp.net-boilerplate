@@ -5,7 +5,7 @@ export class Usuario {
   public sexo: string;
   public email: string;
   public cpf: string;
-  public dataDeNascimento: string;
+  public dataDeNascimento: any;
   public perfilId: string;
   public celular: string;
   public telefone: string;
@@ -18,22 +18,11 @@ export class Usuario {
   public estado: string;
 
   constructor() {
-    this.id = '';
     this.nome = '';
     this.sobrenome = '';
     this.sexo = '';
     this.email = '';
     this.cpf = '';
     this.dataDeNascimento = '';
-    this.perfilId = '';
-    this.celular = '';
-    this.telefone = '';
-    this.logradouro = '';
-    this.numero = '';
-    this.complemento = '';
-    this.bairro = '';
-    this.cep = '';
-    this.cidade = '';
-    this.estado = '';
   }
 }

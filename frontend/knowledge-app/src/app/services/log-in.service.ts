@@ -14,7 +14,7 @@ import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.red
 import { ErrosService } from './erros.service';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
+  headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
 };
 
 @Injectable({
@@ -27,8 +27,8 @@ export class LogInService {
     stateManager.pipe(select(ObterTokenModel)).subscribe(model => this.tokenModel = model);
   }
 
-  getTokenAcesso( grantAcess: GrantAcessModel): Observable<TokenModel> {
-      return this.http.post(`${url}/connect/token`, grantAcess , httpOptions)
+  getTokenAcesso(grantAcess: GrantAcessModel): Observable<TokenModel> {
+    return this.http.post(`${url}/connect/token`, grantAcess, httpOptions)
       .pipe(
         catchError(this.handleError<any>('obterToken'))
       );
@@ -36,23 +36,24 @@ export class LogInService {
 
   hasToken(): boolean {
     const hasToken = !!localStorage.getItem(LOGIN_KEY);
-
-    if (!hasToken) {
+    const hasTokenInState = !!this.tokenModel;
+    if (!hasToken || !hasTokenInState) {
       this.stateManager.dispatch(new Logout());
+      return false;
     }
 
     return hasToken;
   }
 
-   async validateToken() {
+  validateToken() {
     // tslint:disable-next-line: no-shadowed-variable
     const { exp } = jwtParser(this.tokenModel.access_token) as any;
-    const dateExpire = new Date( exp * 1000 );
+    const dateExpire = new Date(exp * 1000);
     const tokenExpirou = dateExpire < new Date();
-    if ( tokenExpirou ) {
+    if (tokenExpirou) {
       this.introspectToken().subscribe(value => {
-        if ( !value.active ) {
-          this.refreshToken().subscribe( model => {
+        if (!value.active) {
+          this.refreshToken().subscribe(model => {
             if (model) {
               this.stateManager.dispatch(new RefreshToken(model));
             } else {
@@ -68,30 +69,32 @@ export class LogInService {
     // tslint:disable-next-line: no-shadowed-variable
     const httpOptions = {
       headers: new HttpHeaders({
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Basic ${btoa('api:hello')}`
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${btoa('api:hello')}`
       })
     };
     const token = this.tokenModel.access_token;
-    const postModel = new HttpParams({fromObject: { token }});
+    const postModel = new HttpParams({ fromObject: { token } });
 
-    return this.http.post(`${url}/connect/introspect`, postModel , httpOptions)
+    return this.http.post(`${url}/connect/introspect`, postModel, httpOptions)
       .pipe(
         catchError(this.handleError<any>('validarToken'))
-        );
+      );
   }
 
-   refreshToken(): Observable<TokenModel> {
+  refreshToken(): Observable<TokenModel> {
     const refresh_token = this.tokenModel.refresh_token;
-    const postModel = new HttpParams({fromObject: {
-      grant_type: 'refresh_token',
-      client_id : 'spa.client',
-      refresh_token
-    }});
-    return this.http.post(`${url}/connect/token`, postModel , httpOptions)
+    const postModel = new HttpParams({
+      fromObject: {
+        grant_type: 'refresh_token',
+        client_id: 'spa.client',
+        refresh_token
+      }
+    });
+    return this.http.post(`${url}/connect/token`, postModel, httpOptions)
       .pipe(
         catchError(this.handleError<any>('refreshToken'))
-        );
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

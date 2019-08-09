@@ -9,11 +9,21 @@ import { jwtParser } from '../Utils/jwtParser';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioLogadoService {
-  tokenModel$: Observable<TokenModel>;
+export class UsuarioAutenticadoService {
+
+  private tokenModel$: Observable<TokenModel>;
   constructor(private store: Store<AppState>) {
     this.tokenModel$ = store.pipe(select(ObterTokenModel));
-   }
+  }
+
+  getAuthorizationToken(): TokenModel {
+    let token: TokenModel;
+    this.tokenModel$.subscribe(model => {
+      if (model) { token = model; }
+    });
+
+    return token;
+  }
 }
 
 export class UsuarioViewModel {

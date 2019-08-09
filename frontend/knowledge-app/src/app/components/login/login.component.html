@@ -4,14 +4,6 @@
         <img src="../../../assets/logo/logo.png" alt="Logo">
       </div>
       <form novalidate (ngSubmit)="autenticarUsuario($event)" [formGroup]="loginForm">
-          <!-- //TODO: Componentizar esse bloco de erros -->
-
-          <!-- <ngb-alert *ngIf="!closeAlert" type="danger" (close)="closeAlert = !closeAlert">
-              <h4 class="alert-heading">Ops... Algo deu errado!</h4>
-              <ul *ngFor="let item of errorsService.errors">
-                  <li>{{ item }}</li>
-              </ul>
-          </ngb-alert> -->
           <div class="form-group">
               <input type="text" name="username" class="form-control" formControlName="username"
                   placeholder="E-mail" required>
@@ -33,13 +25,4 @@
       </form>
     </div>
   </div>
-      <app-toast [tipoToast]="'error'" [toastBody]="bodyToast" [mostrarToast]="errosDeRequest.length > 0" (close)="close($event)">
-        <ng-template #bodyToast>
-            <ul class="list-group">
-              <li class="list-group-item" *ngFor="let erro of errosDeRequest">
-                {{erro}}
-              </li>
-            </ul>
-        </ng-template>
-      </app-toast>
 

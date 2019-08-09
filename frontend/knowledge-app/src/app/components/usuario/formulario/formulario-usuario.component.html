@@ -63,7 +63,8 @@
         <div class="form-group col-md" *ngIf="adminInput">
           <label for="control-label" for="perfilId">Perfil</label>
           <select class="form-control" id="perfilId" formControlName="perfilId">
-            <option value="a">aa</option>
+            <option value="" selected="selected">--Selecione--</option>
+            <option [value]="perfil.id" *ngFor="let perfil of perfis">{{perfil.nome}}</option>
           </select>
           <div class="invalid-feedback">
               <p [innerHtml]="erros.perfilId"></p>
@@ -136,8 +137,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label class="control-label" for="estado">Estado</label>
-            <select class="form-control" id="estado" formControlName="estado">
-              <option value="" disabled="disabled">Estado</option>
+            <select class="form-control" id="estado" formControlName="estado" aria-placeholder="--Selecione--">
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
               <option value="AP">Amapá</option>
@@ -177,7 +177,7 @@
         <div class="col-md-4">
             <div class="form-group">
               <label class="control-label" for="celular">Celular</label>
-              <input class="form-control" id="celular" mask="00000000000" formControlName="celular" prefix="+55" type="text" placeholder="Celular" />
+              <input class="form-control" id="celular" mask="(00) 00000-0000" formControlName="celular" type="text" placeholder="Celular" />
               <div class="invalid-feedback">
                 <p [innerHtml]="erros.celular"></p>
               </div>
@@ -187,7 +187,7 @@
           <div class="col-md-4">
               <div class="form-group">
                 <label class="control-label" for="telefone">Telefone</label>
-                <input class="form-control" id="telefone" mask="0000000000" formControlName="telefone" prefix="+55" type="text" placeholder="telefone" />
+                <input class="form-control" id="telefone" mask="(00) 0000-0000" formControlName="telefone" type="text" placeholder="telefone" />
               </div>
               <div class="invalid-feedback">
                 <p [innerHtml]="erros.telefone"></p>

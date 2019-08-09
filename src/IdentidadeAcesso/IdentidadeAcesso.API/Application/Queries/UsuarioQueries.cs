@@ -66,15 +66,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                                [Id]
                               ,[PrimeiroNome] AS Nome
                               ,[Sobrenome]
-                              ,[Sexo]
                               ,[Email]
-                              ,[CPF]
-                              ,[DataDeNascimento_Data] as DataDeNascimento
-                              ,[Celular]
-                              ,[Telefone]
-                              ,[Status]
-                              ,[DeletadoEm]
-                              ,[PerfilId]
                           FROM [usuarios] WHERE [DeletadoEm] IS NULL";
 
                 var query = await connection.QueryAsync<UsuarioViewModel>(sql);

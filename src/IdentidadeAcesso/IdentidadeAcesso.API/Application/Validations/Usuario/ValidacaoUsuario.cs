@@ -43,13 +43,13 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
 
             RuleFor(c => c.Celular)
                 .Must(ValidarCelular)
-                .WithMessage("O celular deve obedecer o padrão Ex: +5518999928663")
+                .WithMessage("O celular deve obedecer o padrão Ex: 18999928663")
                 .Length(11, 15);
 
             RuleFor(c => c.Telefone)
                 .Must(ValidarTelefone)
-                .WithMessage("O telefone deve obedecer o padrão Ex: +551832815555")
-                .Length(11, 13);
+                .WithMessage("O telefone deve obedecer o padrão Ex: 1832815555")
+                .Length(10, 13);
 
             RuleFor(c => c.Logradouro)
                 .Length(2, 150).WithMessage("O logradouro deve conter entre 2 e 150 caracteres");
@@ -84,7 +84,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         private bool ValidarTelefone(string arg)
         {
             if (arg != null)
-                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{10})");
+                return Regex.IsMatch(arg, @"(\d{10})");
 
             return true;
         }
@@ -92,7 +92,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
         private bool ValidarCelular(string arg)
         {
             if (arg != null)
-                return Regex.IsMatch(arg, @"(\+\d{2})+(\d{11})");
+                return Regex.IsMatch(arg, @"(\d{11})");
 
             return true;
         }
