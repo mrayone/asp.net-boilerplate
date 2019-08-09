@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CanActivateUser } from './guards/can-activate-user';
 import { ErrosService } from './services/erros.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PermissaoModule } from './components/permissao/permissao.module';
+import { httpInterceptorProviders } from './http-interceptors';
 
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
@@ -23,9 +25,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
-import { httpInterceptorProviders } from './http-interceptors';
-import { AdicionarPermissaoComponent } from './components/permissao/adicionar-permissao/adicionar-permissao.component';
-import { FormularioComponent } from './components/permissao/formulario/formulario.component';
 
 
 @NgModule({
@@ -34,9 +33,7 @@ import { FormularioComponent } from './components/permissao/formulario/formulari
     DashBoardComponent,
     MenuComponent,
     NavbarComponent,
-    LoginComponent,
-    AdicionarPermissaoComponent,
-    FormularioComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +46,7 @@ import { FormularioComponent } from './components/permissao/formulario/formulari
     ReactiveFormsModule,
     NgbModule,
     UsuarioModule,
+    PermissaoModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],

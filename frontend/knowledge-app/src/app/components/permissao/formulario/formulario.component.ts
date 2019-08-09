@@ -1,26 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Permissao } from '../Models/permissao';
 import { FormType } from 'src/app/Utils/formType/form-type.enum';
+import { merge, Observable, fromEvent } from 'rxjs';
+import { GenericValidator } from 'src/app/Utils/generic-validator';
+import { mensagensDeErroPermissaoForm } from './mensagens-de-erro/mensagens-de-erro';
+
 
 @Component({
   selector: 'app-formulario-permissao',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.scss']
 })
-export class FormularioComponent implements OnInit {
+export class FormularioComponent implements OnInit, AfterViewInit {
 
-  permissao: FormGroup;
+  permissaoForm: FormGroup;
   model: Permissao;
   formType: FormType;
-  constructor() { }
+  erros: { [key: string]: string } = {};
+  genericValidator: any;
+
+  @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+  constructor() {
+    this.genericValidator = new GenericValidator(mensagensDeErroPermissaoForm);
+   }
 
   ngOnInit() {
     this.gerarFormulario();
   }
 
   gerarFormulario() {
-    this.permissao = new FormGroup({
+    this.permissaoForm = new FormGroup({
       tipo: new FormControl(this.model.tipo, [
         Validators.required,
         Validators.minLength(3),
@@ -33,6 +43,15 @@ export class FormularioComponent implements OnInit {
       ]),
     });
 
+  }
+
+  ngAfterViewInit(): void {
+    const controlBlurs: Observable<any>[] = this.formInputElements
+      .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
+
+    merge(...controlBlurs).subscribe(value => {
+      this.erros = this.genericValidator.processMessages(this.permissaoForm);
+    });
   }
 
 }
