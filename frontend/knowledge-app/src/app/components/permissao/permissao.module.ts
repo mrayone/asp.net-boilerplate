@@ -5,7 +5,7 @@ import { ListaPermissoesComponent } from './lista-permissoes/lista-permissoes.co
 import { AdicionarPermissaoComponent } from './adicionar-permissao/adicionar-permissao.component';
 import { PermissaoRoutingModule } from './permissao-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     FormularioComponent,
@@ -15,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PermissaoRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class PermissaoModule { }
