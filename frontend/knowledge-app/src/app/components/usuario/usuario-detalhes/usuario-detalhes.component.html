@@ -1,5 +1,5 @@
-<div class="row justify-content-center" *ngIf="usuario">
-  <div class="col-md-6">
+<div class="row justify-content-start" *ngIf="usuario">
+  <div class="col-md-12">
     <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="usuario.nome" [email]="usuario.email">
       <ng-template #dados>
         <div class="row">
@@ -7,6 +7,8 @@
             <dl>
               <dt>E-mail</dt>
               <dd>{{usuario.email}}</dd>
+              <dt>CPF</dt>
+              <dd>{{usuario.cpf}}</dd>
               <dt>Data de Nascimento</dt>
               <dd>{{usuario.dataDeNascimento | date:"dd-MM-yy"}}</dd>
               <dt>Sexo</dt>
