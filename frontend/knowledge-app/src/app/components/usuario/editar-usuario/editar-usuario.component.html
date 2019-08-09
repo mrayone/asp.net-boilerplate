@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="usuario">
+    <app-card-rounded titulo="Editar Perfil" [bodyTemplate]="campos">
+      <ng-template #campos>
+        <app-formulario-usuario [formType]="formType" [adminInput]="true" [perfis]="perfis"
+        (command)="putUsuario($event)" [model]="usuario"></app-formulario-usuario>
+      </ng-template>
+    </app-card-rounded>
+  </div>
+</div>

@@ -19,6 +19,7 @@ import { FormularioUsuarioComponent } from './formulario/formulario-usuario.comp
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.component';
+import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.co
     FormularioUsuarioComponent,
     PerfilUsuarioComponent,
     NullFieldPipe,
-    GeneroUsuarioPipe
+    GeneroUsuarioPipe,
+    EditarUsuarioComponent
   ],
   imports: [
     CommonModule,
