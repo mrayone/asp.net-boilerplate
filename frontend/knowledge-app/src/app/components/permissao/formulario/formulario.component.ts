@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Permissao } from '../Models/permissao';
 import { FormType } from 'src/app/Utils/formType/form-type.enum';
@@ -15,8 +15,8 @@ import { mensagensDeErroPermissaoForm } from './mensagens-de-erro/mensagens-de-e
 export class FormularioComponent implements OnInit, AfterViewInit {
 
   permissaoForm: FormGroup;
-  model: Permissao;
-  formType: FormType;
+  @Input() model: Permissao;
+  @Input() formType: FormType = FormType.Post;
   erros: { [key: string]: string } = {};
   genericValidator: any;
 
@@ -24,6 +24,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   constructor() {
     this.genericValidator = new GenericValidator(mensagensDeErroPermissaoForm);
+    this.model =  new Permissao();
    }
 
   ngOnInit() {
@@ -44,6 +45,10 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       ]),
     });
 
+    if (this.formType === FormType.Put) {
+      this.permissaoForm.addControl('id', new FormControl(this.model.id)
+      );
+    }
   }
 
   ngAfterViewInit(): void {
