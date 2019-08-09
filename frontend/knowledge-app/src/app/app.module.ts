@@ -24,6 +24,8 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { httpInterceptorProviders } from './http-interceptors';
+import { AdicionarPermissaoComponent } from './components/permissao/adicionar-permissao/adicionar-permissao.component';
+import { FormularioComponent } from './components/permissao/formulario/formulario.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { httpInterceptorProviders } from './http-interceptors';
     DashBoardComponent,
     MenuComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    AdicionarPermissaoComponent,
+    FormularioComponent
   ],
   imports: [
     BrowserModule,

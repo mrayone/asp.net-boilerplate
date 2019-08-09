@@ -3,7 +3,7 @@ import { Usuario } from '../models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
-import { FormType } from '../formulario/formType/form-type.enum';
+import { FormType } from '../../../Utils/formType/form-type.enum';
 import { FormGroup } from '@angular/forms';
 import { ErrosService } from 'src/app/services/erros.service';
 import { ToastrService } from 'ngx-toastr';
