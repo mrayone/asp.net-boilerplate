@@ -7,6 +7,7 @@ import { NgxMaskModule , IConfig} from 'ngx-mask';
 import { httpInterceptorProviders } from 'src/app/http-interceptors';
 import { FormsModule } from '@angular/forms';
 import { NullFieldPipe } from '../../utils/pipes/null-field.pipe';
+import { GeneroUsuarioPipe } from '../../utils/pipes/genero-usuario.pipe';
 // const
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -26,7 +27,8 @@ import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.co
     UsuarioDetalhesComponent,
     FormularioUsuarioComponent,
     PerfilUsuarioComponent,
-    NullFieldPipe
+    NullFieldPipe,
+    GeneroUsuarioPipe
   ],
   imports: [
     CommonModule,

@@ -22,6 +22,20 @@ export class UsuarioService {
       );
   }
 
+  put(usuario: Usuario): Observable<HttpResponse<any>> {
+    return this.http.put(`${url}/api/v1/usuarios`, usuario, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('putUsuario'))
+      );
+  }
+
+  delete(uid: string) {
+    return this.http.put(`${url}/api/v1/usuarios/${uid}`, httpOptions)
+      .pipe(
+        catchError(this.handleError<any>('deleteUsuario'))
+      );
+  }
+
   putUsuarioPerfil(usuario: Usuario): Observable<HttpResponse<any>> {
     return this.http.put(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions)
       .pipe(
@@ -36,8 +50,8 @@ export class UsuarioService {
       );
   }
 
-  getPorId(id: string): Observable<Usuario> {
-    return this.http.get(`${url}/api/v1/usuarios/${id}`, httpOptions)
+  getPorId(uid: string): Observable<Usuario> {
+    return this.http.get(`${url}/api/v1/usuarios/${uid}`, httpOptions)
       .pipe(
         catchError(this.handleError<any>('getUsuarioPorId'))
       );
