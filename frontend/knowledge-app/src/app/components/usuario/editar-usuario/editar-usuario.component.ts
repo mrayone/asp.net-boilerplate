@@ -48,14 +48,13 @@ export class EditarUsuarioComponent implements OnInit {
     });
   }
 
-
   putUsuario(form: FormGroup) {
     if (form.dirty && form.valid) {
-      const usuario: Usuario = Object.assign({}, new Usuario(), form.value);
-      usuario.dataDeNascimento =
+      this.usuario = Object.assign({}, new Usuario(), form.value);
+      this.usuario.dataDeNascimento =
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
-      this.usuarioService.putUsuarioPerfil(usuario).subscribe(response => {
+      this.usuarioService.put(this.usuario).subscribe(response => {
         if (this.errosDeRequest.length === 0) {
           this.toastService.success('Operação realizada com sucesso!');
         } else {

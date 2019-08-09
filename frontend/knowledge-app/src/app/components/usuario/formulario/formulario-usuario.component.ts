@@ -16,13 +16,13 @@ import { CustomValidators } from 'ng2-validation';
   templateUrl: './formulario-usuario.component.html',
   styleUrls: ['./formulario-usuario.component.scss'],
   providers: [
-    [I18n, {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n}],
-    [{provide: NgbDateParserFormatter, useClass: NgbDatePTParserFormatter}]
+    [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }],
+    [{ provide: NgbDateParserFormatter, useClass: NgbDatePTParserFormatter }]
   ]
 })
 export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @Input() model: Usuario;
-  @Input() formType: FormType =  FormType.Post;
+  @Input() formType: FormType = FormType.Post;
   @Input() adminInput: boolean;
   @Input() perfis: Perfil[];
   @Output() command = new EventEmitter<FormGroup>();
@@ -33,7 +33,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   erros?: { [key: string]: string } = {};
   constructor() {
     this.genericValidator = new GenericValidator(mensagensDeErro);
-   }
+  }
 
   ngOnInit() {
     this.gerarFormulario();
@@ -73,20 +73,20 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         Validators.required
       ]),
       telefone: new FormControl(this.model.telefone,
-      [
-        Validators.maxLength(13),
-        Validators.minLength(10)
-      ]),
+        [
+          Validators.maxLength(13),
+          Validators.minLength(10)
+        ]),
       celular: new FormControl(this.model.celular,
-      [
-        Validators.maxLength(15),
-        Validators.minLength(11)
-      ]),
+        [
+          Validators.maxLength(15),
+          Validators.minLength(11)
+        ]),
       logradouro: new FormControl(this.model.logradouro,
-      [
-        Validators.minLength(2),
-        Validators.maxLength(150)
-      ]),
+        [
+          Validators.minLength(2),
+          Validators.maxLength(150)
+        ]),
       numero: new FormControl(this.model.numero, [
         Validators.minLength(2),
         Validators.maxLength(10)
@@ -96,30 +96,35 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         Validators.maxLength(50)
       ]),
       bairro: new FormControl(this.model.bairro,
-      [
-        Validators.minLength(3),
-        Validators.maxLength(150)
-      ]),
+        [
+          Validators.minLength(3),
+          Validators.maxLength(150)
+        ]),
       cep: new FormControl(this.model.cep,
-      [
-        Validators.minLength(8),
-        Validators.maxLength(9)
-      ]),
+        [
+          Validators.minLength(8),
+          Validators.maxLength(9)
+        ]),
       cidade: new FormControl(this.model.cidade,
-      [
-        Validators.minLength(3),
-        Validators.maxLength(150)
-      ]),
+        [
+          Validators.minLength(3),
+          Validators.maxLength(150)
+        ]),
       estado: new FormControl(this.model.estado, [
         Validators.minLength(2),
         Validators.maxLength(2)
       ])
     });
 
-    if ( this.adminInput ) {
+    if (this.adminInput) {
       this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
-          Validators.required
-        ])
+        Validators.required
+      ])
+      );
+
+      this.usuarioForm.addControl('id', new FormControl(this.model.id, [
+        Validators.required
+      ])
       );
     }
   }
@@ -130,7 +135,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
     const year = data.getUTCFullYear();
     const month = data.getMonth() + 1;
     const day = data.getDate();
-    usuario.dataDeNascimento = { year, month, day};
+    usuario.dataDeNascimento = { year, month, day };
     return usuario;
   }
 
