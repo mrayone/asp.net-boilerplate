@@ -117,7 +117,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
     });
 
     if ( this.adminInput ) {
-      this.usuarioForm.addControl('perfilId', new FormControl('', [
+      this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
           Validators.required
         ])
       );

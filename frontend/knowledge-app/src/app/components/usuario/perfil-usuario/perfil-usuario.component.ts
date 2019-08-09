@@ -19,8 +19,8 @@ export class PerfilUsuarioComponent implements OnInit {
   formType: FormType = FormType.Put;
   usuario: Usuario;
   errosDeRequest: string[];
-  constructor( private usuarioService: UsuarioService, private toastService: ToastrService,
-    private erroService: ErrosService ) {
+  constructor(private usuarioService: UsuarioService, private toastService: ToastrService,
+    private erroService: ErrosService) {
 
   }
 
@@ -29,7 +29,7 @@ export class PerfilUsuarioComponent implements OnInit {
       this.usuario = usuario;
     });
     this.subscribeErros();
-   }
+  }
 
   private subscribeErros() {
     this.erroService.getErros().subscribe(erros => {
@@ -39,16 +39,16 @@ export class PerfilUsuarioComponent implements OnInit {
 
   putUsuarioPerfil(form: FormGroup) {
     if (form.dirty && form.valid) {
-      const usuario: Usuario = Object.assign({ }, new Usuario(), form.value);
+      const usuario: Usuario = Object.assign({}, new Usuario(), form.value);
       usuario.dataDeNascimento =
-      `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
+        `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.putUsuarioPerfil(usuario).subscribe(response => {
-         if (this.errosDeRequest.length === 0) {
-            this.toastService.success('Operação realizada com sucesso!');
-         } else {
-           this.checarErrosDeRequest();
-         }
+        if (this.errosDeRequest.length === 0) {
+          this.toastService.success('Operação realizada com sucesso!');
+        } else {
+          this.checarErrosDeRequest();
+        }
       });
     }
   }
@@ -62,7 +62,7 @@ export class PerfilUsuarioComponent implements OnInit {
         enableHtml: true,
         disableTimeOut: true
       }).onTap.pipe(take(1))
-      .subscribe(() => this.erroService.limparErros());
+        .subscribe(() => this.erroService.limparErros());
     }
-}
+  }
 }
