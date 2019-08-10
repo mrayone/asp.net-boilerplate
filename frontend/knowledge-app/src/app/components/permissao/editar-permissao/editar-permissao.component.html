@@ -1,0 +1,9 @@
+<div class="row" *ngIf="permissao">
+    <div class="col-md-12">
+      <app-card-rounded titulo="Editar Permissão" [bodyTemplate]="bodyTemplate" >
+          <ng-template #bodyTemplate>
+              <app-formulario-permissao [formType]="formType" (command)="onPutCommand($event)" [model]="permissao"></app-formulario-permissao>
+          </ng-template>
+        </app-card-rounded>
+    </div>
+  </div>

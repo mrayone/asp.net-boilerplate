@@ -1,0 +1,46 @@
+<div class="row justify-content-start" *ngIf="permissao">
+  <div class="col-md-12">
+    <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer">
+      <ng-template #dados>
+        <h2 class="text-center text-greenland">{{permissao.tipo}}</h2>
+        <h5 class="text-center">{{permissao.valor}}</h5>
+        <p>
+          A permissão fornece o tipo de nível de acesso em que um determinado perfil pode obter no sistema. Esta permissão pode estar vinculada ou não a um perfil, neste caso,
+          <span class="text-danger">modifica-la pode ocorrer em alterações no comportamento do sistema.</span>
+        </p>
+      </ng-template>
+      <ng-template #footer>
+          <div class="row">
+              <a [routerLink]="['/permissoes/editar', permissao.id]" class="btn btn-primary mr-1"> <i class="ti-pencil"></i>Editar</a>
+              <button type="button" class="btn btn-danger" (click)="open(content)"><i class="ti-trash"></i>Excluir</button>
+          </div>
+
+          <div class="row mt-4">
+              <span class="badge badge-primary">Know</span>
+              <span class="badge badge-secondary">ledge</span>
+              <span class="badge badge-success">I.O</span>
+          </div>
+      </ng-template>
+
+    </app-card-rounded>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Exclusão</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Você tem certeza que deseja excluir a permissão <span class="text-primary">"{{permissao.tipo}} [{{permissao.valor}}]"</span>?</strong></p>
+        <p>Esta operação pode afetar todos os dados que dependem desta permissão.
+        <span class="text-danger">Esta operação não podera ser desfeita.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-outline-primary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>
