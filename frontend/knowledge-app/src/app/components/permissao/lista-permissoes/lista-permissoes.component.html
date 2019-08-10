@@ -18,7 +18,10 @@
                   </a> |
                   <a [routerLink]="['editar', permissao.id]" title="editar" class="btn btn-warning text-white">
                       <span class="ti ti-pencil"></span>
-                  </a>
+                  </a> |
+                  <a [routerLink]="['detalhes', permissao.id]" title="excluir" class="btn btn-danger text-white">
+                    <span class="ti ti-trash"></span>
+                </a>
                 </td>
               </tr>
             </tbody>
