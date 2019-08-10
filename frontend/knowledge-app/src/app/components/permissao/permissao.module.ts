@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 import { FormularioComponent } from './formulario/formulario.component';
 import { ListaPermissoesComponent } from './lista-permissoes/lista-permissoes.component';
 import { AdicionarPermissaoComponent } from './adicionar-permissao/adicionar-permissao.component';
+import { DetalhesPermissaoComponent } from './detalhes-permissao/detalhes-permissao.component';
 @NgModule({
   declarations: [
     FormularioComponent,
     AdicionarPermissaoComponent,
-    ListaPermissoesComponent
+    ListaPermissoesComponent,
+    DetalhesPermissaoComponent
   ],
   imports: [
     CommonModule,
