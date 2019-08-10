@@ -4,6 +4,7 @@ import { ListaPermissoesComponent } from './lista-permissoes/lista-permissoes.co
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { AdicionarPermissaoComponent } from './adicionar-permissao/adicionar-permissao.component';
 import { DetalhesPermissaoComponent } from './detalhes-permissao/detalhes-permissao.component';
+import { EditarPermissaoComponent } from './editar-permissao/editar-permissao.component';
 
 
 
@@ -12,6 +13,8 @@ const routes: Routes = [
     { path: 'adicionar', component: AdicionarPermissaoComponent, data: { title: 'Adicionar Permissão' }, canActivate: [CanActivateUser] },
     { path: 'detalhes/:id', component: DetalhesPermissaoComponent,
       data: { title: 'Detalhes da Permissão' }, canActivate: [CanActivateUser] },
+    { path: 'editar/:id', component: EditarPermissaoComponent,
+      data: { title: 'Editar Permissão' }, canActivate: [CanActivateUser] },
  ];
 
 

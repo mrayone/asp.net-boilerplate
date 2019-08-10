@@ -9,12 +9,14 @@ import { FormularioComponent } from './formulario/formulario.component';
 import { ListaPermissoesComponent } from './lista-permissoes/lista-permissoes.component';
 import { AdicionarPermissaoComponent } from './adicionar-permissao/adicionar-permissao.component';
 import { DetalhesPermissaoComponent } from './detalhes-permissao/detalhes-permissao.component';
+import { EditarPermissaoComponent } from './editar-permissao/editar-permissao.component';
 @NgModule({
   declarations: [
     FormularioComponent,
     AdicionarPermissaoComponent,
     ListaPermissoesComponent,
-    DetalhesPermissaoComponent
+    DetalhesPermissaoComponent,
+    EditarPermissaoComponent
   ],
   imports: [
     CommonModule,

@@ -82,7 +82,7 @@ namespace IdentidadeAcesso.API.Controllers
         /// </summary>
         ///
         [HttpPut]
-        [PermissaoAuthorize("Atualizar Permissão")]
+        [PermissaoAuthorize("Editar Permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AtualizarPermissaoAsync([FromBody] AtualizarPermissaoCommand atualizarPermissao)
         {
