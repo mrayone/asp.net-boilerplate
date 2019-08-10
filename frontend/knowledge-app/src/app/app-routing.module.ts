@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'nao-autorizado', component: UnauthorizedComponent },
   { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule' },
+  { path: 'permissoes', loadChildren: './components/permissao/permissao.module#PermissaoModule' },
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

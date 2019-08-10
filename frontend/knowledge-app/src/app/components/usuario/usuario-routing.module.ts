@@ -13,7 +13,10 @@ const routes: Routes = [
   { path: 'adicionar', component: AdicionarUsuarioComponent, data: { title: 'Adicionar Novo Usuário' }, canActivate: [CanActivateUser] },
   { path: 'perfil', component: PerfilUsuarioComponent, data: { title: 'Perfil do Usuário' }, canActivate: [CanActivateUser] },
   { path: 'editar/:id', component: EditarUsuarioComponent, data: { title: 'Editar o Usuário' }, canActivate: [CanActivateUser] },
-  { path: 'detalhes/:id', component: UsuarioDetalhesComponent, data: { title: 'Detalhes do Usuário' }, canActivate: [CanActivateUser] },
+  {
+    path: 'detalhes/:id', component: UsuarioDetalhesComponent,
+    data: { title: 'Detalhes do Usuário' }, canActivate: [CanActivateUser]
+  },
 ];
 
 @NgModule({

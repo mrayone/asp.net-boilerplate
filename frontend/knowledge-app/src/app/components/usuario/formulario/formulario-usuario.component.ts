@@ -7,7 +7,7 @@ import { merge, Observable, fromEvent } from 'rxjs';
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens-de-erro';
 import { Usuario } from '../models/usuario';
-import { FormType } from './formType/form-type.enum';
+import { FormType } from '../../../Utils/formType/form-type.enum';
 import { Perfil } from '../../perfil/models/perfil';
 import { CustomValidators } from 'ng2-validation';
 

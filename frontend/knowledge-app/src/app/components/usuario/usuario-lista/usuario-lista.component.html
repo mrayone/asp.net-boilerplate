@@ -18,9 +18,15 @@
               <td>{{usuario.nome}}</td>
               <td>{{usuario.email}}</td>
               <td>
-                <a [routerLink]="['/detalhes', usuario.id]" title="Detalhes" class="btn btn-info text-white">
+                <a [routerLink]="['detalhes', usuario.id]" class="btn btn-info text-white" >
                   <span class="ti ti-search"></span>
-                </a>
+                </a> |
+                <a [routerLink]="['editar', usuario.id]" class="btn btn-warning text-white">
+                    <span class="ti ti-pencil"></span>
+                  </a> |
+                  <a [routerLink]="['detalhes', usuario.id]" class="btn btn-danger text-white">
+                      <span class="ti ti-trash"></span>
+                  </a>
               </td>
             </tr>
           </tbody>

@@ -4,7 +4,6 @@ export class Permissao {
   valor: string;
 
   constructor() {
-    this.id = '';
     this.tipo = '';
     this.valor = '';
   }

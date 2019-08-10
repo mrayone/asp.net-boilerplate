@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormType } from '../formulario/formType/form-type.enum';
+import { FormType } from '../../../Utils/formType/form-type.enum';
 import { UsuarioAutenticadoService, UsuarioViewModel } from 'src/app/services/usuario-autenticado.service';
 import { jwtParser } from 'src/app/Utils/jwtParser';
 import { Usuario } from '../models/usuario';

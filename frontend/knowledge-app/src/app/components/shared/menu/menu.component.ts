@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
   isCollapseUsuario: false;
+  isCollapsePermissao: false;
 
   constructor() { }
 
