@@ -21,7 +21,7 @@ export class AdicionarUsuarioComponent implements OnInit {
   perfis: Perfil[];
   errosDeRequest: string[];
   ngOnInit() {
-    this.perfilService.getPerfis().subscribe(perfis => {
+    this.perfilService.getTodos().subscribe(perfis => {
         this.perfis = perfis;
     });
 

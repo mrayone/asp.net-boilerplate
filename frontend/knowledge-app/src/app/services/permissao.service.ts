@@ -44,7 +44,7 @@ export class PermissaoService {
   getPorId(uid: string): Observable<Permissao> {
     return this.http.get(`${url}/api/v1/permissoes/${uid}`, httpOptions)
       .pipe(
-        catchError(this.handleError<any>('getUsuarioPorId'))
+        catchError(this.handleError<any>('getPermissaoPorId'))
       );
   }
 

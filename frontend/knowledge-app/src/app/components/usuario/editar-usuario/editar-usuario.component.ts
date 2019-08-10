@@ -37,7 +37,7 @@ export class EditarUsuarioComponent implements OnInit {
       this.subscribeErros();
     });
 
-    this.perfilService.getPerfis().subscribe(perfis => {
+    this.perfilService.getTodos().subscribe(perfis => {
       this.perfis = perfis;
   });
   }
