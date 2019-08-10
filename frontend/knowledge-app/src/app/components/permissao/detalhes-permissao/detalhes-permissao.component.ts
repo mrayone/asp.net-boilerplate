@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Permissao } from '../Models/permissao';
 import { PermissaoService } from 'src/app/services/permissao.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ErrosService } from 'src/app/services/erros.service';
 import { ToastrService } from 'ngx-toastr';
@@ -65,7 +65,7 @@ export class DetalhesPermissaoComponent implements OnInit {
         .subscribe(() => {
           if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realizada com sucesso!');
-            this.router.navigate(['/usuarios']);
+            this.router.navigate(['/permissoes']);
           } else {
             this.checarErrosDeRequest();
           }
