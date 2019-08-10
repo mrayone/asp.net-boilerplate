@@ -47,6 +47,10 @@ export class PerfilService {
     );
   }
 
+  //TODO: Atribuir Permissões
+
+  //TODO: RevogarPermissões
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: {}): Observable<T> => {
       // Let the app keep running by returning an empty result.
