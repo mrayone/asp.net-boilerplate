@@ -39,11 +39,8 @@
       </ng-template>
       <ng-template #footer>
           <div class="row">
-              <div class="btn-group" role="group" aria-label="Basic example">
-                  <a [routerLink]="['/usuarios/editar', usuario.id]" class="btn btn-primary"> <i class="ti-pencil"></i>Editar</a>
-                  <button type="button" class="btn btn-secondary">/</button>
-                  <button type="button" class="btn btn-danger" (click)="open(content)"><i class="ti-trash"></i>Excluir</button>
-                </div>
+              <a [routerLink]="['/usuarios/editar', usuario.id]" class="btn btn-primary mr-1"> <i class="ti-pencil"></i>Editar</a>
+              <button type="button" class="btn btn-danger" (click)="open(content)"><i class="ti-trash"></i>Excluir</button>
           </div>
 
           <div class="row mt-4">
