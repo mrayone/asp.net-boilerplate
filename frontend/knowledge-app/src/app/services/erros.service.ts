@@ -32,9 +32,12 @@ export class ErrosService {
   }
 
   private traduzirMensagem(mensagem: string): string {
+
       switch (mensagem) {
         case 'invalid_username_or_password':
           return 'E-mail ou senha inválidos.';
+        case 'invalid_grant':
+          return 'Ocorreu algum erro, tente novamente mais tarde.';
         default:
           if (mensagem) { return mensagem; } else { return 'Ocorreu algum erro.'; }
       }
