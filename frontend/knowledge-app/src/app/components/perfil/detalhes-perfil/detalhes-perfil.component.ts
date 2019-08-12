@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Permissao } from '../Models/permissao';
-import { PermissaoService } from 'src/app/services/permissao.service';
+import { Perfil } from '../models/perfil';
+import { PerfilService } from 'src/app/services/perfil.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ErrosService } from 'src/app/services/erros.service';
@@ -8,16 +8,16 @@ import { ToastrService } from 'ngx-toastr';
 import { switchMap, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-detalhes-permissao',
-  templateUrl: './detalhes-permissao.component.html',
-  styleUrls: ['./detalhes-permissao.component.scss']
+  selector: 'app-detalhes-perfil',
+  templateUrl: './detalhes-perfil.component.html',
+  styleUrls: ['./detalhes-perfil.component.scss']
 })
-export class DetalhesPermissaoComponent implements OnInit {
+export class DetalhesPerfilComponent implements OnInit {
 
-  permissao: Permissao;
+  perfil: Perfil;
   closeResult: string;
   errosDeRequest: string[];
-  constructor(private permissaoService: PermissaoService,
+  constructor(private perfilService: PerfilService,
               private route: ActivatedRoute, private router: Router,
               private modalService: NgbModal,
               private erroService: ErrosService,
@@ -26,10 +26,10 @@ export class DetalhesPermissaoComponent implements OnInit {
   ngOnInit() {
    this.route.paramMap.pipe(
       switchMap( (params: ParamMap) =>
-       this.permissaoService.getPorId(params.get('id'))
+       this.perfilService.getPorId(params.get('id'))
       )
     ).subscribe(map => {
-      this.permissao = map;
+      this.perfil = map;
       this.subscribeErros();
     });
   }
@@ -37,7 +37,7 @@ export class DetalhesPermissaoComponent implements OnInit {
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      this.deletarPermissao(this.closeResult);
+      this.deletarPerfil(this.closeResult);
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -59,13 +59,13 @@ export class DetalhesPermissaoComponent implements OnInit {
     });
   }
 
-  private deletarPermissao(result: string) {
+  private deletarPerfil(result: string) {
     if (result === `Closed with: Ok click`) {
-        this.permissaoService.delete(this.permissao.id)
+        this.perfilService.delete(this.perfil.id)
         .subscribe(() => {
           if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realizada com sucesso!');
-            this.router.navigate(['/perfis']);
+            this.router.navigate(['/permissoes']);
           } else {
             this.checarErrosDeRequest();
           }
