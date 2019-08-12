@@ -35,7 +35,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                 Nome = "Fake",
                 Sobrenome = "News",
                 Sexo = "M",
-                DateDeNascimento = new DateTime(1993,7, 22),
+                DataDeNascimento = new DateTime(1993,7, 22),
                 Email = "email@gmail.com",
                 Celular = "+5511999948663"
             };

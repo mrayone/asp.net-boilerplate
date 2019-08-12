@@ -98,15 +98,13 @@ export class LogInService {
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: {}): Observable<T> => {
+    return (errorRequest: any): Observable<T> => {
       // Let the app keep running by returning an empty result.
       if (operation === 'refreshToken') {
         this.stateManager.dispatch(new Logout());
       }
-      if (operation === 'obterToken') {
-        this.erros.adicionarErro(error['error'].error_description);
-      }
-      console.error(error);
+      const { error_description, error } = errorRequest.error;
+      this.erros.adicionarErro( error_description === '' ? error : error_description ) ;
       return of(result as T);
     };
   }

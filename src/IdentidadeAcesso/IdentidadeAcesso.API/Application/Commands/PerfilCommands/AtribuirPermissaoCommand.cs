@@ -18,7 +18,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 
     public class AtribuicaoDTO
     {
-        public Guid AtribuicaoId { get; set; }
         public Guid PermissaoId { get; set; }
     }
 }
