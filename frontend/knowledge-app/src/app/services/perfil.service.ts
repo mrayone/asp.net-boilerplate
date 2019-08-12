@@ -50,7 +50,6 @@ export class PerfilService {
 
   //TODO: Atribuir Permissões
 
-  //TODO: RevogarPermissões
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (errorRequest: any): Observable<T> => {

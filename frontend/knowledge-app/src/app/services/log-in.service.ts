@@ -104,7 +104,7 @@ export class LogInService {
         this.stateManager.dispatch(new Logout());
       }
       const { error_description, error } = errorRequest.error;
-      this.erros.adicionarErro( error_description === '' ? error : error_description ) ;
+      this.erros.adicionarErro( error_description ? error_description : error ) ;
       return of(result as T);
     };
   }
