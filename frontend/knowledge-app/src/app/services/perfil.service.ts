@@ -5,6 +5,7 @@ import { Perfil } from '../components/perfil/models/perfil';
 import { url, httpOptions } from './config/config';
 import { catchError } from 'rxjs/operators';
 import { ErrosService } from './erros.service';
+import { AtribuicaoDTO } from '../components/perfil/models/atribuicaoDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -48,12 +49,19 @@ export class PerfilService {
     );
   }
 
-  //TODO: Atribuir Permissões
-
+  public putAtribuirPermissoes(perfilId: string, atribuicoes: AtribuicaoDTO[] ): Observable<HttpResponse<any>> {
+    const objeto = {
+      perfilId,
+      atribuicoes
+    };
+    return this.http.put(`${url}/api/v1/perfis/atribuir-permissoes`, objeto, httpOptions)
+    .pipe(
+      catchError(this.handleError<any>('putAtribuirPermissoes'))
+    );
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (errorRequest: any): Observable<T> => {
-
       const { error_description, error } = errorRequest.error;
       this.errosService.adicionarErro( error_description === '' ? error : error_description ) ;
       console.error(error);
