@@ -16,7 +16,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   perfilForm: FormGroup;
   @Input() model: Perfil;
   @Input() formType: FormType = FormType.Post;
-  erros: { [key: string]: string } = {};
+  erros: any = {};
   genericValidator: any;
 
   @Output() command = new EventEmitter<FormGroup>();
@@ -33,15 +33,14 @@ export class FormularioComponent implements OnInit, AfterViewInit {
 
   gerarFormulario() {
     this.perfilForm = new FormGroup({
-      tipo: new FormControl(this.model.nome, [
+      nome: new FormControl(this.model.nome, [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(30)
+        Validators.maxLength(50)
       ]),
-      valor: new FormControl(this.model.descricao, [
-        Validators.required,
+      descricao: new FormControl(this.model.descricao, [
         Validators.minLength(3),
-        Validators.maxLength(30)
+        Validators.maxLength(150)
       ]),
     });
 

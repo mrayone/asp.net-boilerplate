@@ -17,7 +17,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   permissaoForm: FormGroup;
   @Input() model: Permissao;
   @Input() formType: FormType = FormType.Post;
-  erros: { [key: string]: string } = {};
+  erros: any = {};
   genericValidator: any;
 
   @Output() command = new EventEmitter<FormGroup>();

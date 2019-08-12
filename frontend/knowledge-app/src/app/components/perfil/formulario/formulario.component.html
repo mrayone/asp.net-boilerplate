@@ -1,4 +1,4 @@
-<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="permissaoForm" autocomplete="off">
+<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="perfilForm" autocomplete="off">
     <div class="form-row">
       <div class="form-group col">
         <label for="control-label" for="nome">Nome</label>
@@ -11,7 +11,7 @@
 
       <div class="form-group col">
         <label for="control-label" for="descricao">Descrição</label>
-        <input type="text" id="descricao" placeholder="Ex: perfil para usuários do RH" formControlName="descricao" required
+        <input type="text" id="descricao" placeholder="Ex: perfil para usuários do RH" formControlName="descricao"
           class="form-control">
         <div class="invalid-feedback">
           <p [innerHTML]="erros.descricao"></p>
