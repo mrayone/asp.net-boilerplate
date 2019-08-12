@@ -67,19 +67,6 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// Revoga permissões atribuidas a um perfil. Este método requer permissão para "Revogar Permissões".
-        /// </summary>
-        [HttpPut("revogar-permissoes")]
-        [PermissaoAuthorize("Revogar Permissões")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> RevogarPermissoesAsync([FromBody] RevogarPermissaoCommand command)
-        {
-            var result = await _mediator.Send(command);
-
-            return this.VerificarErros(_notifications, result);
-        }
-
-        /// <summary>
         /// Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".
         /// </summary>
         [HttpPut("atribuir-permissoes")]

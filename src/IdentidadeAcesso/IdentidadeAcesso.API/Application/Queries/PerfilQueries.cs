@@ -56,8 +56,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[atribuicoes_perfil].[Id] as AtribuicaoId
                               ,[atribuicoes_perfil].[Ativo]
                               ,[atribuicoes_perfil].[PermissaoId]
-                          FROM [perfis] LEFT JOIN [atribuicoes_perfil] ON [atribuicoes_perfil].[PerfilId] = [perfis].[Id] 
-                          AND [atribuicoes_perfil].[Ativo] = 1
+                          FROM [perfis] LEFT JOIN [atribuicoes_perfil] ON [atribuicoes_perfil].[PerfilId] = [perfis].[Id]
                           WHERE [perfis].[Id] = @uid AND [DeletadoEm] IS NULL";
 
                 var result = await connection.QueryAsync<PerfilViewModel, AtribuicaoDTO,

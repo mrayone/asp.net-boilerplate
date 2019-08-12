@@ -35,20 +35,21 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             //arrange
             _mediator.Setup(s => s.Send(It.IsAny<IRequest<CommandResponse>>(), new System.Threading.CancellationToken()))
                 .ReturnsAsync(CommandResponse.Ok).Verifiable();
-            var permissao = new RevogarPermissaoCommand(
+            var permissao = new AtribuirPermissaoCommand(
             
                 perfilId: Guid.NewGuid(),
                 atribuicoes: new List<AtribuicaoDTO>()
                 {
                     new AtribuicaoDTO()
                     {
-                        PermissaoId = Guid.NewGuid()
+                        PermissaoId = Guid.NewGuid(),
+                        Ativa =  false
                     }
                 }
             );
 
             //act
-            var result = await _controller.RevogarPermissoesAsync(permissao);
+            var result = await _controller.AtribuirPermissoesAsync(permissao);
 
             //assert
             result.Should().BeAssignableTo<OkResult>();

@@ -19,5 +19,6 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
     public class AtribuicaoDTO
     {
         public Guid PermissaoId { get; set; }
+        public bool Ativa { get; set; }
     }
 }

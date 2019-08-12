@@ -20,11 +20,6 @@
             Retorna um objeto PerfilViewModel caso o mesmo exista na base de dados com o Id fornecido.
             </remarks>
         </member>
-        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.RevogarPermissoesAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.RevogarPermissaoCommand)">
-            <summary>
-            Revoga permissões atribuidas a um perfil. Este método requer permissão para "Revogar Permissões".
-            </summary>
-        </member>
         <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.AtribuirPermissoesAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.AtribuirPermissaoCommand)">
             <summary>
             Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".

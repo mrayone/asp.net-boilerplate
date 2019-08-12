@@ -4,6 +4,7 @@ using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
+using IdentidadeAcesso.Domain.Events.PerfilEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
@@ -12,6 +13,7 @@ using MediatR;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -49,10 +51,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
+                    Ativa = true
+                    
                 },
                 new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
+                    Ativa = true
                 }
             };
         }
@@ -72,6 +77,51 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             result.Success.Should().BeTrue();
             _service.Verify(s => s.AtribuirPermissaoAsync(perfil, It.IsAny<Guid>()), Times.Once);
             _uow.Verify(u => u.Commit(), Times.Once);
+        }
+
+        [Fact(DisplayName = "O Handle deve retornar falso se o perfil não existir.")]
+        [Trait("Handler - Perfil", "CancelarPermissão")]
+        public async Task Handle_deve_retornar_falso_se_perfil_nao_existir()
+        {
+            //arrange
+            var perfilId = Guid.NewGuid();
+            _perfilRepositoryMock.Setup(r => r.ObterComPermissoesAsync(It.IsAny<Guid>()))
+                                .ReturnsAsync((Perfil) null);
+
+            var command = new AtribuirPermissaoCommand(perfilId, _list);
+            var cancelToken = new System.Threading.CancellationToken();
+
+            //act
+            var result = await _handler.Handle(command, cancelToken);
+
+            //assert
+            result.Success.Should().BeFalse();
+        }
+
+        [Fact(DisplayName = "O handle deve retornar verdadeiro se cancelar com sucesso as permissões.")]
+        [Trait("Handler - Perfil", "CancelarPermissão")]
+        public async Task Handle_deve_retornar_verdadeiro_se_cancelar_com_sucesso_as_permissoes()
+        {
+            //arrange
+            var permissao1 = Guid.NewGuid();
+            var permissao = _list.FirstOrDefault();
+            permissao.Ativa = false;
+
+            var perfil = TestBuilder.PerfilFalso();
+            _perfilRepositoryMock.Setup(p => p.ObterComPermissoesAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);
+            _service.Setup(s => s.RevogarPermissaoAsync(It.IsAny<Perfil>(), It.IsAny<Guid>()))
+                .ReturnsAsync(perfil);
+
+            _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
+            var command = new AtribuirPermissaoCommand(perfil.Id, _list);
+            var cancelToken = new System.Threading.CancellationToken();
+
+            //act
+            var result = await _handler.Handle(command, cancelToken);
+
+            //assert
+            result.Success.Should().BeTrue();
+            _mediator.Verify(m => m.Publish(It.IsAny<PermissaoAssinadaEvent>(), default), Times.Once());
         }
     }
 }

@@ -44,7 +44,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
             var permissaoExistente = EncontrarPermissao(permissaoId);
             if (permissaoExistente == null)
             {
-                return;
+                var permissaoAssinada = new AtribuicaoPerfil(permissaoId);
+                permissaoAssinada.DesativarAssinatura();
+                _atribuicoes.Add(permissaoAssinada);
             }
             permissaoExistente.DesativarAssinatura();
         }

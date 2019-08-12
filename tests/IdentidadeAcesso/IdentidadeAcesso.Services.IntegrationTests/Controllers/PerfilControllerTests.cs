@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -120,7 +121,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 PerfilId = perfilId,
                 Atribuicoes = new object[]
                 {
-                   new { PermissaoId = permissaoId }
+                   new { PermissaoId = permissaoId, Ativa = false }
                 }
             };
 
@@ -128,12 +129,20 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             //act
-            var response = await _client.PutAsync("api/v1/perfis/revogar-permissoes", content);
+            var response = await _client.PutAsync("api/v1/perfis/atribuir-permissoes", content);
             var vr = await response.Content.ReadAsStringAsync();
+
+            var getPerfil = await _client.GetAsync($"api/v1/perfis/{perfilId}");
+            var value = await getPerfil.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var perfil = JsonConvert.DeserializeObject<PerfilViewModel>(value);
+
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-
+         var permissaoAtribuida = perfil.Atribuicoes
+                .Where(p => p.PermissaoId.Equals(Guid.Parse(permissaoId))).FirstOrDefault();
+            permissaoAtribuida.Should().NotBeNull();
+            permissaoAtribuida.Ativa.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve cadastrar perfil e retornar Ok.")]
