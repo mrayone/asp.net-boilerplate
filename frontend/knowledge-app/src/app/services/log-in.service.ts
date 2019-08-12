@@ -103,10 +103,8 @@ export class LogInService {
       if (operation === 'refreshToken') {
         this.stateManager.dispatch(new Logout());
       }
-      if (operation === 'obterToken') {
-        const { error_description, error } = errorRequest.error;
-        this.erros.adicionarErro( error_description === '' ? error : error_description ) ;
-      }
+      const { error_description, error } = errorRequest.error;
+      this.erros.adicionarErro( error_description === '' ? error : error_description ) ;
       return of(result as T);
     };
   }

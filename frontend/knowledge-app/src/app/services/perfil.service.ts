@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { Perfil } from '../components/perfil/models/perfil';
 import { url, httpOptions } from './config/config';
 import { catchError } from 'rxjs/operators';
+import { ErrosService } from './erros.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerfilService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private errosService: ErrosService) { }
 
   post(perfil: Perfil): Observable<HttpResponse<any>> {
     return this.http.post(`${url}/api/v1/perfis`, perfil, httpOptions)
@@ -52,10 +53,13 @@ export class PerfilService {
   //TODO: RevogarPermissões
 
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: {}): Observable<T> => {
-      // Let the app keep running by returning an empty result.
+    return (errorRequest: any): Observable<T> => {
+
+      const { error_description, error } = errorRequest.error;
+      this.errosService.adicionarErro( error_description === '' ? error : error_description ) ;
       console.error(error);
       return of(result as T);
+
     };
   }
 }
