@@ -6,25 +6,27 @@ export const LOGIN_KEY = 'USUARIO_TOKEN';
 
 export const initialState: TokenModel = new TokenModel();
 
-export function reducer(state =  initialState, action: AutorizacaoActions) {
-    switch (action.type) {
-      case AutorizacaoTypes.RefreshToken:
-      case AutorizacaoTypes.Login:
-        return setLoginState(action.payload);
-      case AutorizacaoTypes.Logout:
-        return removeLoginState(state);
-      case AutorizacaoTypes.ReaverToken:
-        return reaverToken(state);
-    }
+export function reducer(state = initialState, action: AutorizacaoActions) {
+  switch (action.type) {
+    case AutorizacaoTypes.RefreshToken:
+      window.location.reload();
+      return setLoginState(action.payload);
+    case AutorizacaoTypes.Login:
+      return setLoginState(action.payload);
+    case AutorizacaoTypes.Logout:
+      return removeLoginState(state);
+    case AutorizacaoTypes.ReaverToken:
+      return reaverToken(state);
+  }
 }
 
-function setLoginState(state =  initialState) {
-    localStorage.setItem(LOGIN_KEY, JSON.stringify(state));
+function setLoginState(state = initialState) {
+  localStorage.setItem(LOGIN_KEY, JSON.stringify(state));
 
-    return state;
+  return state;
 }
 
-function removeLoginState(state =  initialState) {
+function removeLoginState(state = initialState) {
   localStorage.removeItem(LOGIN_KEY);
   return null;
 }

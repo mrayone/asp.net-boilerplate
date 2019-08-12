@@ -3,7 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Perfil } from '../components/perfil/models/perfil';
 import { url, httpOptions } from './config/config';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { ErrosService } from './erros.service';
 import { AtribuicaoDTO } from '../components/perfil/models/atribuicaoDTO';
 
