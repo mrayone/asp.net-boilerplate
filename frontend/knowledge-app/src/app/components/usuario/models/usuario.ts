@@ -24,5 +24,6 @@ export class Usuario {
     this.email = '';
     this.cpf = '';
     this.dataDeNascimento = '';
+    this.perfilId = '';
   }
 }

@@ -121,12 +121,12 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
         Validators.required
       ])
       );
-    }
 
-    if (this.formType === FormType.Put) {
-      this.usuarioForm.addControl('id', new FormControl(this.model.id, [
-      ])
-      );
+      if (this.formType === FormType.Put) {
+        this.usuarioForm.addControl('id', new FormControl(this.model.id, [
+        ])
+        );
+      }
     }
   }
 
