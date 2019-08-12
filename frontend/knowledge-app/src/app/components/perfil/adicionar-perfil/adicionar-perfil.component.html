@@ -1,1 +1,9 @@
-<p>adicionar-perfil works!</p>
+<div class="row">
+    <div class="col-md-12">
+      <app-card-rounded titulo="Novo Perfil" [bodyTemplate]="bodyTemplate" >
+          <ng-template #bodyTemplate>
+              <app-formulario-perfil [formType]="formType" (command)="onPostCommand($event)"></app-formulario-perfil>
+          </ng-template>
+        </app-card-rounded>
+    </div>
+  </div>

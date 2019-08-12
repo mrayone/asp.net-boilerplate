@@ -62,8 +62,8 @@ export class PerfilService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (errorRequest: any): Observable<T> => {
-      const { error_description, error } = errorRequest.error;
-      this.errosService.adicionarErro( error_description === '' ? error : error_description ) ;
+      const { error } = errorRequest;
+      this.errosService.adicionarErro( error.error_description ? error.error_description : error  ) ;
       console.error(error);
       return of(result as T);
 

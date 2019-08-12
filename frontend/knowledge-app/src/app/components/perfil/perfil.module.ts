@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/shared.module';
 
 import { ListarPerfisComponent } from './listar-perfis/listar-perfis.component';
 import { AdicionarPerfilComponent } from './adicionar-perfil/adicionar-perfil.component';
+import { FormularioComponent } from './formulario/formulario.component';
 
 @NgModule({
   declarations: [
     ListarPerfisComponent,
-    AdicionarPerfilComponent
+    AdicionarPerfilComponent,
+    FormularioComponent
   ],
   imports: [
     CommonModule,

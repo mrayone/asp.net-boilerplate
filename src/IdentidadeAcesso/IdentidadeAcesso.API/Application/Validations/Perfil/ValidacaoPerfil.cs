@@ -19,7 +19,7 @@ namespace IdentidadeAcesso.API.Application.Validations.Perfil
                 .Length(3, 50).WithMessage("O nome só pode conter entre 3 e 50 caracteres.");
 
             RuleFor(command => command.Descricao)
-                .Length(3, 50).WithMessage("A descrição só pode conter entre 3 e 150 caracteres.");
+                .Length(3, 150).WithMessage("A descrição só pode conter entre 3 e 150 caracteres.");
         }
     }
 }
