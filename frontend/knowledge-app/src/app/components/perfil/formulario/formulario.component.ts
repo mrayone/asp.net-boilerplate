@@ -5,6 +5,8 @@ import { FormGroup, FormControlName, FormControl, Validators } from '@angular/fo
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErroPerfilForm } from './mensagens-de-erro/mensagens-de-erro';
 import { Observable, fromEvent, merge } from 'rxjs';
+import { PermissaoService } from 'src/app/services/permissao.service';
+import { Permissao } from '../../permissao/Models/permissao';
 
 @Component({
   selector: 'app-formulario-perfil',
@@ -14,6 +16,7 @@ import { Observable, fromEvent, merge } from 'rxjs';
 export class FormularioComponent implements OnInit, AfterViewInit {
 
   perfilForm: FormGroup;
+  private permissoes: Permissao[];
   @Input() model: Perfil;
   @Input() formType: FormType = FormType.Post;
   erros: any = {};
@@ -22,13 +25,33 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   @Output() command = new EventEmitter<FormGroup>();
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-  constructor() {
+  constructor(private permissoesService: PermissaoService) {
     this.genericValidator = new GenericValidator(mensagensDeErroPerfilForm);
     this.model =  new Perfil();
+    this.permissoes = new Array<Permissao>();
    }
 
   ngOnInit() {
     this.gerarFormulario();
+
+    this.permissoesService.getTodas().subscribe(permissoes => {
+      this.permissoes = permissoes;
+    });
+  }
+
+
+  get mapPermissoes(): any {
+    const permissoes = [];
+    this.permissoes.forEach((value, index, array) => {
+      const valores = array.filter((el) => el.tipo === value.tipo);
+      if (permissoes.findIndex((p) => p.tipo === value.tipo) === -1) {
+        permissoes.push({
+          tipo: value.tipo,
+          valores
+        });
+      }
+    });
+    return permissoes;
   }
 
   gerarFormulario() {

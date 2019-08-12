@@ -19,10 +19,9 @@ export class EditarPerfilComponent implements OnInit {
   errosDeRequest: string[];
   formType = FormType.Put;
 
-  constructor(private perfilService: PerfilService,
-              private erroService: ErrosService, private toastService: ToastrService, private router: Router,
-              private route: ActivatedRoute) {
-  }
+  constructor(private perfilService: PerfilService, private erroService: ErrosService,
+    private toastService: ToastrService, private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(

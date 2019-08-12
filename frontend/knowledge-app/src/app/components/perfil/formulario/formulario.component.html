@@ -25,3 +25,41 @@
         [disabled]="perfilForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
     </div>
   </form>
+
+  <div class="row">
+      <div class="col-md-12">
+        <app-card-rounded [bodyTemplate]="bodyTemplate">
+          <ng-template #bodyTemplate>
+            <h3 class="text-center">Permissões</h3>
+            <div class="col-md-12" *ngFor="let permissoes of mapPermissoes">
+              <h4>{{permissoes.tipo}}</h4>
+              <div class="row" *ngFor="let valores of permissoes.valores">
+                <div class="col-md-8 offset-md-3 mb-2">
+                  <div class="row">
+                    <div class="col">
+                      <p>{{valores.valor}}</p>
+                    </div>
+                    <div class="col">
+                      <div class="btn-group btn-group-toggle">
+                        <label class="btn btn-dark">
+                          <input type="checkbox" name="options" id="option1" autocomplete="off"> <i
+                            class="ti-close text-red"></i>
+                        </label>
+                        <label class="btn btn-secondary active">
+                          <input type="checkbox" name="options" id="option1" autocomplete="off" checked> <i class="ti-bolt-alt"></i>
+                        </label>
+                        <label class="btn btn-dark">
+                          <input type="checkbox" name="options" id="option1" autocomplete="off"> <i
+                            class="ti-check text-green"></i>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </div>
+          </ng-template>
+        </app-card-rounded>
+      </div>
+    </div>
