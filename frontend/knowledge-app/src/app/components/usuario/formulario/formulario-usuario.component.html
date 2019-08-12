@@ -7,7 +7,7 @@
                 <div class="invalid-feedback">
                     <p [innerHTML]="erros.nome"></p>
                 </div>
-              <input *ngIf="adminInput" type="hidden" id="id" name="id" formControlName="id">
+              <input *ngIf="adminInput && formType == 2" type="hidden" id="id" name="id" formControlName="id">
         </div>
 
         <div class="form-group col-md-4">

@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-12">
+      <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Descrição</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let perfil of perfis">
+              <td>{{perfil.nome}}</td>
+              <td>{{perfil.descricao}}</td>
+              <td>
+                <a [routerLink]="['detalhes', perfil.id]" title="Detalhes" class="btn btn-info text-white">
+                  <span class="ti ti-search"></span>
+                </a> |
+                <a [routerLink]="['editar', perfil.id]" title="editar" class="btn btn-warning text-white">
+                    <span class="ti ti-pencil"></span>
+                </a> |
+                <a [routerLink]="['detalhes', perfil.id]" title="excluir" class="btn btn-danger text-white">
+                  <span class="ti ti-trash"></span>
+              </a>
+              </td>
+            </tr>
+          </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+        </ngb-pagination>
+      </div>
+  </div>
+</div>

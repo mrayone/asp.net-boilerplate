@@ -1,69 +1,100 @@
 <div class="sidebar">
-    <div class="sidebar-wrapper">
-        <div class="logo">
-            <img src="../../../../assets/logo/logo.png" alt="Logo">
-        </div>
-
-        <ul class="nav flex-column">
-            <li class="nav-item" routerLinkActive="active">
-                <a routerLink="/dashboard">
-                        <i class="ti-panel"></i>
-                        <p>Dashboard</p>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapseUsuario"
-                    (click)="isCollapseUsuario = !isCollapseUsuario" aria-controls="subMenuUsuario">
-                        <i class="ti-user"></i>
-                        <p> Usuários<i [ngClass]="{'ti-angle-up': !isCollapseUsuario, 'ti-angle-down': isCollapseUsuario }"></i></p>
-                </a>
-            </li>
-
-            <div class="collapse" id="subMenuUsuario" [ngbCollapse]="!isCollapseUsuario">
-                <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a [routerLink]="['/usuarios']">
-                      <i class="ti-list-ol"></i>
-                      <p>Lista de Registros</p>
-                    </a>
-                </li>
-                <li class="nav-sub-item" routerLinkActive="active">
-                  <a [routerLink]="['/usuarios/adicionar']">
-                    <i class="ti-plus"></i>
-                    <p>Adicionar</p>
-                  </a>
-                </li>
-            </div>
-
-            <li class="nav-item">
-                <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePermissao"
-                    (click)="isCollapsePermissao = !isCollapsePermissao" aria-controls="subMenuPermissao">
-                        <i class="ti-bookmark"></i>
-                        <p>Permissões <i [ngClass]="{'ti-angle-up': !isCollapsePermissao, 'ti-angle-down': isCollapsePermissao }"></i></p>
-                </a>
-            </li>
-
-            <div class="collapse" id="subMenuPermissao" [ngbCollapse]="!isCollapsePermissao">
-                <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                    <a [routerLink]="['/permissoes']">
-                      <i class="ti-list-ol"></i>
-                      <p>Lista de Registros</p>
-                    </a>
-                </li>
-                <li class="nav-sub-item" routerLinkActive="active">
-                  <a [routerLink]="['/permissoes/adicionar']">
-                    <i class="ti-plus"></i>
-                    <p>Adicionar</p>
-                  </a>
-                </li>
-            </div>
-
-            <li class="nav-item" routerLinkActive="active">
-                <a  routerLink="/usuarios/perfil">
-                        <i class="ti-id-badge"></i>
-                        <p>Perfil do Usuário</p>
-                </a>
-            </li>
-        </ul>
+  <div class="sidebar-wrapper">
+    <div class="logo">
+      <img src="../../../../assets/logo/logo.png" alt="Logo">
     </div>
+
+    <ul class="nav flex-column">
+      <li class="nav-item" routerLinkActive="active">
+        <a routerLink="/dashboard"  aria-controls="subMenuUsuario">
+          <i class="ti-panel"></i>
+          <p> Dashboard </p>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapseUsuario"
+          (click)="isCollapseUsuario = !isCollapseUsuario" aria-controls="subMenuUsuario">
+          <i class="ti-user"></i>
+          <p> Usuários<i [ngClass]="{'ti-angle-up': !isCollapseUsuario, 'ti-angle-down': isCollapseUsuario }"></i></p>
+        </a>
+      </li>
+
+      <div class="collapse" id="subMenuUsuario" [ngbCollapse]="!isCollapseUsuario">
+        <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a [routerLink]="['/usuarios']">
+            <i class="ti-list-ol"></i>
+            <p>Lista de Registros</p>
+          </a>
+        </li>
+        <li class="nav-sub-item" routerLinkActive="active">
+          <a [routerLink]="['/usuarios/adicionar']">
+            <i class="ti-plus"></i>
+            <p>Adicionar</p>
+          </a>
+        </li>
+      </div>
+
+      <li class="nav-item">
+        <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePerfil"
+          (click)="isCollapsePerfil = !isCollapsePerfil" aria-controls="subMenuPermissao">
+          <i class="ti-bookmark-alt"></i>
+          <p>Perfis <i [ngClass]="{'ti-angle-up': !isCollapsePerfil, 'ti-angle-down': isCollapsePerfil }"></i></p>
+        </a>
+      </li>
+
+      <div class="collapse" id="subMenuPermissao" [ngbCollapse]="!isCollapsePerfil">
+        <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a [routerLink]="['/perfis']">
+            <i class="ti-list-ol"></i>
+            <p>Lista de Registros</p>
+          </a>
+        </li>
+        <li class="nav-sub-item" routerLinkActive="active">
+          <a [routerLink]="['/perfis/adicionar']">
+            <i class="ti-plus"></i>
+            <p>Adicionar</p>
+          </a>
+        </li>
+
+        <li class="nav-sub-item" routerLinkActive="active">
+            <a [routerLink]="['/perfis/adicionar']">
+              <i class="ti-unlock"></i>
+              <p>Editar Permissões</p>
+            </a>
+          </li>
+      </div>
+
+      <li class="nav-item">
+        <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePermissao"
+          (click)="isCollapsePermissao = !isCollapsePermissao" aria-controls="subMenuPermissao">
+          <i class="ti-key"></i>
+          <p>Permissões <i [ngClass]="{'ti-angle-up': !isCollapsePermissao, 'ti-angle-down': isCollapsePermissao }"></i>
+          </p>
+        </a>
+      </li>
+
+      <div class="collapse" id="subMenuPermissao" [ngbCollapse]="!isCollapsePermissao">
+        <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a [routerLink]="['/permissoes']">
+            <i class="ti-list-ol"></i>
+            <p>Lista de Registros</p>
+          </a>
+        </li>
+        <li class="nav-sub-item" routerLinkActive="active">
+          <a [routerLink]="['/permissoes/adicionar']">
+            <i class="ti-plus"></i>
+            <p>Adicionar</p>
+          </a>
+        </li>
+      </div>
+
+      <li class="nav-item" routerLinkActive="active">
+        <a routerLink="/usuarios/perfil">
+          <i class="ti-id-badge"></i>
+          <p>Perfil do Usuário</p>
+        </a>
+      </li>
+    </ul>
+  </div>
 </div>

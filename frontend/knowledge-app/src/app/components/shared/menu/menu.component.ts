@@ -9,6 +9,7 @@ export class MenuComponent implements OnInit {
 
   isCollapseUsuario: false;
   isCollapsePermissao: false;
+  isCollapsePerfil: false;
 
   constructor() { }
 
