@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'nao-autorizado', component: UnauthorizedComponent },
   { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule' },
   { path: 'permissoes', loadChildren: './components/permissao/permissao.module#PermissaoModule' },
+  { path: 'perfis', loadChildren: './components/perfil/perfil.module#PerfilModule' },
   { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

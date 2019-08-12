@@ -15,6 +15,7 @@ import { ErrosService } from './services/erros.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PermissaoModule } from './components/permissao/permissao.module';
 import { httpInterceptorProviders } from './http-interceptors';
+import { PerfilModule } from './components/perfil/perfil.module';
 
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 
@@ -47,6 +48,7 @@ import { LoginComponent } from './components/login/login.component';
     NgbModule,
     UsuarioModule,
     PermissaoModule,
+    PerfilModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
