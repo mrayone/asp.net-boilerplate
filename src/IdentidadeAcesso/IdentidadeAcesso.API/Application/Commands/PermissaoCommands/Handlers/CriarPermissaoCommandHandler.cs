@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands.Handlers
 
         public async Task<CommandResponse> Handle(CriarPermissaoCommand request, CancellationToken cancellationToken)
         {
-            var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor);
+            var permissaoBusca = await _permissaoRepository.Buscar(p => p.Atribuicao.Tipo == request.Tipo && p.Atribuicao.Valor == request.Valor && p.DeletadoEm == null);
             if(permissaoBusca.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Uma permissão com Tipo {request.Tipo} e Valor {request.Valor} já foi cadastrada. "));

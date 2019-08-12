@@ -6,6 +6,7 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         {
             var perfil = this.DefinirPerfil(request);
 
-            var perfilExistente = await _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome);
+            var perfilExistente = await _perfilRepository.Buscar(p => p.Identifacao.Nome == request.Nome && p.DeletadoEm == null);
             if (perfilExistente.Any())
             {
                 await _mediator.Publish(new DomainNotification(request.GetType().Name, $"Um perfil com o nome {request.Nome} já existe."));

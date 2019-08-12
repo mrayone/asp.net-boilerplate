@@ -18,7 +18,7 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
 
             perfilConfiguration.OwnsOne(p => p.Identifacao, i =>
             {
-                i.Property(p => p.Descricao).HasColumnName("Descricao").IsRequired();
+                i.Property(p => p.Descricao).HasColumnName("Descricao").IsRequired(false);
                 i.Property(p => p.Nome).HasColumnName("Nome").IsRequired();
             });
 

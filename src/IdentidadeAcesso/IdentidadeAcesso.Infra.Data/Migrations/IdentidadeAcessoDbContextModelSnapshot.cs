@@ -42,98 +42,98 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("10ee538c-01a1-4e41-8956-2b5fae573708"),
+                            Id = new Guid("4f0a7721-c50a-4df1-a1d6-61152f304d6f"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("4cf679e7-ef92-49e4-b677-2ec8d4e91453"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("7caecebf-9522-4e88-9d08-85ba2797caec"),
+                            Id = new Guid("b8ce11d0-f458-4437-a8fa-eaadff320da0"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("99e90c66-a791-42d6-a24a-f4bc1235a576"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("e4cc37cb-10e6-4d85-9c7b-862a472115a5"),
+                            Id = new Guid("a07dd0a4-60b7-45f1-9dbc-a7d4bf8d5f37"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("20f04a05-7732-428c-a5f2-1a5765256808"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("de256069-fea2-4ecf-919d-245ffcda5ed4"),
+                            Id = new Guid("92a02629-8f6e-43c9-a80e-db1fd7368bd8"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("f40ed114-8191-4621-8836-21aaf60eecf4"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("41e7bea1-7a95-4cdb-acc7-4b4c80620cf1"),
+                            Id = new Guid("e953547b-3ef7-4985-8e04-9e0a50b4e635"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("0440c348-12c2-435a-a027-f81636e71faa"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("414af151-1408-4ec6-b1a5-da2630989fa9"),
+                            Id = new Guid("4522b342-6037-43c3-8b39-f367cc17076a"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("1503b73e-4db3-4122-ac1f-b8ce7a0214ee"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("96a5e8ce-7432-4ccd-b733-6cfab29b4d32"),
+                            Id = new Guid("3f02bb54-e8db-4b08-9feb-51ef07cb033c"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("170a49c2-5f0f-4552-b8cc-bf679e96bcbe"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("563b8c28-58ff-4c0c-bb6d-9d98bc81ba5d"),
+                            Id = new Guid("8656ddfb-4851-43a5-bfec-f3e51ab2f4fb"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("cec6f99f-4c3f-483c-ba53-954d79a553e0"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("36479f98-6616-4893-a621-9c4da228637d"),
+                            Id = new Guid("ab516ffa-d02a-4b0b-8a5f-2d0e02ec09e6"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("fc7cc8f8-0fd8-4067-ba34-f8c06e02f57c"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("50b37aa3-cce4-41bf-b178-d1da4cfa5392"),
+                            Id = new Guid("93d04dbd-cd3b-4bd1-a96b-c80ce11056f5"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("f2c056c9-9320-492e-9d6a-563bd5788a8a"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("8ea60c9d-11c6-450d-a055-3ba269922a24"),
+                            Id = new Guid("49c06af4-f0ae-420d-a5d3-09b6df4bfb02"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("e8d085f3-ebc1-4bc1-83c7-1cdc41d3dc49"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("410eb828-8088-46fe-b046-09f3d0edac93"),
+                            Id = new Guid("8b7dd48d-fa14-462e-8a48-0c0a9eeb9115"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("bc6e96ae-c6af-40ca-8c11-cd11fb8a3e27"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("92950fb1-21ad-4dbd-89db-63d60300bbde"),
+                            Id = new Guid("5e27b13a-2e35-48f9-b3b0-c81930aba5ef"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("9f688e0a-a29f-4713-be45-c2a25df474b1"),
                             Status = true
                         },
                         new
                         {
-                            Id = new Guid("2b9306d8-c823-4080-a051-a92ffdcc3edb"),
+                            Id = new Guid("56e2f83e-eeb9-42f3-afeb-e8153ee17a5b"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             PermissaoId = new Guid("a6eb8dd5-cfe6-4154-8a29-f3cf66dc5cd0"),
                             Status = true
@@ -248,7 +248,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                            Id = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                             PerfilId = new Guid("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                             Status = true
                         });
@@ -273,7 +273,6 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.Property<Guid>("PerfilId");
 
                             b1.Property<string>("Descricao")
-                                .IsRequired()
                                 .HasColumnName("Descricao");
 
                             b1.Property<string>("Nome")
@@ -433,7 +432,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                                     Digitos = "28999953084"
                                 });
                         });
@@ -456,7 +455,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                                     Data = new DateTime(1993, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified)
                                 });
                         });
@@ -481,7 +480,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                                     Endereco = "adminfake@mozej.com"
                                 });
                         });
@@ -516,7 +515,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa")
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f")
                                 });
                         });
 
@@ -544,7 +543,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                                     PrimeiroNome = "Maycon Rayone",
                                     Sobrenome = "Rodrigues Xavier"
                                 });
@@ -572,7 +571,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa")
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f")
                                 });
                         });
 
@@ -595,8 +594,8 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
-                                    Caracteres = "AJCSz62DvWZLfooUaYj10vFYzwARYGBCpCx9CPQyoqNQtsphBev+ge2A5oK1lS1B2Q=="
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
+                                    Caracteres = "AINXYaqB+I+QcIA0E2xHq7N4H84CrXPkzoOmJQxf7XV2/mIiHa0xS8RbQOTcOJ6b3g=="
                                 });
                         });
 
@@ -620,7 +619,7 @@ namespace IdentidadeAcesso.Infra.Data.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    UsuarioId = new Guid("bfdbdfc7-70c2-468f-bef5-fb82b67613fa"),
+                                    UsuarioId = new Guid("85a53c0f-7ece-40a2-a272-a03ce143406f"),
                                     Tipo = "Masculino"
                                 });
                         });
