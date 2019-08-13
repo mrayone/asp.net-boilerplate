@@ -7,13 +7,10 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
 import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
-import { ToastrService } from 'ngx-toastr';
 
 import { Router } from '@angular/router';
 import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector';
 import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
-import { ErrosService } from 'src/app/services/erros.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -23,16 +20,13 @@ import { take } from 'rxjs/operators';
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   inRequest = false;
-  errosDeRequest: string[];
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   genericValidator: GenericValidator;
   erros?: { [key: string]: string } = {};
 
-  constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router,
-     private erroService: ErrosService, private toastrService: ToastrService) {
+  constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
-    this.errosDeRequest = [];
   }
 
   autenticarUsuario(): void {
@@ -44,22 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           if (response) {
             this.loginComplete(response);
           }
-          this.checarErrosDeRequest();
           this.inRequest = false;
       });
-    }
-  }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastrService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-      .subscribe(() => this.close());
     }
   }
 
@@ -71,7 +51,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.formInit();
     this.stateInit();
-    this.subscribeErros();
   }
 
   private stateInit() {
@@ -90,16 +69,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
-    });
-  }
-
-  close() {
-    this.erroService.limparErros();
-  }
-
   ngAfterViewInit(): void {
     const controlBlurs: Observable<any>[] = this.formInputElements
     .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
@@ -108,5 +77,4 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.erros = this.genericValidator.processMessages(this.loginForm);
     });
   }
-
 }

@@ -27,11 +27,18 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
         }
         public async Task<CommandResponse> Handle(AtualizarUsuarioCommand request, CancellationToken cancellationToken)
         {
+            var encontrarUsuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
+            if (encontrarUsuario == null)
+            {
+                await _mediator.Publish(new DomainNotification(request.GetType().Name, "Não existe o usuario que você esta tentando modificar."));
+                return await Task.FromResult(CommandResponse.Fail);
+            }
+
             var podeAtualizar = await ValidarOperacao(request);
 
             if (!podeAtualizar) return await Task.FromResult(CommandResponse.Fail);
 
-            var usuario = this.DefinirUsuario(request);
+            var usuario = this.DefinirUsuario(request, encontrarUsuario.Senha.Caracteres);
             var vinculouPerfil = await _service.VincularAoPerfilAsync(request.PerfilId, usuario);
             if (!vinculouPerfil) return await Task.FromResult(CommandResponse.Fail);
 
@@ -47,13 +54,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
         private async Task<bool> ValidarOperacao(AtualizarUsuarioCommand request)
         {
-            var encontrarUsuario = await _usuarioRepository.ObterPorIdAsync(request.Id);
-            if (encontrarUsuario == null)
-            {
-                await _mediator.Publish(new DomainNotification(request.GetType().Name, "Não existe o usuario que você esta tentando modificar."));
-                return await Task.FromResult(false);
-            }
-
             var DisponivelEmailECpf = await _service.DisponivelEmailECpfAsync(request.Email, request.CPF, request.Id);
             if (!DisponivelEmailECpf)
             {

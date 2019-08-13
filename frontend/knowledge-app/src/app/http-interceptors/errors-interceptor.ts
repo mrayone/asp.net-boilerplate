@@ -5,12 +5,14 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { eventNames } from 'cluster';
 import { tap, catchError } from 'rxjs/operators';
+import { ErrosService } from '../services/erros.service';
 
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private auth: UsuarioAutenticadoService, private router: Router) { }
+  constructor(private auth: UsuarioAutenticadoService, private erros: ErrosService,
+    private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
@@ -24,8 +26,9 @@ export class ErrorsInterceptor implements HttpInterceptor {
         this.router.navigateByUrl(`/nao-autorizado`);
       }
 
-      if (errorRequest.status === 401) {
-        this.router.navigateByUrl(`/login`);
+      if (errorRequest.status === 401 || errorRequest.status === 400) {
+        const { error_description, error } = errorRequest.error;
+        this.erros.dispararErro(error_description ? error_description : error);
       }
       return of(result as T);
     };
