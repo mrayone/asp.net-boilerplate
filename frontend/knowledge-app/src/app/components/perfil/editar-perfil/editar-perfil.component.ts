@@ -7,6 +7,7 @@ import { FormType } from 'src/app/Utils/formType/form-type.enum';
 import { FormGroup } from '@angular/forms';
 import { Perfil } from '../models/perfil';
 import { take, switchMap } from 'rxjs/operators';
+import { AtribuicaoDTO } from '../models/atribuicaoDTO';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -37,6 +38,7 @@ export class EditarPerfilComponent implements OnInit {
   onPutCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
       const perfil: Perfil = Object.assign({}, new Perfil(), form.value);
+      perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);
       this.perfilService.put(perfil).subscribe(response => {
         if (this.errosDeRequest.length === 0) {
           this.toastService.success('Operação realiza com sucesso!');
@@ -46,6 +48,9 @@ export class EditarPerfilComponent implements OnInit {
         }
       });
     }
+  }
+  sanitizeAtribuicoes(el, i, arr) {
+    if (el !== null) { return el; }
   }
 
   checarErrosDeRequest() {

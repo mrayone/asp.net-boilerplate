@@ -28,6 +28,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
+        private readonly Mock<IPerfilService> _perfilService;
         private readonly DomainNotificationHandler _notifications;
         private readonly IList<Perfil>_listMock;
         private readonly CriarPerfilCommandHandler _handler;
@@ -37,6 +38,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
+            _perfilService = new Mock<IPerfilService>();
             _notifications = new DomainNotificationHandler();
 
             _listMock = new List<Perfil>()
@@ -45,7 +47,7 @@ namespace IdentidadeAcesso.Services.Tests.CommandsTest.PerfilCommandHandlers
             };
 
             _perfilRepositoryMock.Setup(perfil => perfil.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
-            _handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications);
+            _handler = new CriarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _perfilService.Object, _uow.Object, _notifications);
         }
 
         [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]

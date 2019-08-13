@@ -105,8 +105,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   }
 
   sendCommand() {
-    //this.command.emit(this.perfilForm);
-    console.log(this.model);
+    this.command.emit(this.perfilForm);
   }
 }
 

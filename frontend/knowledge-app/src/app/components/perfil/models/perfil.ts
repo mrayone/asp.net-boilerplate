@@ -5,4 +5,11 @@ export class Perfil {
     nome: string;
     descricao: string;
     atribuicoes: AtribuicaoDTO[];
+
+    /**
+     *
+     */
+    constructor() {
+      this.atribuicoes = new Array<AtribuicaoDTO>();
+    }
 }
