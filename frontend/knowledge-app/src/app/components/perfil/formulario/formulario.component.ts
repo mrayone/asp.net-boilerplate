@@ -40,9 +40,9 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   }
 
   ordemAlfabetica(a: Permissao, b: Permissao) {
-    if (a.valor < b.valor) {
+    if (a.tipo < b.tipo) {
       return -1;
-    } else if (a.valor > b.valor) {
+    } else if (a.tipo > b.tipo) {
       return 1;
     }
     return 0;
@@ -62,25 +62,6 @@ export class FormularioComponent implements OnInit, AfterViewInit {
 
     this.perfilForm.addControl('atribuicoes', new FormArray(array));
   }
-
-  //TODO: o que interessa é apenas o valor e o id.
-  //talvez seja melhor uilizar apenas os valores e criar o array de radio buttons.
-  // get mapPermissoes(): any {
-  //   const permissoes = [];
-  //   this.permissoes.forEach((value, index, array) => {
-  //     const valores = array.filter((el) => el.tipo === value.tipo);
-  //     if (permissoes.findIndex((p) => p.tipo === value.tipo) === -1) {
-  //       this.perfilForm.addControl('atribuicoes', new FormArray([
-
-  //       ]));
-  //       permissoes.push({
-  //         tipo: value.tipo,
-  //         valores
-  //       });
-  //     }
-  //   });
-  //   return permissoes;
-  // }
 
   radioAtivo(index, value): boolean {
     const control = this.perfilForm.value.atribuicoes[index];
