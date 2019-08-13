@@ -1,10 +1,4 @@
-<div class="row" *ngIf="perfil">
-  <div class="col-md-12">
-    <app-card-rounded titulo="Editar Perfil" [bodyTemplate]="bodyTemplate">
-      <ng-template #bodyTemplate>
-        <app-formulario-perfil [formType]="formType" (command)="onPutCommand($event)" [model]="perfil">
-        </app-formulario-perfil>
-      </ng-template>
-    </app-card-rounded>
-  </div>
+<div *ngIf="perfil">
+  <app-formulario-perfil [formType]="formType" (command)="onPutCommand($event)" [model]="perfil">
+  </app-formulario-perfil>
 </div>
