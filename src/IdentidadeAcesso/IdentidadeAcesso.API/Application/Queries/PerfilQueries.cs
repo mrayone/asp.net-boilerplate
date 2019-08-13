@@ -62,7 +62,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                 var result = await connection.QueryAsync<PerfilViewModel, AtribuicaoDTO,
                     PerfilViewModel>(sql, (p, a) =>
                     {
-                        if (a != null)
+                        if (a.PermissaoId != Guid.Empty)
                         {
                             p.Atribuicoes.Add(a);
                         }

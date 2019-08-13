@@ -32,17 +32,35 @@ export class FormularioComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.permissoesService.getTodas().subscribe(permissoes => {
-      this.permissoes = permissoes;
-
-      const array = [];
-      this.permissoes.forEach((el) => {
-        array.push(new FormControl());
-      });
-
-      this.perfilForm.addControl('atribuicoes', new FormArray(array));
+      this.permissoes = permissoes.sort(this.ordemAlfabetica);
+      this.gerarFields();
     });
 
     this.gerarFormulario();
+  }
+
+  ordemAlfabetica(a: Permissao, b: Permissao) {
+    if (a.valor < b.valor) {
+      return -1;
+    } else if (a.valor > b.valor) {
+      return 1;
+    }
+    return 0;
+  }
+
+  gerarFields() {
+    const array = [];
+    this.permissoes.forEach((el) => {
+      const permissaoPerfil = this.model.atribuicoes.find((atr) => atr.permissaoId === el.id);
+      if (permissaoPerfil) {
+        const { permissaoId, ativo } = permissaoPerfil;
+        array.push(new FormControl({ permissaoId, ativo }));
+      } else {
+        array.push(new FormControl());
+      }
+    });
+
+    this.perfilForm.addControl('atribuicoes', new FormArray(array));
   }
 
   //TODO: o que interessa é apenas o valor e o id.

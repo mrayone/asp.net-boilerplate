@@ -29,10 +29,6 @@
               [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
               [disabled]="perfilForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
           </div>
-
-          <div class="row">
-            {{perfilForm.value | json}}
-          </div>
         </div>
       </div>
     </ng-template>
