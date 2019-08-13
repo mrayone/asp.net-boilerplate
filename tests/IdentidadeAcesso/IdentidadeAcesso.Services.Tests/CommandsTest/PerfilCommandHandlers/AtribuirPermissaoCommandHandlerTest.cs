@@ -51,13 +51,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
                 new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
-                    Ativa = true
+                    Ativo = true
                     
                 },
                 new AtribuicaoDTO()
                 {
                     PermissaoId = Guid.NewGuid(),
-                    Ativa = true
+                    Ativo = true
                 }
             };
         }
@@ -105,7 +105,7 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             //arrange
             var permissao1 = Guid.NewGuid();
             var permissao = _list.FirstOrDefault();
-            permissao.Ativa = false;
+            permissao.Ativo = false;
 
             var perfil = TestBuilder.PerfilFalso();
             _perfilRepositoryMock.Setup(p => p.ObterComPermissoesAsync(It.IsAny<Guid>())).ReturnsAsync(perfil);

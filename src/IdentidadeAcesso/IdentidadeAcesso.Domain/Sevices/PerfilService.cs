@@ -42,7 +42,6 @@ namespace IdentidadeAcesso.Domain.Sevices
             {
                 perfil.AssinarPermissao(permissao.Id);
             }
-            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }
@@ -51,17 +50,15 @@ namespace IdentidadeAcesso.Domain.Sevices
         {
             var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
-            var containsPermissao = perfil.Atribuicoes.Where(p => p.PermissaoId == permissaoId);
-            if (!containsPermissao.Any())
+            if (permissao == null)
             {
-                await _mediator.Publish(new DomainNotification(GetType().Name, "Erro ao cancelar permissão, verifique se a mesma já foi assinada."));
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Permissão não encontrada."));
+
             }
             else
             {
-                perfil.CancelarPermissao(permissaoId);
+                perfil.CancelarPermissao(permissao.Id);
             }
-
-            _perfilRepo.Atualizar(perfil);
 
             return await Task.FromResult(perfil);
         }

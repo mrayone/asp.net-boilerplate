@@ -19,7 +19,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "1",
-                descricao: "a"
+                descricao: "a",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -28,7 +29,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "1",
-                descricao: "a"
+                descricao: "a",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -36,7 +38,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1"
+                descricao: "Perfil de acesso nível 1",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -45,7 +48,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1"
+                descricao: "Perfil de acesso nível 1",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -56,7 +60,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 01",
-                descricao: "Perfil de acesso nível 1"
+                descricao: "Perfil de acesso nível 1",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -64,7 +69,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         {
             return new CriarPerfilCommand(
                 nome: "Perfil RH 02",
-                descricao: "Perfil de acesso nível 1"
+                descricao: "Perfil de acesso nível 1",
+                new List<AtribuicaoDTO>()
                 );
         }
 
@@ -73,7 +79,8 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             return new AtualizarPerfilCommand(
                 id: Guid.NewGuid(),
                 nome: "Perfil RH 02",
-                descricao: "Perfil de acesso nível 1"
+                descricao: "Perfil de acesso nível 1",
+                new List<AtribuicaoDTO>()
                 );
         }
     }

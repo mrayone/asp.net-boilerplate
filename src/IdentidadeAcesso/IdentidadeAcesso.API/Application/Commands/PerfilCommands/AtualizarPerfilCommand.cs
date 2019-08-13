@@ -10,10 +10,12 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
     public class AtualizarPerfilCommand : BasePerfilCommand<AtualizarPerfilCommand>
     {
-        public AtualizarPerfilCommand(Guid id, string nome, string descricao)
+        public AtualizarPerfilCommand(Guid id, string nome, string descricao, List<AtribuicaoDTO> atribuicoes)
         {
             Id = id;
             Nome = nome;
-            Descricao = descricao;        }
+            Descricao = descricao;
+            Atribuicoes = atribuicoes;
+        }
     }
 }

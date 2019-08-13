@@ -56,21 +56,13 @@
             <p>Adicionar</p>
           </a>
         </li>
-
-        <li class="nav-sub-item" routerLinkActive="active">
-            <a [routerLink]="['/perfis/atribuir-permissoes']">
-              <i class="ti-unlock"></i>
-              <p>Atribuir Permissões</p>
-            </a>
-          </li>
       </div>
 
       <li class="nav-item">
         <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePermissao"
           (click)="isCollapsePermissao = !isCollapsePermissao" aria-controls="subMenuPermissao">
           <i class="ti-key"></i>
-          <p>Permissões <i [ngClass]="{'ti-angle-up': !isCollapsePermissao, 'ti-angle-down': isCollapsePermissao }"></i>
-          </p>
+          <p>Permissões <i [ngClass]="{'ti-angle-up': !isCollapsePermissao, 'ti-angle-down': isCollapsePermissao }"></i></p>
         </a>
       </li>
 

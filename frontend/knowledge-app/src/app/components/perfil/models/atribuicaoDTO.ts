@@ -1,4 +1,4 @@
 export class AtribuicaoDTO {
   permissaoId:	string;
-  ativa: boolean;
+  ativo: boolean;
 }

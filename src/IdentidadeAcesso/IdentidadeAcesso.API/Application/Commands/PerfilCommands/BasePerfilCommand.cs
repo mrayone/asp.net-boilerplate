@@ -20,5 +20,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
         [DataMember]
         public string Descricao { get; protected set; }
 
+        public List<AtribuicaoDTO> Atribuicoes { get; protected set; }
+
     }
 }

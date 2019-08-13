@@ -17,15 +17,18 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
         private readonly IMediator _mediator;
         private readonly IPerfilRepository _perfilRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPerfilService _perfilService;
 
         public AtualizarPerfilCommandHandler(IMediator mediator, 
-            IPerfilRepository perfilRepository, 
+            IPerfilRepository perfilRepository,
+            IPerfilService domainService,
             IUnitOfWork unitOfWork,
             INotificationHandler<DomainNotification> notifications) : base(mediator, unitOfWork, notifications )
         {
             _mediator = mediator;
             _perfilRepository = perfilRepository;
             _unitOfWork = unitOfWork;
+            _perfilService = domainService;
         }
 
         public async Task<CommandResponse> Handle(AtualizarPerfilCommand request, CancellationToken cancellationToken)
@@ -45,6 +48,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             if (await Commit())
             {
+                await _mediator.Send(new AtribuirPermissaoCommand(request.Id, request.Atribuicoes));
                 await _mediator.Publish(new PerfilAtualizadoEvent(perfil));
             }
 

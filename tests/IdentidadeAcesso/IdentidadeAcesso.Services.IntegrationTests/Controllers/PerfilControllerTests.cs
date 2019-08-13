@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using IdentidadeAcesso.API.Application.Commands.PerfilCommands;
 using IdentidadeAcesso.API.Application.Models;
 using IdentidadeAcesso.Services.IntegrationTests.WebService;
 using IdentidadeAcesso.Services.IntegrationTests.WebService.Extension;
@@ -142,7 +143,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
          var permissaoAtribuida = perfil.Atribuicoes
                 .Where(p => p.PermissaoId.Equals(Guid.Parse(permissaoId))).FirstOrDefault();
             permissaoAtribuida.Should().NotBeNull();
-            permissaoAtribuida.Ativa.Should().BeFalse();
+            permissaoAtribuida.Ativo.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve cadastrar perfil e retornar Ok.")]
@@ -154,7 +155,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var perfil = new
             {
                 Nome = "Vendas 002",
-                Descricao = "Perfil para vendedores gerenciar suas vendas"
+                Descricao = "Perfil para vendedores gerenciar suas vendas",
+                Atribuicoes = new List<AtribuicaoDTO>()
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(perfil));
@@ -178,7 +180,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             {
                 Id = "8cd6c8ca-7db7-4551-b6c5-f7a724286709",
                 Nome = "Vendas 003",
-                Descricao = "Perfil para vendedores gerenciar suas vendas"
+                Descricao = "Perfil para vendedores gerenciar suas vendas",
+                Atribuicoes = new List<AtribuicaoDTO>()
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(perfil));

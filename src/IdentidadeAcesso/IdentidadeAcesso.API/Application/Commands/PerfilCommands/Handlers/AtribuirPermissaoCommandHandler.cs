@@ -40,7 +40,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             foreach (var item in request.Atribuicoes)
             {
-                if (item.Ativa) perfil = await _perfilService.AtribuirPermissaoAsync(perfil, item.PermissaoId);
+                if (item.Ativo) perfil = await _perfilService.AtribuirPermissaoAsync(perfil, item.PermissaoId);
                 else perfil = await _perfilService.RevogarPermissaoAsync(perfil, item.PermissaoId);
             }
 

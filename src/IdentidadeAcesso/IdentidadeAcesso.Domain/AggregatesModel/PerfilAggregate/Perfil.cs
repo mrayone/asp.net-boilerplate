@@ -48,7 +48,10 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate
                 permissaoAssinada.DesativarAssinatura();
                 _atribuicoes.Add(permissaoAssinada);
             }
-            permissaoExistente.DesativarAssinatura();
+            else
+            {
+                permissaoExistente.DesativarAssinatura();
+            }
         }
 
         public void Deletar()

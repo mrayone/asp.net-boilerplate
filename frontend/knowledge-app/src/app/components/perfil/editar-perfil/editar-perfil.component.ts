@@ -7,6 +7,7 @@ import { FormType } from 'src/app/Utils/formType/form-type.enum';
 import { FormGroup } from '@angular/forms';
 import { Perfil } from '../models/perfil';
 import { take, switchMap } from 'rxjs/operators';
+import { AtribuicaoDTO } from '../models/atribuicaoDTO';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -18,11 +19,10 @@ export class EditarPerfilComponent implements OnInit {
   perfil: Perfil;
   errosDeRequest: string[];
   formType = FormType.Put;
-
-  constructor(private perfilService: PerfilService,
-              private erroService: ErrosService, private toastService: ToastrService, private router: Router,
-              private route: ActivatedRoute) {
-  }
+  inRequest = false;
+  constructor(private perfilService: PerfilService, private erroService: ErrosService,
+    private toastService: ToastrService, private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -37,7 +37,9 @@ export class EditarPerfilComponent implements OnInit {
 
   onPutCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
+      this.inRequest = true;
       const perfil: Perfil = Object.assign({}, new Perfil(), form.value);
+      perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);
       this.perfilService.put(perfil).subscribe(response => {
         if (this.errosDeRequest.length === 0) {
           this.toastService.success('Operação realiza com sucesso!');
@@ -45,8 +47,12 @@ export class EditarPerfilComponent implements OnInit {
         } else {
           this.checarErrosDeRequest();
         }
+        this.inRequest = false;
       });
     }
+  }
+  sanitizeAtribuicoes(el, i, arr) {
+    if (el !== null) { return el; }
   }
 
   checarErrosDeRequest() {

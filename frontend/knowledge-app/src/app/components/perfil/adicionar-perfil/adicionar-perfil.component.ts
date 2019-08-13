@@ -20,6 +20,7 @@ export class AdicionarPerfilComponent implements OnInit {
 
   errosDeRequest: string[];
   formType = FormType.Post;
+  inRequest = false;
   ngOnInit() {
 
     this.subscribeErros();
@@ -27,7 +28,9 @@ export class AdicionarPerfilComponent implements OnInit {
 
   onPostCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
+      this.inRequest = true;
       const perfil: Perfil = Object.assign({ }, new Perfil(), form.value);
+      perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);
       this.perfilService.post(perfil).subscribe(response => {
          if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realiza com sucesso!');
@@ -35,8 +38,13 @@ export class AdicionarPerfilComponent implements OnInit {
          } else {
            this.checarErrosDeRequest();
          }
+         this.inRequest = false;
       });
     }
+  }
+
+  sanitizeAtribuicoes(el, i, arr) {
+    if (el !== null) { return el; }
   }
 
   checarErrosDeRequest() {
