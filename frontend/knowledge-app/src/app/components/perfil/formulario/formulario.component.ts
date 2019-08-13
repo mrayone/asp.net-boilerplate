@@ -21,6 +21,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   genericValidator: any;
   @Input() model: Perfil;
   @Input() formType: FormType = FormType.Post;
+  @Input() inRequest: false;
   @Output() command = new EventEmitter<FormGroup>();
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 

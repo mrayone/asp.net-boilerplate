@@ -27,7 +27,7 @@
           <div class="row center">
             <button class="btn ml-auto mr-auto btn-lg btn-rounded"
               [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
-              [disabled]="perfilForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+              [disabled]="perfilForm.invalid || inRequest">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
           </div>
         </div>
       </div>

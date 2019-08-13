@@ -19,7 +19,7 @@ export class EditarPerfilComponent implements OnInit {
   perfil: Perfil;
   errosDeRequest: string[];
   formType = FormType.Put;
-
+  inRequest = false;
   constructor(private perfilService: PerfilService, private erroService: ErrosService,
     private toastService: ToastrService, private router: Router,
     private route: ActivatedRoute) { }
@@ -37,6 +37,7 @@ export class EditarPerfilComponent implements OnInit {
 
   onPutCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
+      this.inRequest = true;
       const perfil: Perfil = Object.assign({}, new Perfil(), form.value);
       perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);
       this.perfilService.put(perfil).subscribe(response => {
@@ -46,6 +47,7 @@ export class EditarPerfilComponent implements OnInit {
         } else {
           this.checarErrosDeRequest();
         }
+        this.inRequest = false;
       });
     }
   }
