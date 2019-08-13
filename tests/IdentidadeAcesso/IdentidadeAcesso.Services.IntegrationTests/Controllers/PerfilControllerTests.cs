@@ -142,7 +142,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
          var permissaoAtribuida = perfil.Atribuicoes
                 .Where(p => p.PermissaoId.Equals(Guid.Parse(permissaoId))).FirstOrDefault();
             permissaoAtribuida.Should().NotBeNull();
-            permissaoAtribuida.Ativa.Should().BeFalse();
+            permissaoAtribuida.Ativo.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Deve cadastrar perfil e retornar Ok.")]

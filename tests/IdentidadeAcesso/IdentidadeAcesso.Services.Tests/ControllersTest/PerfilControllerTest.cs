@@ -43,7 +43,7 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
                     new AtribuicaoDTO()
                     {
                         PermissaoId = Guid.NewGuid(),
-                        Ativa =  false
+                        Ativo =  false
                     }
                 }
             );
