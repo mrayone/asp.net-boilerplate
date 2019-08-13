@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services
             var sobrenome = identities.Claims.Where(c => c.Type == "sobrenome").FirstOrDefault();
             var email = identities.Claims.Where(c => c.Type == "email").FirstOrDefault();
 
-            var perfil = await _perfilRepository.ObterComPermissoesAsync(Guid.Parse(perfilId.Value));
+            var perfil = await _perfilRepository.ObterComPermissoesAtivasAsync(Guid.Parse(perfilId.Value));
 
             if(perfil != null)
             {

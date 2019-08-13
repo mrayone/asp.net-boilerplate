@@ -21,39 +21,7 @@ export class CanActivateUser implements CanActivate {
     }
 
     this.loginService.validateToken();
-    if (!this.checarClaims()) {
-      this.router.navigate(['/nao-autorizado']);
-      return false;
-    }
 
     return true;
-  }
-
-  checarClaims(): boolean {
-    let contemClaim = true;
-    let usuarioModel: UsuarioViewModel;
-    const tokenModel = this.usuarioAutenticado.getAuthorizationToken();
-    if (!tokenModel) { return false; }
-
-    usuarioModel = jwtParser(tokenModel.access_token) as UsuarioViewModel;
-
-    const claim = usuarioModel.permissions.find((val, i) => {
-      return this.checarPermissaoRota(val);
-    });
-
-    contemClaim = !!claim;
-
-    return contemClaim;
-  }
-
-  checarPermissaoRota(valor: string): boolean {
-    switch (this.router.url) {
-      case '/usuarios/adicionar':
-        return valor === 'Criar Usuário';
-      case '/usuarios':
-        return valor === 'Visualizar Usuários';
-      default:
-        return true;
-    }
   }
 }

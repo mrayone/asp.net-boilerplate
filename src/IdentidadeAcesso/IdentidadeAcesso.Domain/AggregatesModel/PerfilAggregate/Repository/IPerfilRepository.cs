@@ -9,5 +9,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository
     public interface IPerfilRepository : IRepository<Perfil>
     {
         Task<Perfil> ObterComPermissoesAsync(Guid id);
+        Task<Perfil> ObterComPermissoesAtivasAsync (Guid id);
     }
 }
