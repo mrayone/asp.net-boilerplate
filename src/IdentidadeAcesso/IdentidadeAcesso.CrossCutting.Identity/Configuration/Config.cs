@@ -43,7 +43,8 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
                         new Secret("secret".Sha256())
                     },
                     AllowedScopes = { "api", IdentityServerConstants.StandardScopes.OfflineAccess },
-                    AllowOfflineAccess =  true
+                    AllowOfflineAccess =  true,
+                    UpdateAccessTokenClaimsOnRefresh = true,
                 }
             };
         }

@@ -40,7 +40,6 @@ export class ErrosService {
         case 'invalid_username_or_password':
           return 'E-mail ou senha inválidos.';
         case 'invalid_grant':
-          this.stateManager.dispatch(new Logout());
           return 'Ocorreu algum erro, tente novamente mais tarde.';
         default:
           if (mensagem) { return mensagem; } else { return 'Ocorreu algum erro.'; }
