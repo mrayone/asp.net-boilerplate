@@ -12,7 +12,6 @@ import { Perfil } from '../../perfil/models/perfil';
 import { CustomValidators } from 'ng2-validation';
 import { AppState } from 'src/app/store/reducers';
 import { Store, select } from '@ngrx/store';
-import { InRequest } from 'src/app/store/selectors/app.selector';
 import { InrequestService } from 'src/app/services/inrequest.service';
 
 @Component({

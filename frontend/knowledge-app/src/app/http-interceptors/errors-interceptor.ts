@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpResponse, HttpErrorResponse, HttpEvent } from '@angular/common/http';
-import { UsuarioAutenticadoService } from '../services/usuario-autenticado.service';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { eventNames } from 'cluster';
 import { tap, catchError } from 'rxjs/operators';
 import { ErrosService } from '../services/erros.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../store/reducers';
-import { Progress, Stopped } from '../store/actions/app.actions';
 import { InrequestService } from '../services/inrequest.service';
 
 

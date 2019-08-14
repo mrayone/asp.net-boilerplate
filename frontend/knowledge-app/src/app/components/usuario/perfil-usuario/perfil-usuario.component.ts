@@ -19,21 +19,12 @@ export class PerfilUsuarioComponent implements OnInit {
   formType: FormType = FormType.Put;
   usuario: Usuario;
   errosDeRequest: string[];
-  constructor(private usuarioService: UsuarioService, private toastService: ToastrService,
-    private erroService: ErrosService) {
-
+  constructor(private usuarioService: UsuarioService, private toastService: ToastrService) {
   }
 
   ngOnInit() {
     this.usuarioService.getUsuarioInfo().subscribe(usuario => {
       this.usuario = usuario;
-    });
-    this.subscribeErros();
-  }
-
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
     });
   }
 
@@ -44,25 +35,8 @@ export class PerfilUsuarioComponent implements OnInit {
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.putUsuarioPerfil(usuario).subscribe(response => {
-        if (this.errosDeRequest.length === 0) {
           this.toastService.success('Operação realizada com sucesso!');
-        } else {
-          this.checarErrosDeRequest();
-        }
       });
-    }
-  }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-        .subscribe(() => this.erroService.limparErros());
     }
   }
 }

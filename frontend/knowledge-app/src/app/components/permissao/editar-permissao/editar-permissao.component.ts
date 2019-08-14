@@ -18,8 +18,6 @@ export class EditarPermissaoComponent implements OnInit {
 
   constructor(private permissaoService: PermissaoService,
               private route: ActivatedRoute, private router: Router,
-              private modalService: NgbModal,
-              private erroService: ErrosService,
               private toastService: ToastrService) { }
 
     permissao: Permissao;

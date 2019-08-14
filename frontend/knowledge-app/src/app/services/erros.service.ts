@@ -15,16 +15,6 @@ export class ErrosService {
     this.errosMessage$ = new Observable((observer) => observer.next(this.erros));
   }
 
-  adicionarErro(mensagem: string) {
-    this.errosMessage$.subscribe(erros => erros.push(this.traduzirMensagem(mensagem)));
-  }
-
-  adicionarRange(array: []) {
-    this.errosMessage$.subscribe(erros => {
-      erros.push(...array);
-    });
-  }
-
   dispararErro(mensagem: string) {
     const msg = this.traduzirMensagem(mensagem);
     this.toastrService.error(msg, 'Erros', {
@@ -43,13 +33,6 @@ export class ErrosService {
     }).onTap.pipe(take(1));
   }
 
-  getErros(): Observable<string[]> {
-    return this.errosMessage$;
-  }
-
-  limparErros() {
-    this.errosMessage$.subscribe(erros => erros.length = 0);
-  }
 
   private traduzirMensagem(mensagem: string): string {
 

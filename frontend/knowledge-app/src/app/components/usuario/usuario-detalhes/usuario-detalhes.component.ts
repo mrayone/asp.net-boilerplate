@@ -20,7 +20,6 @@ export class UsuarioDetalhesComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
               private route: ActivatedRoute, private router: Router,
               private modalService: NgbModal,
-              private erroService: ErrosService,
               private toastService: ToastrService) {
    }
   ngOnInit() {
@@ -30,7 +29,6 @@ export class UsuarioDetalhesComponent implements OnInit {
       )
     ).subscribe(map => {
       this.usuario = map;
-      this.subscribeErros();
     });
   }
 
@@ -53,37 +51,13 @@ export class UsuarioDetalhesComponent implements OnInit {
     }
   }
 
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
-    });
-  }
-
   private deletarUsuario(result: string) {
     if (result === `Closed with: Ok click`) {
         this.usuarioService.delete(this.usuario.id)
         .subscribe(() => {
-          if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realizada com sucesso!');
             this.router.navigate(['/usuarios']);
-          } else {
-            this.checarErrosDeRequest();
-          }
         });
     }
   }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-        .subscribe(() => this.erroService.limparErros());
-    }
-  }
-
 }

@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../models/usuario';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { switchMap, take } from 'rxjs/operators';
-import { FormType } from '../../../Utils/formType/form-type.enum';
 import { FormGroup } from '@angular/forms';
-import { ErrosService } from 'src/app/services/erros.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Perfil } from '../../perfil/models/perfil';
+import { switchMap } from 'rxjs/operators';
 import { PerfilService } from 'src/app/services/perfil.service';
-import { AppState } from 'src/app/store/reducers';
-import { Store, select } from '@ngrx/store';
-import { InRequest } from 'src/app/store/selectors/app.selector';
-import { InrequestService } from 'src/app/services/inrequest.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { FormType } from '../../../Utils/formType/form-type.enum';
+import { Perfil } from '../../perfil/models/perfil';
+import { Usuario } from '../models/usuario';
 
 @Component({
   selector: 'app-editar-usuario',

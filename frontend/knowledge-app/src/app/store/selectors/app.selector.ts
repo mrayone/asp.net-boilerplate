@@ -7,8 +7,3 @@ export const ObterTokenModel = createSelector(
     selectorAppState,
     store => store.auth
 );
-
-export const InRequest = createSelector(
-  selectorAppState,
-  state => state.inRequest
-);

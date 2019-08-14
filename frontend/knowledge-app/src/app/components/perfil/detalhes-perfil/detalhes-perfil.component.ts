@@ -3,7 +3,6 @@ import { Perfil } from '../models/perfil';
 import { PerfilService } from 'src/app/services/perfil.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { ErrosService } from 'src/app/services/erros.service';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap, take } from 'rxjs/operators';
 
@@ -20,7 +19,6 @@ export class DetalhesPerfilComponent implements OnInit {
   constructor(private perfilService: PerfilService,
               private route: ActivatedRoute, private router: Router,
               private modalService: NgbModal,
-              private erroService: ErrosService,
               private toastService: ToastrService) {
    }
   ngOnInit() {
@@ -30,7 +28,6 @@ export class DetalhesPerfilComponent implements OnInit {
       )
     ).subscribe(map => {
       this.perfil = map;
-      this.subscribeErros();
     });
   }
 
@@ -53,36 +50,13 @@ export class DetalhesPerfilComponent implements OnInit {
     }
   }
 
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
-    });
-  }
-
   private deletarPerfil(result: string) {
     if (result === `Closed with: Ok click`) {
         this.perfilService.delete(this.perfil.id)
         .subscribe(() => {
-          if (this.errosDeRequest.length === 0) {
             this.toastService.success('Operação realizada com sucesso!');
             this.router.navigate(['/permissoes']);
-          } else {
-            this.checarErrosDeRequest();
-          }
         });
-    }
-  }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-        .subscribe(() => this.erroService.limparErros());
     }
   }
 }

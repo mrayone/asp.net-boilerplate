@@ -6,12 +6,10 @@ export const LOGIN_KEY = 'USUARIO_TOKEN';
 
 export interface StateApp {
   auth: TokenModel;
-  inRequest: boolean;
 }
 
 export const initialState: StateApp = {
-  auth: new TokenModel(),
-  inRequest: false
+  auth: new TokenModel()
 };
 
 export function reducer(state = initialState, action: AppActions) {
@@ -24,12 +22,6 @@ export function reducer(state = initialState, action: AppActions) {
       return removeLoginState();
     case AppTypes.ReaverToken:
       return reaverToken(state);
-    case AppTypes.RequestProgress:
-      state.inRequest = true;
-      return state;
-    case AppTypes.RequestStopped:
-      state.inRequest = false;
-      return state;
   }
 }
 
@@ -41,13 +33,11 @@ function setLoginState(state = initialState) {
 
 function removeLoginState() {
   localStorage.removeItem(LOGIN_KEY);
-  initialState.inRequest = false;
   return initialState;
 }
 
 function reaverToken(state = initialState) {
   const stringTokenModel = localStorage.getItem(LOGIN_KEY);
   state.auth = JSON.parse(stringTokenModel) as TokenModel;
-  state.inRequest = false;
   return state;
 }
