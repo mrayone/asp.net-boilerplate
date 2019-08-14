@@ -14,22 +14,10 @@ import { Progress, Stopped } from '../store/actions/app.actions';
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private erros: ErrosService, private store: Store<AppState>,
-    private router: Router) { }
+  constructor(private erros: ErrosService, private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      tap(
-        event => {
-          if (event instanceof HttpResponse) {
-            if (event.body) {
-              this.store.dispatch(new Stopped());
-            }
-          } else {
-            this.store.dispatch(new Progress());
-          }
-        },
-      ),
       catchError(this.handleError<any>())
     );
   }
@@ -52,8 +40,6 @@ export class ErrorsInterceptor implements HttpInterceptor {
           this.erros.dispararRangeErros(errorRequest.error);
         }
       }
-
-      this.store.dispatch(new Stopped());
       return of(result as T);
     };
   }

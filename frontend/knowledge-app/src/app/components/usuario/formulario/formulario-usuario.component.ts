@@ -28,20 +28,19 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @Input() formType: FormType = FormType.Post;
   @Input() adminInput: boolean;
   @Input() perfis: Perfil[];
+  @Input() InRequest = false;
   @Output() command = new EventEmitter<FormGroup>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   usuarioForm: FormGroup;
   genericValidator: GenericValidator;
   erros: any = {};
-  inRequest$: Observable<boolean>;
   constructor(private store: Store<AppState>) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
   ngOnInit() {
     this.gerarFormulario();
-    this.inRequest$ = this.store.pipe(select(InRequest));
   }
 
   sendCommand() {
