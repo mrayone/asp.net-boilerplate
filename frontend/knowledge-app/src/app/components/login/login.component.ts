@@ -30,21 +30,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   autenticarUsuario(): void {
-    if ( this.loginForm.valid ) {
+    if (this.loginForm.valid) {
       const model = new GrantAcessModel(this.loginForm.value.username,
-         this.loginForm.value.password);
-      this.inRequest = true;
+        this.loginForm.value.password);
       this.loginService.getTokenAcesso(model).subscribe(response => {
-          if (response) {
-            this.loginComplete(response);
-          }
-        });
+        if (response) {
+          this.loginComplete(response);
+        }
+      });
     }
   }
 
   loginComplete(response: TokenModel) {
-      this.stateService.dispatch(new Autorizacao(response));
-      this.router.navigate(['dashboard']);
+    this.stateService.dispatch(new Autorizacao(response));
+    this.router.navigate(['dashboard']);
   }
 
   ngOnInit() {
@@ -54,11 +53,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   private stateInit() {
     this.stateService.pipe(select(ObterTokenModel))
-    .subscribe(token => {
-      if (token) {
-        this.router.navigate(['/dashboard']);
-      }
-    });
+      .subscribe(token => {
+        if (token) {
+          this.router.navigate(['/dashboard']);
+        }
+      });
   }
 
   private formInit() {
@@ -70,7 +69,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const controlBlurs: Observable<any>[] = this.formInputElements
-    .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
+      .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
 
     merge(...controlBlurs).subscribe(value => {
       this.erros = this.genericValidator.processMessages(this.loginForm);
