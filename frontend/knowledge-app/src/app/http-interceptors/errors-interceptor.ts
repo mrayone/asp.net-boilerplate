@@ -9,15 +9,24 @@ import { ErrosService } from '../services/erros.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../store/reducers';
 import { Progress, Stopped } from '../store/actions/app.actions';
+import { InrequestService } from '../services/inrequest.service';
 
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private erros: ErrosService, private router: Router) { }
+  constructor(private erros: ErrosService, private inRequestService: InrequestService, private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.inRequestService.startRequest();
     return next.handle(req).pipe(
+      tap(
+        event => {
+          if (event instanceof HttpResponse) {
+            this.inRequestService.stopRequest();
+          }
+        }
+      ),
       catchError(this.handleError<any>())
     );
   }
@@ -40,6 +49,8 @@ export class ErrorsInterceptor implements HttpInterceptor {
           this.erros.dispararRangeErros(errorRequest.error);
         }
       }
+
+      this.inRequestService.stopRequest();
       return of(result as T);
     };
   }

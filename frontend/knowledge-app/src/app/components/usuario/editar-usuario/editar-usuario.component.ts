@@ -12,6 +12,7 @@ import { PerfilService } from 'src/app/services/perfil.service';
 import { AppState } from 'src/app/store/reducers';
 import { Store, select } from '@ngrx/store';
 import { InRequest } from 'src/app/store/selectors/app.selector';
+import { InrequestService } from 'src/app/services/inrequest.service';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -23,8 +24,7 @@ export class EditarUsuarioComponent implements OnInit {
   formType: FormType = FormType.Put;
   usuario: Usuario;
   perfis: Perfil[];
-  InRequest = false;
-  constructor(private usuarioService: UsuarioService, private toastService: ToastrService, private route: ActivatedRoute,
+  constructor(private usuarioService: UsuarioService, private toastService: ToastrService,  private route: ActivatedRoute,
     private router: Router, private perfilService: PerfilService) {
   }
 
@@ -44,13 +44,11 @@ export class EditarUsuarioComponent implements OnInit {
 
   putUsuario(form: FormGroup) {
     if (form.valid) {
-      this.InRequest = true;
       this.usuario = Object.assign({}, new Usuario(), form.value);
       this.usuario.dataDeNascimento =
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.put(this.usuario).subscribe(response => {
-          this.InRequest = false;
           this.toastService.success('Operação realizada com sucesso!');
       });
     }

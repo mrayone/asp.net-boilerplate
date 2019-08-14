@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
 import { ErrosService } from './erros.service';
+import { InrequestService } from './inrequest.service';
 
 @Injectable({
   providedIn: 'root'

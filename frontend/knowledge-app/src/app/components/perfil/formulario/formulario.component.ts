@@ -8,9 +8,7 @@ import { Observable, fromEvent, merge } from 'rxjs';
 import { PermissaoService } from 'src/app/services/permissao.service';
 import { Permissao } from '../../permissao/Models/permissao';
 import * as _ from "lodash";
-import { AppState } from 'src/app/store/reducers';
-import { Store, select } from '@ngrx/store';
-import { InRequest } from 'src/app/store/selectors/app.selector';
+import { InrequestService } from 'src/app/services/inrequest.service';
 @Component({
   selector: 'app-formulario-perfil',
   templateUrl: './formulario.component.html',
@@ -22,14 +20,12 @@ export class FormularioComponent implements OnInit, AfterViewInit {
   permissoes: Permissao[];
   erros: any = {};
   genericValidator: any;
-  inRequest$: Observable<boolean>;
   @Input() model: Perfil;
   @Input() formType: FormType = FormType.Post;
-  @Input() inRequest: false;
   @Output() command = new EventEmitter<FormGroup>();
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
 
-  constructor(private permissoesService: PermissaoService, private store: Store<AppState>) {
+  constructor(private permissoesService: PermissaoService, public inRequestService: InrequestService) {
     this.genericValidator = new GenericValidator(mensagensDeErroPerfilForm);
     this.model = new Perfil();
     this.permissoes = new Array<Permissao>();
@@ -40,8 +36,6 @@ export class FormularioComponent implements OnInit, AfterViewInit {
       this.permissoes = permissoes.sort(this.ordemAlfabetica);
       this.gerarFields();
     });
-
-    this.inRequest$ = this.store.pipe(select(InRequest));
     this.gerarFormulario();
   }
 
@@ -112,6 +106,7 @@ export class FormularioComponent implements OnInit, AfterViewInit {
 
   sendCommand() {
     this.command.emit(this.perfilForm);
+    this.inRequestService.startRequest();
   }
 }
 

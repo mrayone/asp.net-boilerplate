@@ -13,6 +13,7 @@ import { CustomValidators } from 'ng2-validation';
 import { AppState } from 'src/app/store/reducers';
 import { Store, select } from '@ngrx/store';
 import { InRequest } from 'src/app/store/selectors/app.selector';
+import { InrequestService } from 'src/app/services/inrequest.service';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -28,14 +29,13 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @Input() formType: FormType = FormType.Post;
   @Input() adminInput: boolean;
   @Input() perfis: Perfil[];
-  @Input() InRequest = false;
   @Output() command = new EventEmitter<FormGroup>();
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   usuarioForm: FormGroup;
   genericValidator: GenericValidator;
   erros: any = {};
-  constructor(private store: Store<AppState>) {
+  constructor(public inRequestService: InrequestService) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
@@ -45,6 +45,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
 
   sendCommand() {
     this.command.emit(this.usuarioForm);
+    this.inRequestService.startRequest();
   }
 
   gerarFormulario(): void {

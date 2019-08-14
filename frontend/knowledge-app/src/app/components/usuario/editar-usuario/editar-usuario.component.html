@@ -3,7 +3,7 @@
     <app-card-rounded titulo="Editar Usuário" [bodyTemplate]="campos">
       <ng-template #campos>
         <app-formulario-usuario [formType]="formType" [adminInput]="true" [perfis]="perfis"
-        (command)="putUsuario($event)" [model]="usuario" [InRequest]="InRequest"></app-formulario-usuario>
+        (command)="putUsuario($event)" [model]="usuario"></app-formulario-usuario>
       </ng-template>
     </app-card-rounded>
   </div>
