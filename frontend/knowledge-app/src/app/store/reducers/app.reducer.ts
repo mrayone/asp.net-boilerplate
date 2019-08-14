@@ -15,7 +15,6 @@ export const initialState: StateApp = {
 export function reducer(state = initialState, action: AppActions) {
   switch (action.type) {
     case AppTypes.RefreshToken:
-      window.location.reload();
       return setLoginState(action.payload);
     case AppTypes.Login:
       return setLoginState(action.payload);

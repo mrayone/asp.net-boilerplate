@@ -5,12 +5,14 @@ import { Observable, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { ErrosService } from '../services/erros.service';
 import { InrequestService } from '../services/inrequest.service';
+import { UsuarioAutenticadoService } from '../services/usuario-autenticado.service';
 
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private erros: ErrosService, private inRequestService: InrequestService, private router: Router) { }
+  constructor(private erros: ErrosService, private inRequestService: InrequestService, private auth: UsuarioAutenticadoService,
+     private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.inRequestService.startRequest();
@@ -33,15 +35,21 @@ export class ErrorsInterceptor implements HttpInterceptor {
       }
 
       if (errorRequest.status === 401) {
-        this.router.navigate([`/login`]);
+        const tkModel = this.auth.getAuthorizationToken();
+        if (this.auth.tokenExpirou(tkModel.access_token)) {
+          this.auth.refreshToken(tkModel);
+          this.router.navigate(['/dashboard']);
+        }
       }
 
       if (errorRequest.status === 400) {
         const { error_description } = errorRequest.error;
         if (error_description) {
           this.erros.dispararErro(error_description);
-        } else {
+        } else if (errorRequest.error instanceof Array) {
           this.erros.dispararRangeErros(errorRequest.error);
+        } else {
+          this.erros.dispararErro(errorRequest.error.error);
         }
       }
 

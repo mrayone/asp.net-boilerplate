@@ -21,7 +21,7 @@ const httpOptions = {
 export class LogInService {
 
   private tokenModel: TokenModel;
-  constructor(private http: HttpClient, private stateManager: Store<AppState>, private erros: ErrosService) {
+  constructor(private http: HttpClient, private stateManager: Store<AppState>) {
     stateManager.pipe(select(ObterTokenModel)).subscribe(model => this.tokenModel = model);
   }
 
@@ -40,27 +40,7 @@ export class LogInService {
     return hasToken;
   }
 
-  validateToken() {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { exp } = jwtParser(this.tokenModel.access_token) as any;
-    const dateExpire = new Date(exp * 1000);
-    const tokenExpirou = dateExpire < new Date();
-    if (tokenExpirou) {
-      this.introspectToken().subscribe(value => {
-        if (!value.active) {
-          this.refreshToken().subscribe(model => {
-            if (model) {
-              this.stateManager.dispatch(new RefreshToken({ auth: model}));
-            } else {
-              this.stateManager.dispatch(new Logout());
-            }
-          });
-        }
-      });
-    }
-  }
-
-  private introspectToken(): Observable<IntrospectModel> {
+  introspectToken(): Observable<IntrospectModel> {
     // tslint:disable-next-line: no-shadowed-variable
     const httpOptions = {
       headers: new HttpHeaders({

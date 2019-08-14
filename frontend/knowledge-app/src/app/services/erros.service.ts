@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { Logout } from '../store/actions/app.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrosService {
 
-  private errosMessage$: Observable<string[]>;
-  private erros: string[];
-  constructor( private toastrService: ToastrService) {
-    this.erros = [];
-    this.errosMessage$ = new Observable((observer) => observer.next(this.erros));
+  constructor( private toastrService: ToastrService, private store: Store<AppState>) {
   }
 
   dispararErro(mensagem: string) {
@@ -40,6 +39,7 @@ export class ErrosService {
       case 'invalid_username_or_password':
         return 'E-mail ou senha inválidos.';
       case 'invalid_grant':
+        this.store.dispatch(new Logout());
         return 'Ocorreu algum erro, tente novamente mais tarde.';
       default:
         if (mensagem) { return mensagem; } else { return 'Ocorreu algum erro.'; }
