@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './state-manager/reducers';
+import { reducers, metaReducers } from './store/reducers';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './components/shared/shared.module';

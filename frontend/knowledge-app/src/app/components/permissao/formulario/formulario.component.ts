@@ -5,6 +5,9 @@ import { FormType } from 'src/app/Utils/formType/form-type.enum';
 import { merge, Observable, fromEvent } from 'rxjs';
 import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErroPermissaoForm } from './mensagens-de-erro/mensagens-de-erro';
+import { AppState } from 'src/app/store/reducers';
+import { Store, select } from '@ngrx/store';
+import { InRequest } from 'src/app/store/selectors/app.selector';
 
 
 @Component({
@@ -15,20 +18,22 @@ import { mensagensDeErroPermissaoForm } from './mensagens-de-erro/mensagens-de-e
 export class FormularioComponent implements OnInit, AfterViewInit {
 
   permissaoForm: FormGroup;
-  @Input() model: Permissao;
-  @Input() formType: FormType = FormType.Post;
   erros: any = {};
   genericValidator: any;
+  inRequest$: Observable<boolean>;
+  @Input() model: Permissao;
+  @Input() formType: FormType = FormType.Post;
 
   @Output() command = new EventEmitter<FormGroup>();
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
-  constructor() {
+  constructor(private store: Store<AppState>) {
     this.genericValidator = new GenericValidator(mensagensDeErroPermissaoForm);
     this.model =  new Permissao();
    }
 
   ngOnInit() {
     this.gerarFormulario();
+    this.inRequest$ = this.store.pipe(select(InRequest));
   }
 
   gerarFormulario() {

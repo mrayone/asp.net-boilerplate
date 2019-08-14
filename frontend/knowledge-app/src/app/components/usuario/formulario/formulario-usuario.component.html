@@ -198,6 +198,6 @@
 
       <div class="form-row center">
           <button class="btn ml-auto mr-auto btn-lg btn-rounded" [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
-          [disabled]="usuarioForm.invalid">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+          [disabled]="usuarioForm.invalid || (inRequest$ | async)">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
       </div>
 </form>

@@ -4,13 +4,13 @@ import { logging } from 'protractor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { url } from './config/config';
-import { AppState } from '../state-manager/reducers';
+import { AppState } from '../store/reducers';
 import { Store, select } from '@ngrx/store';
-import { ObterTokenModel } from '../state-manager/selectors/token.selector';
+import { ObterTokenModel } from '../store/selectors/app.selector';
 import { jwtParser } from '../Utils/jwtParser';
-import { Logout, RefreshToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout, RefreshToken } from '../store/actions/app.actions';
 import { TokenModel, GrantAcessModel } from './config/models/models';
-import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
+import { LOGIN_KEY } from '../store/reducers/app.reducer';
 import { ErrosService } from './erros.service';
 
 const httpOptions = {
@@ -55,7 +55,7 @@ export class LogInService {
         if (!value.active) {
           this.refreshToken().subscribe(model => {
             if (model) {
-              this.stateManager.dispatch(new RefreshToken(model));
+              this.stateManager.dispatch(new RefreshToken({ auth: model, inRequest: false}));
             } else {
               this.stateManager.dispatch(new Logout());
             }

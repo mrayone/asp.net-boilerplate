@@ -4,12 +4,12 @@ import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { merge, Observable, fromEvent } from 'rxjs';
 import { LogInService } from 'src/app/services/log-in.service';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/state-manager/reducers';
-import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
+import { AppState } from 'src/app/store/reducers';
+import { Autorizacao } from 'src/app/store/actions/app.actions';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
 import { Router } from '@angular/router';
-import { ObterTokenModel } from 'src/app/state-manager/selectors/token.selector';
+import { ObterTokenModel, InRequest } from 'src/app/store/selectors/app.selector';
 import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
 
 @Component({
@@ -19,7 +19,7 @@ import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/mode
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
-  inRequest = false;
+  inRequest$: Observable<boolean>;
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   genericValidator: GenericValidator;
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
+    this.inRequest$ = this.stateService.pipe(select(InRequest));
   }
 
   autenticarUsuario(): void {
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   loginComplete(response: TokenModel) {
-    this.stateService.dispatch(new Autorizacao(response));
+    this.stateService.dispatch(new Autorizacao({auth: response, inRequest: false}));
     this.router.navigate(['dashboard']);
   }
 

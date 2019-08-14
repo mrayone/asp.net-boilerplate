@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { AppState } from './state-manager/reducers';
-import { ObterTokenModel } from './state-manager/selectors/token.selector';
+import { AppState } from './store/reducers';
+import { ObterTokenModel } from './store/selectors/app.selector';
 import { Observable, interval } from 'rxjs';
-import { ReaverToken } from './state-manager/actions/autorizacao/autorizacao.actions';
+import { ReaverToken } from './store/actions/app.actions';
+import { TokenModel } from './services/config/models/models';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,10 @@ import { ReaverToken } from './state-manager/actions/autorizacao/autorizacao.act
 
 export class AppComponent implements OnInit {
   autenticado: boolean;
-
+  tokenModel$: Observable<TokenModel>;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new ReaverToken());
+    this.tokenModel$ = this.store.pipe(select(ObterTokenModel));
   }
 
   ngOnInit(): void {
@@ -23,9 +25,8 @@ export class AppComponent implements OnInit {
   }
 
   validarToken(): void {
-    this.store.pipe(select(ObterTokenModel))
-    .subscribe(token => {
-      this.autenticado = !!token;
+    this.tokenModel$.subscribe(val => {
+      this.autenticado = !!val;
     });
   }
 }

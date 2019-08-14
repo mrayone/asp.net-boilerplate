@@ -6,16 +6,30 @@ import { Observable, of } from 'rxjs';
 import { eventNames } from 'cluster';
 import { tap, catchError } from 'rxjs/operators';
 import { ErrosService } from '../services/erros.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { Progress, Stopped } from '../store/actions/app.actions';
 
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private auth: UsuarioAutenticadoService, private erros: ErrosService,
+  constructor(private erros: ErrosService, private store: Store<AppState>,
     private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
+      tap(
+        event => {
+          if (event instanceof HttpResponse) {
+            if (event.body) {
+              this.store.dispatch(new Stopped());
+            }
+          } else {
+            this.store.dispatch(new Progress());
+          }
+        },
+      ),
       catchError(this.handleError<any>())
     );
   }
@@ -27,17 +41,19 @@ export class ErrorsInterceptor implements HttpInterceptor {
       }
 
       if (errorRequest.status === 401) {
-        this.router.navigateByUrl(`/login`);
+        this.router.navigate([`/login`]);
       }
 
       if (errorRequest.status === 400) {
         const { error_description } = errorRequest.error;
-        if ( error_description ) {
+        if (error_description) {
           this.erros.dispararErro(error_description);
         } else {
           this.erros.dispararRangeErros(errorRequest.error);
         }
       }
+
+      this.store.dispatch(new Stopped());
       return of(result as T);
     };
   }

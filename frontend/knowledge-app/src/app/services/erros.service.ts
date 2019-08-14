@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AppState } from '../state-manager/reducers';
-import { Store } from '@ngrx/store';
-import { Logout } from '../state-manager/actions/autorizacao/autorizacao.actions';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 
@@ -13,7 +10,7 @@ export class ErrosService {
 
   private errosMessage$: Observable<string[]>;
   private erros: string[];
-  constructor(private stateManager: Store<AppState>, private toastrService: ToastrService) {
+  constructor( private toastrService: ToastrService) {
     this.erros = [];
     this.errosMessage$ = new Observable((observer) => observer.next(this.erros));
   }
