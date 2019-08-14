@@ -21,6 +21,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             return new Senha(HashPassword(senha));
         }
 
+        public static Senha DefinirSenhaHash(string senha)
+        {
+            return new Senha(senha);
+        }
+
         private static string HashPassword(string password)
         {
             byte[] salt;
