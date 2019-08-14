@@ -17,7 +17,6 @@ export const initialState: StateApp = {
 export function reducer(state = initialState, action: AppActions) {
   switch (action.type) {
     case AppTypes.RefreshToken:
-      window.location.reload();
       return setLoginState(action.payload);
     case AppTypes.Login:
       return setLoginState(action.payload);
@@ -40,9 +39,10 @@ function setLoginState(state = initialState) {
   return state;
 }
 
-function removeLoginState(state = initialState) {
+function removeLoginState() {
   localStorage.removeItem(LOGIN_KEY);
-  return null;
+  initialState.inRequest = false;
+  return initialState;
 }
 
 function reaverToken(state = initialState) {
