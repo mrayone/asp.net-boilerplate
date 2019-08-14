@@ -6,15 +6,19 @@ import { Observable, of } from 'rxjs';
 import { eventNames } from 'cluster';
 import { tap, catchError } from 'rxjs/operators';
 import { ErrosService } from '../services/erros.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducers';
+import { Progress, Stopped } from '../store/actions/app.actions';
 
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
 
-  constructor(private auth: UsuarioAutenticadoService, private erros: ErrosService,
+  constructor(private erros: ErrosService, private store: Store<AppState>,
     private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.store.dispatch(new Progress());
     return next.handle(req).pipe(
       catchError(this.handleError<any>())
     );
@@ -27,7 +31,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
       }
 
       if (errorRequest.status === 401) {
-        this.router.navigateByUrl(`/login`);
+        this.router.navigate([`/login`]);
       }
 
       if (errorRequest.status === 400) {
@@ -38,6 +42,8 @@ export class ErrorsInterceptor implements HttpInterceptor {
           this.erros.dispararRangeErros(errorRequest.error);
         }
       }
+
+      this.store.dispatch(new Stopped());
       return of(result as T);
     };
   }

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { url, httpOptions } from './config/config';
-import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
-import { Perfil } from '../components/perfil/models/perfil';
 import { ErrosService } from './erros.service';
 
 @Injectable({

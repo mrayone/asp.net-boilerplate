@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivationStart, ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/state-manager/reducers';
-import { Logout } from 'src/app/state-manager/actions/autorizacao.actions';
+import { AppState } from 'src/app/store/reducers';
+import { Logout } from 'src/app/store/actions/app.actions';
 import { UsuarioViewModel, UsuarioAutenticadoService } from 'src/app/services/usuario-autenticado.service';
 import { jwtParser } from 'src/app/Utils/jwtParser';
 

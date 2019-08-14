@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TokenModel } from './config/models/models';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../state-manager/reducers';
-import { ObterTokenModel } from '../state-manager/selectors/token.selector';
+import { AppState } from '../store/reducers';
+import { ObterTokenModel } from '../store/selectors/app.selector';
 import { jwtParser } from '../Utils/jwtParser';
 
 @Injectable({

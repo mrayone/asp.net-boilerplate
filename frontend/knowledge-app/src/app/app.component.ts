@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { AppState } from './state-manager/reducers';
-import { ObterTokenModel } from './state-manager/selectors/token.selector';
+import { AppState } from './store/reducers';
+import { ObterTokenModel } from './store/selectors/app.selector';
 import { Observable, interval } from 'rxjs';
-import { ReaverToken } from './state-manager/actions/autorizacao.actions';
+import { ReaverToken } from './store/actions/app.actions';
 
 @Component({
   selector: 'app-root',
