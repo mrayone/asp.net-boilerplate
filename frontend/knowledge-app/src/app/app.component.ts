@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from './state-manager/reducers';
 import { ObterTokenModel } from './state-manager/selectors/token.selector';
 import { Observable, interval } from 'rxjs';
-import { ReaverToken } from './state-manager/actions/autorizacao/autorizacao.actions';
+import { ReaverToken } from './state-manager/actions/autorizacao.actions';
 
 @Component({
   selector: 'app-root',

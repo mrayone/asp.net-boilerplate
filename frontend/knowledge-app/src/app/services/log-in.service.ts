@@ -8,9 +8,9 @@ import { AppState } from '../state-manager/reducers';
 import { Store, select } from '@ngrx/store';
 import { ObterTokenModel } from '../state-manager/selectors/token.selector';
 import { jwtParser } from '../Utils/jwtParser';
-import { Logout, RefreshToken } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout, RefreshToken } from '../state-manager/actions/autorizacao.actions';
 import { TokenModel, GrantAcessModel } from './config/models/models';
-import { LOGIN_KEY } from '../state-manager/reducers/autorizacao/autorizacao.reducer';
+import { LOGIN_KEY } from '../state-manager/reducers/autorizacao.reducer';
 import { ErrosService } from './erros.service';
 
 const httpOptions = {

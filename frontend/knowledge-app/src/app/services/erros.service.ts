@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AppState } from '../state-manager/reducers';
 import { Store } from '@ngrx/store';
-import { Logout } from '../state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout } from '../state-manager/actions/autorizacao.actions';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 

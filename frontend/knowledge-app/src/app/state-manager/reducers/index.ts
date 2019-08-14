@@ -2,7 +2,7 @@ import {
   ActionReducerMap, MetaReducer,
 } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
-import * as fromUser from './autorizacao/autorizacao.reducer';
+import * as fromUser from './autorizacao.reducer';
 import { TokenModel } from 'src/app/services/config/models/models';
 
 export interface AppState {

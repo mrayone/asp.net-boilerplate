@@ -3,7 +3,7 @@ import { Router, ActivationStart, ActivatedRoute } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
-import { Logout } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
+import { Logout } from 'src/app/state-manager/actions/autorizacao.actions';
 import { UsuarioViewModel, UsuarioAutenticadoService } from 'src/app/services/usuario-autenticado.service';
 import { jwtParser } from 'src/app/Utils/jwtParser';
 

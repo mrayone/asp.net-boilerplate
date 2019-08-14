@@ -5,7 +5,7 @@ import { merge, Observable, fromEvent } from 'rxjs';
 import { LogInService } from 'src/app/services/log-in.service';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/state-manager/reducers';
-import { Autorizacao } from 'src/app/state-manager/actions/autorizacao/autorizacao.actions';
+import { Autorizacao } from 'src/app/state-manager/actions/autorizacao.actions';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
 import { Router } from '@angular/router';
