@@ -12,41 +12,26 @@ import { AtribuicaoDTO } from '../components/perfil/models/atribuicaoDTO';
 })
 export class PerfilService {
 
-  constructor(private http: HttpClient, private errosService: ErrosService) { }
+  constructor(private http: HttpClient) { }
 
   post(perfil: Perfil): Observable<HttpResponse<any>> {
-    return this.http.post(`${url}/api/v1/perfis`, perfil, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('postPerfil'))
-      );
+    return this.http.post<HttpResponse<any>>(`${url}/api/v1/perfis`, perfil, httpOptions);
   }
 
   put(perfil: Perfil): Observable<HttpResponse<any>> {
-    return this.http.put(`${url}/api/v1/perfis`, perfil, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('putPerfil'))
-      );
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/perfis`, perfil, httpOptions);
   }
 
   delete(uid: string) {
-    return this.http.delete(`${url}/api/v1/perfis/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('deletePerfil'))
-      );
+    return this.http.delete(`${url}/api/v1/perfis/${uid}`, httpOptions);
   }
 
   getPorId(uid: string): Observable<Perfil> {
-    return this.http.get(`${url}/api/v1/perfis/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getPerfilPorId'))
-      );
+    return this.http.get<Perfil>(`${url}/api/v1/perfis/${uid}`, httpOptions);
   }
 
   public getTodos(): Observable<Perfil[]> {
-    return this.http.get(`${url}/api/v1/perfis/obter-todos`)
-    .pipe(
-      catchError(this.handleError<any>('getTodosOsPerfis'))
-    );
+    return this.http.get<Perfil[]>(`${url}/api/v1/perfis/obter-todos`);
   }
 
   public putAtribuirPermissoes(perfilId: string, atribuicoes: AtribuicaoDTO[] ): Observable<HttpResponse<any>> {
@@ -54,19 +39,6 @@ export class PerfilService {
       perfilId,
       atribuicoes
     };
-    return this.http.put(`${url}/api/v1/perfis/atribuir-permissoes`, objeto, httpOptions)
-    .pipe(
-      catchError(this.handleError<any>('putAtribuirPermissoes'))
-    );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (errorRequest: any): Observable<T> => {
-      const { error } = errorRequest;
-      this.errosService.adicionarErro( error.error_description ? error.error_description : error  ) ;
-      console.error(error);
-      return of(result as T);
-
-    };
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/perfis/atribuir-permissoes`, objeto, httpOptions);
   }
 }

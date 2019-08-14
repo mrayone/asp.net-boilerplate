@@ -7,9 +7,7 @@ export enum AppTypes {
   Login = '[Autorização Component] Login',
   RefreshToken = '[Autorização Component] Refresh Token',
   Logout = '[Autorização Component] Logout',
-  ReaverToken = '[Autorização Component] ReaverToken',
-  RequestProgress = '[Request Component] Progress',
-  RequestStopped = '[Request Component] Stopped',
+  ReaverToken = '[Autorização Component] ReaverToken'
 }
 
 export class Autorizacao implements Action {
@@ -29,22 +27,10 @@ export class Logout implements Action {
   constructor() { }
 }
 
-export class Progress implements Action {
-  readonly type = AppTypes.RequestProgress;
-
-  constructor() { }
-}
-
-export class Stopped implements Action {
-  readonly type = AppTypes.RequestStopped;
-
-  constructor() { }
-}
-
 export class ReaverToken implements Action {
   readonly type = AppTypes.ReaverToken;
 
   constructor() { }
 }
 
-export type AppActions = Autorizacao | RefreshToken | Logout | ReaverToken | Progress | Stopped;
+export type AppActions = Autorizacao | RefreshToken | Logout | ReaverToken;

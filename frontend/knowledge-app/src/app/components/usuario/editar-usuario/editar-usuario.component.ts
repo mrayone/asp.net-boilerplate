@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../models/usuario';
-import { UsuarioService } from 'src/app/services/usuario.service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { switchMap, take } from 'rxjs/operators';
-import { FormType } from '../../../Utils/formType/form-type.enum';
 import { FormGroup } from '@angular/forms';
-import { ErrosService } from 'src/app/services/erros.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Perfil } from '../../perfil/models/perfil';
+import { switchMap } from 'rxjs/operators';
 import { PerfilService } from 'src/app/services/perfil.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { FormType } from '../../../Utils/formType/form-type.enum';
+import { Perfil } from '../../perfil/models/perfil';
+import { Usuario } from '../models/usuario';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -19,12 +18,9 @@ export class EditarUsuarioComponent implements OnInit {
 
   formType: FormType = FormType.Put;
   usuario: Usuario;
-  errosDeRequest: string[];
   perfis: Perfil[];
-  constructor(private usuarioService: UsuarioService, private toastService: ToastrService, private route: ActivatedRoute,
-              private router: Router, private perfilService: PerfilService,
-              private erroService: ErrosService) {
-
+  constructor(private usuarioService: UsuarioService, private toastService: ToastrService,  private route: ActivatedRoute,
+    private router: Router, private perfilService: PerfilService) {
   }
 
   ngOnInit() {
@@ -34,47 +30,22 @@ export class EditarUsuarioComponent implements OnInit {
       )
     ).subscribe(map => {
       this.usuario = map;
-      this.subscribeErros();
     });
 
     this.perfilService.getTodos().subscribe(perfis => {
       this.perfis = perfis;
-  });
-  }
-
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
     });
   }
 
   putUsuario(form: FormGroup) {
-    if (form.dirty && form.valid) {
+    if (form.valid) {
       this.usuario = Object.assign({}, new Usuario(), form.value);
       this.usuario.dataDeNascimento =
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.put(this.usuario).subscribe(response => {
-        if (this.errosDeRequest.length === 0) {
           this.toastService.success('Operação realizada com sucesso!');
-        } else {
-          this.checarErrosDeRequest();
-        }
       });
     }
   }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-        .subscribe(() => this.erroService.limparErros());
-    }
-  }
-
 }

@@ -18,24 +18,22 @@ export class DetalhesPermissaoComponent implements OnInit {
   closeResult: string;
   errosDeRequest: string[];
   constructor(private permissaoService: PermissaoService,
-              private route: ActivatedRoute, private router: Router,
-              private modalService: NgbModal,
-              private erroService: ErrosService,
-              private toastService: ToastrService) {
-   }
+    private route: ActivatedRoute, private router: Router,
+    private modalService: NgbModal,
+    private toastService: ToastrService) {
+  }
   ngOnInit() {
-   this.route.paramMap.pipe(
-      switchMap( (params: ParamMap) =>
-       this.permissaoService.getPorId(params.get('id'))
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.permissaoService.getPorId(params.get('id'))
       )
     ).subscribe(map => {
       this.permissao = map;
-      this.subscribeErros();
     });
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
       this.deletarPermissao(this.closeResult);
     }, (reason) => {
@@ -49,40 +47,17 @@ export class DetalhesPermissaoComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
-  }
-
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
-    });
   }
 
   private deletarPermissao(result: string) {
     if (result === `Closed with: Ok click`) {
-        this.permissaoService.delete(this.permissao.id)
+      this.permissaoService.delete(this.permissao.id)
         .subscribe(() => {
-          if (this.errosDeRequest.length === 0) {
-            this.toastService.success('Operação realizada com sucesso!');
-            this.router.navigate(['/perfis']);
-          } else {
-            this.checarErrosDeRequest();
-          }
+          this.toastService.success('Operação realizada com sucesso!');
+          this.router.navigate(['/perfis']);
         });
-    }
-  }
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-        .subscribe(() => this.erroService.limparErros());
     }
   }
 }

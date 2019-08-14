@@ -11,48 +11,25 @@ import { Permissao } from '../components/permissao/Models/permissao';
 })
 export class PermissaoService {
 
-  constructor(private http: HttpClient, private errosService: ErrosService) { }
+  constructor(private http: HttpClient) { }
 
   post(permissao: Permissao): Observable<HttpResponse<any>> {
-    return this.http.post(`${url}/api/v1/permissoes`, permissao, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('postPermissao'))
-      );
+    return this.http.post<HttpResponse<any>>(`${url}/api/v1/permissoes`, permissao, httpOptions);
   }
 
   put(permissao: Permissao): Observable<HttpResponse<any>> {
-    return this.http.put(`${url}/api/v1/permissoes`, permissao, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('putPermissao'))
-      );
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/permissoes`, permissao, httpOptions);
   }
 
   delete(uid: string) {
-    return this.http.delete(`${url}/api/v1/permissoes/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('deletePermissao'))
-      );
+    return this.http.delete(`${url}/api/v1/permissoes/${uid}`, httpOptions);
   }
 
   getTodas(): Observable<Permissao[]> {
-    return this.http.get(`${url}/api/v1/permissoes/obter-todas`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getTodasPermissoes'))
-      );
+    return this.http.get<Permissao[]>(`${url}/api/v1/permissoes/obter-todas`, httpOptions);
   }
 
   getPorId(uid: string): Observable<Permissao> {
-    return this.http.get(`${url}/api/v1/permissoes/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getPermissaoPorId'))
-      );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: {}): Observable<T> => {
-      // Let the app keep running by returning an empty result.
-      this.errosService.adicionarRange(error['error']);
-      return of(result as T);
-    };
+    return this.http.get<Permissao>(`${url}/api/v1/permissoes/${uid}`, httpOptions);
   }
 }

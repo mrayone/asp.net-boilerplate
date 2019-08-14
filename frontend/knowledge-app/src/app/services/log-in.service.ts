@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { logging } from 'protractor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { url } from './config/config';
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Logout, RefreshToken } from '../store/actions/app.actions';
 import { AppState } from '../store/reducers';
-import { Store, select } from '@ngrx/store';
+import { LOGIN_KEY } from '../store/reducers/app.reducer';
 import { ObterTokenModel } from '../store/selectors/app.selector';
 import { jwtParser } from '../Utils/jwtParser';
-import { Logout, RefreshToken } from '../store/actions/app.actions';
-import { TokenModel, GrantAcessModel } from './config/models/models';
-import { LOGIN_KEY } from '../store/reducers/app.reducer';
+import { url } from './config/config';
+import { GrantAcessModel, TokenModel } from './config/models/models';
 import { ErrosService } from './erros.service';
 
 const httpOptions = {
@@ -28,10 +26,7 @@ export class LogInService {
   }
 
   getTokenAcesso(grantAcess: GrantAcessModel): Observable<TokenModel> {
-    return this.http.post(`${url}/connect/token`, grantAcess, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('obterToken'))
-      );
+    return this.http.post<TokenModel>(`${url}/connect/token`, grantAcess, httpOptions);
   }
 
   hasToken(): boolean {
@@ -55,7 +50,7 @@ export class LogInService {
         if (!value.active) {
           this.refreshToken().subscribe(model => {
             if (model) {
-              this.stateManager.dispatch(new RefreshToken({ auth: model, inRequest: false}));
+              this.stateManager.dispatch(new RefreshToken({ auth: model}));
             } else {
               this.stateManager.dispatch(new Logout());
             }
@@ -76,10 +71,7 @@ export class LogInService {
     const token = this.tokenModel.access_token;
     const postModel = new HttpParams({ fromObject: { token } });
 
-    return this.http.post(`${url}/connect/introspect`, postModel, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('validarToken'))
-      );
+    return this.http.post<IntrospectModel>(`${url}/connect/introspect`, postModel, httpOptions);
   }
 
   refreshToken(): Observable<TokenModel> {
@@ -91,22 +83,7 @@ export class LogInService {
         refresh_token
       }
     });
-    return this.http.post(`${url}/connect/token`, postModel, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('refreshToken'))
-      );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (errorRequest: any): Observable<T> => {
-      // Let the app keep running by returning an empty result.
-      if (operation === 'refreshToken') {
-        this.stateManager.dispatch(new Logout());
-      }
-      const { error_description, error } = errorRequest.error;
-      this.erros.adicionarErro( error_description ? error_description : error ) ;
-      return of(result as T);
-    };
+    return this.http.post<TokenModel>(`${url}/connect/token`, postModel, httpOptions);
   }
 }
 

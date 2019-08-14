@@ -12,7 +12,7 @@ import { Perfil } from '../../perfil/models/perfil';
 import { CustomValidators } from 'ng2-validation';
 import { AppState } from 'src/app/store/reducers';
 import { Store, select } from '@ngrx/store';
-import { InRequest } from 'src/app/store/selectors/app.selector';
+import { InrequestService } from 'src/app/services/inrequest.service';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -34,18 +34,17 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   usuarioForm: FormGroup;
   genericValidator: GenericValidator;
   erros: any = {};
-  inRequest$: Observable<boolean>;
-  constructor(private store: Store<AppState>) {
+  constructor(public inRequestService: InrequestService) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
   ngOnInit() {
     this.gerarFormulario();
-    this.inRequest$ = this.store.pipe(select(InRequest));
   }
 
   sendCommand() {
     this.command.emit(this.usuarioForm);
+    this.inRequestService.startRequest();
   }
 
   gerarFormulario(): void {

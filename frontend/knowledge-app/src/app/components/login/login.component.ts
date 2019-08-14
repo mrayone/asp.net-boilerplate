@@ -1,16 +1,16 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, FormControlName, Validators, FormControl } from '@angular/forms';
-import { GenericValidator } from 'src/app/Utils/generic-validator';
-import { merge, Observable, fromEvent } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
+import { FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { fromEvent, merge, Observable } from 'rxjs';
+import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
 import { LogInService } from 'src/app/services/log-in.service';
-import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/store/reducers';
 import { Autorizacao } from 'src/app/store/actions/app.actions';
+import { AppState } from 'src/app/store/reducers';
+import { ObterTokenModel } from 'src/app/store/selectors/app.selector';
+import { GenericValidator } from 'src/app/Utils/generic-validator';
 import { mensagensDeErro } from './mensgens-de-erro/mensagens';
 
-import { Router } from '@angular/router';
-import { ObterTokenModel, InRequest } from 'src/app/store/selectors/app.selector';
-import { GrantAcessModel, TokenModel } from 'src/app/services/config/models/models';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(private loginService: LogInService, private stateService: Store<AppState>, private router: Router) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
-    this.inRequest$ = this.stateService.pipe(select(InRequest));
   }
 
   autenticarUsuario(): void {
@@ -43,7 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   loginComplete(response: TokenModel) {
-    this.stateService.dispatch(new Autorizacao({auth: response, inRequest: false}));
+    this.stateService.dispatch(new Autorizacao({auth: response}));
     this.router.navigate(['dashboard']);
   }
 

@@ -16,57 +16,25 @@ import { Router } from '@angular/router';
 })
 export class AdicionarUsuarioComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private perfilService: PerfilService,
-    private erroService: ErrosService, private toastService: ToastrService, private router: Router) { }
+    private toastService: ToastrService, private router: Router) { }
 
   perfis: Perfil[];
-  errosDeRequest: string[];
   ngOnInit() {
     this.perfilService.getTodos().subscribe(perfis => {
-        this.perfis = perfis;
+      this.perfis = perfis;
     });
-
-    this.subscribeErros();
   }
 
   onPostCommand(form: FormGroup) {
     if (form.dirty && form.valid) {
-      const usuario: Usuario = Object.assign({ }, new Usuario(), form.value);
+      const usuario: Usuario = Object.assign({}, new Usuario(), form.value);
       usuario.dataDeNascimento =
-      `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
+        `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.post(usuario).subscribe(response => {
-         if (this.errosDeRequest.length === 0) {
-            this.toastService.success('Operação realiza com sucesso!')
-                .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
-         } else {
-           this.checarErrosDeRequest();
-         }
+        this.toastService.success('Operação realiza com sucesso!')
+          .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
       });
     }
   }
-
-
-  checarErrosDeRequest() {
-    if (this.errosDeRequest.length > 0) {
-      const erros = this.errosDeRequest.reduce((acc, next) => {
-        return `<p>${acc}</p>` + `<p>${next}</p>`;
-      });
-      this.toastService.error(erros, 'Erros', {
-        enableHtml: true,
-        disableTimeOut: true
-      }).onTap.pipe(take(1))
-      .subscribe(() => this.close());
-    }
-  }
-
-  private subscribeErros() {
-    this.erroService.getErros().subscribe(erros => {
-      this.errosDeRequest = erros;
-    });
-  }
-
-  close() {
-    this.erroService.limparErros();
-  }
-
 }
