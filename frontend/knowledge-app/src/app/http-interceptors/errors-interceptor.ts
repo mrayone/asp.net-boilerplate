@@ -18,8 +18,18 @@ export class ErrorsInterceptor implements HttpInterceptor {
     private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.store.dispatch(new Progress());
     return next.handle(req).pipe(
+      tap(
+        event => {
+          if (event instanceof HttpResponse) {
+            if (event.body) {
+              this.store.dispatch(new Stopped());
+            }
+          } else {
+            this.store.dispatch(new Progress());
+          }
+        },
+      ),
       catchError(this.handleError<any>())
     );
   }
@@ -36,7 +46,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
 
       if (errorRequest.status === 400) {
         const { error_description } = errorRequest.error;
-        if ( error_description ) {
+        if (error_description) {
           this.erros.dispararErro(error_description);
         } else {
           this.erros.dispararRangeErros(errorRequest.error);

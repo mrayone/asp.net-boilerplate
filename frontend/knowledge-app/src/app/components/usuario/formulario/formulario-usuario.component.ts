@@ -10,6 +10,9 @@ import { Usuario } from '../models/usuario';
 import { FormType } from '../../../Utils/formType/form-type.enum';
 import { Perfil } from '../../perfil/models/perfil';
 import { CustomValidators } from 'ng2-validation';
+import { AppState } from 'src/app/store/reducers';
+import { Store, select } from '@ngrx/store';
+import { InRequest } from 'src/app/store/selectors/app.selector';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -30,13 +33,15 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   usuarioForm: FormGroup;
   genericValidator: GenericValidator;
-  erros?: { [key: string]: string } = {};
-  constructor() {
+  erros: any = {};
+  inRequest$: Observable<boolean>;
+  constructor(private store: Store<AppState>) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
   ngOnInit() {
     this.gerarFormulario();
+    this.inRequest$ = this.store.pipe(select(InRequest));
   }
 
   sendCommand() {
