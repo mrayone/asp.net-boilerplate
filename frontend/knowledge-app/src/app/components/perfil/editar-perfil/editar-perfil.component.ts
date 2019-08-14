@@ -36,7 +36,7 @@ export class EditarPerfilComponent implements OnInit {
   }
 
   onPutCommand(form: FormGroup) {
-    if (form.dirty && form.valid) {
+    if (form.valid) {
       this.inRequest = true;
       const perfil: Perfil = Object.assign({}, new Perfil(), form.value);
       perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);

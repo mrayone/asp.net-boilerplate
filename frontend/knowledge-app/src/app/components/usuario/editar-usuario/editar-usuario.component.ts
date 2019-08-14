@@ -22,7 +22,6 @@ export class EditarUsuarioComponent implements OnInit {
 
   formType: FormType = FormType.Put;
   usuario: Usuario;
-  errosDeRequest: string[];
   perfis: Perfil[];
   InRequest = false;
   constructor(private usuarioService: UsuarioService, private toastService: ToastrService, private route: ActivatedRoute,
@@ -44,17 +43,15 @@ export class EditarUsuarioComponent implements OnInit {
   }
 
   putUsuario(form: FormGroup) {
-    if (form.dirty && form.valid) {
+    if (form.valid) {
       this.InRequest = true;
       this.usuario = Object.assign({}, new Usuario(), form.value);
       this.usuario.dataDeNascimento =
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.put(this.usuario).subscribe(response => {
-        this.InRequest = false;
-        if (this.errosDeRequest.length === 0) {
+          this.InRequest = false;
           this.toastService.success('Operação realizada com sucesso!');
-        }
       });
     }
   }
