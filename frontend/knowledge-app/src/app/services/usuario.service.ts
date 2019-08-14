@@ -12,63 +12,34 @@ import { InrequestService } from './inrequest.service';
 })
 export class UsuarioService {
 
-  constructor(private http: HttpClient, private errosService: ErrosService) { }
+  constructor(private http: HttpClient) { }
 
 
   post(usuario: Usuario): Observable<HttpResponse<any>> {
-    return this.http.post(`${url}/api/v1/usuarios`, usuario, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('postUsuario'))
-      );
+    return this.http.post<HttpResponse<any>>(`${url}/api/v1/usuarios`, usuario, httpOptions);
   }
 
   put(usuario: Usuario): Observable<HttpResponse<any>> {
-    return this.http.put(`${url}/api/v1/usuarios`, usuario, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('putUsuario'))
-      );
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios`, usuario, httpOptions);
   }
 
   delete(uid: string) {
-    return this.http.delete(`${url}/api/v1/usuarios/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('deleteUsuario'))
-      );
+    return this.http.delete(`${url}/api/v1/usuarios/${uid}`, httpOptions);
   }
 
   putUsuarioPerfil(usuario: Usuario): Observable<HttpResponse<any>> {
-    return this.http.put(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('putAtualizarPerfil'))
-      );
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/atualizar-perfil`, usuario, httpOptions);
   }
 
   getTodos(): Observable<Usuario[]> {
-    return this.http.get(`${url}/api/v1/usuarios/obter-todos`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getTodosUsuarios'))
-      );
+    return this.http.get<Usuario[]>(`${url}/api/v1/usuarios/obter-todos`, httpOptions);
   }
 
   getPorId(uid: string): Observable<Usuario> {
-    return this.http.get(`${url}/api/v1/usuarios/${uid}`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getUsuarioPorId'))
-      );
+    return this.http.get<Usuario>(`${url}/api/v1/usuarios/${uid}`, httpOptions);
   }
 
   getUsuarioInfo(): Observable<Usuario> {
-    return this.http.get(`${url}/api/v1/usuarios/info`, httpOptions)
-      .pipe(
-        catchError(this.handleError<any>('getUsuarioInfo'))
-      );
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: {}): Observable<T> => {
-      // Let the app keep running by returning an empty result.
-      this.errosService.adicionarRange(error['error']);
-      return of(result as T);
-    };
+    return this.http.get<Usuario>(`${url}/api/v1/usuarios/info`, httpOptions);
   }
 }
