@@ -26,9 +26,14 @@ export class ErrorsInterceptor implements HttpInterceptor {
         this.router.navigateByUrl(`/nao-autorizado`);
       }
 
-      if (errorRequest.status === 401 || errorRequest.status === 400) {
+      if (errorRequest.status === 401 ) {
         const { error_description, error } = errorRequest.error;
         this.erros.dispararErro(error_description ? error_description : error);
+        this.router.navigateByUrl(`/login`);
+      }
+
+      if (errorRequest.status === 400) {
+        this.erros.dispararErro(errorRequest.error);
       }
       return of(result as T);
     };

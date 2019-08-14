@@ -38,8 +38,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           if (response) {
             this.loginComplete(response);
           }
-          this.inRequest = false;
-      });
+        });
     }
   }
 
