@@ -1,5 +1,5 @@
 ﻿using IdentidadeAcesso.CrossCutting.Identity.Configuration;
-using IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement;
+using IdentidadeAcesso.CrossCutting.Identity.Policy.Requeriment;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using Microsoft.AspNetCore.Authorization;
