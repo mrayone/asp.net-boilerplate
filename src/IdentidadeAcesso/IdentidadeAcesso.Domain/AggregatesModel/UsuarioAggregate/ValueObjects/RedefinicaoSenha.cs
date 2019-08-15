@@ -9,23 +9,21 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
     public class RedefinicaoSenha : ValueObject<RedefinicaoSenha>
     {
         public string Token { get; private set; }
-        public DateTime CriadoEm { get; private set; }
-        public string Email { get; private set; }
+        public DateTime? CriadoEm { get; private set; }
 
-        protected RedefinicaoSenha(string token, string email, DateTime criadoEm)
+        protected RedefinicaoSenha(string token, DateTime? criadoEm)
         {
             Token = token;
             CriadoEm = criadoEm;
-            Email = email;
         }
 
-        public static RedefinicaoSenha GerarRedefinicaoDeSenha(string email)
+        public static RedefinicaoSenha GerarRedefinicaoDeSenha()
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
             string token = Convert.ToBase64String(time.Concat(key).ToArray());
 
-            return new RedefinicaoSenha(token, email, DateTime.UtcNow);
+            return new RedefinicaoSenha(token, DateTime.UtcNow);
         }
 
         public static bool TokenValido(string token)
@@ -39,8 +37,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         protected override bool EqualsCore(RedefinicaoSenha other)
         {
-            return Token.Equals(other.Token) 
-                && Email.Equals(other.Email) 
+            return Token.Equals(other.Token)
                 && CriadoEm.Equals(other.CriadoEm);
         }
 
@@ -50,7 +47,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             {
                 var hash = Token.GetHashCode();
                 hash += (CriadoEm.GetHashCode() * 907) ^ CriadoEm.GetHashCode();
-                hash += (Email.GetHashCode() * 907) ^ Email.GetHashCode();
 
                 return hash;
             }

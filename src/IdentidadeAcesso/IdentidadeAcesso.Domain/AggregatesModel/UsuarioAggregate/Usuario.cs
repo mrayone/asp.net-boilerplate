@@ -14,10 +14,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public CPF CPF { get; private set; }
         public DataDeNascimento DataDeNascimento { get; private set; }
         public NumerosContato NumerosContato { get; private set; }
-        public bool Status { get; private set; }
         public Endereco Endereco { get; private set; }
         public Senha Senha { get; private set; }
+        public RedefinicaoSenha RedefinicaoSenha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
+        public bool Status { get; private set; }
         public Guid? PerfilId { get; private set; }
         protected Usuario()
         {
@@ -39,6 +40,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public void DefinirSenha(Senha senha)
         {
             Senha = senha;
+        }
+
+        public void RedefinirSenha()
+        {
+            RedefinicaoSenha = RedefinicaoSenha.GerarRedefinicaoDeSenha();
         }
 
         public void AdicionarEndereco(Endereco endereco)

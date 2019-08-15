@@ -20,7 +20,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void Deve_gerar_token_de_redefinicao_de_senha()
         {
             //arrange
-            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha("maycon.rayone@gmail.com");
+            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha();
             //act
             var token = rs.Token;
             //assert
@@ -32,7 +32,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void Deve_retornar_true_para_token_valido()
         {
             //arrange
-            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha("maycon.rayone@gmail.com");
+            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha();
 
             //act
             var expirou = RedefinicaoSenha.TokenValido(rs.Token);
