@@ -18,7 +18,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public static Senha GerarSenha(string senha)
         {
-            return new Senha(HashPassword(senha));
+            return new Senha(GerarHash(senha));
         }
 
         public static Senha DefinirSenhaHash(string senha)
@@ -26,7 +26,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             return new Senha(senha);
         }
 
-        private static string HashPassword(string password)
+        private static string GerarHash(string password)
         {
             byte[] salt;
             byte[] buffer2;
@@ -45,7 +45,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
             return Convert.ToBase64String(dst);
         }
 
-        private static bool VerifyHashedPassword(string hashedPassword, string password)
+        private static bool VerificarSenhaHash(string hashedPassword, string password)
         {
             byte[] buffer4;
             if (hashedPassword == null)
@@ -86,7 +86,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects
 
         public bool ValidarSenha(string senha)
         {
-            return VerifyHashedPassword(Caracteres, senha);
+            return VerificarSenhaHash(Caracteres, senha);
         }
 
         protected override bool EqualsCore(Senha other)

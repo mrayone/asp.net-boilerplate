@@ -78,21 +78,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             permissaoAssinada.Status.Should().BeFalse();
         }
 
-        [Fact(DisplayName = "Deve notificar quando tentar revogar permissão não atribuida.")]
-        [Trait("Services", "Perfil")]
-        public async Task Deve_Notificar_Quando_Tentar_Revogar_Permissao_Nao_atribuida()
-        {
-            //arrange
-            var permissao = PermissaoBuilder.ObterPermissaoFake();
-            _permRepo.Setup(p => p.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(permissao);
-            //act
-            var act = await _perfilService.RevogarPermissaoAsync(PerfilBuilder.ObterPerfil(), permissao.Id);
-            //assert
-            _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(),
-                new System.Threading.CancellationToken()), Times.Once());
-        }
-
-
         [Fact(DisplayName = "Deve notificar quando tentar revogar permissão que não exista.")]
         [Trait("Services", "Perfil")]
         public async Task Deve_Notificar_Quando_Tentar_Revogar_Uma_Permissao_Que_Nao_Exista()
