@@ -163,6 +163,26 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         }
 
+
+        [Fact(DisplayName = "Solicitar redefinição de senha.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Solicitar_RedefinicaoDeSenha()
+        {
+            //arrange
+            var usuario = new
+            {
+                email = "fakedoi_2@gmail.com",
+            };
+
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PostAsync($"{API}/acesso-perdido", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEmpty();
+        }
+
         [Theory(DisplayName = "Deve retornar erro em commands inválidos.")]
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]

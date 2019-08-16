@@ -1,6 +1,8 @@
 ﻿using IdentidadeAcesso.API.Application.Commands.CommandHandler;
 using IdentidadeAcesso.API.Application.Models;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
@@ -36,7 +38,6 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             }
 
             var usuario = busca.FirstOrDefault();
-            usuario.RedefinirSenha();
 
             _repository.Atualizar(usuario);
 

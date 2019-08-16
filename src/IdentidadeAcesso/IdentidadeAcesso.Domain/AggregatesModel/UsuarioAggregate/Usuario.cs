@@ -42,9 +42,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Senha = senha;
         }
 
-        public void RedefinirSenha()
+        public void RedefinirSenha( RedefinicaoSenha redefinicao )
         {
-            RedefinicaoSenha = RedefinicaoSenha.GerarRedefinicaoDeSenha();
+            RedefinicaoSenha = redefinicao;
         }
 
         public void AdicionarEndereco(Endereco endereco)

@@ -37,6 +37,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
             services.TryAddScoped<IRequestHandler<AtualizarPerfilUsuarioCommand, CommandResponse>, AtualizarPerfilUsuarioCommandHandler>();
             services.TryAddScoped<IRequestHandler<AtualizarUsuarioCommand, CommandResponse>, AtualizarUsuarioCommandHandler>();
             services.TryAddScoped<IRequestHandler<ExcluirUsuarioCommand, CommandResponse>, ExcluirUsuarioCommandHandler>();
+            services.TryAddScoped<IRequestHandler<SolicitarNovaSenhaCommand, CommandResponse>, SolicitarNovaSenhaCommandHandler>();
 
             return services;
         }

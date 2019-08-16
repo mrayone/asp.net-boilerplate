@@ -121,6 +121,21 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
+        /// Solicitar nova senha em caso de esquecimento.
+        /// </summary>
+        ///
+        [HttpPost("acesso-perdido")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SolicitacaoDeNovaSenhaAsync([FromBody] SolicitarNovaSenhaCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
         /// Atualiza os dados do usuário logado. Este método requer estar logado.
         /// </summary>
         ///

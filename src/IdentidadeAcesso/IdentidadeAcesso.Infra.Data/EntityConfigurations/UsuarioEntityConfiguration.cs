@@ -60,12 +60,6 @@ namespace Knowledge.IO.Infra.Data.EntityConfigurations
                 e.ToTable("usuario_endereco");
             });
 
-            usuarioConfiguration.OwnsOne(u => u.RedefinicaoSenha, e =>
-            {
-                e.ToTable("usuario_redefinicao_senha");
-                e.Property(r => r.CriadoEm).IsRequired(false);
-            });
-
             usuarioConfiguration.Property(u => u.DeletadoEm)
                 .IsRequired(false);
 

@@ -2,6 +2,7 @@
 using IdentidadeAcesso.CrossCutting.Identity.Policy;
 using IdentidadeAcesso.CrossCutting.Identity.Policy.Handler;
 using IdentidadeAcesso.CrossCutting.Identity.Services;
+using IdentidadeAcesso.CrossCutting.Identity.Services.Interfaces;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -21,6 +22,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
 
             services.AddScoped<IAuthorizationHandler, PermissaoPolicyHandler>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IEmailSender, MessageService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();
