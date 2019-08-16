@@ -136,6 +136,21 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
+        /// trocar a senha através do token
+        /// </summary>
+        ///
+        [HttpPost("trocar-senha/{token}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> TrocarSenhaAsync([FromBody] RedefinirSenhaViewModel model, string token)
+        {
+            var command = new DefinirNovaSenhaPorTokenCommand(token, model.Email, model.Senha, model.ConfirmaSenha);
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
         /// Atualiza os dados do usuário logado. Este método requer estar logado.
         /// </summary>
         ///

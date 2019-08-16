@@ -16,16 +16,16 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         protected TokenRedefinicaoSenha()
         {
             Id = new Guid();
-            Token = GerarRedefinicaoDeSenha();
+            Token = GerarToken();
             CriadoEm = DateTime.UtcNow;
         }
 
-        public TokenRedefinicaoSenha(string email, Guid usuarioId): this()
+        public TokenRedefinicaoSenha(string email, Guid usuarioId) : this()
         {
             Email = email;
             UsuarioId = usuarioId;
         }
-        private string GerarRedefinicaoDeSenha()
+        public string GerarToken()
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
@@ -40,5 +40,19 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             if (when < dataLimite) { return false; }
             return true;
         }
+        public class TokenRedefinicaoSenhaFactory
+        {
+            public static TokenRedefinicaoSenha CriarToken(string token, string email, Guid usuarioId)
+            {
+                return new TokenRedefinicaoSenha()
+                {
+                    Token = token,
+                    Email = email,
+                    UsuarioId = usuarioId,
+                    CriadoEm = DateTime.UtcNow
+                };
+            }
+        }
     }
+
 }

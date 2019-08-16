@@ -26,19 +26,19 @@ namespace Knowledge.IO.Infra.Data.Repository
 
         public async Task<IEnumerable<TokenRedefinicaoSenha>> ObterTokenUsuarioAsync(string email)
         {
-            using (var conn = _context.Database.GetDbConnection())
-            {
-                var sql = @"SELECT [Id]
-                                ,[Token]
-                                ,[Email]
-                                ,[CriadoEm]
-                                ,[UsuarioId]
-                            FROM [IdentidadeDb].[dbo].[tokens_de_redefinicao] WHERE [Email] = @key AND ORDER BY [CriadoEm] DESC ";
+            var conn = _context.Database.GetDbConnection();
 
-                var query = await conn.QueryAsync<TokenRedefinicaoSenha>(sql, new { key = email });
+            var sql = @"SELECT [Id]
+                          ,[Token]
+                          ,[Email]
+                          ,[CriadoEm]
+                          ,[UsuarioId]
+                      FROM [tokens_de_redefinicao] WHERE [Email] = @key ORDER BY [CriadoEm] DESC;";
 
-                return query;
-            }
+            var query = await conn.QueryAsync<TokenRedefinicaoSenha>(sql, new { key = email });
+
+            return query;
+
         }
     }
 }
