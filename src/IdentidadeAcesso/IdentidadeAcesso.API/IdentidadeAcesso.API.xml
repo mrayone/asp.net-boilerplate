@@ -99,6 +99,18 @@
              </summary>
             
         </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.SolicitacaoDeNovaSenhaAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.SolicitarNovaSenhaCommand)">
+             <summary>
+             Solicitar nova senha em caso de esquecimento.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.TrocarSenhaAsync(IdentidadeAcesso.API.Application.Models.RedefinirSenhaViewModel,System.String)">
+             <summary>
+             Redefine a senha do usuário através do token fornecido.
+             </summary>
+            
+        </member>
         <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarPerfilUsuarioAsync(IdentidadeAcesso.API.Application.Models.AtualizarPerfilUsuarioViewModel)">
              <summary>
              Atualiza os dados do usuário logado. Este método requer estar logado.

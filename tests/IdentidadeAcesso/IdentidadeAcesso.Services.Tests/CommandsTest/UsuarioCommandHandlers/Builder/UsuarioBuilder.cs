@@ -51,7 +51,11 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.UsuarioCommandHandler
             var sexo = Sexo.Masculino;
             var cpf = new CPF("332.447.920-73");
             var dataDeNascimento = new DataDeNascimento(new DateTime(2002, 7, 22));
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento);
+            var usuario =  new Usuario(nome, sexo, email, cpf, dataDeNascimento);
+
+            usuario.DefinirSenha(Senha.GerarSenha("123456"));
+
+            return usuario;
         }
     }
 }

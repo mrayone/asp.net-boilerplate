@@ -37,4 +37,11 @@ namespace IdentidadeAcesso.API.Application.Models
         public string Estado { get; set; }
 
     }
+
+    public class RedefinirSenhaViewModel
+    {
+        public string Email { get; set; }
+        public string Senha { get; set; }
+        public string ConfirmaSenha { get; set; }
+    }
 }

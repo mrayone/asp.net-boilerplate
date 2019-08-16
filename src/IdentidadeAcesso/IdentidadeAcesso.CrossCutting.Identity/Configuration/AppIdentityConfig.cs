@@ -1,16 +1,13 @@
 ﻿using IdentidadeAcesso.CrossCutting.Identity.CredentialsValidator;
 using IdentidadeAcesso.CrossCutting.Identity.Policy;
 using IdentidadeAcesso.CrossCutting.Identity.Policy.Handler;
-using IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement;
 using IdentidadeAcesso.CrossCutting.Identity.Services;
+using IdentidadeAcesso.CrossCutting.Identity.Services.Interfaces;
 using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
 {
@@ -25,6 +22,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
 
             services.AddScoped<IAuthorizationHandler, PermissaoPolicyHandler>();
             services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IEmailSender, MessageService>();
 
             services.AddSingleton<IAuthorizationPolicyProvider, PermissaoPolicyProvider>();
             services.AddTransient<IResourceOwnerPasswordValidator, CredentialsValidate>();

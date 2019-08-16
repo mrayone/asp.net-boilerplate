@@ -1,4 +1,4 @@
-﻿using IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement;
+﻿using IdentidadeAcesso.CrossCutting.Identity.Policy.Requeriment;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;

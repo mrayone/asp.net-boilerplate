@@ -163,6 +163,46 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         }
 
+        [Fact(DisplayName = "Solicitar redefinição de senha.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Solicitar_RedefinicaoDeSenha()
+        {
+            //arrange
+            var usuario = new
+            {
+                email = "admin@omegafive.net",
+            };
+
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PostAsync($"{API}/esqueci-a-senha", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEmpty();
+        }
+
+        [Fact(DisplayName = "Redefinir senha através do token.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_Redefinir_Senha_Com_Sucesso()
+        {
+            //arrange
+            var usuario = new
+            {
+                email = "admin@omegafive.net",
+                senha = "124578F@k",
+                confirmaSenha = "124578F@k"
+            };
+
+            var content = GerarContent(usuario);
+            //act
+            var post = await _client.PostAsync($"{API}/trocar-senha/1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", content);
+            var result = await post.Content.ReadAsStringAsync();
+            //assert
+            post.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Should().BeEmpty();
+        }
+
         [Theory(DisplayName = "Deve retornar erro em commands inválidos.")]
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]

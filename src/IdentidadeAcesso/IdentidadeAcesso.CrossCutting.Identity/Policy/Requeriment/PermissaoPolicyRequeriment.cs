@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace IdentidadeAcesso.CrossCutting.Identity.Policy.Requirement
+namespace IdentidadeAcesso.CrossCutting.Identity.Policy.Requeriment
 {
     public class PermissaoPolicyRequeriment : IAuthorizationRequirement
     {

@@ -121,6 +121,36 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
+        /// Solicitar nova senha em caso de esquecimento.
+        /// </summary>
+        ///
+        [HttpPost("esqueci-a-senha")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SolicitacaoDeNovaSenhaAsync([FromBody] SolicitarNovaSenhaCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
+        /// Redefine a senha do usuário através do token fornecido.
+        /// </summary>
+        ///
+        [HttpPost("trocar-senha/{token}")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> TrocarSenhaAsync([FromBody] RedefinirSenhaViewModel model, string token)
+        {
+            var command = new DefinirNovaSenhaPorTokenCommand(token, model.Email, model.Senha, model.ConfirmaSenha);
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
         /// Atualiza os dados do usuário logado. Este método requer estar logado.
         /// </summary>
         ///
