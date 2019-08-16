@@ -170,7 +170,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var usuario = new
             {
-                email = "fakedoi_2@gmail.com",
+                email = "admin@omegafive.net",
             };
 
             var content = GerarContent(usuario);
@@ -189,7 +189,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             var usuario = new
             {
-                email = "fakedoi_2@gmail.com",
+                email = "admin@omegafive.net",
                 senha = "124578F@k",
                 confirmaSenha = "124578F@k"
             };

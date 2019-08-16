@@ -7,6 +7,6 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services.Interfaces
 {
     public interface IEmailSender
     {
-        Task SendEmailAsync(string email, string subject, string message);
+        Task SendEmailAsync(string email, string destinatario, string subject, string message);
     }
 }

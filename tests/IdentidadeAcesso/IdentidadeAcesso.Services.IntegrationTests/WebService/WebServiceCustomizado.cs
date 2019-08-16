@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
             db.Usuarios.AddRange(ObterUsuarios());
-            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", "fakedoi_2@gmail.com", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
+            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", "admin@omegafive.net", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
             await db.SaveChangesAsync();
         }
 
@@ -78,7 +78,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
         {
             var list = new List<Usuario>()
             {
-                Usuario.UsuarioFactory.CriarUsuario(new Guid("50d4a981-48d3-42e6-9c6e-9602184afca7"), "Fake", "Fake L", "M", "fakedoi_2@gmail.com", new CPF("28999953084"),
+                Usuario.UsuarioFactory.CriarUsuario(new Guid("50d4a981-48d3-42e6-9c6e-9602184afca7"), "Fake", "Fake L", "M", "admin@omegafive.net", new CPF("28999953084"),
                 new DateTime(1993,7,22), "+5518981928363", "+551832815597",
                 new Endereco("R Tal", "19ew", "Centro", "18971000", "Seilandia",
                 "Seilão"), Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"), Senha.GerarSenha("asdasdsadad")),
