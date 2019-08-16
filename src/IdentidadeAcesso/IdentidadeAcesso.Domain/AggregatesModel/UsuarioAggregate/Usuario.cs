@@ -43,9 +43,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Senha = senha;
         }
 
-        public void GerarTokenRedefinicaoSenha()
+        public void DefinirTokenRedefinicaoSenha(TokenRedefinicaoSenha token)
         {
-            TokenRedefinicaoSenha = new TokenRedefinicaoSenha();
+            TokenRedefinicaoSenha = token;
         }
 
         public void AdicionarEndereco(Endereco endereco)

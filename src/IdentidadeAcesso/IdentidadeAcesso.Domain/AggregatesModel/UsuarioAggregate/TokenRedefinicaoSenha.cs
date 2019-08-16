@@ -9,23 +9,26 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
     public class TokenRedefinicaoSenha : Entity
     {
         public string Token { get; private set; }
+        public string Email { get; private set; }
         public DateTime? CriadoEm { get; private set; }
-        public TokenRedefinicaoSenha()
+        public Guid UsuarioId { get; private set; }
+
+        protected TokenRedefinicaoSenha()
         {
             Id = new Guid();
             Token = GerarRedefinicaoDeSenha();
             CriadoEm = DateTime.UtcNow;
         }
 
-        public TokenRedefinicaoSenha(string token, DateTime criadoEm): this()
+        public TokenRedefinicaoSenha(string email, Guid usuarioId): this()
         {
-            Token = token;
-            CriadoEm = criadoEm;
+            Email = email;
+            UsuarioId = usuarioId;
         }
         private string GerarRedefinicaoDeSenha()
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
+            byte[] key = UsuarioId.ToByteArray();
             return Convert.ToBase64String(time.Concat(key).ToArray());
         }
 

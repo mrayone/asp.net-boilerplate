@@ -13,22 +13,32 @@ namespace Knowledge.IO.Infra.Data.Repository
 {
     public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     {
-        private readonly DbConnection _dapper;
+        private readonly IdentidadeAcessoDbContext _context;
         public UsuarioRepository(IdentidadeAcessoDbContext context) : base(context)
         {
-            _dapper = context.Database.GetDbConnection();
+            _context = context;
         }
 
-        public async Task<IEnumerable<Usuario>> ObterUsuarioPorEmailAsync(string email)
+        public void AdicionarTokenDeRedefinicao(TokenRedefinicaoSenha token)
         {
-            var sql = @"SELECT * FROM [usuarios]" +
-                     "LEFT JOIN [usuario_redefinicao_senha] ON" +
-                     "[usuario_redefinicao_senha].[UsuarioId] = [usuarios].[Id] " +
-                     "WHERE [usuarios].[Email] = @key";
+            _context.TokensRedefinicaoSenha.Add(token);
+        }
 
-            var usuario = await _dapper.QueryAsync<Usuario>(sql, new { key = email });
+        public async Task<IEnumerable<TokenRedefinicaoSenha>> ObterTokenUsuarioAsync(string email)
+        {
+            using (var conn = _context.Database.GetDbConnection())
+            {
+                var sql = @"SELECT [Id]
+                                ,[Token]
+                                ,[Email]
+                                ,[CriadoEm]
+                                ,[UsuarioId]
+                            FROM [IdentidadeDb].[dbo].[tokens_de_redefinicao] WHERE [Email] = @key AND ORDER BY [CriadoEm] DESC ";
 
-            return usuario;
+                var query = await conn.QueryAsync<TokenRedefinicaoSenha>(sql, new { key = email });
+
+                return query;
+            }
         }
     }
 }

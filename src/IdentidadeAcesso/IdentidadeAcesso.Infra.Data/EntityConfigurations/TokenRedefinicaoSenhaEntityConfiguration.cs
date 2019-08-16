@@ -17,6 +17,7 @@ namespace IdentidadeAcesso.Infra.Data.EntityConfigurations
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.Token);
+            builder.Property(p => p.Email);
             builder.Property(p => p.CriadoEm).IsRequired(false);
 
             builder.HasOne<Usuario>()

@@ -18,6 +18,7 @@ namespace Knowledge.IO.Infra.Data.Context
         public const string DEFAULT_SCHEMA = "dbo";
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<TokenRedefinicaoSenha> TokensRedefinicaoSenha { get; set; }
         public DbSet<Perfil> Perfis { get; set; }
         public DbSet<Permissao> Permissoes { get; set; }
         public IdentidadeAcessoDbContext(DbContextOptions<IdentidadeAcessoDbContext> options) : base(options)
@@ -34,7 +35,7 @@ namespace Knowledge.IO.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new TokenRedefinicaoSenhaEntityConfiguration());
 
             //TODO: Comente esta linha para executar testes do xUnit
-            modelBuilder.Seed(); 
+            //modelBuilder.Seed(); 
         }
     }
 

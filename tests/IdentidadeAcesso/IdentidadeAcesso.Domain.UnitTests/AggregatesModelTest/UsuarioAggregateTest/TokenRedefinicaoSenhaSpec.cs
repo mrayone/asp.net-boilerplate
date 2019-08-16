@@ -15,7 +15,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void Deve_gerar_token_de_redefinicao_de_senha()
         {
             //arrange
-            var rs = new TokenRedefinicaoSenha();
+            var rs = new TokenRedefinicaoSenha("email@gmail.com", Guid.NewGuid());
             //act
             var token = rs.Token;
             //assert
@@ -27,30 +27,13 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void Deve_retornar_true_para_token_valido()
         {
             //arrange
-            var rs = new TokenRedefinicaoSenha();
+            var rs = new TokenRedefinicaoSenha("email@gmail.com", Guid.NewGuid());
 
             //act
             var expirou = rs.TokenValido();
 
             //assert
             expirou.Should().BeTrue();
-        }
-
-
-        [Fact(DisplayName = "Deve retornar false para token inválido.")]
-        [Trait("Value Object", "Redefinir Senha")]
-        public void Deve_retornar_false_para_token_invalido()
-        {
-            //arrange
-            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.AddDays(-2).ToBinary());
-            byte[] key = Guid.NewGuid().ToByteArray();
-            string token = Convert.ToBase64String(time.Concat(key).ToArray());
-
-            //act
-            var expirou = new TokenRedefinicaoSenha(token, DateTime.UtcNow.AddDays(-2)).TokenValido();
-
-            //assert
-            expirou.Should().BeFalse();
         }
     }
 }
