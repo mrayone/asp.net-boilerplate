@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         private string GerarRedefinicaoDeSenha()
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            byte[] key = UsuarioId.ToByteArray();
+            byte[] key = Guid.NewGuid().ToByteArray();
             return Convert.ToBase64String(time.Concat(key).ToArray());
         }
 

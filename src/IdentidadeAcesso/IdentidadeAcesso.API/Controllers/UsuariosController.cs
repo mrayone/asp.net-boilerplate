@@ -124,7 +124,7 @@ namespace IdentidadeAcesso.API.Controllers
         /// Solicitar nova senha em caso de esquecimento.
         /// </summary>
         ///
-        [HttpPost("acesso-perdido")]
+        [HttpPost("esqueci-a-senha")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> SolicitacaoDeNovaSenhaAsync([FromBody] SolicitarNovaSenhaCommand command)

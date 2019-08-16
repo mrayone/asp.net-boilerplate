@@ -21,9 +21,9 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.NovaSenhaSolicita
         public async Task Handle(NovaSenhaSolicitadaEvent notification, CancellationToken cancellationToken)
         {
             //TODO: enviar e-mail.
-            //await _emailSender.SendEmailAsync(notification.Usuario.Email.Endereco,
-            //    "Redefinição de senha", string.Format(@"Olá {0} tudo bem? Você solicitou a redefinição de senha, por favor clique no link
-            //     http://localhost:5001/trocarsenha?auth={1}", notification.Usuario.Nome.PrimeiroNome, notification.Usuario.RedefinicaoSenha.Token));
+            await _emailSender.SendEmailAsync(notification.Email,
+                "Redefinição de senha", string.Format(@"Olá {0} tudo bem? Você solicitou a redefinição de senha, por favor clique no link
+                 http://localhost:5001/trocarsenha?auth={1}", notification.Nome, notification.Token));
         }
     }
 }

@@ -37,13 +37,14 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
                 return await Task.FromResult(CommandResponse.Fail);
             }
 
-            var usuario = busca.FirstOrDefault();
+            var usuario = busca.SingleOrDefault();
+            var token = new TokenRedefinicaoSenha(request.Email, usuario.Id);
 
-            _repository.Atualizar(usuario);
+            _repository.AdicionarTokenDeRedefinicao(token);
 
             if(await Commit())
             {
-                await _mediator.Publish(new NovaSenhaSolicitadaEvent(usuario));
+                await _mediator.Publish(new NovaSenhaSolicitadaEvent(usuario.Nome.PrimeiroNome, usuario.Email.Endereco, token.Token));
             }
 
             return await Task.FromResult(CommandResponse.Ok);

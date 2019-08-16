@@ -176,7 +176,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
             var content = GerarContent(usuario);
             //act
-            var post = await _client.PostAsync($"{API}/acesso-perdido", content);
+            var post = await _client.PostAsync($"{API}/esqueci-a-senha", content);
             var result = await post.Content.ReadAsStringAsync();
             //assert
             post.StatusCode.Should().Be(HttpStatusCode.OK);

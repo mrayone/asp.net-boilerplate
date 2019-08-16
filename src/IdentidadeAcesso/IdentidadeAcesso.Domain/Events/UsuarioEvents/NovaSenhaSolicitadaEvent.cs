@@ -8,11 +8,15 @@ namespace IdentidadeAcesso.Domain.Events.UsuarioEvents
 {
     public class NovaSenhaSolicitadaEvent : INotification
     {
-        public NovaSenhaSolicitadaEvent(Usuario usuario)
+        public NovaSenhaSolicitadaEvent(string nome, string email, string token)
         {
-            Usuario = usuario;
+            Nome = nome;
+            Email = email;
+            Token = token;
         }
 
-        public Usuario Usuario { get; private set; }
+        public string Nome { get; }
+        public string Email { get; }
+        public string Token { get; }
     }
 }
