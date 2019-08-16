@@ -46,6 +46,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             usuario.DefinirSenha(senha);
 
             _repository.Atualizar(usuario);
+            _repository.RemoverTokenUtilizado(token);
 
             if (await Commit())
             {

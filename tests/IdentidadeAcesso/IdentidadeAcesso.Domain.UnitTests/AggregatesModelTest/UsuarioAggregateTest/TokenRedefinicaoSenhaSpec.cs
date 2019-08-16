@@ -11,7 +11,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
     public class TokenRedefinicaoSenhaSpec
     {
         [Fact(DisplayName = "Deve gerar token de redefinição de senha")]
-        [Trait("Value Object", "Redefinir Senha")]
+        [Trait("Entity", "Redefinir Senha")]
         public void Deve_gerar_token_de_redefinicao_de_senha()
         {
             //arrange
@@ -23,12 +23,11 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         }
 
         [Fact(DisplayName = "Deve retornar true para token válido.")]
-        [Trait("Value Object", "Redefinir Senha")]
+        [Trait("Entity", "Redefinir Senha")]
         public void Deve_retornar_true_para_token_valido()
         {
             //arrange
             var rs = new TokenRedefinicaoSenha("email@gmail.com", Guid.NewGuid());
-
             //act
             var expirou = rs.TokenValido();
 

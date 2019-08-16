@@ -10,5 +10,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository
     {
         void AdicionarTokenDeRedefinicao(TokenRedefinicaoSenha token);
         Task<IEnumerable<TokenRedefinicaoSenha>> ObterTokenUsuarioAsync(string email);
+        void RemoverTokenUtilizado(TokenRedefinicaoSenha token);
     }
 }

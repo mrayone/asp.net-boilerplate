@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
             db.Usuarios.AddRange(ObterUsuarios());
-            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("c5v4PWYi10gzwfqJhbSiToObuXj8yNuW", "fakedoi_2@gmail.com", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
+            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", "fakedoi_2@gmail.com", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
             await db.SaveChangesAsync();
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +40,11 @@ namespace Knowledge.IO.Infra.Data.Repository
 
             return query;
 
+        }
+
+        public void RemoverTokenUtilizado(TokenRedefinicaoSenha token)
+        {
+            _context.Set<TokenRedefinicaoSenha>().Remove(token);
         }
     }
 }
