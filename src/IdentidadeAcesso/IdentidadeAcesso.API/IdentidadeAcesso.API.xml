@@ -107,7 +107,7 @@
         </member>
         <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.TrocarSenhaAsync(IdentidadeAcesso.API.Application.Models.RedefinirSenhaViewModel,System.String)">
              <summary>
-             trocar a senha através do token
+             Redefine a senha do usuário através do token fornecido.
              </summary>
             
         </member>
