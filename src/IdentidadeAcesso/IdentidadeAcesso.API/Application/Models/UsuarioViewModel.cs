@@ -37,4 +37,9 @@ namespace IdentidadeAcesso.API.Application.Models
         public string Estado { get; set; }
 
     }
+
+    public class RedefinirSenhaViewModel
+    {
+        public string Token { get; private set; }
+    }
 }
