@@ -136,7 +136,7 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// trocar a senha através do token
+        /// Redefine a senha do usuário através do token fornecido.
         /// </summary>
         ///
         [HttpPost("trocar-senha/{token}")]
