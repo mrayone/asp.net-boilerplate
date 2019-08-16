@@ -10,7 +10,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
     {
         public string Token { get; private set; }
         public DateTime? CriadoEm { get; private set; }
-        protected TokenRedefinicaoSenha()
+        public TokenRedefinicaoSenha()
         {
             Id = new Guid();
             Token = GerarRedefinicaoDeSenha();

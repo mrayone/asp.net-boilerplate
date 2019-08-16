@@ -3,6 +3,7 @@ using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.ValueObjects;
 using System;
+using System.Collections.Generic;
 
 namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 {
@@ -16,7 +17,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public NumerosContato NumerosContato { get; private set; }
         public Endereco Endereco { get; private set; }
         public Senha Senha { get; private set; }
-        public RedefinicaoSenha RedefinicaoSenha { get; private set; }
+        public TokenRedefinicaoSenha TokenRedefinicaoSenha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public bool Status { get; private set; }
         public Guid? PerfilId { get; private set; }
@@ -42,9 +43,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Senha = senha;
         }
 
-        public void RedefinirSenha( RedefinicaoSenha redefinicao )
+        public void GerarTokenRedefinicaoSenha()
         {
-            RedefinicaoSenha = redefinicao;
+            TokenRedefinicaoSenha = new TokenRedefinicaoSenha();
         }
 
         public void AdicionarEndereco(Endereco endereco)

@@ -1,26 +1,21 @@
 ﻿using FluentAssertions;
-using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest.ValueObjectSpecs
+namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest
 {
-    public class RedefinirSenhaSpec
+    public class TokenRedefinicaoSenhaSpec
     {
-        public RedefinirSenhaSpec()
-        {
-
-        }
-
         [Fact(DisplayName = "Deve gerar token de redefinição de senha")]
         [Trait("Value Object", "Redefinir Senha")]
         public void Deve_gerar_token_de_redefinicao_de_senha()
         {
             //arrange
-            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha();
+            var rs = new TokenRedefinicaoSenha();
             //act
             var token = rs.Token;
             //assert
@@ -32,10 +27,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
         public void Deve_retornar_true_para_token_valido()
         {
             //arrange
-            var rs = RedefinicaoSenha.GerarRedefinicaoDeSenha();
+            var rs = new TokenRedefinicaoSenha();
 
             //act
-            var expirou = RedefinicaoSenha.TokenValido(rs.Token);
+            var expirou = rs.TokenValido();
 
             //assert
             expirou.Should().BeTrue();
@@ -52,7 +47,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             string token = Convert.ToBase64String(time.Concat(key).ToArray());
 
             //act
-            var expirou = RedefinicaoSenha.TokenValido(token);
+            var expirou = new TokenRedefinicaoSenha(token, DateTime.UtcNow.AddDays(-2)).TokenValido();
 
             //assert
             expirou.Should().BeFalse();
