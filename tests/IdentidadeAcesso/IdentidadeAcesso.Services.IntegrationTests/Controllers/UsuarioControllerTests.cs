@@ -196,7 +196,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
             var content = GerarContent(usuario);
             //act
-            var post = await _client.PostAsync($"{API}/trocar-senha/1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", content);
+            var post = await _client.PutAsync($"{API}/redefinir-senha?token=/9o1HFf2a2KDXf6bSzuJZyn0CqNgdY2vgVGmkGXo8g7L40Q1J31OcCdmqzWr23PE", content);
             var result = await post.Content.ReadAsStringAsync();
             //assert
             post.StatusCode.Should().Be(HttpStatusCode.OK);

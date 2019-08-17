@@ -136,15 +136,33 @@ namespace IdentidadeAcesso.API.Controllers
         }
 
         /// <summary>
-        /// Redefine a senha do usuário através do token fornecido.
+        /// Redefine a senha do usuário através do token fornecido. url/redefinir-senha?token=TOKEN_GERADO
         /// </summary>
         ///
-        [HttpPost("trocar-senha/{token}")]
+        [HttpPut("redefinir-senha")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> TrocarSenhaAsync([FromBody] RedefinirSenhaViewModel model, string token)
+        public async Task<IActionResult> RedefinirSenhaAsync([FromBody] RedefinirSenhaViewModel model, string token)
         {
             var command = new DefinirNovaSenhaPorTokenCommand(token, model.Email, model.Senha, model.ConfirmaSenha);
+            var result = await _mediator.Send(command);
+
+            return this.VerificarErros(_notifications, result);
+        }
+
+        /// <summary>
+        /// Possibilita a alteração de senha do usuário logado.
+        /// </summary>
+        ///
+        [HttpPut("trocar-senha")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> TrocarSenha([FromBody] TrocarSanhaViewModel model)
+        {
+            var claimValue = _httpAcessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+
+            var command = new TrocarSenhaCommand(new Guid(claimValue.Value), model.SenhaAtual, model.Senha, model.ConfirmaSenha);
+
             var result = await _mediator.Send(command);
 
             return this.VerificarErros(_notifications, result);

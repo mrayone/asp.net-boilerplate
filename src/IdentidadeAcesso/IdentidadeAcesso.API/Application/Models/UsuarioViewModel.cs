@@ -44,4 +44,11 @@ namespace IdentidadeAcesso.API.Application.Models
         public string Senha { get; set; }
         public string ConfirmaSenha { get; set; }
     }
+
+    public class TrocarSanhaViewModel
+    {
+        public string Senha { get; set; }
+        public string SenhaAtual { get; set; }
+        public string ConfirmaSenha { get; set; }
+    }
 }
