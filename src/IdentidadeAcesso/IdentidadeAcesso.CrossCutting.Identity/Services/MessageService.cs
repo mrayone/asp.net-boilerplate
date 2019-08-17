@@ -1,4 +1,6 @@
-﻿using IdentidadeAcesso.CrossCutting.Identity.Services.Interfaces;
+﻿using IdentidadeAcesso.CrossCutting.Identity.Options;
+using IdentidadeAcesso.CrossCutting.Identity.Services.Interfaces;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -10,9 +12,15 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Services
 {
     public class MessageService : IEmailSender
     {
+        private readonly IOptionsMonitor<AppOptions> _options;
+
+        public MessageService(IOptionsMonitor<AppOptions> options)
+        {
+            _options = options;
+        }
         public async Task SendEmailAsync(string email, string destinatario, string subject, string message)
         {
-            var apiKey = "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";
+            var apiKey = _options.CurrentValue.SendGridKey;
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {

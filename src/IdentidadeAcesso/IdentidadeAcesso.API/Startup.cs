@@ -1,22 +1,28 @@
 ﻿using IdentidadeAcesso.API.Infrastrucuture.IoC;
+using IdentidadeAcesso.CrossCutting.Identity.Configuration;
+using IdentidadeAcesso.CrossCutting.Identity.Options;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using IdentidadeAcesso.CrossCutting.Identity.Configuration;
-using System.IO;
 using Microsoft.IdentityModel.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace IdentidadeAcesso.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var configBuilder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+               .AddJsonFile($"mailsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
+            Configuration = configBuilder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -35,6 +41,7 @@ namespace IdentidadeAcesso.API
                 .AddApplicationHandlers()
                 .AddIdentityConfig();
 
+            services.Configure<AppOptions>(Configuration);
 
             services.AddApiVersioning(options =>
             {
