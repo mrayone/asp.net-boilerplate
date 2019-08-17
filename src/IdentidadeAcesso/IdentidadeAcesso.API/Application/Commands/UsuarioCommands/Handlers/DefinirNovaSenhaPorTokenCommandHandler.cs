@@ -2,6 +2,7 @@
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
+using IdentidadeAcesso.Domain.Events.UsuarioEvents;
 using IdentidadeAcesso.Domain.SeedOfWork;
 using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
@@ -50,7 +51,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
 
             if (await Commit())
             {
-               /* await _mediator.Publish(new NovaSenhaSolicitadaEvent(usuario.Nome.PrimeiroNome, usuario.Email.Endereco, token.Token)) */;
+                await _mediator.Publish(new UsuarioAtualizadoEvent(usuario));
             }
 
             return await Task.FromResult(CommandResponse.Ok);

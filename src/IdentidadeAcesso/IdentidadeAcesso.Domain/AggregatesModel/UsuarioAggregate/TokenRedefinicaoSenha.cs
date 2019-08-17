@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         }
         public string GerarToken()
         {
-            return Encrypt(string.Format("{0}#{1}", Email, DateTime.UtcNow));
+            return Encrypt(string.Format("{0}#{1}", Email, CriadoEm));
         }
 
         public bool TokenValido()

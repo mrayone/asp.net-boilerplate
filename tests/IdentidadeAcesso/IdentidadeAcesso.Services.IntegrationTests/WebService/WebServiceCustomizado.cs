@@ -58,7 +58,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
             db.Permissoes.AddRange(ObterPermissoes());
             db.Perfis.AddRange(ObterPerfis());
             db.Usuarios.AddRange(ObterUsuarios());
-            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("1f4C0BWuSk6uTVF4u2HHvvJOWd4XjClDtwgZybkySikyFiMLPaYbc+GCIfPR5Of7", "admin@omegafive.net", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
+            db.TokensRedefinicaoSenha.Add(TokenRedefinicaoSenha.TokenRedefinicaoSenhaFactory.CriarToken("/9o1HFf2a2KDXf6bSzuJZyn0CqNgdY2vgVGmkGXo8g7L40Q1J31OcCdmqzWr23PE", "admin@omegafive.net", Guid.Parse("50d4a981-48d3-42e6-9c6e-9602184afca7")));
             await db.SaveChangesAsync();
         }
 

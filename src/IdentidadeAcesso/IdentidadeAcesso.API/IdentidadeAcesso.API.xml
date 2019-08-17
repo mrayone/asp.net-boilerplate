@@ -105,9 +105,15 @@
              </summary>
             
         </member>
-        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.TrocarSenhaAsync(IdentidadeAcesso.API.Application.Models.RedefinirSenhaViewModel,System.String)">
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.RedefinirSenhaAsync(IdentidadeAcesso.API.Application.Models.RedefinirSenhaViewModel,System.String)">
              <summary>
-             Redefine a senha do usuário através do token fornecido.
+             Redefine a senha do usuário através do token fornecido. url/redefinir-senha?token=TOKEN_GERADO
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.TrocarSenha(IdentidadeAcesso.API.Application.Models.TrocarSanhaViewModel)">
+             <summary>
+             Possibilita a alteração de senha do usuário logado.
              </summary>
             
         </member>
