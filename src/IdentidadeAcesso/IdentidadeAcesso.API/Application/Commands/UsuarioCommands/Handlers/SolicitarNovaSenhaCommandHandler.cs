@@ -38,7 +38,7 @@ namespace IdentidadeAcesso.API.Application.Commands.UsuarioCommands.Handlers
             }
 
             var usuario = busca.SingleOrDefault();
-            var token = new TokenRedefinicaoSenha(request.Email, usuario.Id);
+            var token = usuario.GerarTokenDeRefinicaoSenha();
 
             _repository.AdicionarTokenDeRedefinicao(token);
 

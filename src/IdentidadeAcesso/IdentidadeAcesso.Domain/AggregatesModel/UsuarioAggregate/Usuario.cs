@@ -17,7 +17,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public NumerosContato NumerosContato { get; private set; }
         public Endereco Endereco { get; private set; }
         public Senha Senha { get; private set; }
-        public TokenRedefinicaoSenha TokenRedefinicaoSenha { get; private set; }
         public DateTime? DeletadoEm { get; private set; }
         public bool Status { get; private set; }
         public Guid? PerfilId { get; private set; }
@@ -43,9 +42,9 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
             Senha = senha;
         }
 
-        public void DefinirTokenRedefinicaoSenha(TokenRedefinicaoSenha token)
+        public TokenRedefinicaoSenha GerarTokenDeRefinicaoSenha()
         {
-            TokenRedefinicaoSenha = token;
+            return new TokenRedefinicaoSenha(Email.Endereco, Id);
         }
 
         public void AdicionarEndereco(Endereco endereco)
