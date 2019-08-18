@@ -1,15 +1,11 @@
 ﻿using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.API.Application.DomainEventHandlers.NovaSenhaSolicitada;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.UsuarioCriado;
 using IdentidadeAcesso.Domain.Events.UsuarioEvents;
-using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 {
@@ -19,6 +15,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
         {
             services.TryAddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
             services.TryAddScoped<INotificationHandler<NovaSenhaSolicitadaEvent>, NovaSenhaSolicitadaEventHandler>();
+            services.TryAddScoped<INotificationHandler<UsuarioCriadoEvent>, UsuarioCriadoEventHandler>();
 
             return services;
         }
