@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivationStart, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Router, ActivationStart, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/reducers';
@@ -13,17 +13,37 @@ import { jwtParser } from 'src/app/Utils/jwtParser';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  public titulo =  'Knowledg.IO';
+  public titulo = 'Knowledg.IO';
+  collapseMenu = false;
   usuario: UsuarioViewModel;
+  @Output() command = new EventEmitter<boolean>();
+
   constructor(private router: Router, private store: Store<AppState>, private usuarioService: UsuarioAutenticadoService) {
-   }
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (this.collapseMenu) {
+          this.toggleCollapse();
+        }
+      }
+    });
+  }
+
+  toggleMenu(event: Event) {
+    this.toggleCollapse();
+  }
+
+
+  toggleCollapse() {
+    this.collapseMenu = !this.collapseMenu;
+    this.command.emit(this.collapseMenu);
+  }
 
   ngOnInit() {
-    this.router.events.pipe( filter(event => event instanceof ActivationStart) )
-    .subscribe(event => {
-      const { snapshot } = event as ActivatedRoute;
-      this.titulo =  snapshot.data.title;
-     });
+    this.router.events.pipe(filter(event => event instanceof ActivationStart))
+      .subscribe(event => {
+        const { snapshot } = event as ActivatedRoute;
+        this.titulo = snapshot.data.title;
+      });
 
     const tokenModel = this.usuarioService.getAuthorizationToken();
     this.usuario = jwtParser(tokenModel.access_token) as UsuarioViewModel;

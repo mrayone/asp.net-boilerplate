@@ -15,6 +15,7 @@ import { TokenModel } from './services/config/models/models';
 export class AppComponent implements OnInit {
   autenticado: boolean;
   tokenModel$: Observable<TokenModel>;
+  showMenu =  false;
   constructor(private store: Store<AppState>) {
     this.store.dispatch(new ReaverToken());
     this.tokenModel$ = this.store.pipe(select(ObterTokenModel));
@@ -22,6 +23,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.validarToken();
+  }
+
+  toggleMenu(showMenu: boolean) {
+    this.showMenu = showMenu;
   }
 
   validarToken(): void {
