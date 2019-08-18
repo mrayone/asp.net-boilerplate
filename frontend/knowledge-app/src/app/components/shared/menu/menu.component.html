@@ -14,7 +14,7 @@
 
       <li class="nav-item">
         <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapseUsuario"
-          (click)="isCollapseUsuario = !isCollapseUsuario" aria-controls="subMenuUsuario">
+          (click)="collapseAction('subMenuUsuario')" aria-controls="subMenuUsuario">
           <i class="ti-user"></i>
           <p> Usuários<i [ngClass]="{'ti-angle-up': !isCollapseUsuario, 'ti-angle-down': isCollapseUsuario }"></i></p>
         </a>
@@ -37,13 +37,13 @@
 
       <li class="nav-item">
         <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePerfil"
-          (click)="isCollapsePerfil = !isCollapsePerfil" aria-controls="subMenuPermissao">
+          (click)="collapseAction('subMenuPerfil')" aria-controls="subMenuPerfil">
           <i class="ti-bookmark-alt"></i>
           <p>Perfis <i [ngClass]="{'ti-angle-up': !isCollapsePerfil, 'ti-angle-down': isCollapsePerfil }"></i></p>
         </a>
       </li>
 
-      <div class="collapse" id="subMenuPermissao" [ngbCollapse]="!isCollapsePerfil">
+      <div class="collapse" id="subMenuPerfil" [ngbCollapse]="!isCollapsePerfil">
         <li class="nav-sub-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a [routerLink]="['/perfis']">
             <i class="ti-list-ol"></i>
@@ -60,7 +60,7 @@
 
       <li class="nav-item">
         <a href="javascript:void(0)" [attr.aria-expanded]="!isCollapsePermissao"
-          (click)="isCollapsePermissao = !isCollapsePermissao" aria-controls="subMenuPermissao">
+        (click)="collapseAction('subMenuPermissao')" aria-controls="subMenuPermissao">
           <i class="ti-key"></i>
           <p>Permissões <i [ngClass]="{'ti-angle-up': !isCollapsePermissao, 'ti-angle-down': isCollapsePermissao }"></i></p>
         </a>

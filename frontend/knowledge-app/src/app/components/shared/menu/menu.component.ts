@@ -15,6 +15,27 @@ export class MenuComponent implements OnInit {
   constructor() {
   }
 
+  collapseAction(item: string) {
+
+    switch (item) {
+      case 'subMenuUsuario':
+        this.isCollapseUsuario = !this.isCollapseUsuario;
+        this.isCollapsePermissao = false;
+        this.isCollapsePerfil = false;
+        break;
+      case 'subMenuPerfil':
+        this.isCollapseUsuario = false;
+        this.isCollapsePermissao = false;
+        this.isCollapsePerfil = !this.isCollapsePerfil;
+        break;
+      case 'subMenuPermissao':
+        this.isCollapsePermissao = !this.isCollapsePermissao ;
+        this.isCollapseUsuario = false;
+        this.isCollapsePerfil = false;
+        break;
+    }
+  }
+
   ngOnInit() {
   }
 
