@@ -140,10 +140,9 @@
   }
 
   .show-menu {
-    display: flex;
+    display: block;
     z-index: 1000;
-    position: relative;
-    float: left;
+    position: fixed;
   }
 
 }
@@ -155,7 +154,7 @@
   }
 
   .show-menu {
-    display: flex;
+    display: block;
     position: fixed;
     z-index: 1000;
   }
