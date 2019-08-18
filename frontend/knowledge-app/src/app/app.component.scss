@@ -28,6 +28,9 @@
   .main-panel {
     width: 100%;
   }
+  .nav-open {
+    margin-left: calc(100vw - 150px);
+   }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -35,4 +38,7 @@
   .main-panel {
     width: 100%;
   }
+  .nav-open {
+    margin-left: calc(100vw - 150px);
+   }
  }
