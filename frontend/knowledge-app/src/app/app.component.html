@@ -1,5 +1,4 @@
-<main class="main-panel">
-
+<main [ngClass]="{'main-panel': autenticado, 'main-panel-default': !autenticado}">
   <ng-container *ngIf="autenticado">
     <div class="menu">
       <app-menu></app-menu>
