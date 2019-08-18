@@ -1,18 +1,15 @@
-<main class="main-panel" *ngIf="autenticado; else loginTemplate">
+<main class="main-panel">
+
+  <ng-container *ngIf="autenticado">
     <div class="menu">
       <app-menu></app-menu>
     </div>
     <div class="menu-superior">
       <app-navbar></app-navbar>
     </div>
+  </ng-container>
 
   <div class="container-fluid">
-        <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </div>
 </main>
-
-<ng-template #loginTemplate>
-  <div class="container-fluid">
-    <app-login></app-login>
-  </div>
-</ng-template>

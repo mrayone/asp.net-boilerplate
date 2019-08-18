@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   validarToken(): void {
     this.tokenModel$.subscribe(val => {
-      this.autenticado = !!val;
+      this.autenticado = val !== null;
     });
   }
 }
