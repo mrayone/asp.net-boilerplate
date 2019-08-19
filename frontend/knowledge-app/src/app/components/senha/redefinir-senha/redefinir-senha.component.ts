@@ -30,7 +30,7 @@ export class RedefinirSenhaComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.formInit();
-    this.route.queryParamMap.pipe(
+    this.route.paramMap.pipe(
       map((params: ParamMap) => {
         return params.get('token');
       })
@@ -55,7 +55,7 @@ export class RedefinirSenhaComponent implements OnInit, AfterViewInit {
   private formInit() {
     this.recuperarSenhaForm = new FormGroup({
       email: new FormControl('', [Validators.email, Validators.required]),
-      senha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      senha: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmaSenha: new FormControl('', [Validators.required])
     }, { validators: MustMatch('senha', 'confirmaSenha') });
   }

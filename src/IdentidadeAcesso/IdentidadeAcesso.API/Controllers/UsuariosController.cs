@@ -139,7 +139,7 @@ namespace IdentidadeAcesso.API.Controllers
         /// Redefine a senha do usuário através do token fornecido. url/redefinir-senha?token=TOKEN_GERADO
         /// </summary>
         ///
-        [HttpPut("redefinir-senha")]
+        [HttpPut("redefinir-senha/{token}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> RedefinirSenhaAsync([FromBody] RedefinirSenhaViewModel model, string token)

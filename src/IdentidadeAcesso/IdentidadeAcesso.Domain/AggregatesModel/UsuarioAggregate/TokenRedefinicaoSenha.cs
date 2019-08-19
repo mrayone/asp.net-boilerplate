@@ -14,9 +14,6 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         public string Email { get; private set; }
         public DateTime? CriadoEm { get; private set; }
         public Guid UsuarioId { get; private set; }
-        static readonly string PasswordHash = "P@@Sw0rd";
-        static readonly string SaltKey = "S@LT&KEY";
-        static readonly string VIKey = "@1B2c3D4e5F6g7H8";
         protected TokenRedefinicaoSenha()
         {
             Id = new Guid();
@@ -36,7 +33,24 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
 
         public bool TokenValido()
         {
-            byte[] data = Convert.FromBase64String(Token);
+            var s = Token;
+            s = s.Replace('-', '+'); // 62nd char of encoding
+            s = s.Replace('_', '/'); // 63rd char of encoding
+            switch (s.Length % 4) // Pad with trailing '='s
+            {
+                case 0:
+                    break; // No pad chars in this case
+                case 2:
+                    s += "==";
+                    break; // Two pad chars
+                case 3:
+                    s += "=";
+                    break; // One pad char
+                default:
+                    throw new Exception("Illegal base64 url string!");
+            }
+
+            byte[] data = Convert.FromBase64String(s);
             DateTime when = DateTime.FromBinary(BitConverter.ToInt64(data, 0));
             DateTime dataLimite = DateTime.UtcNow.AddHours(-24);
             if (when < dataLimite) { return false; }
@@ -47,7 +61,11 @@ namespace IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate
         {
             byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
             byte[] key = Guid.NewGuid().ToByteArray();
-            return Convert.ToBase64String(time.Concat(key).ToArray());
+            var token =  Convert.ToBase64String(time.Concat(key).ToArray());
+            token = token.Split('=')[0]; // Remove any trailing '='s
+            token = token.Replace('+', '-'); // 62nd char of encoding
+            token = token.Replace('/', '_'); // 63rd char of encoding
+            return token;
         }
 
         public class TokenRedefinicaoSenhaFactory

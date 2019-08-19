@@ -49,7 +49,7 @@ export class UsuarioService {
       senha,
       confirmaSenha
     };
-    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/redefinir-senha?token=${token}`, obj, httpOptions);
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/redefinir-senha/${token}`, obj, httpOptions);
   }
 
   getUsuarioInfo(): Observable<Usuario> {
