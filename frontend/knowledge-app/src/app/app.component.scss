@@ -23,8 +23,9 @@
   padding: 0 30px 30px;
 }
 
+
 // Small devices (landscape phones, 576px and up)
-@media (max-width: 576px) {
+@media screen and (max-width: 576px) {
   .main-panel {
     width: 100%;
   }
@@ -34,11 +35,18 @@
 }
 
 // Medium devices (tablets, 768px and up)
-@media (max-width: 768px) {
+@media screen and (min-width: 768px) {
   .main-panel {
     width: 100%;
   }
   .nav-open {
-    margin-left: calc(100% - 100px);
+    margin-left: calc(100% - 500px);
    }
+ }
+
+
+ @media screen and (min-width: 996px) {
+  .main-panel {
+    width: calc(100% - 260px);
+  }
  }
