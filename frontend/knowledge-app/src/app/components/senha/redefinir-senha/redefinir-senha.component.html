@@ -1,0 +1,38 @@
+<div class="container-content">
+  <div class="content">
+    <div class="content-logo">
+      <img src="../../../assets/logo/logo.png" alt="Logo">
+    </div>
+    <form novalidate (ngSubmit)="alterarSenha($event)" [formGroup]="recuperarSenhaForm">
+      <div class="form-group">
+        <input type="text" name="email" class="form-control" formControlName="email" placeholder="E-mail"
+          required>
+
+        <div class="invalid-feedback">
+          <p [innerHtml]="erros.email"></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" name="senha" class="form-control" formControlName="senha" placeholder="Nova Senha"
+          required>
+
+        <div class="invalid-feedback">
+          <p [innerHtml]="erros.senha"></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="password" name="confirmaSenha" class="form-control" formControlName="confirmaSenha" placeholder="Confirmação de Senha"
+          required>
+
+        <div class="invalid-feedback">
+          <p [innerHtml]="erros.confirmaSenha"></p>
+        </div>
+      </div>
+      <button class="btn btn-success btn-lg btn-block" [disabled]="recuperarSenhaForm.invalid || inRequestService.InRequest"
+        type="submit">Salvar</button>
+    </form>
+    <div class="mt-4">
+      <a routerLink="/login">Logar</a>
+    </div>
+  </div>
+</div>

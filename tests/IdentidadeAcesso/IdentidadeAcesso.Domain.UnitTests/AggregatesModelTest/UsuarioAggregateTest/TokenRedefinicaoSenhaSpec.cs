@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregateTest
@@ -29,10 +26,10 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.UsuarioAggregate
             //arrange
             var rs = new TokenRedefinicaoSenha("email@gmail.com", Guid.NewGuid());
             //act
-            var expirou = rs.TokenValido();
+            var valido = rs.TokenValido();
 
             //assert
-            expirou.Should().BeTrue();
+            valido.Should().BeTrue();
         }
     }
 }

@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { url, httpOptions } from './config/config';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
-import { ErrosService } from './erros.service';
-import { InrequestService } from './inrequest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +34,31 @@ export class UsuarioService {
 
   getPorId(uid: string): Observable<Usuario> {
     return this.http.get<Usuario>(`${url}/api/v1/usuarios/${uid}`, httpOptions);
+  }
+
+  postSolicitarNovaSenha(email: string): Observable<HttpResponse<any>> {
+    const obj = {
+      email
+    };
+    return this.http.post<HttpResponse<any>>(`${url}/api/v1/usuarios/esqueci-a-senha`, obj, httpOptions);
+  }
+
+  postRedefinirSenha(email: string, senha: string, confirmaSenha: string, token: string): Observable<HttpResponse<any>> {
+    const obj = {
+      email,
+      senha,
+      confirmaSenha
+    };
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/redefinir-senha/${token}`, obj, httpOptions);
+  }
+
+  putTrocarSenha(senha: string, senhaAtual: string, confirmaSenha: string): Observable<HttpResponse<any>> {
+    const obj = {
+      senhaAtual,
+      senha,
+      confirmaSenha
+    };
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/trocar-senha/`, obj, httpOptions);
   }
 
   getUsuarioInfo(): Observable<Usuario> {

@@ -20,6 +20,7 @@ import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
+import { TrocarSenhaComponent } from '../senha/trocar-senha/trocar-senha.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.componen
     PerfilUsuarioComponent,
     NullFieldPipe,
     GeneroUsuarioPipe,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    TrocarSenhaComponent
   ],
   imports: [
     CommonModule,

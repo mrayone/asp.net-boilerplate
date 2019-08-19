@@ -26,6 +26,8 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
+import { RecuperarSenhaComponent } from './components/senha/recuperar-senha/recuperar-senha.component';
+import { RedefinirSenhaComponent } from './components/senha/redefinir-senha/redefinir-senha.component';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { LoginComponent } from './components/login/login.component';
     DashBoardComponent,
     MenuComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    RecuperarSenhaComponent,
+    RedefinirSenhaComponent,
   ],
   imports: [
     BrowserModule,

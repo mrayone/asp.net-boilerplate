@@ -1,0 +1,33 @@
+<form (ngSubmit)="sendCommand($event)" [formGroup]="trocarSenhaForm">
+    <div class="form-group">
+      <input type="password" name="senhaAtual" class="form-control" formControlName="senhaAtual"
+        placeholder="Senha Atual" required>
+
+      <div class="invalid-feedback">
+        <p [innerHtml]="erros.senhaAtual"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" name="senha" class="form-control" formControlName="senha" placeholder="Nova Senha"
+        required>
+
+      <div class="invalid-feedback">
+        <p [innerHtml]="erros.senha"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="password" name="confirmaSenha" class="form-control" formControlName="confirmaSenha"
+        placeholder="Confirmação de Senha" required>
+
+      <div class="invalid-feedback">
+        <p [innerHtml]="erros.confirmaSenha"></p>
+      </div>
+    </div>
+
+    <div class="form-row center">
+        <button class="btn ml-auto mr-auto btn-lg btn-rounded btn-success"
+          [disabled]="trocarSenhaForm.invalid || inRequestService.InRequest">Salvar</button>
+      </div>
+  </form>
