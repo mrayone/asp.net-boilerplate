@@ -33,6 +33,7 @@ function setLoginState(state = initialState) {
 
 function removeLoginState() {
   localStorage.removeItem(LOGIN_KEY);
+  initialState.auth = null;
   return initialState;
 }
 

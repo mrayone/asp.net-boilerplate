@@ -52,6 +52,15 @@ export class UsuarioService {
     return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/redefinir-senha/${token}`, obj, httpOptions);
   }
 
+  putTrocarSenha(senha: string, senhaAtual: string, confirmaSenha: string): Observable<HttpResponse<any>> {
+    const obj = {
+      senhaAtual,
+      senha,
+      confirmaSenha
+    };
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/trocar-senha/`, obj, httpOptions);
+  }
+
   getUsuarioInfo(): Observable<Usuario> {
     return this.http.get<Usuario>(`${url}/api/v1/usuarios/info`, httpOptions);
   }

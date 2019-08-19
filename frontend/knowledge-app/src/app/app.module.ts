@@ -38,7 +38,7 @@ import { RedefinirSenhaComponent } from './components/senha/redefinir-senha/rede
     NavbarComponent,
     LoginComponent,
     RecuperarSenhaComponent,
-    RedefinirSenhaComponent
+    RedefinirSenhaComponent,
   ],
   imports: [
     BrowserModule,

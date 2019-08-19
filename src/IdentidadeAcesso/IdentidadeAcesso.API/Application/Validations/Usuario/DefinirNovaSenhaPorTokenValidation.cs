@@ -21,11 +21,5 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
                 .NotEmpty()
                 .Equal(c => c.Senha).WithMessage("A confirmação de senha não é igual a senha fornecida.");
         }
-
-        private bool ValidarSenha(string arg)
-        {
-            if (string.IsNullOrEmpty(arg)) return false;
-            return Regex.IsMatch(arg, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$");
-        }
     }
 }

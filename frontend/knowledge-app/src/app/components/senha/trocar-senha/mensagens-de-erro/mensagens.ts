@@ -1,7 +1,6 @@
 export const mensagensDeErro = {
-  email: {
-    required: 'O e-mail deve ser fornecido',
-    email: 'Não é um e-mail válido.'
+  senhaAtual: {
+    required: 'A senha atual deve ser fornecida.',
   },
   senha: {
     required: 'Informe a senha',
