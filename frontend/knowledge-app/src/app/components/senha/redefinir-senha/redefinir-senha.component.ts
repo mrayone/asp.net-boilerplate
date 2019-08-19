@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChildren, ElementRef } from '@ang
 import { FormGroup, FormControlName, FormControl, Validators } from '@angular/forms';
 import { GenericValidator, MustMatch } from 'src/app/Utils/generic-validator';
 import { InrequestService } from 'src/app/services/inrequest.service';
-import { ParamMap, ActivatedRoute } from '@angular/router';
+import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -20,27 +20,35 @@ export class RedefinirSenhaComponent implements OnInit, AfterViewInit {
   erros: any = {};
   recuperarSenhaForm: FormGroup;
 
+  private token: string;
   constructor(private usuarioService: UsuarioService,
     private route: ActivatedRoute, public inRequestService: InrequestService,
+    private router: Router,
     private toastService: ToastrService) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
   ngOnInit() {
     this.formInit();
-    this.route.paramMap.pipe(
+    this.route.queryParamMap.pipe(
       map((params: ParamMap) => {
-        console.log(params.get('token'));
+        return params.get('token');
       })
-    ).subscribe(map => {
-
+    ).subscribe(val => {
+      this.token = val;
     });
   }
 
 
   alterarSenha(): void {
     if (this.recuperarSenhaForm.valid) {
-
+      const { email, senha, confirmaSenha } = this.recuperarSenhaForm.value;
+      this.usuarioService
+        .postRedefinirSenha(email, senha, confirmaSenha, this.token)
+        .subscribe(val => {
+          this.toastService.success('Operação Realizada com sucesso!');
+          this.router.navigate(['/login']);
+        });
     }
   }
 

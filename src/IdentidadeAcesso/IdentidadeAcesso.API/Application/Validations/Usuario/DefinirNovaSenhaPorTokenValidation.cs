@@ -16,11 +16,11 @@ namespace IdentidadeAcesso.API.Application.Validations.Usuario
             RuleFor(d => d.Token).NotNull().NotEmpty();
             RuleFor(d => d.Senha)
                 .Must(ValidarSenha)
-                .WithMessage(@"A senha deve ter pelo menos uma minúscula.\n
-                            A senha deve ter pelo menos uma maiúscula.\n
-                            A senha deve ter pelo menos um número.\n
-                            A senha deve ter pelo menos um caractere especial.\n
-                            A senha deve no mínimo conter 8 caracteres.");
+                .WithMessage("A senha deve ter pelo menos uma minúscula.\n"+
+                            "A senha deve ter pelo menos uma maiúscula.\n"+
+                            "A senha deve ter pelo menos um número.\n"+
+                            "A senha deve ter pelo menos um caractere especial.\n"+
+                            "A senha deve no mínimo conter 8 caracteres.");
             RuleFor(d => d.ConfirmaSenha)
                 .NotNull()
                 .NotEmpty()

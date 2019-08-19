@@ -36,7 +36,7 @@ export class RecuperarSenhaComponent implements OnInit, AfterViewInit {
   recuperarLogin(): void {
     if (this.recuperaraSenhaForm.valid) {
       this.usuarioService
-        .postRedefinicaoSenha(this.recuperaraSenhaForm.value.username)
+        .postSolicitarNovaSenha(this.recuperaraSenhaForm.value.username)
         .subscribe(val => {
           this.toastService.success('Solicitação realizada com sucesso! Em até 10 min lhe enviaremos um e-mail.');
         });

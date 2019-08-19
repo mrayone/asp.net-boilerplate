@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'nao-autorizado', component: UnauthorizedComponent },
   { path: 'recuperar-senha', component: RecuperarSenhaComponent },
-  { path: 'redefinir-senha/:token', component: RedefinirSenhaComponent },
+  { path: 'redefinir-senha', component: RedefinirSenhaComponent },
   { path: 'usuarios', loadChildren: './components/usuario/usuario.module#UsuarioModule' },
   { path: 'permissoes', loadChildren: './components/permissao/permissao.module#PermissaoModule' },
   { path: 'perfis', loadChildren: './components/perfil/perfil.module#PerfilModule' },

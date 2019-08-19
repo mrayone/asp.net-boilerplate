@@ -36,11 +36,20 @@ export class UsuarioService {
     return this.http.get<Usuario>(`${url}/api/v1/usuarios/${uid}`, httpOptions);
   }
 
-  postRedefinicaoSenha(email: string): Observable<HttpResponse<any>> {
+  postSolicitarNovaSenha(email: string): Observable<HttpResponse<any>> {
     const obj = {
       email
     };
     return this.http.post<HttpResponse<any>>(`${url}/api/v1/usuarios/esqueci-a-senha`, obj, httpOptions);
+  }
+
+  postRedefinirSenha(email: string, senha: string, confirmaSenha: string, token: string): Observable<HttpResponse<any>> {
+    const obj = {
+      email,
+      senha,
+      confirmaSenha
+    };
+    return this.http.put<HttpResponse<any>>(`${url}/api/v1/usuarios/redefinir-senha?token=${token}`, obj, httpOptions);
   }
 
   getUsuarioInfo(): Observable<Usuario> {
