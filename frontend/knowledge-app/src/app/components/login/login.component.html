@@ -23,6 +23,10 @@
 
           <button class="btn btn-primary btn-lg btn-block" [disabled]="loginForm.invalid || inRequestService.InRequest" type="submit">Entrar</button>
       </form>
+
+      <div class="mt-4">
+        <a [routerLink]="['/recuperar-senha']" >Perdeu a senha?</a>
+      </div>
     </div>
   </div>
 

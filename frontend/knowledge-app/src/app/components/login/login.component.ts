@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   genericValidator: GenericValidator;
-  erros?: { [key: string]: string } = {};
+  erros: any = {};
 
   constructor(private loginService: LogInService, private stateService: Store<AppState>, public inRequestService: InrequestService,
      private router: Router) {
