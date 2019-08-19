@@ -23,8 +23,8 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.NovaSenhaSolicita
             //TODO: enviar e-mail.
             await _emailSender.SendEmailAsync(notification.Email, notification.Nome,
                 "Redefinição de senha", string.Format(@"<h4>Olá {0} tudo bem?</h4> <p>Você solicitou uma redefinição de senha, por favor clique no link abaixo
-                 <p><a href='http://localhost:4200/trocar-senha?token={1}'>Clique aqui</a></p><br><br>
-                <p>Caso não esteja vendo o link acima clique neste link: http://localhost:4200/trocar-senha?token={1} </p>
+                 <p><a href='http://localhost:4200/redefinir-senha/{1}'>Clique aqui</a></p><br><br>
+                <p>Caso não esteja vendo o link acima clique neste link: http://localhost:4200/redefinir-senha/{1} </p>
                 </p><br><br><p><strong>Atenciosamente</strong>, Knowledge Team</p>", notification.Nome, notification.Token));
         }
     }

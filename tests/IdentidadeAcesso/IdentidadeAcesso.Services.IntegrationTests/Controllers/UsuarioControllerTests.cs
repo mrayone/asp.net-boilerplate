@@ -182,27 +182,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             result.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "Redefinir senha através do token.")]
-        [Trait("Testes de Integração", "UsuarioControllerTests")]
-        public async Task Deve_Redefinir_Senha_Com_Sucesso()
-        {
-            //arrange
-            var usuario = new
-            {
-                email = "admin@omegafive.net",
-                senha = "124578F@k",
-                confirmaSenha = "124578F@k"
-            };
-
-            var content = GerarContent(usuario);
-            //act
-            var post = await _client.PutAsync($"{API}/redefinir-senha?token=/9o1HFf2a2KDXf6bSzuJZyn0CqNgdY2vgVGmkGXo8g7L40Q1J31OcCdmqzWr23PE", content);
-            var result = await post.Content.ReadAsStringAsync();
-            //assert
-            post.StatusCode.Should().Be(HttpStatusCode.OK);
-            result.Should().BeEmpty();
-        }
-
         [Theory(DisplayName = "Deve retornar erro em commands inválidos.")]
         [ClassData(typeof(CommandsFails))]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
