@@ -1,25 +1,2 @@
-$color-bg: rgba(0,0,0, 0.2);
-.container-content {
-    margin-top: 180px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.content {
-  width: 400px;
-  min-height: 200px;
-  border-radius: 12px;
-  background-color: $color-bg;
-  padding: 1em;
-}
-
-
-.content-logo {
-  margin-bottom: 10px;
-  display: flex;
-
-  justify-content: center;
-}
+@import '../../../../assets/sass/senha';
 
