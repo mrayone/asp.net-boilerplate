@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { url, httpOptions } from './config/config';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import { Usuario } from '../components/usuario/models/usuario';
-import { ErrosService } from './erros.service';
-import { InrequestService } from './inrequest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +34,13 @@ export class UsuarioService {
 
   getPorId(uid: string): Observable<Usuario> {
     return this.http.get<Usuario>(`${url}/api/v1/usuarios/${uid}`, httpOptions);
+  }
+
+  postRedefinicaoSenha(email: string): Observable<HttpResponse<any>> {
+    const obj = {
+      email
+    };
+    return this.http.post<HttpResponse<any>>(`${url}/api/v1/usuarios/esqueci-a-senha`, obj, httpOptions);
   }
 
   getUsuarioInfo(): Observable<Usuario> {

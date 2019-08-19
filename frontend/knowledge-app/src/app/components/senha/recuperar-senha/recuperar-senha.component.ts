@@ -8,6 +8,8 @@ import { InrequestService } from 'src/app/services/inrequest.service';
 import { Router } from '@angular/router';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { mensagensDeErro } from './mensagens-de-erro/mensagens';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-recuperar-senha',
@@ -22,9 +24,8 @@ export class RecuperarSenhaComponent implements OnInit, AfterViewInit {
   genericValidator: GenericValidator;
   erros: any = {};
 
-  constructor(private loginService: LogInService,
-    private stateService: Store<AppState>, public inRequestService: InrequestService,
-    private router: Router) {
+  constructor(private usuarioService: UsuarioService, public inRequestService: InrequestService,
+    private router: Router, private toastService: ToastrService) {
     this.genericValidator = new GenericValidator(mensagensDeErro);
   }
 
@@ -34,7 +35,11 @@ export class RecuperarSenhaComponent implements OnInit, AfterViewInit {
 
   recuperarLogin(): void {
     if (this.recuperaraSenhaForm.valid) {
-
+      this.usuarioService
+        .postRedefinicaoSenha(this.recuperaraSenhaForm.value.username)
+        .subscribe(val => {
+          this.toastService.success('Solicitação realizada com sucesso! Em até 10 min lhe enviaremos um e-mail.');
+        });
     }
   }
 

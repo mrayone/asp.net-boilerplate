@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.router.url === '/login') { return next.handle(req.clone()); }
 
     const tkModel = this.auth.getAuthorizationToken();
-    if (!req.headers.has('Authorization')) {
+    if (!req.headers.has('Authorization') && tkModel) {
       const authReq = req.clone({
         headers: new HttpHeaders({
           Authorization: `Bearer ${tkModel.access_token}`
