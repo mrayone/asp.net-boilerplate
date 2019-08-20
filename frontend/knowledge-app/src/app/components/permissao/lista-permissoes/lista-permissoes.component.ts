@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Permissao } from '../Models/permissao';
 import { PermissaoService } from 'src/app/services/permissao.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-permissoes',
@@ -9,23 +12,23 @@ import { PermissaoService } from 'src/app/services/permissao.service';
 })
 export class ListaPermissoesComponent implements OnInit {
 
-  private getPermissoes: Permissao[];
-  page = 1;
-  pageSize = 4;
-  collectionSize = 0;
-  constructor(private permissaoService: PermissaoService) {
-    this.getPermissoes = new Array<Permissao>();
+  permissoes$: Observable<Permissao[]>;
+  constructor(private permissaoService: PermissaoService, private router: Router) {
   }
 
   ngOnInit() {
-    this.permissaoService.getTodas().subscribe(permissoes => {
-      this.getPermissoes = permissoes;
-      this.collectionSize = this.getPermissoes.length;
-    });
-  }
-  get permissoes(): Permissao[] {
-
-    return this.getPermissoes.map((permissao, i) => ({ id: i + 1, ...permissao }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    this.permissoes$ = this.permissaoService.getTodas()
+    .pipe(
+      map(permissoes => {
+        permissoes.map((el) => {
+          el.action = {
+            view: this.router.createUrlTree(['permissoes/detalhes', el.id]).toString(),
+            edit: this.router.createUrlTree(['permissoes/editar', el.id]).toString(),
+            delete: this.router.createUrlTree(['permissoes/detalhes', el.id]).toString()
+          };
+        });
+        return permissoes;
+      })
+    );
   }
 }

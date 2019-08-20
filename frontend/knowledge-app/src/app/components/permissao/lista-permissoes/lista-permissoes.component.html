@@ -1,34 +1,5 @@
   <div class="row">
-    <div class="col-md-12">
-        <table class="table table-dark">
-            <thead>
-              <tr>
-                <th scope="col">Tipo</th>
-                <th scope="col">Valor</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let permissao of permissoes">
-                <td>{{permissao.tipo}}</td>
-                <td>{{permissao.valor}}</td>
-                <td>
-                  <a [routerLink]="['detalhes', permissao.id]" title="Detalhes" class="btn btn-info text-white">
-                    <span class="ti ti-search"></span>
-                  </a> |
-                  <a [routerLink]="['editar', permissao.id]" title="editar" class="btn btn-warning text-white">
-                      <span class="ti ti-pencil"></span>
-                  </a> |
-                  <a [routerLink]="['detalhes', permissao.id]" title="excluir" class="btn btn-danger text-white">
-                    <span class="ti ti-trash"></span>
-                </a>
-                </td>
-              </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-between p-2">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-          </ngb-pagination>
+      <div class="col-md-12">
+          <data-table-component [array]="permissoes$" [columns]="{tipo: 'Tipo', valor: 'Valor', action:''}"></data-table-component>
         </div>
-    </div>
   </div>

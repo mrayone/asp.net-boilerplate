@@ -14,16 +14,13 @@ import { Router } from '@angular/router';
 })
 export class UsuarioListaComponent implements OnInit {
 
-  getUsuarios$: Observable<any[]>;
-  page = 1;
-  pageSize = 4;
-  collectionSize = 0;
+  usuarios$: Observable<any[]>;
   constructor(private usuarioService: UsuarioService, private router: Router) {
 
   }
 
   ngOnInit() {
-    this.getUsuarios$ = this.usuarioService.getTodos().pipe(
+    this.usuarios$ = this.usuarioService.getTodos().pipe(
       map((usuarios) => {
         usuarios.map((el) => {
           el.action = {
