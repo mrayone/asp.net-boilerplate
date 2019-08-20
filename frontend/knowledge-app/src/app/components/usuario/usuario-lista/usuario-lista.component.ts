@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { DataTableService } from '../../shared/data-table/interfaces/data-table-service';
+import { DataTableService } from '../../shared/data-table/services/data-table-service';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

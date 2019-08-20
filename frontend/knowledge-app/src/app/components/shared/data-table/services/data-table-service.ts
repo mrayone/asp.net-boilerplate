@@ -34,10 +34,12 @@ function sort(valores: any[], column: string, direction: string): any[] {
   }
 }
 
-function matches(valor: any, term: string, pipe: PipeTransform) {
-  return valor.nome.toLowerCase().includes(term.toLowerCase());
+function matches(valor: any, term: string, terms: string[]) {
+  return valor[terms[0]].toLowerCase().includes(term.toLowerCase())
+  || valor[terms[1]].toLowerCase().includes(term.toLowerCase());
 }
 
+@Injectable({ providedIn: 'root' })
 export class DataTableService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -53,6 +55,7 @@ export class DataTableService {
   };
 
   dados: any[];
+  termsAccepts: any[];
   constructor(private pipe: DecimalPipe) {
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
@@ -66,6 +69,7 @@ export class DataTableService {
     });
     this._search$.next();
     this.dados = new Array<any>();
+    this.termsAccepts = new Array<any>();
   }
 
   get dados$() { return this._dados$.asObservable(); }
@@ -91,10 +95,10 @@ export class DataTableService {
 
     // 1. sort
     let valores = [];
-    valores = sort( this.dados, sortColumn, sortDirection);
+    valores = sort(this.dados, sortColumn, sortDirection);
 
     // 2. filter
-    valores = valores.filter(dados => matches(dados, searchTerm, this.pipe));
+    valores = valores.filter(dados => matches(dados, searchTerm, this.termsAccepts));
     const total = valores.length;
 
     // 3. paginate

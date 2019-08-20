@@ -18,8 +18,8 @@
     <thead>
 
       <tr>
-        <th scope="col" sortable="nome" (sort)="onSort($event)" *ngFor="let column of objectValues(columns);">
-          {{column | titlecase}}</th>
+        <th scope="col" [sortable]="key" (sort)="onSort($event)" *ngFor="let key of objectKeys(columns);">
+          {{columns[key]}}</th>
       </tr>
     </thead>
     <tbody>

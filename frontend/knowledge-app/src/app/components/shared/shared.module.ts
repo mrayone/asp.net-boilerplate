@@ -7,12 +7,14 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { FormsModule } from '@angular/forms';
 import { SanitizeHtml} from '../../Utils/pipes/sanitizeHtml.pipe';
 import { RouterModule } from '@angular/router';
+import { NgbdSortableHeader } from './data-table/directive/sortable.directive';
 @NgModule({
   declarations: [
     CardRoundedComponent,
     UnauthorizedComponent,
     DataTableComponent,
-    SanitizeHtml
+    SanitizeHtml,
+    NgbdSortableHeader
   ],
   imports: [
     CommonModule,

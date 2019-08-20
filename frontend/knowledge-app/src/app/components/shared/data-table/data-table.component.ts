@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from './directive/sortable.directive';
-import { DataTableService } from './interfaces/data-table-service';
+import { DataTableService } from './services/data-table-service';
 import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'data-table-component',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
+  providers: [DataTableService, DecimalPipe]
 })
 export class DataTableComponent implements OnInit, AfterViewInit  {
   dados$: Observable<any[]>;
@@ -26,6 +27,7 @@ export class DataTableComponent implements OnInit, AfterViewInit  {
   ngOnInit(): void {
     this.array.subscribe((val) => {
       this.service.dados = val;
+      this.service.termsAccepts = this.objectKeys(this.columns);
     });
   }
 
