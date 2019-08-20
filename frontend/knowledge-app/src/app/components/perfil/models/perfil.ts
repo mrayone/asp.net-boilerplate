@@ -5,6 +5,7 @@ export class Perfil {
     nome: string;
     descricao: string;
     atribuicoes: AtribuicaoDTO[];
+    action: any;
 
     /**
      *

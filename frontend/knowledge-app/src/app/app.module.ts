@@ -43,7 +43,7 @@ import { RedefinirSenhaComponent } from './components/senha/redefinir-senha/rede
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({ positionClass: 'toast-bottom-center' }),
+    ToastrModule.forRoot({ positionClass: 'toast-top-center' }),
     ToastContainerModule,
     AppRoutingModule,
     HttpClientModule,

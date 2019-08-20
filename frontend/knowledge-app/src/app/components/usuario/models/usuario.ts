@@ -16,6 +16,7 @@ export class Usuario {
   public cep: string;
   public cidade: string;
   public estado: string;
+  public action: any;
 
   constructor() {
     this.nome = '';

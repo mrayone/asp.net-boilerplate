@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Perfil } from '../models/perfil';
 import { PerfilService } from 'src/app/services/perfil.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-listar-perfis',
@@ -9,24 +12,23 @@ import { PerfilService } from 'src/app/services/perfil.service';
 })
 export class ListarPerfisComponent implements OnInit {
 
-  private getPerfis: Perfil[];
-  page = 1;
-  pageSize = 4;
-  collectionSize = 0;
-  constructor(private perfilSerivce: PerfilService) {
-    this.getPerfis = new Array<Perfil>();
+  perfis$: Observable<Perfil[]>;
+  constructor(private perfilSerivce: PerfilService, private router: Router) {
   }
 
   ngOnInit() {
-    this.perfilSerivce.getTodos().subscribe(perfis => {
-      this.getPerfis = perfis;
-      this.collectionSize = this.getPerfis.length;
-    });
-  }
-
-
-  get perfis(): Perfil[] {
-    return this.getPerfis.map((perfil, i) => ({ id: i + 1, ...perfil }))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    this.perfis$ = this.perfilSerivce.getTodos()
+    .pipe(
+      map((perfis) => {
+        perfis.map((el) => {
+          el.action = {
+            view: this.router.createUrlTree(['perfis/detalhes', el.id]).toString(),
+            edit: this.router.createUrlTree(['perfis/editar', el.id]).toString(),
+            delete: this.router.createUrlTree(['perfis/detalhes', el.id]).toString()
+          };
+        });
+        return perfis;
+      })
+    );
   }
 }
