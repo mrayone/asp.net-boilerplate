@@ -10,22 +10,25 @@ e aplicar políticas de autorização baseadas em **permissões** por **perfil**
 com _IdentityServer_, com o propósito de descartar a implementação do IdentityCore, porque para o contexto atual não se encaixava.
 
 
-#### Tecnologias Utilizadas
- - [x] .NET Core / Standard
- - [x] ASP.NET Core Web Application
- - [x] EntityFramework Core
+#### Tecnologias Implementadas
+ - [x] ASP.NET Core 2.2 (com .NET Core 2.2)
+ - [x] ASP.NET WebApi Core
+ - [x] Identity Server 4
+ - [x] Entity Framework Core 2.2
+ - [x] .NET Core DI Nativa
  - [x] MediatR
- - [x] IdentityServer 4
+ - [x] FluentValidator
  - [x] Angular 8 
  - [x] Elmah.IO 
+ - [x] Swagger UI
  - [ ] RobbitMQ
 
  #### Arquiteturas
- - [x] Domain Driven-Design
- - [x] Test Driven-Development
- - [x] CQRS
+ - [x] Domain Driven Design (Camadas e Domain Model Pattern)
+ - [x] Test Driven Development
+ - [x] CQRS (abordagem simples)
  - [x] Domain Events
  - [x] Domain Notifications
- - [x] Mediator Pattern
+ - [x] Repository e Generic Repository
  - [x] Unit Of Work
  - [ ] Event Sourcing
