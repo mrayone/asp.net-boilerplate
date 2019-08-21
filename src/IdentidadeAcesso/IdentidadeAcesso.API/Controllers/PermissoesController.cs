@@ -21,8 +21,8 @@ namespace IdentidadeAcesso.API.Controllers
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PermissoesController( IMediator mediator,
-            INotificationHandler<DomainNotification> notification )
+        public PermissoesController(IMediator mediator,
+            INotificationHandler<DomainNotification> notification)
         {
             _mediator = mediator;
             _notifications = notification;
@@ -52,15 +52,8 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPermissaoAsync(Guid id)
         {
-            try
-            {
-                var model = await _mediator.Send(new BuscarPorId<PermissaoViewModel>(id));
-                return Ok(model);
-            }
-            catch
-            {
-                return NotFound();
-            }
+            var model = await _mediator.Send(new BuscarPorId<PermissaoViewModel>(id));
+            return Ok(model);
         }
 
         /// <summary>
@@ -98,7 +91,7 @@ namespace IdentidadeAcesso.API.Controllers
         [HttpDelete("{id:Guid}")]
         [PermissaoAuthorize("Excluir Permissão")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ExcluirPermissaoAsync( Guid id )
+        public async Task<IActionResult> ExcluirPermissaoAsync(Guid id)
         {
             var command = new ExcluirPermissaoCommand(id);
             var result = await _mediator.Send(command);
