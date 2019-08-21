@@ -2,7 +2,7 @@
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.Repository;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using MediatR;
 using System;
@@ -29,25 +29,36 @@ namespace IdentidadeAcesso.Domain.Sevices
             _usuarioRepo = usuarioRepository;
         }
 
-        public async Task<Perfil> CancelarPermissoesAsync(List<PermissaoAssinada> permissoes, Guid perfilId)
+        public async Task<Perfil> AtribuirPermissaoAsync(Perfil perfil, Guid permissaoId)
         {
-            var perfil = await _perfilRepo.ObterPorId(perfilId);
+            var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
 
-            foreach (var item in permissoes)
+            if (permissao == null)
             {
-                if(perfil.PermissoesAssinadas.Contains(item))
-                {
-                    perfil.CancelarPermissao(item.PermissaoId);
-                } else
-                {
-                    var permissao = await _permissaoRepo.ObterPorId(item.PermissaoId);
-                    var mensagem = permissao != null ? $"Não foi possível cancelar a permissão {permissao.Atribuicao.Tipo} - {permissao.Atribuicao.Valor}, pois não foi assinada anteriormente." :
-                        $"Erro ao cancelar permissão ID:{item.PermissaoId}.";
-                    await _mediator.Publish(new DomainNotification(GetType().Name,
-                    mensagem));
-                }
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Permissão não encontrada."));
+
             }
-            _perfilRepo.Atualizar(perfil);
+            else
+            {
+                perfil.AssinarPermissao(permissao.Id);
+            }
+
+            return await Task.FromResult(perfil);
+        }
+
+        public async Task<Perfil> RevogarPermissaoAsync(Perfil perfil, Guid permissaoId)
+        {
+            var permissao = await _permissaoRepo.ObterPorIdAsync(permissaoId);
+
+            if (permissao == null)
+            {
+                await _mediator.Publish(new DomainNotification(GetType().Name, "Permissão não encontrada."));
+
+            }
+            else
+            {
+                perfil.CancelarPermissao(permissao.Id);
+            }
 
             return await Task.FromResult(perfil);
         }

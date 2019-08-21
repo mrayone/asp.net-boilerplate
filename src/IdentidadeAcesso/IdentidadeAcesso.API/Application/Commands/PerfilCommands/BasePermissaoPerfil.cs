@@ -1,18 +1,22 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+﻿using FluentValidation.Results;
+using IdentidadeAcesso.Domain.SeedOfWork;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands
 {
-    public abstract class BasePermissaoPerfil<T> : ICommand where T : BasePermissaoPerfil<T>
+    public abstract class BasePermissaoPerfil<T> : IRequest<CommandResponse> where T : BasePermissaoPerfil<T>
     {
-        public Guid PermissaoId { get; protected set; }
-        public ValidationResult ValidationResult { get; set; }
+        [DataMember]
+        public Guid PerfilId { get; protected set; }
 
-        public abstract bool isValid();
+        [DataMember]
+        public IList<AtribuicaoDTO> Atribuicoes { get; protected set; }
+
     }
 }

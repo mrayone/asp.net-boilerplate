@@ -2,7 +2,6 @@
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.AggregatesModel.PermissaoAggregate.Repository;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
 using IdentidadeAcesso.Domain.Sevices;
 using IdentidadeAcesso.Domain.UnitTests.Builders.PerfilBuilders;
@@ -12,7 +11,6 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,7 +30,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             _mediator = new Mock<IMediator>();
             _service = new PermissaoService(_repositoryMock.Object, _mediator.Object, _perfilRepoMock.Object);
 
-            _repositoryMock.Setup(e => e.ObterPorId(It.IsAny<Guid>()))
+            _repositoryMock.Setup(e => e.ObterPorIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(PermissaoBuilder.ObterPermissaoFake());
             _listMock = new List<Perfil>()
             {
@@ -45,7 +43,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
         public async Task Deve_Deletar_a_Permissao_e_Retornar_True()
         {
             //arrange
-            var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
+            var permissao = await _repositoryMock.Object.ObterPorIdAsync(Guid.NewGuid());
 
             //act
             var result = await _service.DeletarPermissaoAsync(permissao);
@@ -62,7 +60,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             //arrange
             _perfilRepoMock.Setup(e => e.Buscar(It.IsAny<Expression<Func<Perfil, bool>>>()))
             .ReturnsAsync(_listMock);
-            var permissao = await _repositoryMock.Object.ObterPorId(Guid.NewGuid());
+            var permissao = await _repositoryMock.Object.ObterPorIdAsync(Guid.NewGuid());
 
             //act
             var result = await _service.DeletarPermissaoAsync(permissao);

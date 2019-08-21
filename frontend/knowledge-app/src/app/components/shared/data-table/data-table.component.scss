@@ -1,0 +1,68 @@
+.input-group > .form-control, .input-group > .form-control-plaintext, .input-group > .custom-select, .input-group > .custom-file {
+  border-color: transparent;
+  background: #2f3640;
+  color: #FFF;
+}
+
+.input-group-text {
+  background-color: #2f3640;
+  border: 1px solid transparent;
+}
+
+
+th[ng-reflect-sortable] {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+th[ng-reflect-sortable].asc:before {
+  content: "\e648";
+  color: #FFF;
+  position: absolute;
+  font-family: 'themify';
+  width: 22px;
+  height: 22px;
+  float: right;
+  margin-left: 50px;
+}
+th[ng-reflect-sortable].desc:before {
+  content: "\e64b";
+  color: #FFF;
+  position: absolute;
+  font-family: 'themify';
+  width: 22px;
+  height: 22px;
+  float: right;
+  margin-left: 50px;
+}
+
+// th[ng-reflect-sortable].desc:before {
+//   transform: rotate(180deg);
+//   -ms-transform: rotate(180deg);
+// }
+
+
+/* Filtering table demo */
+ngbd-table-filtering span.ngb-highlight {
+  background-color: yellow;
+}
+
+/* Complete table demo */
+ngbd-table-complete span.ngb-highlight {
+  background-color: yellow;
+}
+
+ngb-carousel .picsum-img-wrapper {
+  position: relative;
+  height: 0;
+  padding-top: 55%; /* Keep ratio for 900x500 images */
+}
+
+ngb-carousel .picsum-img-wrapper>img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

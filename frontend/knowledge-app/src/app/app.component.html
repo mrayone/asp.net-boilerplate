@@ -1,0 +1,14 @@
+<main [ngClass]="{'main-panel': autenticado, 'main-panel-default': !autenticado}">
+  <ng-container *ngIf="autenticado">
+    <div class="menu">
+      <app-menu [showMenu]="showMenu"></app-menu>
+    </div>
+    <div class="menu-superior" [ngClass]="{'nav-open': showMenu}">
+      <app-navbar (command)="toggleMenu($event)"></app-navbar>
+    </div>
+  </ng-container>
+
+  <div class="container-fluid" [ngClass]="{'nav-open': showMenu}">
+    <router-outlet></router-outlet>
+  </div>
+</main>

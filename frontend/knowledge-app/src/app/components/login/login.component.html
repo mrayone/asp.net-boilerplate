@@ -1,0 +1,32 @@
+<div class="auth-content">
+  <div class="auth-modal">
+      <div class="auth-logo">
+        <img src="../../../assets/logo/logo.png" alt="Logo">
+      </div>
+      <form novalidate (ngSubmit)="autenticarUsuario($event)" [formGroup]="loginForm">
+          <div class="form-group">
+              <input type="text" name="username" class="form-control" formControlName="username"
+                  placeholder="E-mail" required>
+
+              <div class="invalid-feedback">
+                  <p [innerHtml]="erros.username"></p>
+              </div>
+          </div>
+          <div class="form-group">
+              <input type="password" name="password" class="form-control"
+                   formControlName="password" placeholder="Senha" required>
+
+              <div class="invalid-feedback">
+                  <p [innerHtml]="erros.password"></p>
+              </div>
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block" [disabled]="loginForm.invalid || inRequestService.InRequest" type="submit">Entrar</button>
+      </form>
+
+      <div class="mt-4">
+        <a [routerLink]="['/recuperar-senha']" >Perdeu a senha?</a>
+      </div>
+    </div>
+  </div>
+

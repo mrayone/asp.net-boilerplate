@@ -1,0 +1,52 @@
+@import '../assets/sass/variables.scss';
+.main-panel {
+  position: relative;
+  float: right;
+  width: calc(100% - 260px);
+}
+
+.main-panel-default {
+  position: relative;
+  float: right;
+  width: 100%;
+}
+
+.menu-superior {
+  margin-bottom: 10px;
+}
+
+.content {
+  padding: 0 30px 30px;
+  min-height: calc(100vh - 123px);
+}
+.container-fluid {
+  padding: 0 30px 30px;
+}
+
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 576px) {
+  .main-panel {
+    width: 100%;
+  }
+  .nav-open {
+    margin-left: calc(100% - 100px);
+   }
+}
+
+// Medium devices (tablets, 768px and up)
+@media screen and (min-width: 768px) {
+  .main-panel {
+    width: 100%;
+  }
+  .nav-open {
+    margin-left: calc(100% - 500px);
+   }
+ }
+
+
+ @media screen and (min-width: 996px) {
+  .main-panel {
+    width: calc(100% - 260px);
+  }
+ }

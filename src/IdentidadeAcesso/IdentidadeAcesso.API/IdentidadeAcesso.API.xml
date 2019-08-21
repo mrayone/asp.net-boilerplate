@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdentidadeAcesso.API</name>
+    </assembly>
+    <members>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfisAsync">
+            <summary>
+            Lista todos os perfis. Este método requer permissão para "Visualizar Perfis".
+            </summary>
+            <remarks>
+            Retorna uma lista de objetos PerfilViewModel.
+            </remarks>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.GetPerfilAsync(System.Guid)">
+            <summary>
+            Obtém um perfil por Id. Este método requer permissão para "Visualizar Perfis".
+            </summary>
+            <remarks>
+            Retorna um objeto PerfilViewModel caso o mesmo exista na base de dados com o Id fornecido.
+            </remarks>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.AtribuirPermissoesAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.AtribuirPermissaoCommand)">
+            <summary>
+            Atribui permissões a um perfil. Este método requer permissão para "Atribuir Permissões".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.CriarPerfilAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.CriarPerfilCommand)">
+            <summary>
+            Cria um novo perfil. Este método requer permissão para "Criar Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.AtualizarPerfilAsync(IdentidadeAcesso.API.Application.Commands.PerfilCommands.AtualizarPerfilCommand)">
+            <summary>
+            Edita um perfil do app. Este método requer permissão para "Editar Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PerfisController.ExcluirPerfilAsync(System.Guid)">
+            <summary>
+            Exclui um perfil do app. Este método requer permissão para "Excluir Perfil".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.GetPermissoesAsync">
+             <summary>
+             Lista todos as permissões. Este método requer permissão para "Visualizar Permissões".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.GetPermissaoAsync(System.Guid)">
+             <summary>
+             Obtém um permissão por Id. Este método requer permissão para "Visualizar Permissões".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.CriarPermissaoAsync(IdentidadeAcesso.API.Application.Commands.PermissaoCommands.CriarPermissaoCommand)">
+             <summary>
+             Cria uma permissão no sistema. Este método requer permissão para "Criar Permissão".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.AtualizarPermissaoAsync(IdentidadeAcesso.API.Application.Commands.PermissaoCommands.AtualizarPermissaoCommand)">
+             <summary>
+             Atualiza uma permissão do sistema. Este método requer permissão para "Atualizar Permissão".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.PermissoesController.ExcluirPermissaoAsync(System.Guid)">
+            <summary>
+            Exclui uma permissão do sistema. Este método requer permissão para "Excluir Permissão".
+            </summary>
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetUsuariosAsync">
+             <summary>
+             Lista todos os usuários. Este método requer permissão para "Visualizar Usuários".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetUsuarioAsync(System.Guid)">
+             <summary>
+             Obtém um usuário por Id. Este método requer permissão para "Visualizar Usuários".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.GetInfoUsuarioAsync">
+             <summary>
+             Retorna as informações do usuário autenticado.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.CriarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.NovoUsuarioCommand)">
+             <summary>
+             Cria um novo usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Criar Usuário".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarUsuarioAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.AtualizarUsuarioCommand)">
+             <summary>
+             Atualiza um usuário no sistema e com tipo de perfil específicado. Este método requer permissão para "Atualizar Usuário".
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.SolicitacaoDeNovaSenhaAsync(IdentidadeAcesso.API.Application.Commands.UsuarioCommands.SolicitarNovaSenhaCommand)">
+             <summary>
+             Solicitar nova senha em caso de esquecimento.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.RedefinirSenhaAsync(IdentidadeAcesso.API.Application.Models.RedefinirSenhaViewModel,System.String)">
+             <summary>
+             Redefine a senha do usuário através do token fornecido. url/redefinir-senha?token=TOKEN_GERADO
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.TrocarSenha(IdentidadeAcesso.API.Application.Models.TrocarSanhaViewModel)">
+             <summary>
+             Possibilita a alteração de senha do usuário logado.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.AtualizarPerfilUsuarioAsync(IdentidadeAcesso.API.Application.Models.AtualizarPerfilUsuarioViewModel)">
+             <summary>
+             Atualiza os dados do usuário logado. Este método requer estar logado.
+             </summary>
+            
+        </member>
+        <member name="M:IdentidadeAcesso.API.Controllers.UsuariosController.ExcluirUsuarioAsync(System.Guid)">
+             <summary>
+             Exclui um usuário do sistema. Este método requer permissão para "Excluir Usuário".
+             </summary>
+            
+        </member>
+    </members>
+</doc>

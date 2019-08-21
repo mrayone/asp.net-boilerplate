@@ -1,0 +1,74 @@
+<div class="row justify-content-start" *ngIf="usuario">
+  <div class="col-md-12">
+    <app-card-rounded [bodyTemplate]="dados" [footerTemplate]="footer" [nomeUsuario]="usuario.nome" [email]="usuario.email">
+      <ng-template #dados>
+        <div class="row">
+          <div class="col-md-4">
+            <dl>
+              <dt>E-mail</dt>
+              <dd>{{usuario.email}}</dd>
+              <dt>CPF</dt>
+              <dd>{{usuario.cpf}}</dd>
+              <dt>Data de Nascimento</dt>
+              <dd>{{usuario.dataDeNascimento | date:"dd-MM-yy"}}</dd>
+              <dt>Sexo</dt>
+              <dd>{{usuario.sexo | generoUsuario}}</dd>
+            </dl>
+          </div>
+
+          <div class="col-md-4">
+            <dl>
+              <dt>Endereço</dt>
+              <dd>{{usuario.logradouro | nullField}} {{usuario.numero | nullField}}</dd>
+              <dt>CEP</dt>
+              <dd>{{usuario.cep | nullField}}</dd>
+              <dt>Cidade</dt>
+              <dd>{{usuario.cidade | nullField}} - {{usuario.estado | nullField}}</dd>
+            </dl>
+          </div>
+
+          <div class="col-md-4">
+              <dl>
+                <dt>Celular</dt>
+                <dd>{{usuario.celular | nullField }}</dd>
+                <dt>Telefone</dt>
+                <dd>{{ usuario.telefone | nullField }}</dd>
+              </dl>
+            </div>
+        </div>
+      </ng-template>
+      <ng-template #footer>
+          <div class="row">
+              <a [routerLink]="['/usuarios/editar', usuario.id]" class="btn btn-primary mr-1"> <i class="ti-pencil"></i>Editar</a>
+              <button type="button" class="btn btn-danger" (click)="open(content)"><i class="ti-trash"></i>Excluir</button>
+          </div>
+
+          <div class="row mt-4">
+              <span class="badge badge-primary">Know</span>
+              <span class="badge badge-secondary">ledge</span>
+              <span class="badge badge-success">I.O</span>
+          </div>
+      </ng-template>
+
+    </app-card-rounded>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Exclusão</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>Você tem certeza que deseja excluir o usuário <span class="text-primary">"{{usuario.nome}} {{usuario.sobrenome}}"</span>?</strong></p>
+        <p>Todos as alterações realizadas por este usuário ainda permanecerão no sistema.
+        <span class="text-danger">Esta operação não podera ser desfeita.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" ngbAutofocus class="btn btn-outline-primary" (click)="modal.dismiss('cancel click')">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Ok</button>
+    </div>
+  </ng-template>

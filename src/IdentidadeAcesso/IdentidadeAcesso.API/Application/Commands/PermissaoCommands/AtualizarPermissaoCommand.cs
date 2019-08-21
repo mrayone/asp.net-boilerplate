@@ -1,4 +1,5 @@
-﻿using IdentidadeAcesso.API.Application.Validations.Permissao;
+﻿using IdentidadeAcesso.API.Application.Behaviors;
+using IdentidadeAcesso.API.Application.Validations.Permissao;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
 {
-    public class AtualizarPermissaoCommand : BasePermissaoCommand<AtualizarPermissaoCommand>, IRequest<bool>
+    public class AtualizarPermissaoCommand : BasePermissaoCommand<AtualizarPermissaoCommand>
     {
         public AtualizarPermissaoCommand(Guid id, string tipo, string valor)
         {
@@ -15,13 +16,5 @@ namespace IdentidadeAcesso.API.Application.Commands.PermissaoCommands
             Tipo = tipo;
             Id = id;
         }
-
-        public Guid Id { get; private set; }
-
-        public override bool isValid()
-        {
-            ValidationResult = new AtualizarPermissaoValidation().Validate(this);
-            return ValidationResult.IsValid ;
-        } 
     }
 }

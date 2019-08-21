@@ -1,0 +1,60 @@
+<form>
+  <div class="form-group form-inline">
+    <div class="form-group">
+      <div class="input-group no-border">
+        <input class="form-control" placeholder="Buscar..." type="text" name="searchTerm"
+          [(ngModel)]="service.searchTerm">
+        <div class="input-group-append">
+          <div class="input-group-text">
+            <i class="ti ti-search"></i>
+          </div>
+        </div>
+        <span class="ml-3 text-white" *ngIf="service.loading$ | async">Carregando...</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped table-dark">
+    <thead>
+
+      <tr>
+        <th scope="col" [sortable]="key" (sort)="onSort($event)" *ngFor="let key of objectKeys(columns);">
+          {{columns[key]}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let valor of dados$ | async">
+        <td>
+          <ngb-highlight [result]="valor[objectKeys(columns)[0]]" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight [result]="valor[objectKeys(columns)[1]]" [term]="service.searchTerm"></ngb-highlight>
+        </td>
+        <td>
+          <a [routerLink]="[valor[objectKeys(columns)[2]].view]" class="btn btn-info text-white">
+            <span class="ti ti-search"></span>
+          </a> |
+          <a [routerLink]="[valor[objectKeys(columns)[2]].edit]" class="btn btn-warning text-white">
+            <span class="ti ti-pencil"></span>
+          </a> |
+          <a [routerLink]="[valor[objectKeys(columns)[2]].delete]" class="btn btn-danger text-white">
+            <span class="ti ti-trash"></span>
+          </a>
+        </td>
+        <!-- <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+      <option [ngValue]="2">2 itens por página</option>
+      <option [ngValue]="4">4 itens por página</option>
+      <option [ngValue]="6">6 itens por página</option>
+    </select>
+  </div>
+
+</form>

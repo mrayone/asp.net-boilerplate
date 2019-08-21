@@ -1,0 +1,27 @@
+<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="permissaoForm" autocomplete="off">
+  <div class="form-row">
+    <div class="form-group col">
+      <label for="control-label" for="tipo">Tipo</label>
+      <input type="text" id="tipo" formControlName="tipo" placeholder="Tipo é querido" required class="form-control">
+      <div class="invalid-feedback">
+        <p [innerHTML]="erros.tipo"></p>
+      </div>
+      <input *ngIf="formType === 2" type="hidden" id="id" name="id" formControlName="id">
+    </div>
+
+    <div class="form-group col">
+      <label for="control-label" for="valor">Valor</label>
+      <input type="text" id="valor" placeholder="valor é requerido" formControlName="valor" required
+        class="form-control">
+      <div class="invalid-feedback">
+        <p [innerHTML]="erros.valor"></p>
+      </div>
+    </div>
+
+  </div>
+  <div class="form-row center">
+    <button class="btn ml-auto mr-auto btn-lg btn-rounded"
+      [ngClass]="{ 'btn-info': formType == 2, 'btn-success': formType == 1 }"
+      [disabled]="permissaoForm.invalid || inRequestService.InRequest">{{ formType == 1 ? 'Adicionar': 'Atualizar' }}</button>
+  </div>
+</form>

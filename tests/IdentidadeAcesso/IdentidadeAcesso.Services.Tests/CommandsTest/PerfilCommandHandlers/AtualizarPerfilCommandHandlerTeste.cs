@@ -1,17 +1,17 @@
 ﻿using FluentAssertions;
 using IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers;
+using IdentidadeAcesso.API.Application.DomainEventHandlers.DomainNotifications;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate;
 using IdentidadeAcesso.Domain.AggregatesModel.PerfilAggregate.Repository;
 using IdentidadeAcesso.Domain.SeedOfWork;
-using IdentidadeAcesso.Domain.SeedOfWork.interfaces;
+using IdentidadeAcesso.Domain.SeedOfWork.Interfaces;
 using IdentidadeAcesso.Domain.SeedOfWork.Notifications;
-using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builders;
+using IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers.Builder;
 using MediatR;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -22,7 +22,9 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
         private readonly Mock<IMediator> _mediator;
         private readonly Mock<IPerfilRepository> _perfilRepositoryMock;
         private readonly Mock<IUnitOfWork> _uow;
-        private readonly Mock<DomainNotificationHandler> _notifications;
+        private readonly DomainNotificationHandler _notifications;
+        private readonly Mock<IPerfilService> _perfilService;
+        private readonly AtualizarPerfilCommandHandler _handler;
         private readonly IList<Perfil> _listMock;
 
         public AtualizarPerfilCommandHandlerTeste()
@@ -30,31 +32,17 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             _mediator = new Mock<IMediator>();
             _perfilRepositoryMock = new Mock<IPerfilRepository>();
             _uow = new Mock<IUnitOfWork>();
-            _notifications = new Mock<DomainNotificationHandler>();
-
+            _notifications = new DomainNotificationHandler();
+            _perfilService = new Mock<IPerfilService>();
+            _handler = new AtualizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, 
+                _perfilService.Object, _uow.Object, _notifications);
 
             _listMock = new List<Perfil>()
             {
                 TestBuilder.PerfilFalso()
             };
 
-            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorId(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
-        }
-
-        [Fact(DisplayName = "O handle deve retornar falso se perfil invalido")]
-        [Trait("Handler - Perfil", "AtualizarPerfil")]
-        public async Task Handle_deve_retornar_falso_se_perfil_invalido()
-        {
-            //arrange
-            var command = TestBuilder.FalsoAtualizarPerfilRequestComPermissoes();
-            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
-            var cancelToken = new System.Threading.CancellationToken();
-
-            //act
-            var result = await handler.Handle(command, cancelToken);
-
-            //assert
-            result.Should().BeFalse();
+            _perfilRepositoryMock.Setup(perfil => perfil.ObterPorIdAsync(It.IsAny<Guid>())).ReturnsAsync(TestBuilder.PerfilFalso());
         }
 
         [Fact(DisplayName = "O Handle deve disparar evento se um perfil com mesmo nome ja existir.")]
@@ -67,15 +55,14 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             .ReturnsAsync(_listMock);
 
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Fail);
-            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
             _mediator.Verify(m => m.Publish(It.IsAny<DomainNotification>(), default), Times.Once());
-            result.Should().BeFalse();
+            result.Success.Should().BeFalse();
         }
 
         [Fact(DisplayName = "O Handle deve persistir um perfil com sucesso.")]
@@ -85,14 +72,13 @@ namespace IdentidadeAcesso.Services.UnitTests.CommandsTest.PerfilCommandHandlers
             var command = TestBuilder.AtualizarPerfilRequestOk();
             _uow.Setup(u => u.Commit()).ReturnsAsync(CommandResponse.Ok);
 
-            var handler = new AtulizarPerfilCommandHandler(_mediator.Object, _perfilRepositoryMock.Object, _uow.Object, _notifications.Object);
             var cancelToken = new System.Threading.CancellationToken();
 
             //act
-            var result = await handler.Handle(command, cancelToken);
+            var result = await _handler.Handle(command, cancelToken);
 
             //assert
-            result.Should().BeTrue();
+            result.Success.Should().BeTrue();
         }
     }
 }

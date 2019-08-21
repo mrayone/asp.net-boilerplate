@@ -11,6 +11,20 @@ namespace IdentidadeAcesso.Domain.UnitTests.AggregatesModelTest.PermissaoAggrega
 {
     public class PermissaoSpec
     {
+        public PermissaoSpec()
+        {
 
+        }
+        [Fact(DisplayName = "Deve disparar exceção se definir atribuição nula.")]
+        [Trait("Raiz de Agregação", "Permissão")]
+        public void Deve_Disparar_Excecao_Se_Definir_Atribuicao_Nula()
+        {
+            //arrange
+            var permissao = PermissaoBuilder.ObterPermissaoFake();
+            //act
+            Action act = () => { permissao.DefinirAtribuicao(null); };
+            //assert
+            act.Should().Throw<ArgumentNullException>();
+        }
     }
 }

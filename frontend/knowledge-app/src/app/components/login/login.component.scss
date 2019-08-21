@@ -1,0 +1,29 @@
+$color-bg: rgba(0,0,0, 0.2);
+$link-color: #dd0330;
+.auth-content {
+    margin-top: 120px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-logo {
+  margin-bottom: 10px;
+  display: flex;
+
+  justify-content: center;
+}
+
+.auth-modal {
+    width: 400px;
+    min-height: 300px;
+    border-radius: 12px;
+    background-color: $color-bg;
+    padding: 1em;
+}
+
+.auth-modal a {
+  color: $link-color;
+}
+

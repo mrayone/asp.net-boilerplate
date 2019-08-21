@@ -1,0 +1,22 @@
+@import '../../../../assets/sass/variables.scss';
+
+.navbar.navbar-transparent {
+  box-shadow: none;
+  border-bottom: 2px solid #ddd;
+  height: 80px;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+a.navbar-brand:not(.btn) {
+  color: $color-default;
+}
+a.navbar-brand:hover {
+  color: $color-default;
+}
+
+
+.dropdown-toggle::after {
+  display: none;
+}
+

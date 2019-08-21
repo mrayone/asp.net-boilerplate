@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate;
+using IdentidadeAcesso.Domain.AggregatesModel.UsuarioAggregate.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,26 +10,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
 {
     public abstract class UsuarioBuilder
     {
-        public static Usuario ObterUsuarioInvalido()
-        {
-            var nome = NomeBuilder.ObterNomeInvalido();
-            var email = EmailBuilder.ObterEmailInvalido();
-            var sexo = SexoBuilder.ObterSexoInvalido();
-            var cpf = CPFBuilder.ObterCPFInvalido();
-            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
-        }
-
-        public static Usuario ObterUsuarioParcialmenteInvalido()
-        {
-            var nome = NomeBuilder.ObterNomeValido();
-            var email = EmailBuilder.ObterEmailValido();
-            var sexo = SexoBuilder.ObterSexoInvalido();
-            var cpf = CPFBuilder.ObterCPFInvalido();
-            var dataDeNascimento = DataDeNascimentoBuilder.ObterDataInvalida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
-        }
-
         public static Usuario ObterUsuarioValido()
         {
             var nome = NomeBuilder.ObterNomeValido();
@@ -36,7 +17,7 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var sexo = SexoBuilder.ObterSexoValido();
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
-            return new Usuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid());
+            return new Usuario(nome, sexo, email, cpf, dataDeNascimento);
         }
 
         public static Usuario ObterUsuarioCompletoValido()
@@ -46,12 +27,12 @@ namespace IdentidadeAcesso.Domain.UnitTests.Builders.UsuarioBuilders
             var sexo = SexoBuilder.ObterSexoValido();
             var cpf = CPFBuilder.ObterCPFValido();
             var dataDeNascimento = DataDeNascimentoBuilder.ObterDataValida();
-            var celular = CelularBuilder.ObterCelularValido();
-            var telefone = TelefoneBuilder.ObterTelefoneValido();
+            var numContato = CelularBuilder.ObterCelularValido();
             var endereco = EnderecoBuilder.ObterEnderecoValido();
 
-            return UsuarioFactory.CriarUsuario(nome, sexo, email, cpf, dataDeNascimento, Guid.NewGuid(),celular,
-                telefone, endereco);
+            return UsuarioFactory.CriarUsuario(null, nome.PrimeiroNome, nome.Sobrenome, sexo.Tipo, email.Endereco, 
+                cpf, dataDeNascimento.Data,numContato.NumeroCel, numContato.NumeroTelefone,
+                endereco, Guid.NewGuid(), Senha.GerarSenha("asdsad"));
         }
     }
 }

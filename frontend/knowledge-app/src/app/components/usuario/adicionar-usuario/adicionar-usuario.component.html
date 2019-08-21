@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-12">
+      <app-card-rounded titulo="Novo Usuário" [bodyTemplate]="bodyTemplate" >
+        <ng-template #bodyTemplate>
+          <app-formulario-usuario (command)="onPostCommand($event)" [perfis]= "perfis" [adminInput]="true"></app-formulario-usuario>
+        </ng-template>
+      </app-card-rounded>
+  </div>
+</div>
