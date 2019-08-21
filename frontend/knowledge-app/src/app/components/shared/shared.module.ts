@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { SanitizeHtml} from '../../Utils/pipes/sanitizeHtml.pipe';
 import { RouterModule } from '@angular/router';
 import { NgbdSortableHeader } from './data-table/directive/sortable.directive';
+import { NotfoundComponent } from './notfound/notfound.component';
 @NgModule({
   declarations: [
     CardRoundedComponent,
     UnauthorizedComponent,
     DataTableComponent,
     SanitizeHtml,
-    NgbdSortableHeader
+    NgbdSortableHeader,
+    NotfoundComponent
   ],
   imports: [
     CommonModule,

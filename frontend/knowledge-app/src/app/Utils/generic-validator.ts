@@ -44,7 +44,7 @@ export function MustMatch(controlName: string, matchingControlName: string): Val
 
     // set error on matchingControl if validation fails
     if (control.value !== matchingControl.value) {
-      return { mustMatch: true };
+      matchingControl.setErrors({ mustMatch: true});
     }
 
     return null;

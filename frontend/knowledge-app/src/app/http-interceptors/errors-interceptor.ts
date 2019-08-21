@@ -12,7 +12,7 @@ import { UsuarioAutenticadoService } from '../services/usuario-autenticado.servi
 export class ErrorsInterceptor implements HttpInterceptor {
 
   constructor(private erros: ErrosService, private inRequestService: InrequestService, private auth: UsuarioAutenticadoService,
-     private router: Router) { }
+    private router: Router) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.inRequestService.startRequest();
@@ -30,31 +30,50 @@ export class ErrorsInterceptor implements HttpInterceptor {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (errorRequest: HttpErrorResponse): Observable<T> => {
-      if (errorRequest.status === 403) {
-        this.router.navigateByUrl(`/nao-autorizado`);
-      }
 
-      if (errorRequest.status === 401) {
-        const tkModel = this.auth.getAuthorizationToken();
-        if (this.auth.tokenExpirou(tkModel.access_token)) {
-          this.auth.refreshToken(tkModel);
-          this.router.navigate(['/dashboard']);
-        }
-      }
-
-      if (errorRequest.status === 400) {
-        const { error_description } = errorRequest.error;
-        if (error_description) {
-          this.erros.dispararErro(error_description);
-        } else if (errorRequest.error instanceof Array) {
-          this.erros.dispararRangeErros(errorRequest.error);
-        } else {
-          this.erros.dispararErro(errorRequest.error.error);
-        }
+      switch (errorRequest.status) {
+        case 400:
+          this.error400(errorRequest);
+          break;
+        case 401:
+          this.error401();
+          break;
+        case 403:
+          this.error403();
+          break;
+        case 404:
+          this.error404();
+          break;
       }
 
       this.inRequestService.stopRequest();
       return of(result as T);
     };
+  }
+
+  error403() {
+    this.router.navigateByUrl(`/nao-autorizado`);
+  }
+  error401() {
+    const tkModel = this.auth.getAuthorizationToken();
+    if (this.auth.tokenExpirou(tkModel.access_token)) {
+      this.auth.refreshToken(tkModel);
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  error400(errorRequest: HttpErrorResponse) {
+    const { error_description } = errorRequest.error;
+    if (error_description) {
+      this.erros.dispararErro(error_description);
+    } else if (errorRequest.error instanceof Array) {
+      this.erros.dispararRangeErros(errorRequest.error);
+    } else {
+      this.erros.dispararErro(errorRequest.error.error);
+    }
+  }
+
+  error404() {
+    this.router.navigateByUrl(`/nao-encontrou`);
   }
 }
