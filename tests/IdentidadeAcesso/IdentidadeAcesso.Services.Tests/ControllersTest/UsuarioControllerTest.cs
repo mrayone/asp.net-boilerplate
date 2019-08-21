@@ -74,21 +74,6 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
             vr.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
 
-        [Trait("Controller", "UsuariosController")]
-        [Fact(DisplayName = "Deve retonar NotFound ao passar o Id por parametro.")]
-        public async Task Deve_Retornar_NotFound_Ao_Passar_O_Id_Por_Parametro()
-        {
-            //arrange
-            var usuarioFake = ViewModelBuilder.UsuarioFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<UsuarioViewModel>>(), new System.Threading.CancellationToken()))
-                .Throws<KeyNotFoundException>();
-            //act
-            var result = await _controller.GetUsuarioAsync(Guid.NewGuid());
-
-            //assert
-            result.Should().BeAssignableTo<NotFoundResult>();
-        }
-
         [Fact(DisplayName = "Deve cadastrar novo usuário e retornar ok.")]
         [Trait("Controller", "UsuariosController")]
         public async Task Deve_Cadastrar_Novo_Usuario_E_Retornar_Ok()

@@ -33,22 +33,6 @@ namespace IdentidadeAcesso.CrossCutting.AspNetFilters
 
         public async void OnActionExecuted(ActionExecutedContext context)
         {
-            if (_hostingEnviroment.IsDevelopment())
-            {
-                var data = new
-                {
-                    Version = "v1.0",
-                    User = context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == "email").Value,
-                    IP = context.HttpContext.Connection.RemoteIpAddress.ToString(),
-                    Hostname = context.HttpContext.Request.Host.ToString(),
-                    AreaAccessed = context.HttpContext.Request.GetDisplayUrl(),
-                    Action = context.ActionDescriptor.DisplayName,
-                    TimeStamp = DateTime.Now
-                };
-
-                _logger.LogInformation(1, data.ToString());
-            }
-
             if (_hostingEnviroment.IsProduction())
             {
                 var message = new CreateMessage

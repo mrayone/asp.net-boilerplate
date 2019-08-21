@@ -55,6 +55,18 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             usuario.Should().NotBeNull();
         }
 
+        [Fact(DisplayName = "Deve retornar notfound se não encontrar usuário por id.")]
+        [Trait("Testes de Integração", "UsuarioControllerTests")]
+        public async Task Deve_RetornarNotFound_Se_Nao_Encontrar_Usuario()
+        {
+            //arrange
+
+            //act
+            var result = await _client.GetAsync($"{API}/50d4a981-48d3-42e6-9c6e-9602184af8a7");
+            //assert
+            result.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
         [Fact(DisplayName = "Deve Cadastrar o usuário com sucesso.")]
         [Trait("Testes de Integração", "UsuarioControllerTests")]
         public async Task Deve_Cadastrar_Usuario_ComSucesso()

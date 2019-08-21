@@ -83,7 +83,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var response = await _client.PostAsync("api/v1/permissoes", content);
-            var value = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -96,10 +95,20 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange
             //act
             var response = await _client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
-            var value = await response.Content.ReadAsStringAsync();
             //assert
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+        }
+
+        [Fact(DisplayName = "Deve retornar notfound se não encontrar permissão.")]
+        [Trait("Testes de Integração", "PermissaoControllerTests")]
+        public async Task Deve_Retornar_NotFound_Se_Nao_Encontrar_Permissao()
+        {
+            //arrange
+            //act
+            var response = await _client.GetAsync($"api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095FC9E4");
+            //assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact(DisplayName = "Deve retornar Todas as Permissões.")]
@@ -154,7 +163,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //act
             var response = await _client.DeleteAsync("api/v1/permissoes/4cf679e7-ef92-49e4-b677-2ec8d4e91453");
             //assert
-            var resp = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
@@ -178,13 +186,12 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             var content = new StringContent(JsonConvert.SerializeObject(assinatura));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
-            var assinar = await _client.PutAsync("api/v1/perfis/assinar-permissao", content);
-            //act
             var delete = await _client.DeleteAsync("api/v1/permissoes/7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4");
             var result = await delete.Content.ReadAsStringAsync();
             //assert
             delete.StatusCode.Should().Be(HttpStatusCode.BadRequest);
             result.Should().NotBeEmpty();
+            content.Dispose();
         }
     }
 }

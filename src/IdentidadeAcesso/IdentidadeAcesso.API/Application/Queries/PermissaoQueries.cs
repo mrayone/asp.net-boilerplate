@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.API.Application.Queries
                               ,[Atribuicao_Valor] as Valor
                               ,[Atribuicao_Tipo] as Tipo
                 FROM [permissoes] WHERE [Id] = @uid AND [DeletadoEm] IS NULL";
-                var result = await connection.QuerySingleAsync<PermissaoViewModel>(sql, new { uid = request.Id });
+                var result = await connection.QueryFirstOrDefaultAsync<PermissaoViewModel>(sql, new { uid = request.Id });
 
                 if (result == null)
                     throw new KeyNotFoundException("Permissão não encontrada");

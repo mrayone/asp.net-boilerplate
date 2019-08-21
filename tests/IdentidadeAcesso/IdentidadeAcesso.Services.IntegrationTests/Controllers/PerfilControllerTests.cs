@@ -21,11 +21,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
 
         public PerfilControllerTests(WebServiceCustomizadoFactory<IdentidadeAcesso.API.Startup> factory)
         {
-            
-            var clientOptions = new WebApplicationFactoryClientOptions();
-            clientOptions.AllowAutoRedirect = false;
-            clientOptions.BaseAddress = new Uri("http://localhost");
-            _client = factory.ComNovoDb().CreateClient(clientOptions);
+
+            _client = factory.ComNovoDb().CreateDefaultClient();
         }
 
         [Fact(DisplayName = "Deve retornar todos os perfis cadastrados.")]
@@ -57,6 +54,18 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             perfil.Id.Should().Be("8cd6c8ca-7db7-4551-b6c5-f7a724286709");
+        }
+
+        [Fact(DisplayName = "Deve retornar NotFound se não encontrar o perfil.")]
+        [Trait("Testes de Integração", "PerfilControllerTests")]
+        public async Task Deve_RetornarNotFound_Se_Nao_Achar_Perfil()
+        {
+            //arrange 
+            var id = "8cd6c8ca-7db7-4551-b6c5-f7a724286759";
+            //act 
+            var response = await _client.GetAsync($"api/v1/perfis/{id}");
+            //assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact(DisplayName = "Deve atribuir permissão e retornar ok.")]
@@ -163,8 +172,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var result = await _client.PostAsync("api/v1/perfis", content);
-            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync();
             //assert
             result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
@@ -188,8 +195,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             //act
             var result = await _client.PutAsync("api/v1/perfis", content);
-            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             //assert
             result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);
@@ -203,8 +208,6 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
             //arrange 
             //act
             var result = await _client.DeleteAsync("api/v1/perfis/c5ecd8a8-f086-4058-b205-a561603415f9");
-            var response = await _client.GetAsync($"api/v1/perfis/obter-todos");
-            var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             //assert
             result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);

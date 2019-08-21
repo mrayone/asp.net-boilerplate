@@ -22,14 +22,10 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
         private readonly DomainNotificationHandler _notifications;
         private readonly Mock<IMediator> _mediator;
         private readonly IList<PermissaoViewModel> _list;
-        private readonly BuscarPorId<PermissaoViewModel> _command;
-        private readonly BuscarTodos<PermissaoViewModel> _commandTodos;
         public PermissaoControllerTest()
         {
             _mediator = new Mock<IMediator>();
             _notifications = new DomainNotificationHandler();
-            _command = new BuscarPorId<PermissaoViewModel>(It.IsAny<Guid>());
-            _commandTodos = new BuscarTodos<PermissaoViewModel>();
             _controller = new PermissoesController(_mediator.Object, _notifications);
             _list = new List<PermissaoViewModel>()
             {
@@ -73,23 +69,6 @@ namespace IdentidadeAcesso.Services.UnitTests.ControllersTest
 
             result.Should().BeAssignableTo<OkObjectResult>();
             vr.Value.Should().Be(permissaoViewModel);
-        }
-
-        [Fact(DisplayName = "Deve retornar notfound em obter permissão por Id.")]
-        [Trait("Controller", "Permissão")]
-        public async Task Deve_Retornar_NotFound_Em_Obter_Permissao_Por_Id()
-        {
-            // arrange
-            var permissaoViewModel = ViewModelBuilder.PermissaoViewFake();
-            _mediator.Setup(s => s.Send(It.IsAny<IRequest<PermissaoViewModel>>(), new System.Threading.CancellationToken()))
-                .Throws<KeyNotFoundException>();
-            //act
-            var result = await _controller.GetPermissaoAsync(Guid.NewGuid());
-            var vr = result as NotFoundResult;
-            //assert
-
-            result.Should().BeAssignableTo<NotFoundResult>();
-            vr.StatusCode.Should().Be(404);
         }
 
         [Fact(DisplayName = "Deve retonar Ok ao persistir permissão.")]
