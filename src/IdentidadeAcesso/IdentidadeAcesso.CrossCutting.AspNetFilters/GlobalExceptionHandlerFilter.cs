@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 
 namespace IdentidadeAcesso.CrossCutting.AspNetFilters
 {
@@ -21,7 +23,17 @@ namespace IdentidadeAcesso.CrossCutting.AspNetFilters
         {
             if(_hostingEnviroment.IsProduction())
             {
-                _logger.LogError(1, context.Exception, context.Exception.Message);
+                if(context.Exception.GetType() != typeof(KeyNotFoundException))
+                    _logger.LogError(1, context.Exception, context.Exception.Message);
+            }
+
+            if(context.Exception.GetType() == typeof(KeyNotFoundException))
+            {
+                context.Result = new NotFoundObjectResult(new { Error = context.Exception.Message });
+            }
+            else
+            {
+                context.Result = new BadRequestObjectResult(new { Error = context.Exception.Message });
             }
 
             context.ExceptionHandled = true;

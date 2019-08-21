@@ -22,7 +22,7 @@ namespace IdentidadeAcesso.API.Controllers
         private readonly IMediator _mediator;
         private readonly INotificationHandler<DomainNotification> _notifications;
 
-        public PerfisController( IMediator mediator, INotificationHandler<DomainNotification> notifications )
+        public PerfisController(IMediator mediator, INotificationHandler<DomainNotification> notifications)
         {
             _mediator = mediator;
             _notifications = notifications;
@@ -55,15 +55,9 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPerfilAsync(Guid id)
         {
-            try
-            {
-                var model = await _mediator.Send(new BuscarPorId<PerfilViewModel>(id));
-                return Ok(model);
-            }
-            catch (Exception e)
-            {
-                return NotFound();
-            }
+
+            var model = await _mediator.Send(new BuscarPorId<PerfilViewModel>(id));
+            return Ok(model);
         }
 
         /// <summary>

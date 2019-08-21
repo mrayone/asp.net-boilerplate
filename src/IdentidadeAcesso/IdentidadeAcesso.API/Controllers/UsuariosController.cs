@@ -58,15 +58,8 @@ namespace IdentidadeAcesso.API.Controllers
         [ProducesResponseType(typeof(UsuarioViewModel), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUsuarioAsync(Guid id)
         {
-            try
-            {
-                var usuario = await _mediator.Send(new BuscarPorId<UsuarioViewModel>(id));
-                return Ok(usuario);
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+            var usuario = await _mediator.Send(new BuscarPorId<UsuarioViewModel>(id));
+            return Ok(usuario);
         }
 
         /// <summary>

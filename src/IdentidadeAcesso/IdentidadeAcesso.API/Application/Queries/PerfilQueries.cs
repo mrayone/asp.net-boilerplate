@@ -70,6 +70,9 @@ namespace IdentidadeAcesso.API.Application.Queries
                         return p;
                     }, new { uid = request.Id }, splitOn: "AtribuicaoId");
 
+                if (result.ToList().Count == 0)
+                    throw new KeyNotFoundException("Perfil não encontrado");
+
 
                 return MapResult(result.ToList());
             }

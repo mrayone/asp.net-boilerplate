@@ -1,4 +1,6 @@
-﻿using IdentidadeAcesso.API.Infrastrucuture.IoC;
+﻿using Elmah.Io.AspNetCore;
+using Elmah.Io.Extensions.Logging;
+using IdentidadeAcesso.API.Infrastrucuture.IoC;
 using IdentidadeAcesso.CrossCutting.AspNetFilters;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.CrossCutting.Identity.Options;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
@@ -31,6 +34,7 @@ namespace IdentidadeAcesso.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
             services.AddMvc( options => {
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalExceptionHandlerFilter)));
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -82,8 +86,14 @@ namespace IdentidadeAcesso.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+            loggerFactory.AddElmahIo("daa07db41fff467f9a4cde8e96d8a5f5", new System.Guid("324d3dc7-d02e-44b1-92b2-c5f8ff17c741"));
+           // app.UseElmahIo();
 
             IdentityModelEventSource.ShowPII = true; //Add this line
             if (env.IsDevelopment())

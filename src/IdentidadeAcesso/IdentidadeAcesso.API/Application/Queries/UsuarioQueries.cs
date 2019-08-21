@@ -54,6 +54,9 @@ namespace IdentidadeAcesso.API.Application.Queries
 
                 var query = await connection.QuerySingleOrDefaultAsync<UsuarioViewModel>(sql, new { uid = request.Id });
 
+                if ( query == null )
+                    throw new KeyNotFoundException("Usuário não encontrado");
+
                 return query;
             }
         }
