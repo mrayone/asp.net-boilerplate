@@ -37,8 +37,8 @@ export class EditarPermissaoComponent implements OnInit {
       if ( form.valid ) {
         const permissao: Permissao = Object.assign({}, new Permissao(), form.value);
         this.permissaoService.put(permissao).subscribe(response => {
-            this.toastService.success('Operação realiza com sucesso!');
-            this.router.navigate(['/permissoes']);
+          this.toastService.success('Operação realiza com sucesso!')
+          .onHidden.subscribe(() => this.router.navigate(['/permissoes']));
         });
       }
     }

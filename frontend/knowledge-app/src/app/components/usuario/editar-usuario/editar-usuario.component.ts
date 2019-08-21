@@ -44,7 +44,8 @@ export class EditarUsuarioComponent implements OnInit {
         `${form.value.dataDeNascimento.year}-${form.value.dataDeNascimento.month}-${form.value.dataDeNascimento.day}`;
 
       this.usuarioService.put(this.usuario).subscribe(response => {
-          this.toastService.success('Operação realizada com sucesso!');
+        this.toastService.success('Operação realiza com sucesso!')
+        .onHidden.subscribe(() => this.router.navigate(['/usuarios']));
       });
     }
   }

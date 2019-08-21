@@ -31,8 +31,8 @@ export class AdicionarPerfilComponent implements OnInit {
       const perfil: Perfil = Object.assign({}, new Perfil(), form.value);
       perfil.atribuicoes = perfil.atribuicoes.filter(this.sanitizeAtribuicoes);
       this.perfilService.post(perfil).subscribe(response => {
-        this.toastService.success('Operação realiza com sucesso!');
-        this.router.navigate(['/perfis']);
+        this.toastService.success('Operação realiza com sucesso!')
+        .onHidden.subscribe(() => this.router.navigate(['/perfis']));
       });
     }
   }
