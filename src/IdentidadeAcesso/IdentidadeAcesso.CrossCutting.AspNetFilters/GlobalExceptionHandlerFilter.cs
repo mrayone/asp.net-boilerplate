@@ -33,7 +33,7 @@ namespace IdentidadeAcesso.CrossCutting.AspNetFilters
             }
             else
             {
-                context.Result = new BadRequestObjectResult(new { Error = context.Exception.Message });
+                context.Result = new BadRequestObjectResult(new { Error = "Ocorreu algum erro interno, contate a administração" });
             }
 
             context.ExceptionHandled = true;

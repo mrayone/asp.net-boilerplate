@@ -37,6 +37,7 @@ namespace IdentidadeAcesso.API
             services.AddLogging();
             services.AddMvc( options => {
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalExceptionHandlerFilter)));
+                options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalActionLogger)));
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMediatR(typeof(Startup).GetType().Assembly)
@@ -93,7 +94,6 @@ namespace IdentidadeAcesso.API
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             loggerFactory.AddElmahIo("daa07db41fff467f9a4cde8e96d8a5f5", new System.Guid("324d3dc7-d02e-44b1-92b2-c5f8ff17c741"));
-           // app.UseElmahIo();
 
             IdentityModelEventSource.ShowPII = true; //Add this line
             if (env.IsDevelopment())

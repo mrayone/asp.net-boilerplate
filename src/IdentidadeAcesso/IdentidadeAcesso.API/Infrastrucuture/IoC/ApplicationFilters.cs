@@ -14,7 +14,9 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
         {
             services.AddScoped<ILogger<GlobalExceptionHandlerFilter>, 
                 Logger<GlobalExceptionHandlerFilter>>();
+            services.AddScoped<ILogger<GlobalActionLogger>, Logger<GlobalActionLogger>>();
             services.AddScoped<GlobalExceptionHandlerFilter>();
+            services.AddScoped<GlobalActionLogger>();
 
             return services;
         }
