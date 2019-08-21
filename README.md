@@ -5,7 +5,7 @@ de modelagem de domínio (DDD), separação de comandos e consultas (CQRS) e imp
 
 
 ## Metodologia
-Realizei estudos sobre as arquiteturas citadas anteriormente e então desenvolvi uma aplicação capaz de fornecer uma API para identificar usuários
+Realizei estudos sobre as arquiteturas citadas anteriormente e então desenvolvi uma aplicação capaz de fornecer uma API, para identificar usuários
 e aplicar políticas de autorização baseadas em **permissões** por **perfil**. Todo o módulo de identidade e acesso foi completamente isolado da aplicação web e customizado
 com _IdentityServer_, com o propósito de descartar a implementação do IdentityCore, porque para o contexto atual não se encaixava.
 
