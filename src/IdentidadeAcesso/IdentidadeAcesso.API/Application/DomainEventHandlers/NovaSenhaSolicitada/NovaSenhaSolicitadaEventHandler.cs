@@ -11,7 +11,7 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.NovaSenhaSolicita
 {
     public class NovaSenhaSolicitadaEventHandler : INotificationHandler<NovaSenhaSolicitadaEvent>
     {
-        private IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
         public NovaSenhaSolicitadaEventHandler(IEmailSender emailSender)
         {

@@ -1,4 +1,5 @@
 ﻿using IdentidadeAcesso.API.Infrastrucuture.IoC;
+using IdentidadeAcesso.CrossCutting.AspNetFilters;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.CrossCutting.Identity.Options;
 using MediatR;
@@ -30,7 +31,9 @@ namespace IdentidadeAcesso.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc( options => {
+                options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalExceptionHandlerFilter)));
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMediatR(typeof(Startup).GetType().Assembly)
                 .AddValidationBehavior()
@@ -39,7 +42,8 @@ namespace IdentidadeAcesso.API
                 .AddDomainNotifications()
                 .AddApplicationQueries()
                 .AddApplicationHandlers()
-                .AddIdentityConfig();
+                .AddIdentityConfig()
+                .AddFilters();
 
             services.Configure<AppOptions>(Configuration);
 
