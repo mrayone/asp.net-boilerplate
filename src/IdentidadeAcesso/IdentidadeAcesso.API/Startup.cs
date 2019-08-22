@@ -51,7 +51,7 @@ namespace IdentidadeAcesso.API
                 .AddDomainNotifications()
                 .AddApplicationQueries()
                 .AddApplicationHandlers()
-                .AddIdentityConfig()
+                .AddIdentityConfig(Configuration)
                 .AddFilters();
 
             services.Configure<AppOptions>(Configuration);
