@@ -27,7 +27,7 @@ namespace IdentidadeAcesso.API
             var configBuilder = new ConfigurationBuilder()
                .SetBasePath(env.ContentRootPath)
                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddJsonFile($"mailsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
             Configuration = configBuilder.Build();
         }
@@ -85,8 +85,11 @@ namespace IdentidadeAcesso.API
                     }
                 });
 
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, "IdentidadeAcesso.API.xml");
-                s.IncludeXmlComments(filePath);
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                var commentsFileName = "IdentidadeAcesso.API" + ".XML";
+                var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+
+                s.IncludeXmlComments(commentsFile);
             });
         }
 
