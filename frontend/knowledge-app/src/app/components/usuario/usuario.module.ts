@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { UsuarioRoutingModule } from './usuario-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxMaskModule , IConfig} from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { httpInterceptorProviders } from 'src/app/http-interceptors';
 import { FormsModule } from '@angular/forms';
-import { NullFieldPipe } from '../../utils/pipes/null-field.pipe';
-import { GeneroUsuarioPipe } from '../../utils/pipes/genero-usuario.pipe';
-// const
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+import { NullFieldPipe } from '../../Utils/pipes/null-field.pipe';
+import { GeneroUsuarioPipe } from '../../Utils/pipes/genero-usuario.pipe';
 
 // componentes
 import { AdicionarUsuarioComponent } from './adicionar-usuario/adicionar-usuario.component';
@@ -41,7 +39,7 @@ import { TrocarSenhaComponent } from '../senha/trocar-senha/trocar-senha.compone
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    NgxMaskModule.forRoot(options)
+    NgxMaskModule
   ],
   exports: [
     FormularioUsuarioComponent
