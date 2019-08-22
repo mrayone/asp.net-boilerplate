@@ -6,9 +6,10 @@ using IdentidadeAcesso.Infra.Data.EntityConfigurations;
 using Knowledge.IO.Infra.Data.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace Knowledge.IO.Infra.Data.Context
 {
@@ -24,7 +25,6 @@ namespace Knowledge.IO.Infra.Data.Context
         public IdentidadeAcessoDbContext(DbContextOptions<IdentidadeAcessoDbContext> options) : base(options)
         { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -35,7 +35,7 @@ namespace Knowledge.IO.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new TokenRedefinicaoSenhaEntityConfiguration());
 
             //TODO: Comente esta linha para executar testes do xUnit
-            //modelBuilder.Seed(); 
+            modelBuilder.Seed(); 
         }
     }
 
@@ -43,8 +43,13 @@ namespace Knowledge.IO.Infra.Data.Context
     {
         public IdentidadeAcessoDbContext CreateDbContext(string[] args)
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             var optionsBuilder = new DbContextOptionsBuilder<IdentidadeAcessoDbContext>()
-                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+                .UseSqlServer(config.GetConnectionString("DefaultConnection"));
             return new IdentidadeAcessoDbContext(optionsBuilder.Options);
         }
     }
