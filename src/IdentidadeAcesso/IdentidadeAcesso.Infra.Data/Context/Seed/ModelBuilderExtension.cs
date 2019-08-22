@@ -301,8 +301,8 @@ namespace IdentidadeAcesso.Infra.Data.Context.Seed
                 u.OwnsOne(p => p.Nome).HasData(new
                 {
                     UsuarioId = uId,
-                    PrimeiroNome = "Maycon Rayone",
-                    Sobrenome = "Rodrigues Xavier"
+                    PrimeiroNome = "Admin",
+                    Sobrenome = "Fake"
                 });
 
                 u.OwnsOne(p => p.Senha).HasData(new

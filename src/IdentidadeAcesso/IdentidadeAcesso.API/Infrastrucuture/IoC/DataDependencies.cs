@@ -19,7 +19,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
 {
     public static class DataDependencies
     {
-        public static IServiceCollection AddDataDependencies(this IServiceCollection services)
+        public static IServiceCollection AddDataDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.TryAddScoped<IUsuarioRepository, UsuarioRepository>();
             services.TryAddScoped<IPerfilRepository, PerfilRepository>();
@@ -28,7 +28,7 @@ namespace IdentidadeAcesso.API.Infrastrucuture.IoC
             services.AddEntityFrameworkSqlServer()
                    .AddDbContext<IdentidadeAcessoDbContext>(options =>
                    {
-                       options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IdentidadeDb;Trusted_Connection=True;MultipleActiveResultSets=true",
+                       options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                            sqlServerOptionsAction: sqlOptions =>
                            {
                                sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);

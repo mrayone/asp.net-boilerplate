@@ -4,15 +4,18 @@ using IdentidadeAcesso.API.Infrastrucuture.IoC;
 using IdentidadeAcesso.CrossCutting.AspNetFilters;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.CrossCutting.Identity.Options;
+using Knowledge.IO.Infra.Data.Context;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Logging;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 using System.IO;
 
 namespace IdentidadeAcesso.API
@@ -35,15 +38,16 @@ namespace IdentidadeAcesso.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
-            services.AddMvc( options => {
+            services.AddMvc(options =>
+            {
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalExceptionHandlerFilter)));
                 options.Filters.Add(new ServiceFilterAttribute(typeof(GlobalActionLogger)));
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMediatR(typeof(Startup).GetType().Assembly)
                 .AddValidationBehavior()
                 .AddDomainServices()
-                .AddDataDependencies()
+                .AddDataDependencies(Configuration)
                 .AddDomainNotifications()
                 .AddApplicationQueries()
                 .AddApplicationHandlers()
@@ -86,8 +90,13 @@ namespace IdentidadeAcesso.API
             });
         }
 
+        private object GetTypeInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
+        public void Configure(IApplicationBuilder app,
             IHostingEnvironment env,
             ILoggerFactory loggerFactory)
         {
