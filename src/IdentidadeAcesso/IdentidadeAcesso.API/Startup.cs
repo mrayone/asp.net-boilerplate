@@ -1,6 +1,7 @@
 ﻿using Elmah.Io.AspNetCore;
 using Elmah.Io.Extensions.Logging;
 using IdentidadeAcesso.API.Infrastrucuture.IoC;
+using IdentidadeAcesso.API.Options;
 using IdentidadeAcesso.CrossCutting.AspNetFilters;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.CrossCutting.Identity.Options;
@@ -55,6 +56,7 @@ namespace IdentidadeAcesso.API
                 .AddFilters();
 
             services.Configure<AppOptions>(Configuration);
+            services.Configure<UrlOptions>(Configuration);
 
             services.AddApiVersioning(options =>
             {
@@ -128,7 +130,7 @@ namespace IdentidadeAcesso.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowledge.IO API V1");
             });
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
