@@ -30,8 +30,7 @@ namespace IdentidadeAcesso.Domain.Sevices
             var perfilComPermissao = await _perfilRepository.Buscar(p => p.Atribuicoes.Where(per => per.PermissaoId == permissao.Id).Any());
             if (!perfilComPermissao.Any())
             {
-                permissao.Deletar();
-                _permissaoRepository.Atualizar(permissao);
+                _permissaoRepository.Deletar(permissao);
                 return await Task.FromResult(true);
             }
 

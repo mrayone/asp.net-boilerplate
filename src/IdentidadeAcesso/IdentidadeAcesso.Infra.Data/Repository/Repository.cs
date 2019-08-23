@@ -40,6 +40,11 @@ namespace Knowledge.IO.Infra.Data.Repository
             return await Task.FromResult(result);  
         }
 
+        public void Deletar(TEntity obj)
+        {
+            DbSet.Remove(obj);
+        }
+
         public virtual void Dispose()
         {
             Context.Dispose();

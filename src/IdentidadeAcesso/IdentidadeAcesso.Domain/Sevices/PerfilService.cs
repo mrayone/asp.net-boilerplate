@@ -72,9 +72,7 @@ namespace IdentidadeAcesso.Domain.Sevices
                 return await Task.FromResult(false);
             }
 
-            perfil.Deletar();
-
-            _perfilRepo.Atualizar(perfil);
+            _perfilRepo.Deletar(perfil);
             return await Task.FromResult(true);
         }
     }

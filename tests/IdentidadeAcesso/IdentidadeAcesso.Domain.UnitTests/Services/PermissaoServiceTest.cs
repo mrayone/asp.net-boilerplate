@@ -38,21 +38,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
             };
         }
 
-        [Trait("Services","Permissao")]
-        [Fact(DisplayName = "Deve deletar a permissão e retornar true.")]
-        public async Task Deve_Deletar_a_Permissao_e_Retornar_True()
-        {
-            //arrange
-            var permissao = await _repositoryMock.Object.ObterPorIdAsync(Guid.NewGuid());
-
-            //act
-            var result = await _service.DeletarPermissaoAsync(permissao);
-
-            //assert
-            result.Should().BeTrue();
-            permissao.DeletadoEm.HasValue.Should().BeTrue();
-        }
-
         [Trait("Services", "Permissao")]
         [Fact(DisplayName = "Deve retornar false se permissão em uso e disparar notificação de domínio.")]
         public async Task Deve_Retornar_False_Se_Permissao_Em_Uso_e_Disparar_Notificacao_de_Dominio()

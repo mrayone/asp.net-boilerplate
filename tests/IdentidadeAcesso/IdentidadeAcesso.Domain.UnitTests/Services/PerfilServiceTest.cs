@@ -93,20 +93,6 @@ namespace IdentidadeAcesso.Domain.UnitTests.Services
                 new System.Threading.CancellationToken()), Times.Once());
         }
 
-        [Fact(DisplayName = "Deve deletar perfil e retornar true.")]
-        [Trait("Services", "Perfil")]
-        public async Task Deve_Deletar_Perfil_e_Retornar_True()
-        {
-            //arrange
-            var perfil = await _perfilRepo.Object.ObterPorIdAsync(Guid.NewGuid());
-            //act
-            var result = await _perfilService.DeletarPerfilAsync(perfil);
-            //assert
-
-            result.Should().BeTrue();
-            perfil.DeletadoEm.HasValue.Should().BeTrue();
-        }
-
         [Fact(DisplayName = "Deve retornar false se perfil em uso.")]
         [Trait("Services", "Perfil")]
         public async Task Deve_Retornar_False_se_Perfil_Em_Uso()
