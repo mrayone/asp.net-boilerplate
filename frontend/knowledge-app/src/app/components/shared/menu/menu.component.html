@@ -1,4 +1,4 @@
-<div class="sidebar" [ngClass]="{'show-menu': showMenu}">
+<div class="sidebar" [ngClass]="{'d-none d-lg-block d-xl-block': !showMenu}">
   <div class="sidebar-wrapper">
     <div class="logo">
       <img src="../../../../assets/logo/logo.png" alt="Logo">
@@ -86,6 +86,12 @@
           <i class="ti-id-badge"></i>
           <p>Meus Dados</p>
         </a>
+      </li>
+
+      <li class="nav-item d-xl-none d-lg-none">
+        <button class="btn btn-block btn-lg btn-dark" (click)="logout()">
+            Sair
+        </button>
       </li>
     </ul>
   </div>

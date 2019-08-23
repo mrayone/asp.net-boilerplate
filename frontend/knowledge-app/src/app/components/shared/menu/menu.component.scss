@@ -84,6 +84,10 @@
   height: auto;
 }
 
+
+.btn-lg {
+  border-radius: 0;
+}
 // Large devices (desktops, 992px and up)
 @media screen and (min-width: 992px), screen and (min-width: 1200px) {
   .sidebar-wrapper .nav > li.active a::before{
@@ -130,32 +134,4 @@
     display: inline;
     position: absolute;
   }
-
 }
-
-// Small devices (landscape phones, 576px and up)
-@media (max-width: 576px) {
-  .sidebar {
-    display: none;
-  }
-
-  .show-menu {
-    display: block;
-    z-index: 1000;
-    position: fixed;
-  }
-
-}
-
-// Medium devices (tablets, 768px and up)
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-
-  .show-menu {
-    display: block;
-    position: fixed;
-    z-index: 1000;
-  }
- }
