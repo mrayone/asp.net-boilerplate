@@ -134,32 +134,4 @@
     display: inline;
     position: absolute;
   }
-
 }
-
-// Small devices (landscape phones, 576px and up)
-@media (max-width: 576px) {
-  .sidebar {
-    display: none;
-  }
-
-  .show-menu {
-    display: block;
-    z-index: 1000;
-    position: fixed;
-  }
-
-}
-
-// Medium devices (tablets, 768px and up)
-@media (max-width: 768px) {
-  .sidebar {
-    display: none;
-  }
-
-  .show-menu {
-    display: block;
-    position: fixed;
-    z-index: 1000;
-  }
- }

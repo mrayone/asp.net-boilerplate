@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   isCollapseUsuario = false;
   isCollapsePermissao = false;
   isCollapsePerfil = false;
-  @Input() showMenu = false;
+  @Input() showMenu = true;
 
   constructor(private router: Router, private store: Store<AppState>) {
   }
