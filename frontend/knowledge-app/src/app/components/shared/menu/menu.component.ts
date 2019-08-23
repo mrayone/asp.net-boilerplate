@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/reducers';
+import { Logout } from 'src/app/store/actions/app.actions';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +16,7 @@ export class MenuComponent implements OnInit {
   isCollapsePerfil = false;
   @Input() showMenu = false;
 
-  constructor() {
+  constructor(private router: Router, private store: Store<AppState>) {
   }
 
   collapseAction(item: string) {
@@ -39,4 +43,8 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  logout() {
+    this.store.dispatch(new Logout());
+    this.router.navigate(['/login']);
+  }
 }
