@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.API.Application.Commands.PerfilCommands.Handlers
 
             if(!await PerfilExitente(request)) return await Task.FromResult(CommandResponse.Fail);
 
-            var perfil = await _perfilRepository.ObterPorIdAsync(request.Id);
+            var perfil = await _perfilRepository.ObterComPermissoesAsync(request.Id);
             if(!await _domainService.DeletarPerfilAsync(perfil))
             {
                 return await Task.FromResult(CommandResponse.Fail);

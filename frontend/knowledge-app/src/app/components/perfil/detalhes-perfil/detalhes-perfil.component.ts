@@ -55,7 +55,7 @@ export class DetalhesPerfilComponent implements OnInit {
         this.perfilService.delete(this.perfil.id)
         .subscribe(() => {
             this.toastService.success('Operação realizada com sucesso!');
-            this.router.navigate(['/permissoes']);
+            this.router.navigate(['/perfis']);
         });
     }
   }
