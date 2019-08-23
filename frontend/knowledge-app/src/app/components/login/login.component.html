@@ -3,7 +3,7 @@
       <div class="auth-logo">
         <img src="../../../assets/logo/logo.png" alt="Logo">
       </div>
-      <form novalidate (ngSubmit)="autenticarUsuario($event)" [formGroup]="loginForm">
+      <form novalidate (ngSubmit)="autenticarUsuario()" [formGroup]="loginForm">
           <div class="form-group">
               <input type="text" name="username" class="form-control" formControlName="username"
                   placeholder="E-mail" required>

@@ -16,10 +16,6 @@ export class UsuarioListaComponent implements OnInit {
 
   usuarios$: Observable<any[]>;
   constructor(private usuarioService: UsuarioService, private router: Router) {
-
-  }
-
-  ngOnInit() {
     this.usuarios$ = this.usuarioService.getTodos().pipe(
       map((usuarios) => {
         usuarios.map((el) => {
@@ -32,6 +28,9 @@ export class UsuarioListaComponent implements OnInit {
         return usuarios;
       })
     );
+  }
+
+  ngOnInit() {
   }
 }
 

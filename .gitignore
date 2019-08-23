@@ -4,18 +4,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 # ignore appsettings
 **/appsettings.development.json
+**/appsettings.Development.json
 **/appsettings.staging.json
 **/appsettings.production.json
-
-# ignore connectionstrings
-**/connectionstrings.development.json
-**/connectionstrings.staging.json
-**/connectionstrings.production.json
-
-# ignore mailsettings
-**/mailsettings.development.json
-**/mailsettings.staging.json
-**/mailsettings.production.json
 
 # User-specific files
 *.rsuser

@@ -7,13 +7,14 @@ using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
 {
     public static class AppIdentityConfig
     {
-        public static IServiceCollection AddIdentityConfig(this IServiceCollection services)
+        public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
@@ -30,7 +31,7 @@ namespace IdentidadeAcesso.CrossCutting.Identity.Configuration
             services.AddAuthentication("Bearer")
                    .AddIdentityServerAuthentication(options =>
                    {
-                       options.Authority = "http://localhost:5001";
+                       options.Authority = configuration.GetSection("urlIdentity").Value;
                        options.RequireHttpsMetadata = false;
                        options.ApiName = "api";
                    });

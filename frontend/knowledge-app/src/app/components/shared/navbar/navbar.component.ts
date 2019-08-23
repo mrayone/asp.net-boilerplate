@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  toggleMenu(event: Event) {
+  toggleMenu() {
     this.toggleCollapse();
   }
 
