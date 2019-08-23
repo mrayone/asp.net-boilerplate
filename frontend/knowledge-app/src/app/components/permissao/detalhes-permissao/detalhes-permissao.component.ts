@@ -56,7 +56,7 @@ export class DetalhesPermissaoComponent implements OnInit {
       this.permissaoService.delete(this.permissao.id)
         .subscribe(() => {
           this.toastService.success('Operação realizada com sucesso!');
-          this.router.navigate(['/perfis']);
+          this.router.navigate(['/permissoes']);
         });
     }
   }

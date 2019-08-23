@@ -79,7 +79,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
                 Sexo = "F",
                 DataDeNascimento = DateTime.Now.AddYears(-18),
                 CPF = "440.156.500-26",
-                Email = "dany.targ@fekail@vimail24.com",
+                Email = "dany.targ@vimail24.com",
                 PerfilId = Guid.Parse("8cd6c8ca-7db7-4551-b6c5-f7a724286709"),
                 Celular = "+5518996113325",
             };

@@ -31,7 +31,7 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.UsuarioCriado
                  <p>Seu usuário foi criado com sucesso!</p>
                  <p>Sua senha temporária é: <strong>{1}</strong></p>
                  <p><a href='{2}/login'>Clique aqui</a></p><br><br>
-                <p>Caso não esteja vendo o link acima clique neste link: {2}/login</p>
+                <p>Caso não esteja vendo o link acima clique neste link: <a href='{2}/login'>{2}/login</a></p>
                 </p><br><br><p><strong>Atenciosamente</strong>, Knowledge Team</p>", notification.Usuario.Nome.PrimeiroNome,
                 notification.Usuario.CPF.Digitos, url));
         }
