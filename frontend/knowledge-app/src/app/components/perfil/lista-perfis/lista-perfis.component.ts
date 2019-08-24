@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-listar-perfis',
-  templateUrl: './listar-perfis.component.html',
-  styleUrls: ['./listar-perfis.component.scss']
+  selector: 'app-lista-perfis',
+  templateUrl: './lista-perfis.component.html',
+  styleUrls: ['./lista-perfis.component.scss']
 })
-export class ListarPerfisComponent implements OnInit {
+export class ListaPerfisComponent implements OnInit {
 
   perfis$: Observable<Perfil[]>;
   constructor(private perfilSerivce: PerfilService, private router: Router) {
