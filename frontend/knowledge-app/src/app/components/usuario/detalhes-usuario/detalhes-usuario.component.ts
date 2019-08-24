@@ -8,11 +8,11 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ErrosService } from 'src/app/services/erros.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-usuario-detalhes',
-  templateUrl: './usuario-detalhes.component.html',
-  styleUrls: ['./usuario-detalhes.component.scss']
+  selector: 'app-detalhes-usuario',
+  templateUrl: './detalhes-usuario.component.html',
+  styleUrls: ['./detalhes-usuario.component.scss']
 })
-export class UsuarioDetalhesComponent implements OnInit {
+export class DetalhesUsuarioComponent implements OnInit {
 
   usuario: Usuario;
   closeResult: string;

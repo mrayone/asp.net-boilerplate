@@ -4,7 +4,7 @@ import { AdicionarUsuarioComponent } from './adicionar-usuario/adicionar-usuario
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.component';
+import { DetalhesUsuarioComponent } from './detalhes-usuario/detalhes-usuario.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 
 
@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'perfil', component: PerfilUsuarioComponent, data: { title: 'Perfil do Usuário' }, canActivate: [CanActivateUser] },
   { path: 'editar/:id', component: EditarUsuarioComponent, data: { title: 'Editar o Usuário' }, canActivate: [CanActivateUser] },
   {
-    path: 'detalhes/:id', component: UsuarioDetalhesComponent,
+    path: 'detalhes/:id', component: DetalhesUsuarioComponent,
     data: { title: 'Detalhes do Usuário' }, canActivate: [CanActivateUser]
   },
 ];

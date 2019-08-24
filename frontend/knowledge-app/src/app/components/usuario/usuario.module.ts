@@ -17,7 +17,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormularioUsuarioComponent } from './formulario/formulario-usuario.component';
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { UsuarioDetalhesComponent } from './usuario-detalhes/usuario-detalhes.component';
+import { DetalhesUsuarioComponent } from './detalhes-usuario/detalhes-usuario.component';
 import { EditarUsuarioComponent } from './editar-usuario/editar-usuario.component';
 import { TrocarSenhaComponent } from '../senha/trocar-senha/trocar-senha.component';
 
@@ -25,7 +25,7 @@ import { TrocarSenhaComponent } from '../senha/trocar-senha/trocar-senha.compone
   declarations: [
     AdicionarUsuarioComponent,
     ListaUsuariosComponent,
-    UsuarioDetalhesComponent,
+    DetalhesUsuarioComponent,
     FormularioUsuarioComponent,
     PerfilUsuarioComponent,
     NullFieldPipe,
