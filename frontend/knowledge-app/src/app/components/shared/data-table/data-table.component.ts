@@ -11,21 +11,21 @@ import { DecimalPipe } from '@angular/common';
   providers: [DataTableService, DecimalPipe]
 })
 export class DataTableComponent implements OnInit, AfterViewInit  {
-  dados$: Observable<any[]>;
+  tabelaItems$: Observable<any[]>;
   total$: Observable<number>;
   objectKeys = Object.keys;
   objectValues = Object.values;
-  @Input() array: Observable<any[]>;
+  @Input() tabelaModel: Observable<any[]>;
   @Input() columns: any = {};
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   constructor(public service: DataTableService,  private elRef:ElementRef) {
-    this.dados$ = service.dados$;
+    this.tabelaItems$ = service.dados$;
     this.total$ = service.total$;
   }
 
 
   ngOnInit(): void {
-    this.array.subscribe((val) => {
+    this.tabelaModel.subscribe((val) => {
       this.service.dados = val;
       this.service.termsAccepts = this.objectKeys(this.columns);
     });

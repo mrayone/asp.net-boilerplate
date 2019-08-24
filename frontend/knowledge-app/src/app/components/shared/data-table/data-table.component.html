@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let valor of dados$ | async">
+      <tr *ngFor="let valor of tabelaItems$ | async">
         <td>
           <ngb-highlight [result]="valor[objectKeys(columns)[0]]" [term]="service.searchTerm"></ngb-highlight>
         </td>
