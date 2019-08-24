@@ -30,7 +30,7 @@ namespace IdentidadeAcesso.API.Application.DomainEventHandlers.NovaSenhaSolicita
             await _emailSender.SendEmailAsync(notification.Email, notification.Nome,
                 "Redefinição de senha", string.Format(@"<h4>Olá {0} tudo bem?</h4> <p>Você solicitou uma redefinição de senha, por favor clique no link abaixo
                  <p><a href='{1}'>Clique aqui</a></p><br><br>
-                <p>Caso não esteja vendo o link acima clique neste link: {1} </p>
+                <p>Caso não esteja vendo o link acima clique neste link: <a href='{1}'>{1}</a> </p>
                 </p><br><br><p><strong>Atenciosamente</strong>, Knowledge Team</p>", notification.Nome, urlFormat));
         }
     }

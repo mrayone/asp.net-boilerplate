@@ -43,6 +43,7 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
   }
 
   sendCommand() {
+    this.sanitizeForm();
     this.command.emit(this.usuarioForm);
     this.inRequestService.startRequest();
   }
@@ -114,12 +115,27 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
           Validators.minLength(3),
           Validators.maxLength(150)
         ]),
-      estado: new FormControl(this.model.estado, [
+      estado: new FormControl(this.model.estado ? this.model.estado : '', [
         Validators.minLength(2),
         Validators.maxLength(2)
       ])
     });
 
+    this.adminInputs();
+  }
+
+  sanitizeForm() {
+    Object.keys(this.usuarioForm.controls)
+    .forEach(key => {
+        let currentControl = this.usuarioForm.controls[key];
+
+        if (currentControl.value === '') {
+          currentControl.setValue(null);
+        }
+    });
+  }
+
+  adminInputs() {
     if (this.adminInput) {
       this.usuarioForm.addControl('perfilId', new FormControl(this.model.perfilId, [
         Validators.required
@@ -133,7 +149,6 @@ export class FormularioUsuarioComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
 
   filtraModel(usuario: Usuario) {
     const data = new Date(usuario.dataDeNascimento);
