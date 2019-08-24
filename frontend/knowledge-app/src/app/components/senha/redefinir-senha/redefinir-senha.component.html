@@ -3,7 +3,7 @@
     <div class="content-logo">
       <img src="../../../assets/logo/logo.png" alt="Logo">
     </div>
-    <form novalidate (ngSubmit)="alterarSenha($event)" [formGroup]="recuperarSenhaForm">
+    <form novalidate (ngSubmit)="alterarSenha()" [formGroup]="recuperarSenhaForm">
       <div class="form-group">
         <input type="text" name="email" class="form-control" formControlName="email" placeholder="E-mail"
           required>

@@ -7,19 +7,15 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-usuario-lista',
-  templateUrl: './usuario-lista.component.html',
-  styleUrls: ['./usuario-lista.component.scss'],
+  selector: 'app-lista-usuarios',
+  templateUrl: './lista-usuarios.component.html',
+  styleUrls: ['./lista-usuarios.component.scss'],
   providers: [DataTableService, DecimalPipe]
 })
-export class UsuarioListaComponent implements OnInit {
+export class ListaUsuariosComponent implements OnInit {
 
   usuarios$: Observable<any[]>;
   constructor(private usuarioService: UsuarioService, private router: Router) {
-
-  }
-
-  ngOnInit() {
     this.usuarios$ = this.usuarioService.getTodos().pipe(
       map((usuarios) => {
         usuarios.map((el) => {
@@ -32,6 +28,9 @@ export class UsuarioListaComponent implements OnInit {
         return usuarios;
       })
     );
+  }
+
+  ngOnInit() {
   }
 }
 

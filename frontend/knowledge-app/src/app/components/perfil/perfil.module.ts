@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 
 
-import { ListarPerfisComponent } from './listar-perfis/listar-perfis.component';
+import { ListaPerfisComponent } from './lista-perfis/lista-perfis.component';
 import { AdicionarPerfilComponent } from './adicionar-perfil/adicionar-perfil.component';
 import { FormularioComponent } from './formulario/formulario.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
@@ -14,7 +14,7 @@ import { DetalhesPerfilComponent } from './detalhes-perfil/detalhes-perfil.compo
 
 @NgModule({
   declarations: [
-    ListarPerfisComponent,
+    ListaPerfisComponent,
     AdicionarPerfilComponent,
     FormularioComponent,
     EditarPerfilComponent,

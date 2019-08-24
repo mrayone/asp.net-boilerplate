@@ -32,3 +32,9 @@ com _IdentityServer_, com o propósito de descartar a implementação do Identit
  - [x] Repository e Generic Repository
  - [x] Unit Of Work
  - [ ] Event Sourcing
+
+
+####  Links dos Apps
+
+[SPA - Angular](https://spaknowledge.azurewebsites.net)
+[API](https://knowledgeback.azurewebsites.net)

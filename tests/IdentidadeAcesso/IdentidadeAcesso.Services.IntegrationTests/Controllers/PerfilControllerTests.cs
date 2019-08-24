@@ -207,7 +207,8 @@ namespace IdentidadeAcesso.Services.IntegrationTests.Controllers
         {
             //arrange 
             //act
-            var result = await _client.DeleteAsync("api/v1/perfis/c5ecd8a8-f086-4058-b205-a561603415f9");
+            var result = await _client.DeleteAsync("api/v1/perfis/577ba295-0da3-44cd-8cd9-2631de0d3571");
+            var response = await result.Content.ReadAsStringAsync();
             //assert
             result.StatusCode.Should().NotBe(HttpStatusCode.NotFound);
             result.StatusCode.Should().NotBe(HttpStatusCode.BadRequest);

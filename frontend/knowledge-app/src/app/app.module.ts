@@ -18,7 +18,6 @@ import { httpInterceptorProviders } from './http-interceptors';
 import { PerfilModule } from './components/perfil/perfil.module';
 
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
-
 // components
 import { DashBoardComponent } from './components/dashboard/dashboard.component';
 // tslint:disable-next-line: max-line-length
@@ -28,6 +27,7 @@ import { MenuComponent } from './components/shared/menu/menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { RecuperarSenhaComponent } from './components/senha/recuperar-senha/recuperar-senha.component';
 import { RedefinirSenhaComponent } from './components/senha/redefinir-senha/redefinir-senha.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 
 @NgModule({

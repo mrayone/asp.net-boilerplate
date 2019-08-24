@@ -1,6 +1,7 @@
 ﻿using Elmah.Io.AspNetCore;
 using Elmah.Io.Extensions.Logging;
 using IdentidadeAcesso.API.Infrastrucuture.IoC;
+using IdentidadeAcesso.API.Options;
 using IdentidadeAcesso.CrossCutting.AspNetFilters;
 using IdentidadeAcesso.CrossCutting.Identity.Configuration;
 using IdentidadeAcesso.CrossCutting.Identity.Options;
@@ -9,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,7 @@ namespace IdentidadeAcesso.API
             var configBuilder = new ConfigurationBuilder()
                .SetBasePath(env.ContentRootPath)
                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddJsonFile($"mailsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
             Configuration = configBuilder.Build();
         }
@@ -51,10 +53,11 @@ namespace IdentidadeAcesso.API
                 .AddDomainNotifications()
                 .AddApplicationQueries()
                 .AddApplicationHandlers()
-                .AddIdentityConfig()
+                .AddIdentityConfig(Configuration)
                 .AddFilters();
 
             services.Configure<AppOptions>(Configuration);
+            services.Configure<UrlOptions>(Configuration);
 
             services.AddApiVersioning(options =>
             {
@@ -81,12 +84,15 @@ namespace IdentidadeAcesso.API
                     License = new License()
                     {
                         Name = "MIT",
-                        Url = "http://eventos.io/license"
+                        Url = "https://github.com/mrayone/knowledge.io/blob/develop/LICENSE"
                     }
                 });
 
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, "IdentidadeAcesso.API.xml");
-                s.IncludeXmlComments(filePath);
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                var commentsFileName = "IdentidadeAcesso.API" + ".XML";
+                var commentsFile = Path.Combine(baseDirectory, commentsFileName);
+
+                s.IncludeXmlComments(commentsFile);
             });
         }
 
@@ -125,7 +131,7 @@ namespace IdentidadeAcesso.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Knowledge.IO API V1");
             });
 
-            // app.UseHttpsRedirection();
+           // app.UseHttpsRedirection();
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -133,6 +139,9 @@ namespace IdentidadeAcesso.API
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseMvc();
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
         }
     }
 }

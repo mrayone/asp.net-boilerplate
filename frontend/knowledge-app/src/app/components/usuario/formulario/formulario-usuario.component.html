@@ -1,4 +1,4 @@
-<form action="" (ngSubmit)="sendCommand($event)" novalidate [formGroup]="usuarioForm" autocomplete="off">
+<form (ngSubmit)="sendCommand()" novalidate [formGroup]="usuarioForm" autocomplete="off">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="control-label" for="nome">Primeiro Nome</label>
@@ -139,6 +139,7 @@
           <div class="form-group">
             <label class="control-label" for="estado">Estado</label>
             <select class="form-control" id="estado" formControlName="estado" aria-placeholder="--Selecione--">
+              <option value="">--Selecione--</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
               <option value="AP">Amapá</option>

@@ -98,7 +98,7 @@ namespace IdentidadeAcesso.Services.IntegrationTests.WebService
                 Perfil.PerfilFactory
                 .NovoPerfilComAssinatura(null, "Recursos Humanos 2", "Perfil que possui alguns níveis de RH.", new Guid("7E5CA36F-9278-4FAD-D6E0-08D7095CC9E4")),
                 Perfil.PerfilFactory
-                .NovoPerfil(null, "Visitante", "Perfil para usuário visitante."),
+                .NovoPerfil(new Guid("577ba295-0da3-44cd-8cd9-2631de0d3571"), "Visitante", "Perfil para usuário visitante."),
             };
             return list;
         }
