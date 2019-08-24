@@ -12,7 +12,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 // componentes
 import { AdicionarUsuarioComponent } from './adicionar-usuario/adicionar-usuario.component';
-import { UsuarioListaComponent } from './usuario-lista/usuario-lista.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormularioUsuarioComponent } from './formulario/formulario-usuario.component';
 import { CanActivateUser } from 'src/app/guards/can-activate-user';
@@ -24,7 +24,7 @@ import { TrocarSenhaComponent } from '../senha/trocar-senha/trocar-senha.compone
 @NgModule({
   declarations: [
     AdicionarUsuarioComponent,
-    UsuarioListaComponent,
+    ListaUsuariosComponent,
     UsuarioDetalhesComponent,
     FormularioUsuarioComponent,
     PerfilUsuarioComponent,
