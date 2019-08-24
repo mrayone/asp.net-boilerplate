@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,7 +84,7 @@ namespace IdentidadeAcesso.API
                     License = new License()
                     {
                         Name = "MIT",
-                        Url = "http://eventos.io/license"
+                        Url = "https://github.com/mrayone/knowledge.io/blob/develop/LICENSE"
                     }
                 });
 
@@ -138,6 +139,9 @@ namespace IdentidadeAcesso.API
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseMvc();
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
         }
     }
 }
