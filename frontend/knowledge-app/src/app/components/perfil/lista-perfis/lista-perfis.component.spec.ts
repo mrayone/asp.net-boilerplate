@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListarPerfisComponent } from './listar-perfis.component';
+import { ListaPerfisComponent } from './lista-perfis.component';
 
 describe('ListarPerfisComponent', () => {
-  let component: ListarPerfisComponent;
-  let fixture: ComponentFixture<ListarPerfisComponent>;
+  let component: ListaPerfisComponent;
+  let fixture: ComponentFixture<ListaPerfisComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListarPerfisComponent ]
+      declarations: [ ListaPerfisComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListarPerfisComponent);
+    fixture = TestBed.createComponent(ListaPerfisComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
